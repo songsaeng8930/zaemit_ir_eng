@@ -149,7 +149,55 @@ if (gpNdaRow && gpTop && gpCountries) {
 }
 ```
 
-### 3.3 Ask 페이지 (17번)
+### 3.3 Product/Service 페이지 (7번)
+
+**문제:** `.svc-phases`, `.svc-cloud-bar` 두 요소가 독립적으로 존재
+
+**해결:** JavaScript에서 동적으로 wrapper 생성
+
+```javascript
+// print-preview.js에 이미 구현됨
+if (svcPhases && svcCloudBar) {
+  let svcWrapper = clone.querySelector('.svc-content-wrapper');
+  if (!svcWrapper) {
+    svcWrapper = document.createElement('div');
+    svcWrapper.className = 'svc-content-wrapper';
+    svcWrapper.style.cssText = 'width: 100%;';
+    // 콘텐츠들을 wrapper로 이동
+    parent.insertBefore(svcWrapper, svcPhases);
+    svcWrapper.appendChild(svcPhases);
+    svcWrapper.appendChild(svcCloudBar);
+  }
+  // wrapper에 줌 적용
+  svcWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
+}
+```
+
+### 3.4 Business 페이지 (10번)
+
+**문제:** `.biz-diagram-wrap`, `.biz-rev-summary` 두 요소가 독립적으로 존재
+
+**해결:** JavaScript에서 동적으로 wrapper 생성
+
+```javascript
+// print-preview.js에 이미 구현됨
+if (bizDiagram && bizRevSummary) {
+  let bizWrapper = clone.querySelector('.biz-content-wrapper');
+  if (!bizWrapper) {
+    bizWrapper = document.createElement('div');
+    bizWrapper.className = 'biz-content-wrapper';
+    bizWrapper.style.cssText = 'width: 100%;';
+    // 콘텐츠들을 wrapper로 이동
+    parent.insertBefore(bizWrapper, bizDiagram);
+    bizWrapper.appendChild(bizDiagram);
+    bizWrapper.appendChild(bizRevSummary);
+  }
+  // wrapper에 줌 적용
+  bizWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
+}
+```
+
+### 3.5 Ask 페이지 (17번)
 
 **문제:** `h2`, `.ask-desc`, `.ask-stats`, `.ask-footer` 여러 요소가 독립적으로 존재
 
@@ -179,7 +227,7 @@ if (askStats && askFooter) {
 }
 ```
 
-### 3.4 로드맵 페이지 (14번)
+### 3.6 로드맵 페이지 (14번)
 
 **주의:** 계단식 레이아웃 유지 필요
 
@@ -197,7 +245,7 @@ if (askStats && askFooter) {
 .slide-clone .roadmap-year:nth-child(4) { padding-bottom: 210px !important; }
 ```
 
-### 3.5 테이블 페이지 (경쟁, 시장)
+### 3.7 테이블 페이지 (경쟁, 시장)
 
 **문제:** 테이블이 고정 너비를 가지면 레이아웃 깨짐
 

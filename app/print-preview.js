@@ -390,6 +390,67 @@ function applyContentZoom(idx, zoomPercent) {
     return;
   }
 
+  // Product 페이지 특별 처리: svc-phases, svc-cloud-bar를 wrapper로 감싸기
+  const svcPhases = clone.querySelector('.svc-phases');
+  const svcCloudBar = clone.querySelector('.svc-cloud-bar');
+
+  if (svcPhases && svcCloudBar) {
+    let svcWrapper = clone.querySelector('.svc-content-wrapper');
+    if (!svcWrapper) {
+      svcWrapper = document.createElement('div');
+      svcWrapper.className = 'svc-content-wrapper';
+      svcWrapper.style.cssText = 'width: 100%;';
+
+      const parent = svcPhases.parentElement;
+      parent.insertBefore(svcWrapper, svcPhases);
+      svcWrapper.appendChild(svcPhases);
+      svcWrapper.appendChild(svcCloudBar);
+    }
+
+    svcWrapper.style.setProperty('transform-origin', 'top center', 'important');
+    svcWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
+    svcWrapper.setAttribute('data-content-zoom', 'true');
+    return;
+  }
+
+  // Business 페이지 특별 처리: biz-diagram-wrap, biz-rev-summary를 wrapper로 감싸기
+  const bizDiagram = clone.querySelector('.biz-diagram-wrap');
+  const bizRevSummary = clone.querySelector('.biz-rev-summary');
+
+  if (bizDiagram && bizRevSummary) {
+    let bizWrapper = clone.querySelector('.biz-content-wrapper');
+    if (!bizWrapper) {
+      bizWrapper = document.createElement('div');
+      bizWrapper.className = 'biz-content-wrapper';
+      bizWrapper.style.cssText = 'width: 100%;';
+
+      const parent = bizDiagram.parentElement;
+      parent.insertBefore(bizWrapper, bizDiagram);
+      bizWrapper.appendChild(bizDiagram);
+      bizWrapper.appendChild(bizRevSummary);
+    }
+
+    bizWrapper.style.setProperty('transform-origin', 'top center', 'important');
+    bizWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
+    bizWrapper.setAttribute('data-content-zoom', 'true');
+    return;
+  }
+
+  // Team 페이지 특별 처리: team-ceo, team-members를 wrapper로 감싸기
+  const teamCeo = clone.querySelector('.team-ceo');
+  const teamMembers = clone.querySelector('.team-members');
+
+  if (teamCeo && teamMembers) {
+    // team-layout이 이미 wrapper 역할을 하는지 확인
+    const teamLayout = clone.querySelector('.team-layout');
+    if (teamLayout) {
+      teamLayout.style.setProperty('transform-origin', 'top center', 'important');
+      teamLayout.style.setProperty('transform', `scale(${zoom})`, 'important');
+      teamLayout.setAttribute('data-content-zoom', 'true');
+      return;
+    }
+  }
+
   // Apply new zoom with !important to override CSS
   contentSelectors.forEach(selector => {
     const el = clone.querySelector(selector);
@@ -736,37 +797,60 @@ function applyContentAlignmentToSlide(clone, alignV, alignH) {
   let firstContentElement = null;
   let totalContentHeight = 0;
 
-  // Global Partners 페이지 특별 처리: 여러 요소의 총 높이 계산
-  const gpNdaRow = clone.querySelector('.gp-nda-row');
-  const gpTop = clone.querySelector('.gp-top');
-  const gpCountries = clone.querySelector('.gp-countries');
+  // Wrapper 기반 페이지들 확인 (applyContentZoom에서 생성된 wrapper 사용)
+  const wrapperSelectors = [
+    '.gp-content-wrapper',    // Global Partners
+    '.hero-content-wrapper',  // Hero
+    '.ask-content-wrapper',   // Ask
+    '.svc-content-wrapper',   // Product/Service
+    '.biz-content-wrapper'    // Business
+  ];
 
-  if (gpNdaRow) {
-    // Global Partners 페이지인 경우
-    firstContentElement = gpNdaRow;
+  // 먼저 wrapper가 있는지 확인
+  for (const selector of wrapperSelectors) {
+    const wrapper = clone.querySelector(selector);
+    if (wrapper) {
+      firstContentElement = wrapper;
+      const rect = wrapper.getBoundingClientRect();
+      totalContentHeight = rect.height / scale;
+      break;
+    }
+  }
 
-    // gp-nda-row + gp-top + gp-countries 전체 높이 계산
-    [gpNdaRow, gpTop, gpCountries].forEach(el => {
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        const style = window.getComputedStyle(el);
-        const marginTop = parseFloat(style.marginTop) || 0;
-        const marginBottom = parseFloat(style.marginBottom) || 0;
-        totalContentHeight += (rect.height / scale) + marginTop + marginBottom;
-      }
-    });
-    // 첫 번째 요소의 margin-top은 우리가 설정할 것이므로 제외
-    const firstStyle = window.getComputedStyle(gpNdaRow);
-    totalContentHeight -= parseFloat(firstStyle.marginTop) || 0;
-  } else {
-    // 일반 페이지: 첫 번째 콘텐츠 요소만 사용
-    for (const selector of contentSelectors) {
-      const el = clone.querySelector(selector);
-      if (el) {
-        firstContentElement = el;
-        const rect = el.getBoundingClientRect();
-        totalContentHeight = rect.height / scale;
-        break;
+  // wrapper가 없으면 기존 로직 사용
+  if (!firstContentElement) {
+    // Global Partners 페이지 특별 처리: 여러 요소의 총 높이 계산
+    const gpNdaRow = clone.querySelector('.gp-nda-row');
+    const gpTop = clone.querySelector('.gp-top');
+    const gpCountries = clone.querySelector('.gp-countries');
+
+    if (gpNdaRow) {
+      // Global Partners 페이지인 경우
+      firstContentElement = gpNdaRow;
+
+      // gp-nda-row + gp-top + gp-countries 전체 높이 계산
+      [gpNdaRow, gpTop, gpCountries].forEach(el => {
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const style = window.getComputedStyle(el);
+          const marginTop = parseFloat(style.marginTop) || 0;
+          const marginBottom = parseFloat(style.marginBottom) || 0;
+          totalContentHeight += (rect.height / scale) + marginTop + marginBottom;
+        }
+      });
+      // 첫 번째 요소의 margin-top은 우리가 설정할 것이므로 제외
+      const firstStyle = window.getComputedStyle(gpNdaRow);
+      totalContentHeight -= parseFloat(firstStyle.marginTop) || 0;
+    } else {
+      // 일반 페이지: 첫 번째 콘텐츠 요소만 사용
+      for (const selector of contentSelectors) {
+        const el = clone.querySelector(selector);
+        if (el) {
+          firstContentElement = el;
+          const rect = el.getBoundingClientRect();
+          totalContentHeight = rect.height / scale;
+          break;
+        }
       }
     }
   }
