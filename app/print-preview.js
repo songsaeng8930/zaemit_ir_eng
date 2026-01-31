@@ -330,6 +330,66 @@ function applyContentZoom(idx, zoomPercent) {
     return; // Global Partners는 여기서 끝
   }
 
+  // Hero 페이지 특별 처리: hero-left, hero-right를 wrapper로 감싸기
+  const heroLeft = clone.querySelector('.hero-left');
+  const heroRight = clone.querySelector('.hero-right');
+
+  if (heroLeft && heroRight) {
+    let heroWrapper = clone.querySelector('.hero-content-wrapper');
+    if (!heroWrapper) {
+      heroWrapper = document.createElement('div');
+      heroWrapper.className = 'hero-content-wrapper';
+      heroWrapper.style.cssText = 'display: flex; gap: 40px; width: 100%; align-items: center;';
+
+      const parent = heroLeft.parentElement;
+      parent.insertBefore(heroWrapper, heroLeft);
+      heroWrapper.appendChild(heroLeft);
+      heroWrapper.appendChild(heroRight);
+    }
+
+    heroWrapper.style.setProperty('transform-origin', 'top center', 'important');
+    heroWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
+    heroWrapper.setAttribute('data-content-zoom', 'true');
+    return;
+  }
+
+  // Ask 페이지 특별 처리: h2, ask-desc, ask-stats, ask-footer를 wrapper로 감싸기
+  const askStats = clone.querySelector('.ask-stats');
+  const askFooter = clone.querySelector('.ask-footer');
+
+  if (askStats && askFooter) {
+    let askWrapper = clone.querySelector('.ask-content-wrapper');
+    if (!askWrapper) {
+      askWrapper = document.createElement('div');
+      askWrapper.className = 'ask-content-wrapper';
+      askWrapper.style.cssText = 'width: 100%; text-align: center;';
+
+      const parent = askStats.parentElement;
+
+      // h2와 ask-desc 찾기
+      const h2Elements = parent.querySelectorAll('h2[data-lang]');
+      const askDescs = parent.querySelectorAll('.ask-desc');
+
+      // 첫 번째 h2 앞에 wrapper 삽입
+      if (h2Elements.length > 0) {
+        parent.insertBefore(askWrapper, h2Elements[0]);
+      } else {
+        parent.insertBefore(askWrapper, askStats);
+      }
+
+      // 모든 요소를 wrapper로 이동
+      h2Elements.forEach(el => askWrapper.appendChild(el));
+      askDescs.forEach(el => askWrapper.appendChild(el));
+      askWrapper.appendChild(askStats);
+      askWrapper.appendChild(askFooter);
+    }
+
+    askWrapper.style.setProperty('transform-origin', 'top center', 'important');
+    askWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
+    askWrapper.setAttribute('data-content-zoom', 'true');
+    return;
+  }
+
   // Apply new zoom with !important to override CSS
   contentSelectors.forEach(selector => {
     const el = clone.querySelector(selector);
