@@ -890,7 +890,10 @@ body.no-motion .roadmap-line{stroke-dashoffset:0 !important}
   .pricing-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:600px){
-  .slide{padding:30px 20px}
+  .slide{padding:30px 20px;overflow-y:auto;align-items:flex-start}
+  .slide-inner{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .comp-table{min-width:580px}
+  .mkt-table{min-width:500px}
   .hero h1{font-size:30px}
   .hero-badge{font-size:11px;padding:6px 14px}
   .hero-sub{font-size:14px;margin-bottom:32px}
@@ -953,10 +956,13 @@ body.no-motion .roadmap-line{stroke-dashoffset:0 !important}
   .ask-stat-value{font-size:24px}
   .btn-primary,.btn-secondary{padding:12px 28px;font-size:14px}
   .sidebar{width:220px}
+  .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:240}
+  .sidebar-overlay.active{display:block}
   .menu-header{height:56px;padding:0 12px;gap:10px}
   .menu-header-title{font-size:14px}
   .menu-header-title span{font-size:12px}
-  .slide{top:56px;padding:30px 20px}
+  .slide{top:56px;padding:30px 20px;-webkit-overflow-scrolling:touch}
+  .slide .slide-inner{padding-bottom:40px}
   .sidebar{top:56px}
   .lang-toggle{top:10px;right:12px}
   .lang-btn{padding:6px 14px;font-size:12px}
@@ -1106,6 +1112,7 @@ body.pdf-capturing .particles{display:none!important}
     <p>WEVEN Inc. &copy; 2025<br>Confidential</p>
   </div>
 </div>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- POWERED BY ZAEMIT -->
 <div class="powered-badge">Powered by <span>Zaemit</span></div>
@@ -2718,7 +2725,7 @@ slides.forEach((s, i) => {
 
 // Open print preview page
 function openPrintPreview() {
-  window.open('print-preview.html?lang=' + lang, '_blank');
+  window.open('../../app/print-preview.html?ir=2601&lang=' + lang, '_blank');
 }
 
 function loadScript(src) {
@@ -2939,23 +2946,71 @@ document.addEventListener('wheel', function(e) {
   }
 }, { passive: false });
 
-// Touch
-let ty = 0;
-document.addEventListener('touchstart', function(e) { ty = e.touches[0].clientY; });
+// Touch - 모바일에서 좌우 가장자리 탭으로 페이지 이동 (슬라이드 영역에서만)
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
+let touchStartEl = null;
+let hasMoved = false;
+
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now();
+  touchStartEl = e.target;
+  hasMoved = false;
+}, { passive: true });
+
+document.addEventListener('touchmove', function(e) {
+  // 조금이라도 움직이면 드래그로 판단
+  const dx = Math.abs(e.touches[0].clientX - touchStartX);
+  const dy = Math.abs(e.touches[0].clientY - touchStartY);
+  if (dx > 10 || dy > 10) {
+    hasMoved = true;
+  }
+}, { passive: true });
+
 document.addEventListener('touchend', function(e) {
-  const d = ty - e.changedTouches[0].clientY;
-  if (d > 50) goTo(current + 1, 'touch-swipe-up');
-  else if (d < -50) goTo(current - 1, 'touch-swipe-down');
+  // 드래그했으면 페이지 전환 안함 (스크롤 허용)
+  if (hasMoved) return;
+
+  // 헤더, 사이드바, 버튼 등에서는 페이지 전환 안함
+  if (touchStartEl) {
+    const ignoreSelectors = '.menu-header, .sidebar, .lang-toggle, button, a, input, .toc-item';
+    if (touchStartEl.closest(ignoreSelectors)) return;
+  }
+
+  const dt = Date.now() - touchStartTime;
+  // 탭: 300ms 이내의 짧은 터치
+  if (dt > 300) return;
+
+  const screenWidth = window.innerWidth;
+  const tapZone = 60; // 가장자리 탭 영역 (60px)
+
+  // 왼쪽 가장자리 탭 = 이전 페이지
+  if (touchStartX < tapZone) {
+    goTo(current - 1, 'touch-tap-left');
+  }
+  // 오른쪽 가장자리 탭 = 다음 페이지
+  else if (touchStartX > screenWidth - tapZone) {
+    goTo(current + 1, 'touch-tap-right');
+  }
 });
 
 // Sidebar toggle
 function toggleSidebar() {
   var isOpen = document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('menuBtn').classList.toggle('active');
-  var w = window.innerWidth <= 600 ? '220px' : '260px';
-  document.querySelectorAll('.slide').forEach(function(s) {
-    s.style.left = isOpen ? w : '0';
-  });
+  // 모바일에서는 콘텐츠를 밀지 않고 덮음 + 오버레이 표시
+  var overlay = document.querySelector('.sidebar-overlay');
+  if (window.innerWidth <= 600) {
+    if (overlay) overlay.classList.toggle('active', isOpen);
+  } else {
+    document.querySelectorAll('.slide').forEach(function(s) {
+      s.style.left = isOpen ? '260px' : '0';
+    });
+    if (overlay) overlay.classList.remove('active');
+  }
 }
 
 // Init

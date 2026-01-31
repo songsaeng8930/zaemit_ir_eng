@@ -1,0 +1,1126 @@
+/* ── PRINT PREVIEW STYLES ── */
+:root {
+  --pp-dark: #0A0E27;
+  --pp-darker: #1a1a2e;
+  --pp-accent: #00D4AA;
+  --pp-text: #fff;
+  --pp-muted: #94A3B8;
+  --pp-border: rgba(255,255,255,0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--pp-darker);
+  color: var(--pp-text);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  padding-top: 70px; /* 툴바 높이만큼 여백 */
+}
+
+html {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+}
+
+/* ── TOOLBAR ── */
+.preview-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(10,14,39,0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--pp-border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pp-text);
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-title svg {
+  width: 24px;
+  height: 24px;
+  color: var(--pp-accent);
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toolbar-group label {
+  color: var(--pp-muted);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-group input[type="range"] {
+  width: 100px;
+  accent-color: var(--pp-accent);
+}
+
+.zoom-value {
+  color: var(--pp-text);
+  font-weight: 600;
+  min-width: 45px;
+  font-size: 13px;
+}
+
+/* Alignment controls - shared */
+.align-label {
+  color: var(--pp-muted);
+  font-size: 13px;
+}
+
+.title-align-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Title alignment buttons (horizontal 3 buttons) */
+.title-align-buttons {
+  display: flex;
+  gap: 2px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  padding: 3px;
+}
+
+.title-align-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--pp-muted);
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.title-align-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--pp-text);
+}
+
+.title-align-btn.active {
+  background: var(--pp-accent);
+  color: #000;
+}
+
+
+.reset-btn {
+  padding: 6px 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: var(--pp-text);
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.reset-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--pp-accent);
+}
+
+.toolbar-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-pdf {
+  background: linear-gradient(135deg, #00D4AA 0%, #7C3AED 100%);
+  color: #fff;
+}
+
+.btn-pdf:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,212,170,0.3);
+}
+
+.btn-print {
+  background: rgba(59,130,246,0.2);
+  color: #3B82F6;
+  border: 1px solid rgba(59,130,246,0.3);
+}
+
+.btn-print:hover {
+  background: rgba(59,130,246,0.3);
+}
+
+.btn-close {
+  background: rgba(239,68,68,0.2);
+  color: #EF4444;
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.btn-close:hover {
+  background: rgba(239,68,68,0.3);
+}
+
+/* ── PREVIEW CONTENT ── */
+.preview-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+  min-height: auto;
+  overflow: visible !important;
+}
+
+/* ── SLIDE WRAPPER ── */
+.preview-slide-wrapper {
+  background: var(--pp-dark);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  width: 100% !important;
+  max-width: 1400px !important;
+}
+
+.preview-slide-header {
+  background: rgba(255,255,255,0.05);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--pp-border);
+}
+
+.slide-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slide-num {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pp-accent);
+  background: rgba(0,212,170,0.15);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.slide-title {
+  font-size: 14px;
+  color: var(--pp-muted);
+}
+
+.zoom-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zoom-control label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.zoom-control input[type="range"] {
+  width: 80px;
+  accent-color: var(--pp-accent);
+}
+
+.zoom-control .zoom-val {
+  font-size: 12px;
+  color: var(--pp-text);
+  font-weight: 600;
+  min-width: 40px;
+}
+
+/* Slide controls container */
+.slide-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Per-page alignment controls - shared */
+.page-title-align-control,
+.page-content-align-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-title-align-control label,
+.page-content-align-control label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+/* Per-page title alignment (3 horizontal buttons) */
+.page-title-align-buttons {
+  display: flex;
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.page-title-align-btn {
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: var(--pp-muted);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  opacity: 0.6;
+}
+
+.page-title-align-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--pp-text);
+  opacity: 1;
+}
+
+.page-title-align-btn.active {
+  background: var(--pp-accent);
+  color: #000;
+  opacity: 1;
+}
+
+.page-title-align-btn.active.global {
+  background: rgba(0,212,170,0.4);
+  color: var(--pp-text);
+}
+
+/* Per-page content V/H alignment (separate 3-button rows) */
+.page-content-v-align-control,
+.page-content-h-align-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-content-v-align-control label,
+.page-content-h-align-control label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.page-content-v-align-buttons,
+.page-content-h-align-buttons {
+  display: flex;
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.page-content-v-btn,
+.page-content-h-btn {
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: var(--pp-muted);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  opacity: 0.6;
+}
+
+.page-content-v-btn:hover,
+.page-content-h-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--pp-text);
+  opacity: 1;
+}
+
+.page-content-v-btn.active,
+.page-content-h-btn.active {
+  background: var(--pp-accent);
+  color: #000;
+  opacity: 1;
+}
+
+.page-content-v-btn.active.global,
+.page-content-h-btn.active.global {
+  background: rgba(0,212,170,0.4);
+  color: var(--pp-text);
+}
+
+.page-align-reset {
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: var(--pp-muted);
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.page-align-reset:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--pp-accent);
+  color: var(--pp-text);
+}
+
+.page-align-reset.using-global {
+  background: rgba(0,212,170,0.15);
+  border-color: rgba(0,212,170,0.4);
+  color: var(--pp-accent);
+}
+
+.page-align-reset.small {
+  padding: 2px 6px;
+  font-size: 10px;
+  min-width: 18px;
+}
+
+/* Auto Fit button */
+.page-auto-fit-btn {
+  padding: 4px 10px;
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  background: rgba(124, 58, 237, 0.15);
+  color: #A78BFA;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.page-auto-fit-btn:hover {
+  background: rgba(124, 58, 237, 0.3);
+  border-color: rgba(124, 58, 237, 0.6);
+  color: #C4B5FD;
+}
+
+/* ── SLIDE FRAME ── */
+.preview-slide-frame {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 ratio */
+  background: var(--pp-dark);
+  overflow: hidden;
+}
+
+.slide-clone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 720px;
+  transform-origin: top left;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Language visibility - hide non-selected language elements */
+.slide-clone [data-lang] {
+  display: none !important;
+}
+
+.slide-clone [data-lang].lang-visible {
+  display: block !important;
+  display: revert !important;
+}
+
+/* Fixed area (no zoom) - ensure titles always full width regardless of content alignment */
+.slide-clone .section-label,
+.slide-clone .section-title,
+.slide-clone .section-desc {
+  flex-shrink: 0 !important;
+  align-self: stretch !important;
+  width: 100% !important;
+}
+
+/* Content area (zoom applied) */
+.slide-clone .content-wrapper {
+  flex: 1;
+  transform-origin: top center;
+  overflow: visible;
+}
+
+/* ── LOADING ── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,14,39,0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 9999;
+}
+
+.loading-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--pp-text);
+}
+
+.loading-bar {
+  width: 280px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+}
+
+.loading-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #00D4AA 0%, #7C3AED 100%);
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .preview-toolbar {
+    padding: 12px 16px;
+  }
+
+  .toolbar-title {
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .toolbar-group {
+    flex-wrap: wrap;
+  }
+
+  .toolbar-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .preview-content {
+    padding: 16px;
+    gap: 24px;
+  }
+
+  .preview-slide-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .slide-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* ── PRINT STYLES ── */
+@media print {
+  .preview-toolbar {
+    display: none !important;
+  }
+
+  .preview-content {
+    padding: 0;
+    gap: 0;
+  }
+
+  .preview-slide-wrapper {
+    page-break-after: always;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .preview-slide-header {
+    display: none;
+  }
+
+  .preview-slide-frame {
+    padding-top: 0;
+    height: 100vh;
+  }
+
+  .slide-clone {
+    position: relative;
+    transform: none !important;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* ── SLIDE OVERRIDES FOR PREVIEW ── */
+/* Override index.html slide styles for preview mode */
+.slide-clone.slide {
+  position: absolute !important;
+  display: flex !important;
+  opacity: 1 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 1280px !important;
+  height: 720px !important;
+  padding: 30px 40px !important;
+  background: var(--dark, #0A0E27) !important;
+}
+
+.slide-clone .slide-inner {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── ANIMATION RESET - Show final state ── */
+/* All elements should show their final animated state */
+.slide-clone *,
+.slide-clone *::before,
+.slide-clone *::after {
+  transition: none !important;
+}
+
+/* Stop one-time animations but allow continuous animations */
+.slide-clone .slide-inner *:not(.orbit-ring):not(.orbit-dot):not(.center-logo) {
+  animation: none !important;
+  animation-delay: 0s !important;
+}
+
+/* Keep orbit animation running for hero visual */
+.slide-clone .orbit-ring {
+  animation: rot 20s linear infinite !important;
+}
+.slide-clone .orbit-ring:nth-child(2) {
+  animation: rot 30s linear infinite reverse !important;
+}
+.slide-clone .orbit-ring:nth-child(3) {
+  animation: rot 25s linear infinite !important;
+}
+
+/* Ensure visibility of all content */
+.slide-clone .slide-inner,
+.slide-clone .slide-inner > * {
+  opacity: 1 !important;
+}
+
+/* SVG animations - show completed state */
+.slide-clone .mkt-line,
+.slide-clone .svg-draw,
+.slide-clone .svg-draw-rev,
+.slide-clone .svg-draw-sub {
+  stroke-dashoffset: 0 !important;
+}
+
+.slide-clone .svg-area {
+  opacity: 1 !important;
+}
+
+/* Chart labels - show visible */
+.slide-clone .mkt-clabel {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Reset any translate/scale transforms from animations */
+/* But allow data-content-zoom elements to have custom transforms */
+/* Note: section-label, section-title, section-desc are controlled by title scale JS */
+.slide-clone .hero-left:not([data-content-zoom]),
+.slide-clone .hero-stats:not([data-content-zoom]),
+.slide-clone .overview-layout:not([data-content-zoom]),
+.slide-clone .problem-flow:not([data-content-zoom]),
+.slide-clone .solution-content:not([data-content-zoom]),
+.slide-clone .solution-step,
+.slide-clone .svc-phases:not([data-content-zoom]),
+.slide-clone .market-content:not([data-content-zoom]),
+.slide-clone .mkt-stages:not([data-content-zoom]),
+.slide-clone .mkt-stage,
+.slide-clone .comp-table:not([data-content-zoom]),
+.slide-clone .traction-grid:not([data-content-zoom]),
+.slide-clone .traction-card,
+.slide-clone .biz-diagram-wrap:not([data-content-zoom]),
+.slide-clone .pricing-grid:not([data-content-zoom]),
+.slide-clone .pricing-card,
+.slide-clone .sales-layout:not([data-content-zoom]),
+.slide-clone .team-layout:not([data-content-zoom]),
+.slide-clone .gp-nda:not([data-content-zoom]),
+.slide-clone .gp-nda-row:not([data-content-zoom]),
+.slide-clone .gp-top:not([data-content-zoom]),
+.slide-clone .gp-countries:not([data-content-zoom]),
+.slide-clone .gp-country,
+.slide-clone .exit-chart-area:not([data-content-zoom]),
+.slide-clone .problem-col,
+.slide-clone .comp-zaemit-cell {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Allow zoom transforms on content elements */
+.slide-clone [data-content-zoom] {
+  opacity: 1 !important;
+}
+
+/* Title elements - fixed at top, never move with content alignment */
+/* Use fixed pixel width (1280 - 80 padding = 1200px) to override any flex shrinking */
+.slide-clone .section-label,
+.slide-clone .section-title,
+.slide-clone .section-desc {
+  opacity: 1 !important;
+  width: 1200px !important;
+  max-width: 1200px !important;
+  min-width: 1200px !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+  margin-top: 0 !important;
+}
+
+/* Reduce title font size in preview to prevent wrapping */
+.slide-clone .section-title {
+  font-size: 40px !important;
+  line-height: 1.2 !important;
+}
+
+/* Ask page - preserve flexbox centering */
+.slide-clone .ask-stats {
+  opacity: 1 !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 64px !important;
+}
+
+.slide-clone .ask-footer-main {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 28px !important;
+}
+
+/* Hero slide - force desktop layout */
+.slide-clone.hero .slide-inner {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 100px !important;
+}
+
+.slide-clone .hero-left {
+  flex: 1 !important;
+  text-align: left !important;
+}
+
+.slide-clone .hero-right {
+  flex: 0.7 !important;
+  opacity: 1 !important;
+  display: block !important;
+  position: relative !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+.slide-clone .hero-visual {
+  opacity: 1 !important;
+  width: 100% !important;
+  aspect-ratio: 1 !important;
+}
+
+.slide-clone .hero-stats {
+  justify-content: flex-start !important;
+}
+
+/* Hide elements that shouldn't appear in preview */
+.slide-clone .hero-grid,
+.slide-clone .particles {
+  display: none !important;
+}
+
+/* ── FORCE DESKTOP LAYOUT FOR ALL SLIDES ── */
+/* Override responsive styles since slides are rendered at 1280px */
+
+/* General slide inner */
+.slide-clone .slide-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+}
+
+/* All direct children of slide-inner - width is controlled by JS for alignment */
+/* Title elements (section-label, section-title, section-desc) use fixed 1200px width */
+/* Content elements width depends on their natural size or specified in their own rules */
+
+/* Overview layout */
+.slide-clone .overview-layout,
+.slide-clone .ov-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1.2fr !important;
+  gap: 40px !important;
+  width: 1200px !important;
+}
+
+/* Problem flow */
+.slide-clone .problem-flow {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+  width: 1200px !important;
+}
+
+/* Pricing grid */
+.slide-clone .pricing-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px !important;
+  width: 1200px !important;
+}
+
+/* Team layout */
+.slide-clone .team-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 40px !important;
+  width: 1200px !important;
+}
+
+/* Global partners - 원본 레이아웃 강제 적용 */
+.slide-clone .gp-nda-row {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 24px !important;
+  margin-bottom: 28px !important;
+  width: 100% !important;
+}
+
+.slide-clone .gp-nda {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+}
+
+.slide-clone .gp-top {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 20px !important;
+  width: 100% !important;
+}
+
+.slide-clone .gp-japan {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 16px !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.slide-clone .gp-japan-text {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.slide-clone .gp-photos {
+  display: flex !important;
+  gap: 10px !important;
+  justify-content: flex-end !important;
+  flex-shrink: 0 !important;
+}
+
+.slide-clone .gp-photo-wide {
+  flex: none !important;
+  width: 360px !important;
+  max-width: 360px !important;
+  aspect-ratio: 16/9 !important;
+}
+
+.slide-clone .gp-photo-wide img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.slide-clone .gp-countries {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+  margin-top: 16px !important;
+  width: 100% !important;
+}
+
+.slide-clone .gp-country-body {
+  padding: 14px 16px !important;
+}
+
+.slide-clone .gp-country-name {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  margin-bottom: 8px !important;
+}
+
+/* Service phases */
+.slide-clone .svc-phases {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  width: 1200px !important;
+}
+
+/* Allow svc-phases to be transformed when data-content-zoom is set */
+.slide-clone .svc-phases[data-content-zoom] {
+  transform-origin: top center !important;
+}
+
+/* Traction grid */
+.slide-clone .traction-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 20px !important;
+  width: 1200px !important;
+}
+
+/* Sales layout */
+.slide-clone .sales-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1.2fr !important;
+  gap: 40px !important;
+  width: 1200px !important;
+}
+
+/* Roadmap - preserve original layout with staggered heights */
+.slide-clone .roadmap-container {
+  position: relative !important;
+  margin-top: 60px !important;
+  width: 1200px !important;
+  overflow: visible !important;
+}
+
+.slide-clone .roadmap-graph {
+  position: absolute !important;
+  bottom: 40px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, rgba(0,212,170,0.15) 0%, rgba(0,212,170,0.5) 50%, rgba(124,58,237,0.7) 100%) !important;
+  border-radius: 2px !important;
+  z-index: 1 !important;
+}
+
+.slide-clone .roadmap-graph::before {
+  content: '' !important;
+  position: absolute !important;
+  right: -16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  border: 6px solid transparent !important;
+  border-left: 10px solid #7C3AED !important;
+}
+
+.slide-clone .roadmap-timeline {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+  gap: 28px !important;
+  width: 100% !important;
+  padding-bottom: 60px !important;
+}
+
+.slide-clone .roadmap-year {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.slide-clone .roadmap-year:nth-child(1) {
+  padding-bottom: 0 !important;
+}
+
+.slide-clone .roadmap-year:nth-child(2) {
+  padding-bottom: 70px !important;
+}
+
+.slide-clone .roadmap-year:nth-child(3) {
+  padding-bottom: 140px !important;
+}
+
+.slide-clone .roadmap-year:nth-child(4) {
+  padding-bottom: 210px !important;
+}
+
+.slide-clone .roadmap-year-label {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  color: #00D4AA !important;
+  margin-bottom: 14px !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.slide-clone .roadmap-year:nth-child(4) .roadmap-year-label {
+  font-size: 36px !important;
+  color: #A78BFA !important;
+}
+
+.slide-clone .roadmap-year-label::before {
+  content: '' !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: #00D4AA !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 15px rgba(0,212,170,0.6) !important;
+}
+
+.slide-clone .roadmap-year:nth-child(4) .roadmap-year-label::before {
+  width: 18px !important;
+  height: 18px !important;
+  background: #7C3AED !important;
+  box-shadow: 0 0 25px rgba(124,58,237,0.8) !important;
+}
+
+.slide-clone .roadmap-year-badge {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #A78BFA !important;
+  margin-bottom: 10px !important;
+}
+
+.slide-clone .roadmap-items {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.slide-clone .roadmap-item {
+  font-size: 13px !important;
+  color: var(--text-muted, #94A3B8) !important;
+  line-height: 1.55 !important;
+  padding: 5px 0 !important;
+}
+
+.slide-clone .roadmap-item b {
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+.slide-clone .roadmap-item.highlight {
+  background: linear-gradient(90deg, rgba(124,58,237,0.25) 0%, rgba(124,58,237,0.1) 100%) !important;
+  padding: 10px 14px !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  margin-top: 6px !important;
+  border: 1px solid rgba(124,58,237,0.4) !important;
+  box-shadow: 0 4px 24px rgba(124,58,237,0.3) !important;
+}
+
+.slide-clone .roadmap-item.highlight b {
+  color: #A78BFA !important;
+  font-size: 14px !important;
+}
+
+.slide-clone .roadmap-line {
+  stroke-dashoffset: 0 !important;
+}
+
+/* Exit strategy chart */
+.slide-clone .exit-chart-area {
+  position: relative !important;
+  margin-top: 20px !important;
+  width: 1200px !important;
+}
+
+.slide-clone .exit-svg {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Business diagram - force desktop layout */
+.slide-clone .biz-diagram-wrap {
+  margin-top: 20px !important;
+  width: 1200px !important;
+  max-width: none !important;
+}
+
+.slide-clone .biz-diagram-svg {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.slide-clone .biz-rev-summary {
+  margin-top: 16px !important;
+  max-width: 900px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Market stages */
+.slide-clone .mkt-stages {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  width: 1200px !important;
+}
+
+.slide-clone .mkt-stage {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Prevent responsive layout changes inside slides */
+.slide-clone .slide-inner * {
+  max-width: none !important;
+}

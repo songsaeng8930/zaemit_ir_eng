@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEVEN Zaemit IR</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #0A0E27;
+      --darker: #050810;
+      --text: #fff;
+      --text-muted: #94A3B8;
+      --accent: #00D4AA;
+      --accent2: #7C3AED;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--darker);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading {
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Version selector (shown when multiple versions) */
+    .version-selector {
+      max-width: 600px;
+      width: 100%;
+      padding: 40px;
+    }
+
+    .selector-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .selector-logo {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .selector-logo .accent {
+      color: var(--accent);
+    }
+
+    .selector-subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .version-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .version-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .version-item:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .version-item.default {
+      border-color: rgba(0,212,170,0.3);
+      background: rgba(0,212,170,0.05);
+    }
+
+    .version-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .version-name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .version-date {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .version-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(0,212,170,0.15);
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .version-arrow {
+      color: var(--text-muted);
+      font-size: 20px;
+      transition: transform 0.2s;
+    }
+
+    .version-item:hover .version-arrow {
+      transform: translateX(4px);
+      color: var(--accent);
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 4px;
+      background: rgba(255,255,255,0.05);
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="loading" id="loading">
+    <div class="loading-spinner"></div>
+    <div>Loading...</div>
+  </div>
+
+  <div class="version-selector" id="versionSelector" style="display: none;">
+    <div class="selector-header">
+      <div class="selector-logo">WEVEN <span class="accent">Zaemit</span></div>
+      <div class="selector-subtitle" data-lang="ko">IR 자료 버전 선택</div>
+      <div class="selector-subtitle" data-lang="en" style="display:none;">Select IR Version</div>
+    </div>
+    <div class="version-list" id="versionList"></div>
+  </div>
+
+  <div class="lang-toggle" id="langToggle" style="display: none;">
+    <button class="lang-btn active" data-lang="ko" onclick="setLang('ko')">KO</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <script>
+    let config = null;
+    let lang = localStorage.getItem('irLang') || 'ko';
+
+    async function init() {
+      try {
+        const response = await fetch('conf.json');
+        config = await response.json();
+
+        document.title = config.title;
+
+        if (config.versions.length === 1) {
+          // 버전이 1개면 바로 이동
+          const version = config.versions[0];
+          redirectToIR(version.id);
+        } else {
+          // 버전이 여러 개면 선택 화면 표시
+          showVersionSelector();
+        }
+      } catch (e) {
+        console.error('Failed to load config:', e);
+        document.getElementById('loading').innerHTML =
+          '<div style="color: #EF4444;">설정 파일을 불러올 수 없습니다.</div>';
+      }
+    }
+
+    function redirectToIR(versionId) {
+      window.location.href = `../ir/${versionId}/index.html?lang=${lang}`;
+    }
+
+    function showVersionSelector() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('versionSelector').style.display = 'block';
+      document.getElementById('langToggle').style.display = 'flex';
+
+      renderVersionList();
+      updateLangUI();
+    }
+
+    function renderVersionList() {
+      const list = document.getElementById('versionList');
+      list.innerHTML = '';
+
+      config.versions.forEach(version => {
+        const item = document.createElement('a');
+        item.className = 'version-item' + (version.default ? ' default' : '');
+        item.href = `../ir/${version.id}/index.html?lang=${lang}`;
+
+        const name = lang === 'en' && version.nameEn ? version.nameEn : version.name;
+        const badgeText = lang === 'en' ? 'Latest' : '최신';
+
+        item.innerHTML = `
+          <div class="version-info">
+            <div class="version-name">${name}</div>
+            <div class="version-date">${version.date}</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            ${version.default ? `<span class="version-badge">${badgeText}</span>` : ''}
+            <span class="version-arrow">→</span>
+          </div>
+        `;
+
+        list.appendChild(item);
+      });
+    }
+
+    function setLang(newLang) {
+      lang = newLang;
+      localStorage.setItem('irLang', lang);
+      updateLangUI();
+      renderVersionList();
+    }
+
+    function updateLangUI() {
+      // Update language toggle buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      // Update text elements
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.dataset.lang === lang ? '' : 'none';
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

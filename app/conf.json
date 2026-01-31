@@ -1,0 +1,13 @@
+{
+  "title": "WEVEN Zaemit IR",
+  "defaultLang": "ko",
+  "versions": [
+    {
+      "id": "2601",
+      "name": "2026년 1월",
+      "nameEn": "January 2026",
+      "date": "2026-01-31",
+      "default": true
+    }
+  ]
+}
