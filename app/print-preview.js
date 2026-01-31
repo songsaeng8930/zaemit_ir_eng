@@ -278,7 +278,7 @@ function applyContentZoom(idx, zoomPercent) {
   const contentSelectors = [
     '.hero-left', '.hero-right', '.hero-stats',
     '.overview-layout', '.ov-layout', '.ov-badges',
-    '.problem-flow', '.solution-content',
+    '.problem-flow', '.solution-content', '.solution-flow',
     '.svc-phases', '.svc-cloud-bar',
     '.market-content', '.mkt-stages', '.mkt-table',
     '.comp-table', '.traction-grid',
