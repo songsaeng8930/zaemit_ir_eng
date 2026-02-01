@@ -228,7 +228,7 @@
     }
 
     function redirectToIR(versionId) {
-      window.location.href = `../ir/${versionId}/index.html?lang=${lang}`;
+      window.location.href = `viewer#ir=${versionId}&lang=${lang}`;
     }
 
     function showVersionSelector() {
@@ -247,7 +247,7 @@
       config.versions.forEach(version => {
         const item = document.createElement('a');
         item.className = 'version-item' + (version.default ? ' default' : '');
-        item.href = `../ir/${version.id}/index.html?lang=${lang}`;
+        item.href = `viewer#ir=${version.id}&lang=${lang}`;
 
         const name = lang === 'en' && version.nameEn ? version.nameEn : version.name;
         const badgeText = lang === 'en' ? 'Latest' : '최신';

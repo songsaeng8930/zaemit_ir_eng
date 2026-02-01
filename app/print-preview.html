@@ -14,7 +14,7 @@
 
   <!-- Inline critical styles from index.html for slides -->
   <style>
-    /* Base variables */
+    /* Base variables - 다크 테마용 기본값 (IR의 CSS가 주입되면 덮어씌워짐) */
     :root {
       --dark: #0A0E27;
       --text: #fff;
@@ -25,12 +25,11 @@
       --gradient2: linear-gradient(135deg, #00D4AA 0%, #7C3AED 100%);
     }
 
-    /* Slide base */
+    /* Slide base - 배경/글자색은 IR의 CSS에서 정의됨 (테마 중립) */
     .slide-clone {
-      background: var(--dark);
+      /* background와 color는 IR의 .slide 스타일에서 상속됨 */
       padding: 30px 40px;
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      color: var(--text);
     }
 
     /* Section styles */

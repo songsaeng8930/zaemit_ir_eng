@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEVEN - Investor Pitch Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* Light Theme Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-tertiary: #F1F5F9;
+  --bg-accent: #EEF2FF;
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  --accent-primary: #4F46E5;
+  --accent-secondary: #0EA5E9;
+  --accent-success: #10B981;
+  --accent-warning: #F59E0B;
+
+  --border-light: #E2E8F0;
+  --border-medium: #CBD5E1;
+  --border-accent: #A5B4FC;
+
+  --gradient-hero: linear-gradient(135deg, #4F46E5 0%, #0EA5E9 100%);
+  --gradient-accent: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  --gradient-success: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+html,body{height:100%;overflow:hidden;background:var(--bg-primary)}
+body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-primary)}
+
+/* Page indicator is now in ir-nav-light.css */
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:40px 80px;opacity:0;background:var(--bg-primary);
+}
+.slide.active{display:flex;opacity:1}
+.slide .slide-inner{
+  max-width:1200px;width:100%;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+
+/* All animatable children start hidden */
+.slide .section-label,
+.slide .section-title,
+.slide .section-desc,
+.slide .cover-left,
+.slide .cover-right,
+.slide .hero-left,
+.slide .hero-right,
+.slide .cover-stats,
+.slide .cover-highlights,
+.slide .cover-partners,
+.slide .cover-contact,
+.slide .solution-layout,
+.slide .solution-feature,
+.slide .solution-diagram,
+.slide .traction-layout,
+.slide .traction-section,
+.slide .metric-card,
+.slide .market-bars,
+.slide .ask-layout,
+.slide .team-section,
+.slide .team-member,
+.slide .ask-section,
+.slide .ask-card,
+.slide .use-of-funds,
+.slide .contact-box{
+  opacity:0;
+}
+
+/* When slide becomes active, animate children with stagger */
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+
+/* Cover/Hero page specifics */
+.slide.active .cover-left,
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .cover-right,
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .cover-stats{animation:aFadeUp .5s ease .6s both}
+.slide.active .cover-highlights{animation:aSlideL .6s ease .4s both}
+.slide.active .cover-partners{animation:aFadeUp .45s ease .7s both}
+.slide.active .cover-contact{animation:aFadeUp .4s ease .85s both}
+
+/* Solution page */
+.slide.active .solution-layout{animation:aFadeIn .3s ease .5s both}
+.slide.active .solution-feature:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .solution-feature:nth-child(2){animation:aFadeUp .5s ease .7s both}
+.slide.active .solution-feature:nth-child(3){animation:aFadeUp .5s ease .85s both}
+.slide.active .solution-diagram{animation:aScaleIn .6s ease .6s both}
+
+/* Traction page */
+.slide.active .traction-layout{animation:aFadeIn .3s ease .5s both}
+.slide.active .traction-section:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .traction-section:nth-child(2){animation:aFadeUp .5s ease .7s both}
+.slide.active .metric-card:nth-child(1){animation:aFadeUp .45s ease .6s both}
+.slide.active .metric-card:nth-child(2){animation:aFadeUp .45s ease .75s both}
+.slide.active .metric-card:nth-child(3){animation:aFadeUp .45s ease .9s both}
+.slide.active .metric-card:nth-child(4){animation:aFadeUp .45s ease 1.05s both}
+.slide.active .market-bars{animation:aFadeUp .5s ease .8s both}
+
+/* Ask/Team page */
+.slide.active .ask-layout{animation:aFadeIn .3s ease .5s both}
+.slide.active .team-section{animation:aFadeUp .5s ease .55s both}
+.slide.active .team-member:nth-child(1){animation:aFadeUp .4s ease .65s both}
+.slide.active .team-member:nth-child(2){animation:aFadeUp .4s ease .8s both}
+.slide.active .team-member:nth-child(3){animation:aFadeUp .4s ease .95s both}
+.slide.active .team-member:nth-child(4){animation:aFadeUp .4s ease 1.1s both}
+.slide.active .ask-section{animation:aFadeUp .5s ease .6s both}
+.slide.active .ask-card{animation:aScaleIn .5s ease .75s both}
+.slide.active .use-of-funds{animation:aFadeUp .45s ease .95s both}
+.slide.active .contact-box{animation:aFadeUp .4s ease 1.1s both}
+
+/* ── MOTION TOGGLE SUPPORT ── */
+body.no-motion *,
+body.no-motion *::before,
+body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,
+body.no-motion .slide.active .section-title,
+body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .cover-left,
+body.no-motion .slide.active .cover-right,
+body.no-motion .slide.active .hero-left,
+body.no-motion .slide.active .hero-right,
+body.no-motion .slide.active .cover-stats,
+body.no-motion .slide.active .cover-highlights,
+body.no-motion .slide.active .cover-partners,
+body.no-motion .slide.active .cover-contact,
+body.no-motion .slide.active .solution-layout,
+body.no-motion .slide.active .solution-feature,
+body.no-motion .slide.active .solution-diagram,
+body.no-motion .slide.active .traction-layout,
+body.no-motion .slide.active .traction-section,
+body.no-motion .slide.active .metric-card,
+body.no-motion .slide.active .market-bars,
+body.no-motion .slide.active .ask-layout,
+body.no-motion .slide.active .team-section,
+body.no-motion .slide.active .team-member,
+body.no-motion .slide.active .ask-section,
+body.no-motion .slide.active .ask-card,
+body.no-motion .slide.active .use-of-funds,
+body.no-motion .slide.active .contact-box{opacity:1 !important;transform:none !important}
+
+/* ── TYPOGRAPHY ── */
+.section-label{
+  display:inline-block;padding:6px 16px;border-radius:20px;
+  background:var(--bg-accent);color:var(--accent-primary);
+  font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.section-title{
+  font-size:48px;font-weight:800;line-height:1.15;
+  color:var(--text-primary);margin-bottom:16px;
+  letter-spacing:-1px;
+}
+.section-desc{
+  font-size:18px;line-height:1.6;color:var(--text-secondary);
+  max-width:700px;
+}
+.gradient-text{
+  background:var(--gradient-hero);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SLIDE 1: COVER
+   ══════════════════════════════════════════════════════════════ */
+.slide.cover{background:var(--gradient-hero)}
+.slide.cover .slide-inner{color:white;display:flex;gap:48px;align-items:stretch}
+
+/* Cover 슬라이드 텍스트 흰색 오버라이드 */
+.slide.cover .section-label{background:rgba(255,255,255,0.2);color:white}
+.slide.cover .section-title{color:white}
+.slide.cover .section-desc{color:rgba(255,255,255,0.9)}
+.cover-left{flex:1;display:flex;flex-direction:column;justify-content:center}
+.cover-right{flex:0 0 380px;display:flex;flex-direction:column;justify-content:center}
+
+.cover-badge{
+  display:inline-block;padding:8px 20px;border-radius:30px;
+  background:rgba(255,255,255,0.2);backdrop-filter:blur(10px);
+  color:white;font-size:13px;font-weight:600;letter-spacing:0.5px;
+  margin-bottom:16px;
+}
+.cover-title{
+  font-size:48px;font-weight:800;line-height:1.1;
+  margin-bottom:16px;letter-spacing:-1.5px;
+}
+.cover-sub{
+  font-size:18px;line-height:1.6;opacity:0.9;
+  max-width:580px;margin-bottom:32px;
+}
+
+.cover-stats{display:flex;gap:32px;flex-wrap:wrap}
+.cover-stat{text-align:left}
+.cover-stat-value{font-size:36px;font-weight:800;margin-bottom:4px}
+.cover-stat-label{font-size:12px;opacity:0.8;font-weight:500}
+
+.cover-card{
+  background:white;border-radius:20px;padding:32px;
+  box-shadow:var(--shadow-xl);color:var(--text-primary);
+}
+.cover-card h3{font-size:16px;font-weight:700;color:var(--accent-primary);margin-bottom:20px}
+.problem-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 0;border-bottom:1px solid var(--border-light);
+}
+.problem-item:last-child{border-bottom:none}
+.problem-icon{
+  width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  background:rgba(239,68,68,0.1);color:#EF4444;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.problem-text{font-size:14px;color:var(--text-secondary);line-height:1.5}
+.problem-text strong{color:var(--text-primary);font-weight:600}
+
+.cover-contact{
+  margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2);
+  font-size:14px;opacity:0.9;
+}
+.cover-contact a{color:white;text-decoration:none}
+.cover-contact a:hover{text-decoration:underline}
+
+/* Cover Partners */
+.cover-partners{margin-top:28px}
+.cover-partners-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;opacity:0.7;margin-bottom:12px}
+.cover-partners-row{display:flex;flex-wrap:wrap;gap:10px}
+.cover-partner{
+  padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.2);
+}
+
+/* Cover Right - Highlights */
+.cover-highlights{display:flex;flex-direction:column;gap:16px}
+.highlight-card{
+  background:white;border-radius:16px;padding:24px;
+  box-shadow:var(--shadow-lg);color:var(--text-primary);
+}
+.highlight-card h4{
+  font-size:13px;font-weight:700;color:var(--accent-primary);
+  text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px;
+}
+.highlight-metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.highlight-metric{text-align:center}
+.highlight-metric-value{
+  font-size:28px;font-weight:800;margin-bottom:2px;
+  background:var(--gradient-hero);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.highlight-metric-label{font-size:11px;color:var(--text-muted);font-weight:500}
+
+.problem-mini{display:flex;flex-direction:column;gap:10px}
+.problem-mini-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--text-secondary);
+}
+.problem-mini-item .icon{
+  width:24px;height:24px;border-radius:6px;flex-shrink:0;
+  background:rgba(239,68,68,0.1);color:#EF4444;
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SLIDE 2: SOLUTION
+   ══════════════════════════════════════════════════════════════ */
+.solution-layout{display:flex;gap:48px;margin-top:40px}
+.solution-main{flex:1}
+.solution-visual{flex:0 0 380px}
+
+.solution-features{display:flex;flex-direction:column;gap:20px}
+.solution-feature{
+  display:flex;gap:20px;padding:24px;
+  background:var(--bg-primary);border:1px solid var(--border-light);
+  border-radius:16px;box-shadow:var(--shadow-sm);
+  transition:all .2s;
+}
+.solution-feature:hover{
+  box-shadow:var(--shadow-md);border-color:var(--border-accent);
+  transform:translateY(-2px);
+}
+.feature-icon{
+  width:56px;height:56px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;
+}
+.feature-icon.blue{background:linear-gradient(135deg,#3B82F6 0%,#1D4ED8 100%);color:white}
+.feature-icon.green{background:linear-gradient(135deg,#10B981 0%,#059669 100%);color:white}
+.feature-icon.purple{background:linear-gradient(135deg,#8B5CF6 0%,#6D28D9 100%);color:white}
+.feature-content h4{font-size:18px;font-weight:700;margin-bottom:6px;color:var(--text-primary)}
+.feature-content p{font-size:14px;color:var(--text-secondary);line-height:1.5}
+
+.solution-diagram{
+  background:var(--bg-tertiary);border-radius:20px;padding:32px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;
+}
+.diagram-flow{display:flex;flex-direction:column;gap:16px;width:100%}
+.diagram-box{
+  background:white;border-radius:12px;padding:16px 20px;
+  text-align:center;font-weight:600;font-size:14px;
+  box-shadow:var(--shadow-sm);border:1px solid var(--border-light);
+}
+.diagram-box.highlight{
+  background:var(--gradient-hero);color:white;border:none;
+  box-shadow:var(--shadow-md);
+}
+.diagram-arrow{
+  text-align:center;color:var(--accent-primary);font-size:20px;
+}
+.diagram-label{
+  margin-top:20px;text-align:center;font-size:13px;
+  color:var(--text-muted);font-weight:500;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SLIDE 3: TRACTION + MARKET
+   ══════════════════════════════════════════════════════════════ */
+.traction-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px}
+
+.traction-section h3{
+  font-size:14px;font-weight:700;color:var(--accent-primary);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;
+}
+
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.metric-card{
+  background:var(--bg-primary);border:1px solid var(--border-light);
+  border-radius:16px;padding:24px;box-shadow:var(--shadow-sm);
+  transition:all .2s;
+}
+.metric-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-accent)}
+.metric-value{
+  font-size:36px;font-weight:800;margin-bottom:6px;
+  background:var(--gradient-hero);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.metric-label{font-size:13px;color:var(--text-secondary);font-weight:500}
+.metric-change{
+  display:inline-block;margin-top:8px;padding:4px 10px;
+  border-radius:20px;font-size:11px;font-weight:700;
+}
+.metric-change.up{background:rgba(16,185,129,0.1);color:#059669}
+
+.market-bars{display:flex;flex-direction:column;gap:16px}
+.market-bar{
+  background:var(--bg-primary);border:1px solid var(--border-light);
+  border-radius:12px;padding:16px 20px;
+}
+.market-bar-header{display:flex;justify-content:space-between;margin-bottom:10px}
+.market-bar-label{font-size:14px;font-weight:600;color:var(--text-primary)}
+.market-bar-value{font-size:14px;font-weight:700;color:var(--accent-primary)}
+.market-bar-track{height:8px;background:var(--bg-tertiary);border-radius:4px;overflow:hidden}
+.market-bar-fill{height:100%;border-radius:4px}
+.market-bar-fill.tam{background:var(--gradient-hero);width:100%}
+.market-bar-fill.sam{background:var(--gradient-accent);width:65%}
+.market-bar-fill.som{background:var(--gradient-success);width:30%}
+
+.partners-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.partner-tag{
+  padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;
+  background:var(--bg-tertiary);color:var(--text-secondary);
+  border:1px solid var(--border-light);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SLIDE 4: TEAM + ASK
+   ══════════════════════════════════════════════════════════════ */
+.ask-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:36px}
+
+.team-section h3{
+  font-size:14px;font-weight:700;color:var(--accent-primary);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;
+}
+
+.team-grid{display:flex;flex-direction:column;gap:16px}
+.team-member{
+  display:flex;gap:16px;padding:16px;
+  background:var(--bg-primary);border:1px solid var(--border-light);
+  border-radius:14px;box-shadow:var(--shadow-sm);
+}
+.team-photo{
+  width:64px;height:64px;border-radius:12px;overflow:hidden;
+  flex-shrink:0;border:2px solid var(--border-light);
+}
+.team-photo img{width:100%;height:100%;object-fit:cover}
+.team-info h4{font-size:16px;font-weight:700;margin-bottom:4px}
+.team-info .role{
+  font-size:12px;font-weight:600;color:var(--accent-primary);
+  margin-bottom:6px;
+}
+.team-info p{font-size:12px;color:var(--text-muted);line-height:1.4}
+
+.ask-section h3{
+  font-size:14px;font-weight:700;color:var(--accent-primary);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;
+}
+
+.ask-card{
+  background:var(--gradient-hero);border-radius:20px;padding:32px;
+  color:white;margin-bottom:24px;
+}
+.ask-card h4{font-size:24px;font-weight:800;margin-bottom:24px}
+.ask-metrics{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ask-metric{text-align:center}
+.ask-metric-value{font-size:32px;font-weight:800;margin-bottom:4px}
+.ask-metric-label{font-size:12px;opacity:0.9}
+
+.use-of-funds{
+  background:var(--bg-primary);border:1px solid var(--border-light);
+  border-radius:16px;padding:24px;
+}
+.use-of-funds h4{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text-primary)}
+.fund-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border-light);
+}
+.fund-item:last-child{border-bottom:none}
+.fund-item span:first-child{font-size:14px;color:var(--text-secondary)}
+.fund-item span:last-child{font-size:14px;font-weight:700;color:var(--accent-primary)}
+
+.contact-box{
+  margin-top:24px;padding:20px;background:var(--bg-tertiary);
+  border-radius:12px;text-align:center;
+}
+.contact-box p{font-size:14px;color:var(--text-secondary);margin-bottom:4px}
+.contact-box a{color:var(--accent-primary);text-decoration:none;font-weight:600}
+.contact-box a:hover{text-decoration:underline}
+
+/* ── PRINT STYLES ── */
+@media print{
+  body{background:white!important}
+  .slide{position:relative!important;top:0!important;page-break-after:always;display:flex!important;opacity:1!important}
+  .page-indicator,.nav-arrows,.menu-header,.sidebar,.sidebar-overlay{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide cover hero active" data-title-en="Cover">
+  <div class="slide-inner">
+    <div class="cover-left hero-left">
+      <div class="cover-badge section-label">AI-Powered Web Platform</div>
+      <h1 class="cover-title section-title">Hyper-Personalized<br>Web Automation</h1>
+      <p class="cover-sub section-desc">We turn static websites into intelligent, self-operating services. Upload HTML from any vibe-coding tool — our AI handles the rest: personalization, optimization, and 24/7 autonomous operation.</p>
+
+      <div class="cover-stats">
+        <div class="cover-stat">
+          <div class="cover-stat-value">$1.1M</div>
+          <div class="cover-stat-label">Annual Revenue</div>
+        </div>
+        <div class="cover-stat">
+          <div class="cover-stat-value">625%</div>
+          <div class="cover-stat-label">YoY Growth</div>
+        </div>
+        <div class="cover-stat">
+          <div class="cover-stat-value">28</div>
+          <div class="cover-stat-label">Patents</div>
+        </div>
+        <div class="cover-stat">
+          <div class="cover-stat-value">25</div>
+          <div class="cover-stat-label">Team</div>
+        </div>
+      </div>
+
+      <div class="cover-partners">
+        <div class="cover-partners-label">Strategic Partners & Network</div>
+        <div class="cover-partners-row">
+          <div class="cover-partner">NHN</div>
+          <div class="cover-partner">Naver</div>
+          <div class="cover-partner">Azure</div>
+          <div class="cover-partner">AhnLab</div>
+          <div class="cover-partner">15 MOUs</div>
+          <div class="cover-partner">4 LOIs</div>
+        </div>
+      </div>
+
+      <div class="cover-contact">
+        <strong>James Kim, Ph.D</strong> &nbsp;|&nbsp; CEO & Founder &nbsp;|&nbsp;
+        <a href="mailto:kjh@weven.kr">kjh@weven.kr</a> &nbsp;|&nbsp;
+        <a href="https://linkedin.com/in/james-kim-842238168" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="cover-right hero-right">
+      <div class="cover-highlights hero-stats">
+        <div class="highlight-card">
+          <h4>Key Metrics</h4>
+          <div class="highlight-metrics">
+            <div class="highlight-metric">
+              <div class="highlight-metric-value">$2.1M</div>
+              <div class="highlight-metric-label">2026 Target</div>
+            </div>
+            <div class="highlight-metric">
+              <div class="highlight-metric-value">200%</div>
+              <div class="highlight-metric-label">Growth Target</div>
+            </div>
+            <div class="highlight-metric">
+              <div class="highlight-metric-value">$10.7M</div>
+              <div class="highlight-metric-label">Valuation</div>
+            </div>
+            <div class="highlight-metric">
+              <div class="highlight-metric-value">$1.4M</div>
+              <div class="highlight-metric-label">Pre-A Raising</div>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <h4>The Problem We Solve</h4>
+          <div class="problem-mini">
+            <div class="problem-mini-item"><span class="icon">✕</span> 80% of websites abandoned within 6 months</div>
+            <div class="problem-mini-item"><span class="icon">✕</span> Manual updates costly for SMBs</div>
+            <div class="problem-mini-item"><span class="icon">✕</span> No personalization for visitors</div>
+            <div class="problem-mini-item"><span class="icon">✕</span> Vibe coding creates, but can't operate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: SOLUTION -->
+<div class="slide solution" data-title-en="Solution">
+  <div class="slide-inner">
+    <div class="section-label">Our Solution</div>
+    <div class="section-title">Upload HTML, Get a<br><span class="gradient-text">Living Web Service</span></div>
+    <div class="section-desc">Our AI-powered platform automatically operates your website — personalizing content, engaging visitors, and optimizing performance in real-time.</div>
+
+    <div class="solution-layout solution-content">
+      <div class="solution-main solution-step">
+        <div class="solution-features">
+          <div class="solution-feature">
+            <div class="feature-icon blue">📊</div>
+            <div class="feature-content">
+              <h4>Living DB</h4>
+              <p>Real-time collection of user behavior and business data, stored in VectorDB for intelligent retrieval and analysis.</p>
+            </div>
+          </div>
+          <div class="solution-feature">
+            <div class="feature-icon green">🤖</div>
+            <div class="feature-content">
+              <h4>RAG-Based AI Engine</h4>
+              <p>Retrieval-Augmented Generation provides context-aware responses and personalized content for each visitor.</p>
+            </div>
+          </div>
+          <div class="solution-feature">
+            <div class="feature-icon purple">⚡</div>
+            <div class="feature-content">
+              <h4>Auto-Operation</h4>
+              <p>24/7 automated content updates, A/B testing, and conversion optimization without manual intervention.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-visual solution-step">
+        <div class="solution-diagram">
+          <div class="diagram-flow">
+            <div class="diagram-box">Upload HTML / Vibe Code Output</div>
+            <div class="diagram-arrow">↓</div>
+            <div class="diagram-box highlight">WEVEN AI Platform</div>
+            <div class="diagram-arrow">↓</div>
+            <div class="diagram-box">Living DB + RAG Engine</div>
+            <div class="diagram-arrow">↓</div>
+            <div class="diagram-box">Self-Operating Web Service</div>
+          </div>
+          <div class="diagram-label">From static site to intelligent service in minutes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: TRACTION + MARKET -->
+<div class="slide traction" data-title-en="Traction">
+  <div class="slide-inner">
+    <div class="section-label">Traction & Market</div>
+    <div class="section-title">Proven Results,<br><span class="gradient-text">Massive Opportunity</span></div>
+
+    <div class="traction-layout traction-grid">
+      <div class="traction-section traction-card">
+        <h3>Key Metrics</h3>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="metric-value">$1.1M</div>
+            <div class="metric-label">Annual Revenue (2025)</div>
+            <div class="metric-change up">↑ 200% YoY</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">625%</div>
+            <div class="metric-label">B2C Service Growth</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">28</div>
+            <div class="metric-label">Patents Filed</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">25</div>
+            <div class="metric-label">Team Members</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:28px">Strategic Partners</h3>
+        <div class="partners-row">
+          <div class="partner-tag">NHN</div>
+          <div class="partner-tag">Naver</div>
+          <div class="partner-tag">Azure</div>
+          <div class="partner-tag">AhnLab</div>
+          <div class="partner-tag">15 MOUs</div>
+          <div class="partner-tag">4 LOIs</div>
+        </div>
+      </div>
+
+      <div class="traction-section traction-card">
+        <h3>Market Opportunity</h3>
+        <div class="market-bars market-content">
+          <div class="market-bar">
+            <div class="market-bar-header">
+              <span class="market-bar-label">TAM — Global Website Market</span>
+              <span class="market-bar-value">$267B</span>
+            </div>
+            <div class="market-bar-track"><div class="market-bar-fill tam"></div></div>
+          </div>
+          <div class="market-bar">
+            <div class="market-bar-header">
+              <span class="market-bar-label">SAM — AI Web Operations</span>
+              <span class="market-bar-value">$48B</span>
+            </div>
+            <div class="market-bar-track"><div class="market-bar-fill sam"></div></div>
+          </div>
+          <div class="market-bar">
+            <div class="market-bar-header">
+              <span class="market-bar-label">SOM — SMB Focus (Year 3)</span>
+              <span class="market-bar-value">$850M</span>
+            </div>
+            <div class="market-bar-track"><div class="market-bar-fill som"></div></div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;padding:20px;background:var(--bg-accent);border-radius:12px">
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.6">
+            <strong style="color:var(--accent-primary)">Why Now?</strong><br>
+            Vibe coding tools create websites but can't operate them. We are the AI layer that transforms static outputs into intelligent, self-running services.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: TEAM + ASK -->
+<div class="slide ask" data-title-en="The Ask">
+  <div class="slide-inner">
+    <div class="section-label">Team & Investment</div>
+    <div class="section-title">Experienced Team,<br><span class="gradient-text">Clear Path Forward</span></div>
+
+    <div class="ask-layout ask-stats">
+      <div class="team-section team-layout">
+        <h3>Leadership Team</h3>
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="team-photo"><img src="kjh.png" alt="James Kim"></div>
+            <div class="team-info">
+              <h4>James Kim, Ph.D</h4>
+              <div class="role">CEO & Founder</div>
+              <p>Korea Univ. MBA • Ex-CEO BlueStream (9 yrs) • Web Award Korea Grand Prize • 7 published papers</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="team-photo"><img src="hjd.png" alt="Jung-Dong Han"></div>
+            <div class="team-info">
+              <h4>Jung-Dong Han</h4>
+              <div class="role">CTO</div>
+              <p>Ex-CTO BlueStream • LG DIOS Web Award • 10+ years enterprise dev</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="team-photo"><img src="lhn.png" alt="Hyo-Nam Lee"></div>
+            <div class="team-info">
+              <h4>Hyo-Nam Lee</h4>
+              <div class="role">Creative Director & Co-Founder</div>
+              <p>Samsung/LG web design • 4.9M YouTube director • 25 years brand experience</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="team-photo"><img src="lsh.png" alt="Seo-Hyuk Lee"></div>
+            <div class="team-info">
+              <h4>Seo-Hyuk Lee</h4>
+              <div class="role">AI Lab Lead</div>
+              <p>Sungkyunkwan Univ. AI M.S. • Generative AI specialist</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ask-section">
+        <h3>The Ask</h3>
+        <div class="ask-card">
+          <h4>Pre-A Round</h4>
+          <div class="ask-metrics">
+            <div class="ask-metric">
+              <div class="ask-metric-value">$1.4M</div>
+              <div class="ask-metric-label">Raising</div>
+            </div>
+            <div class="ask-metric">
+              <div class="ask-metric-value">$10.7M</div>
+              <div class="ask-metric-label">Valuation</div>
+            </div>
+            <div class="ask-metric">
+              <div class="ask-metric-value">$2.1M</div>
+              <div class="ask-metric-label">2026 Revenue Target</div>
+            </div>
+            <div class="ask-metric">
+              <div class="ask-metric-value">200%</div>
+              <div class="ask-metric-label">Growth Target</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="use-of-funds">
+          <h4>Use of Funds</h4>
+          <div class="fund-item"><span>AI/ML Development</span><span>40%</span></div>
+          <div class="fund-item"><span>Sales & Marketing</span><span>30%</span></div>
+          <div class="fund-item"><span>Global Expansion</span><span>20%</span></div>
+          <div class="fund-item"><span>Operations</span><span>10%</span></div>
+        </div>
+
+        <div class="contact-box">
+          <p><strong>James Kim, CEO</strong></p>
+          <p><a href="mailto:kjh@weven.kr">kjh@weven.kr</a> &nbsp;|&nbsp; +82-10-8447-4567</p>
+          <p><a href="https://linkedin.com/in/james-kim-842238168" target="_blank">LinkedIn Profile →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation Script (공통) -->
+<script src="../../app/ir-common.js"></script>
+<script>
+// ── IR 설정 (viewer.html에서 참조) ──
+window.irConfig = {
+  version: '2602',
+  theme: 'light',
+  languages: ['en'],
+  defaultLang: 'en'
+};
+
+// 네비게이션 초기화
+document.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get('lang') || 'en';
+
+  window.irNav = new IRNavigation({
+    lang: lang,
+    theme: 'light',
+    irVersion: '2602'
+  });
+});
+</script>
+</body>
+</html>

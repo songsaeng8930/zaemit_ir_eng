@@ -1,0 +1,231 @@
+/**
+ * IR Navigation - Dark Theme
+ */
+
+/* ── MENU HEADER ── */
+.menu-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px;
+  background: rgba(10, 14, 39, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.menu-btn {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.menu-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.menu-btn.active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.menu-header-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.menu-header-title span {
+  color: #00D4AA;
+  font-weight: 500;
+  margin-left: 6px;
+  font-size: 14px;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  width: 260px;
+  z-index: 250;
+  background: rgba(10, 14, 39, 0.97);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  padding: 0 12px;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 0;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.toc-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toc-item.active {
+  background: rgba(0, 102, 255, 0.15);
+}
+
+.toc-item.active .toc-num {
+  color: #00D4AA;
+  border-color: #00D4AA;
+}
+
+.toc-item.active .toc-label {
+  color: #fff;
+}
+
+.toc-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94A3B8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s;
+}
+
+.toc-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #94A3B8;
+  transition: color 0.25s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: auto;
+}
+
+.sidebar-footer p {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.25);
+  line-height: 1.5;
+}
+
+/* ── SIDEBAR OVERLAY ── */
+.sidebar-overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── PAGE INDICATOR ── */
+.page-indicator {
+  position: fixed;
+  bottom: 28px;
+  right: 36px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.page-progress {
+  width: 100px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.page-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #00D4AA 0%, #0066FF 100%);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-num {
+  font-size: 14px;
+  color: #94A3B8;
+}
+
+.page-num .cur {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+}

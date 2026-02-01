@@ -463,34 +463,42 @@ html {
   width: 1280px;
   height: 720px;
   transform-origin: top left;
-  display: flex;
-  flex-direction: column;
+  /* No display override - let original page layout work */
 }
 
 /* Language visibility - hide non-selected language elements */
-.slide-clone [data-lang] {
+/* display: none 사용하되, flex 요소는 JS에서 별도 처리 */
+.slide-clone [data-lang]:not(.lang-visible) {
   display: none !important;
 }
 
-.slide-clone [data-lang].lang-visible {
-  display: block !important;
-  display: revert !important;
-}
-
-/* Fixed area (no zoom) - ensure titles always full width regardless of content alignment */
-.slide-clone .section-label,
-.slide-clone .section-title,
-.slide-clone .section-desc {
-  flex-shrink: 0 !important;
-  align-self: stretch !important;
-  width: 100% !important;
-}
-
-/* Content area (zoom applied) */
-.slide-clone .content-wrapper {
-  flex: 1;
+/* Content wrapper - 줌/정렬 적용 대상 */
+/* 남은 공간 채우고, 내부에서 콘텐츠 수직 정렬 */
+/* 너비는 항상 100% 유지 - 좁아지지 않음 */
+.slide-clone .slide-inner > .content-wrapper {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch !important; /* 자식 요소 너비 100% 유지 */
+  justify-content: flex-start; /* 기본: 위 정렬, JS로 변경 */
   transform-origin: top center;
   overflow: visible;
+}
+
+/* content-wrapper 내부 요소도 너비 100% 유지 (Cover/Hero 제외) */
+.slide-clone:not(.cover):not(.hero) .slide-inner > .content-wrapper > * {
+  width: 100%;
+}
+
+/* Cover/Hero 페이지 content-wrapper - 가로 레이아웃 유지 */
+/* 2601은 hero, 2602는 cover 클래스 사용 */
+.slide-clone.cover .slide-inner > .content-wrapper,
+.slide-clone.hero .slide-inner > .content-wrapper {
+  flex-direction: row !important;
+  gap: 48px;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
 /* ── LOADING ── */
@@ -616,7 +624,13 @@ html {
   background: var(--dark, #0A0E27) !important;
 }
 
+/* slide-inner: 전체 높이, 타이틀은 위에 고정 */
 .slide-clone .slide-inner {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important; /* 타이틀 항상 위에 */
   opacity: 1 !important;
   transform: none !important;
 }
@@ -670,110 +684,10 @@ html {
   transform: none !important;
 }
 
-/* Reset any translate/scale transforms from animations */
-/* But allow data-content-zoom elements to have custom transforms */
-/* Note: section-label, section-title, section-desc are controlled by title scale JS */
-.slide-clone .hero-left:not([data-content-zoom]),
-.slide-clone .hero-stats:not([data-content-zoom]),
-.slide-clone .overview-layout:not([data-content-zoom]),
-.slide-clone .problem-flow:not([data-content-zoom]),
-.slide-clone .solution-content:not([data-content-zoom]),
-.slide-clone .solution-step,
-.slide-clone .svc-phases:not([data-content-zoom]),
-.slide-clone .market-content:not([data-content-zoom]),
-.slide-clone .mkt-stages:not([data-content-zoom]),
-.slide-clone .mkt-stage,
-.slide-clone .comp-table:not([data-content-zoom]),
-.slide-clone .traction-grid:not([data-content-zoom]),
-.slide-clone .traction-card,
-.slide-clone .biz-diagram-wrap:not([data-content-zoom]),
-.slide-clone .pricing-grid:not([data-content-zoom]),
-.slide-clone .pricing-card,
-.slide-clone .sales-layout:not([data-content-zoom]),
-.slide-clone .team-layout:not([data-content-zoom]),
-.slide-clone .gp-nda:not([data-content-zoom]),
-.slide-clone .gp-nda-row:not([data-content-zoom]),
-.slide-clone .gp-top:not([data-content-zoom]),
-.slide-clone .gp-countries:not([data-content-zoom]),
-.slide-clone .gp-country,
-.slide-clone .exit-chart-area:not([data-content-zoom]),
-.slide-clone .problem-col,
-.slide-clone .comp-zaemit-cell {
+/* Ensure all content is visible (no animation delays) */
+.slide-clone .slide-inner,
+.slide-clone .slide-inner * {
   opacity: 1 !important;
-  transform: none !important;
-}
-
-/* Allow zoom transforms on content elements */
-.slide-clone [data-content-zoom] {
-  opacity: 1 !important;
-}
-
-/* Title elements - fixed at top, never move with content alignment */
-/* Use fixed pixel width (1280 - 80 padding = 1200px) to override any flex shrinking */
-.slide-clone .section-label,
-.slide-clone .section-title,
-.slide-clone .section-desc {
-  opacity: 1 !important;
-  width: 1200px !important;
-  max-width: 1200px !important;
-  min-width: 1200px !important;
-  display: block !important;
-  flex-shrink: 0 !important;
-  box-sizing: border-box !important;
-  margin-top: 0 !important;
-}
-
-/* Reduce title font size in preview to prevent wrapping */
-.slide-clone .section-title {
-  font-size: 40px !important;
-  line-height: 1.2 !important;
-}
-
-/* Ask page - preserve flexbox centering */
-.slide-clone .ask-stats {
-  opacity: 1 !important;
-  display: flex !important;
-  justify-content: center !important;
-  gap: 64px !important;
-}
-
-.slide-clone .ask-footer-main {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 28px !important;
-}
-
-/* Hero slide - force desktop layout */
-.slide-clone.hero .slide-inner {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  gap: 100px !important;
-}
-
-.slide-clone .hero-left {
-  flex: 1 !important;
-  text-align: left !important;
-}
-
-.slide-clone .hero-right {
-  flex: 0.7 !important;
-  opacity: 1 !important;
-  display: block !important;
-  position: relative !important;
-  width: auto !important;
-  max-width: none !important;
-}
-
-.slide-clone .hero-visual {
-  opacity: 1 !important;
-  width: 100% !important;
-  aspect-ratio: 1 !important;
-}
-
-.slide-clone .hero-stats {
-  justify-content: flex-start !important;
 }
 
 /* Hide elements that shouldn't appear in preview */
@@ -782,345 +696,17 @@ html {
   display: none !important;
 }
 
-/* ── FORCE DESKTOP LAYOUT FOR ALL SLIDES ── */
-/* Override responsive styles since slides are rendered at 1280px */
+/* ══════════════════════════════════════════════════════════════════
+   IR-2602 LIGHT THEME OVERRIDES
+   ══════════════════════════════════════════════════════════════════ */
 
-/* General slide inner */
-.slide-clone .slide-inner {
-  display: flex !important;
-  flex-direction: column !important;
-  width: 100% !important;
-  max-width: none !important;
-  height: 100% !important;
+/* 2602 Cover slide - gradient background */
+.slide-clone.ir-2602.slide.cover {
+  background: linear-gradient(135deg, #4F46E5 0%, #0EA5E9 100%) !important;
 }
 
-/* All direct children of slide-inner - width is controlled by JS for alignment */
-/* Title elements (section-label, section-title, section-desc) use fixed 1200px width */
-/* Content elements width depends on their natural size or specified in their own rules */
-
-/* Overview layout */
-.slide-clone .overview-layout,
-.slide-clone .ov-layout {
-  display: grid !important;
-  grid-template-columns: 1fr 1.2fr !important;
-  gap: 40px !important;
-  width: 1200px !important;
-}
-
-/* Problem flow */
-.slide-clone .problem-flow {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 24px !important;
-  width: 1200px !important;
-}
-
-/* Pricing grid */
-.slide-clone .pricing-grid {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 24px !important;
-  width: 1200px !important;
-}
-
-/* Team layout */
-.slide-clone .team-layout {
-  display: flex !important;
-  flex-direction: row !important;
-  gap: 40px !important;
-  width: 1200px !important;
-}
-
-/* Global partners - 원본 레이아웃 강제 적용 */
-.slide-clone .gp-nda-row {
-  display: flex !important;
-  flex-direction: row !important;
-  gap: 24px !important;
-  margin-bottom: 28px !important;
-  width: 100% !important;
-}
-
-.slide-clone .gp-nda {
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-}
-
-.slide-clone .gp-top {
-  display: flex !important;
-  justify-content: flex-end !important;
-  margin-top: 20px !important;
-  width: 100% !important;
-}
-
-.slide-clone .gp-japan {
-  display: grid !important;
-  grid-template-columns: 1fr auto !important;
-  gap: 16px !important;
-  align-items: center !important;
-  width: 100% !important;
-}
-
-.slide-clone .gp-japan-text {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-}
-
-.slide-clone .gp-photos {
-  display: flex !important;
-  gap: 10px !important;
-  justify-content: flex-end !important;
-  flex-shrink: 0 !important;
-}
-
-.slide-clone .gp-photo-wide {
-  flex: none !important;
-  width: 360px !important;
-  max-width: 360px !important;
-  aspect-ratio: 16/9 !important;
-}
-
-.slide-clone .gp-photo-wide img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-}
-
-.slide-clone .gp-countries {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 16px !important;
-  margin-top: 16px !important;
-  width: 100% !important;
-}
-
-.slide-clone .gp-country-body {
-  padding: 14px 16px !important;
-}
-
-.slide-clone .gp-country-name {
-  font-size: 18px !important;
-  font-weight: 800 !important;
-  margin-bottom: 8px !important;
-}
-
-/* Service phases */
-.slide-clone .svc-phases {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 20px !important;
-  width: 1200px !important;
-}
-
-/* Allow svc-phases to be transformed when data-content-zoom is set */
-.slide-clone .svc-phases[data-content-zoom] {
-  transform-origin: top center !important;
-}
-
-/* Traction grid */
-.slide-clone .traction-grid {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 20px !important;
-  width: 1200px !important;
-}
-
-/* Sales layout */
-.slide-clone .sales-layout {
-  display: grid !important;
-  grid-template-columns: 1fr 1.2fr !important;
-  gap: 40px !important;
-  width: 1200px !important;
-}
-
-/* Roadmap - preserve original layout with staggered heights */
-.slide-clone .roadmap-container {
-  position: relative !important;
-  margin-top: 60px !important;
-  width: 1200px !important;
-  overflow: visible !important;
-}
-
-.slide-clone .roadmap-graph {
-  position: absolute !important;
-  bottom: 40px !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 3px !important;
-  background: linear-gradient(90deg, rgba(0,212,170,0.15) 0%, rgba(0,212,170,0.5) 50%, rgba(124,58,237,0.7) 100%) !important;
-  border-radius: 2px !important;
-  z-index: 1 !important;
-}
-
-.slide-clone .roadmap-graph::before {
-  content: '' !important;
-  position: absolute !important;
-  right: -16px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  border: 6px solid transparent !important;
-  border-left: 10px solid #7C3AED !important;
-}
-
-.slide-clone .roadmap-timeline {
-  position: relative !important;
-  z-index: 2 !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: flex-end !important;
-  gap: 28px !important;
-  width: 100% !important;
-  padding-bottom: 60px !important;
-}
-
-.slide-clone .roadmap-year {
-  flex: 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-.slide-clone .roadmap-year:nth-child(1) {
-  padding-bottom: 0 !important;
-}
-
-.slide-clone .roadmap-year:nth-child(2) {
-  padding-bottom: 70px !important;
-}
-
-.slide-clone .roadmap-year:nth-child(3) {
-  padding-bottom: 140px !important;
-}
-
-.slide-clone .roadmap-year:nth-child(4) {
-  padding-bottom: 210px !important;
-}
-
-.slide-clone .roadmap-year-label {
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: 30px !important;
-  font-weight: 800 !important;
-  color: #00D4AA !important;
-  margin-bottom: 14px !important;
-  line-height: 1 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-}
-
-.slide-clone .roadmap-year:nth-child(4) .roadmap-year-label {
-  font-size: 36px !important;
-  color: #A78BFA !important;
-}
-
-.slide-clone .roadmap-year-label::before {
-  content: '' !important;
-  width: 14px !important;
-  height: 14px !important;
-  background: #00D4AA !important;
-  border-radius: 50% !important;
-  box-shadow: 0 0 15px rgba(0,212,170,0.6) !important;
-}
-
-.slide-clone .roadmap-year:nth-child(4) .roadmap-year-label::before {
-  width: 18px !important;
-  height: 18px !important;
-  background: #7C3AED !important;
-  box-shadow: 0 0 25px rgba(124,58,237,0.8) !important;
-}
-
-.slide-clone .roadmap-year-badge {
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  color: #A78BFA !important;
-  margin-bottom: 10px !important;
-}
-
-.slide-clone .roadmap-items {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 8px !important;
-}
-
-.slide-clone .roadmap-item {
-  font-size: 13px !important;
-  color: var(--text-muted, #94A3B8) !important;
-  line-height: 1.55 !important;
-  padding: 5px 0 !important;
-}
-
-.slide-clone .roadmap-item b {
-  color: #fff !important;
-  font-weight: 600 !important;
-}
-
-.slide-clone .roadmap-item.highlight {
-  background: linear-gradient(90deg, rgba(124,58,237,0.25) 0%, rgba(124,58,237,0.1) 100%) !important;
-  padding: 10px 14px !important;
-  border-radius: 8px !important;
-  color: #fff !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
-  margin-top: 6px !important;
-  border: 1px solid rgba(124,58,237,0.4) !important;
-  box-shadow: 0 4px 24px rgba(124,58,237,0.3) !important;
-}
-
-.slide-clone .roadmap-item.highlight b {
-  color: #A78BFA !important;
-  font-size: 14px !important;
-}
-
-.slide-clone .roadmap-line {
-  stroke-dashoffset: 0 !important;
-}
-
-/* Exit strategy chart */
-.slide-clone .exit-chart-area {
-  position: relative !important;
-  margin-top: 20px !important;
-  width: 1200px !important;
-}
-
-.slide-clone .exit-svg {
-  width: 100% !important;
-  height: auto !important;
-}
-
-/* Business diagram - force desktop layout */
-.slide-clone .biz-diagram-wrap {
-  margin-top: 20px !important;
-  width: 1200px !important;
-  max-width: none !important;
-}
-
-.slide-clone .biz-diagram-svg {
-  width: 100% !important;
-  height: auto !important;
-}
-
-.slide-clone .biz-rev-summary {
-  margin-top: 16px !important;
-  max-width: 900px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Market stages */
-.slide-clone .mkt-stages {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: stretch !important;
-  gap: 8px !important;
-  width: 1200px !important;
-}
-
-.slide-clone .mkt-stage {
-  flex: 1 !important;
-  min-width: 0 !important;
-}
-
-/* Prevent responsive layout changes inside slides */
-.slide-clone .slide-inner * {
-  max-width: none !important;
+/* 2602 Non-cover slides - white background */
+.slide-clone.ir-2602.slide:not(.cover) {
+  background: #FFFFFF !important;
+  color: #1E293B !important;
 }

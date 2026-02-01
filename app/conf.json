@@ -4,10 +4,17 @@
   "versions": [
     {
       "id": "2601",
-      "name": "2026년 1월",
-      "nameEn": "January 2026",
+      "name": "2026년 1월 (Full)",
+      "nameEn": "January 2026 (Full)",
       "date": "2026-01-31",
       "default": true
+    },
+    {
+      "id": "2602",
+      "name": "2026년 1월 (US Short)",
+      "nameEn": "January 2026 (US Short)",
+      "date": "2026-01-31",
+      "default": false
     }
   ]
 }

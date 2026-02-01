@@ -1,31 +1,72 @@
 # IR 프린트 미리보기 호환성 가이드
 
 > 이 문서는 IR 자료가 프린트 미리보기 화면에서 깨지지 않도록 하는 필수 지침입니다.
-> 디자인/스타일 가이드는 [ir-style-guide.md](./ir-style-guide.md)를 참조하세요.
+> **AI가 새로운 IR 페이지를 생성하거나 수정할 때 반드시 이 규칙을 따라야 합니다.**
 
 ---
 
-## 핵심 원칙
+## 핵심 원칙 (최우선 준수사항)
 
-> **프린트 미리보기는 슬라이드를 복제(clone)하여 별도 페이지에 렌더링합니다.**
->
-> 원본 CSS가 그대로 적용되지만, 일부 레이아웃은 `print-preview.css`에서 강제 덮어쓰기가 필요합니다.
+### 1. CSS 오버라이드 최소화
+> **원본 페이지의 CSS를 건드리지 않는다.**
+> 프린트 미리보기는 원본 페이지를 그대로 복제(clone)하여 표시한다.
+> `print-preview.css`에서 레이아웃을 강제로 변경하면 원본과 다르게 보인다.
+
+### 2. Wrapper만 씌우기
+> content-wrapper를 동적으로 생성하여 줌/정렬을 적용한다.
+> wrapper 내부의 원본 레이아웃은 그대로 유지한다.
+
+### 3. 타이틀과 콘텐츠 분리
+> **타이틀 (section-label, section-title, section-desc)**: 항상 좌측 상단 고정
+> **콘텐츠**: content-wrapper로 감싸서 줌/정렬 적용
+> 타이틀은 콘텐츠 줌/정렬에 영향받지 않는다.
 
 ---
 
-## 1. 슬라이드 구조 규칙
+## IR 버전별 차이점 (2601 vs 2602)
 
-### 1.1 필수 구조
+| 항목 | 2601 (다크 테마) | 2602 (라이트 테마) |
+|-----|-----------------|------------------|
+| 첫 페이지 클래스 | `.hero` | `.cover` |
+| 테마 | dark | light |
+| ir-common.js | 미사용 (인라인 스크립트) | 사용 |
+| 언어 함수 | `window.setLang` 직접 정의 필요 | ir-common.js에서 제공 |
+
+### 2601 필수 요소
+```javascript
+// ir/2601/index.html의 스크립트에 반드시 포함:
+window.setLang = function(newLang) {
+  lang = newLang;
+  document.body.classList.remove('en', 'ja', 'ko');
+  if (newLang !== 'ko') {
+    document.body.classList.add(newLang);
+  }
+  // inline style 초기화 - CSS 규칙이 적용되도록
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = '';
+  });
+};
+
+window.goToSlide = function(idx) {
+  // 슬라이드 이동 로직
+};
+```
+
+---
+
+## 슬라이드 구조 규칙
+
+### 1. 기본 구조
 
 ```html
 <div class="slide [slide-type]" data-title-ko="제목" data-title-en="Title">
   <div class="slide-inner">
-    <!-- 타이틀 영역 -->
+    <!-- 타이틀 영역 (고정 위치, 줌 영향 없음) -->
     <div class="section-label">...</div>
     <div class="section-title">...</div>
     <div class="section-desc">...</div>
 
-    <!-- 콘텐츠 영역 (단일 컨테이너 권장) -->
+    <!-- 콘텐츠 영역 (자동으로 content-wrapper 생성됨) -->
     <div class="[content-container]">
       ...모든 콘텐츠...
     </div>
@@ -33,394 +74,216 @@
 </div>
 ```
 
-### 1.2 ⚠️ 중요: 콘텐츠는 단일 컨테이너로 감싸기
+### 2. Cover/Hero 페이지 구조 (특별 처리)
 
-**문제 상황:**
+Cover/Hero 페이지는 타이틀이 없고, 가로 레이아웃을 사용:
+
 ```html
-<!-- ❌ 나쁜 예: 여러 독립 요소 -->
-<div class="slide-inner">
-  <div class="section-title">...</div>
-  <div class="content-a">...</div>  <!-- 줌/정렬 개별 적용 -->
-  <div class="content-b">...</div>  <!-- 줌/정렬 개별 적용 -->
-  <div class="content-c">...</div>  <!-- 줌/정렬 개별 적용 -->
+<!-- 2601 Hero 페이지 -->
+<div class="slide hero" data-title-ko="표지">
+  <div class="slide-inner">
+    <div class="hero-left">...</div>   <!-- 좌측 텍스트 -->
+    <div class="hero-right">...</div>  <!-- 우측 카드 -->
+  </div>
 </div>
-```
 
-**해결:**
-```html
-<!-- ✅ 좋은 예: 단일 wrapper로 감싸기 -->
-<div class="slide-inner">
-  <div class="section-title">...</div>
-  <div class="content-wrapper">
-    <div class="content-a">...</div>
-    <div class="content-b">...</div>
-    <div class="content-c">...</div>
+<!-- 2602 Cover 페이지 -->
+<div class="slide cover" data-title-en="Cover">
+  <div class="slide-inner">
+    <div class="cover-left">...</div>
+    <div class="cover-right">...</div>
   </div>
 </div>
 ```
 
-> **왜?** 프린트 미리보기에서 줌과 정렬은 **첫 번째 콘텐츠 요소**에만 적용됩니다.
-> 여러 독립 요소가 있으면 첫 번째만 움직이고 나머지는 그대로입니다.
+> **중요**: Cover/Hero 페이지는 전체가 콘텐츠로 취급된다.
+> content-wrapper에 `flex-direction: row`가 적용되어 가로 레이아웃 유지.
 
 ---
 
-## 2. 콘텐츠 셀렉터 등록
+## print-preview.css 핵심 규칙
 
-### 2.1 print-preview.js에 셀렉터 추가
-
-새로운 콘텐츠 컨테이너를 만들면 반드시 `print-preview.js`의 `contentSelectors` 배열에 추가해야 합니다.
-
-**파일:** `app/print-preview.js`
-
-```javascript
-// applyContentZoom 함수 내
-const contentSelectors = [
-  '.hero-left', '.hero-right', '.hero-stats',
-  '.overview-layout', '.ov-layout',
-  '.problem-flow', '.solution-content',
-  '.svc-phases',
-  '.market-content', '.mkt-table',
-  '.comp-table', '.traction-grid',
-  '.biz-diagram-wrap',
-  '.pricing-grid', '.sales-layout',
-  '.team-layout',
-  '.gp-nda-row', '.gp-top', '.gp-countries',  // Global Partners
-  '.roadmap-container',
-  '.exit-chart-area', '.ask-stats',
-  '.contact-area',
-  // ⬇️ 새 셀렉터 추가
-  '.new-content-container'
-];
-```
-
-**두 곳에 추가 필요:**
-1. `applyContentZoom()` 함수 내 `contentSelectors`
-2. `applyContentAlignmentToSlide()` 함수 내 `contentSelectors`
-
----
-
-## 3. 특별 처리가 필요한 페이지
-
-### 3.1 Hero 페이지 (1번)
-
-**문제:** `.hero-left`, `.hero-right` 두 요소가 독립적으로 존재
-
-**해결:** JavaScript에서 동적으로 wrapper 생성
-
-```javascript
-// print-preview.js에 이미 구현됨
-if (heroLeft && heroRight) {
-  let heroWrapper = clone.querySelector('.hero-content-wrapper');
-  if (!heroWrapper) {
-    heroWrapper = document.createElement('div');
-    heroWrapper.className = 'hero-content-wrapper';
-    heroWrapper.style.cssText = 'display: flex; gap: 40px; width: 100%; align-items: center;';
-    // 콘텐츠들을 wrapper로 이동
-    parent.insertBefore(heroWrapper, heroLeft);
-    heroWrapper.appendChild(heroLeft);
-    heroWrapper.appendChild(heroRight);
-  }
-  // wrapper에 줌 적용
-  heroWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-}
-```
-
-### 3.2 Global Partners 페이지 (13번)
-
-**문제:** `.gp-nda-row`, `.gp-top`, `.gp-countries` 세 요소가 독립적으로 존재
-
-**해결:** JavaScript에서 동적으로 wrapper 생성
-
-```javascript
-// print-preview.js에 이미 구현됨
-if (gpNdaRow && gpTop && gpCountries) {
-  let gpWrapper = clone.querySelector('.gp-content-wrapper');
-  if (!gpWrapper) {
-    gpWrapper = document.createElement('div');
-    gpWrapper.className = 'gp-content-wrapper';
-    // 콘텐츠들을 wrapper로 이동
-    parent.insertBefore(gpWrapper, gpNdaRow);
-    gpWrapper.appendChild(gpNdaRow);
-    gpWrapper.appendChild(gpTop);
-    gpWrapper.appendChild(gpCountries);
-  }
-  // wrapper에 줌 적용
-  gpWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-}
-```
-
-### 3.3 Product/Service 페이지 (7번)
-
-**문제:** `.svc-phases`, `.svc-cloud-bar` 두 요소가 독립적으로 존재
-
-**해결:** JavaScript에서 동적으로 wrapper 생성
-
-```javascript
-// print-preview.js에 이미 구현됨
-if (svcPhases && svcCloudBar) {
-  let svcWrapper = clone.querySelector('.svc-content-wrapper');
-  if (!svcWrapper) {
-    svcWrapper = document.createElement('div');
-    svcWrapper.className = 'svc-content-wrapper';
-    svcWrapper.style.cssText = 'width: 100%;';
-    // 콘텐츠들을 wrapper로 이동
-    parent.insertBefore(svcWrapper, svcPhases);
-    svcWrapper.appendChild(svcPhases);
-    svcWrapper.appendChild(svcCloudBar);
-  }
-  // wrapper에 줌 적용
-  svcWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-}
-```
-
-### 3.4 Business 페이지 (10번)
-
-**문제:** `.biz-diagram-wrap`, `.biz-rev-summary` 두 요소가 독립적으로 존재
-
-**해결:** JavaScript에서 동적으로 wrapper 생성
-
-```javascript
-// print-preview.js에 이미 구현됨
-if (bizDiagram && bizRevSummary) {
-  let bizWrapper = clone.querySelector('.biz-content-wrapper');
-  if (!bizWrapper) {
-    bizWrapper = document.createElement('div');
-    bizWrapper.className = 'biz-content-wrapper';
-    bizWrapper.style.cssText = 'width: 100%;';
-    // 콘텐츠들을 wrapper로 이동
-    parent.insertBefore(bizWrapper, bizDiagram);
-    bizWrapper.appendChild(bizDiagram);
-    bizWrapper.appendChild(bizRevSummary);
-  }
-  // wrapper에 줌 적용
-  bizWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-}
-```
-
-### 3.5 Ask 페이지 (17번)
-
-**문제:** `h2`, `.ask-desc`, `.ask-stats`, `.ask-footer` 여러 요소가 독립적으로 존재
-
-**해결:** JavaScript에서 동적으로 wrapper 생성
-
-```javascript
-// print-preview.js에 이미 구현됨
-if (askStats && askFooter) {
-  let askWrapper = clone.querySelector('.ask-content-wrapper');
-  if (!askWrapper) {
-    askWrapper = document.createElement('div');
-    askWrapper.className = 'ask-content-wrapper';
-    askWrapper.style.cssText = 'width: 100%; text-align: center;';
-
-    // h2와 ask-desc 찾기
-    const h2Elements = parent.querySelectorAll('h2[data-lang]');
-    const askDescs = parent.querySelectorAll('.ask-desc');
-
-    // 모든 요소를 wrapper로 이동
-    h2Elements.forEach(el => askWrapper.appendChild(el));
-    askDescs.forEach(el => askWrapper.appendChild(el));
-    askWrapper.appendChild(askStats);
-    askWrapper.appendChild(askFooter);
-  }
-  // wrapper에 줌 적용
-  askWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-}
-```
-
-### 3.6 로드맵 페이지 (14번)
-
-**주의:** 계단식 레이아웃 유지 필요
+### 1. 언어 가시성 - display:none만 사용
 
 ```css
-/* print-preview.css */
-.slide-clone .roadmap-timeline {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: flex-end !important;
-}
-
-.slide-clone .roadmap-year:nth-child(1) { padding-bottom: 0 !important; }
-.slide-clone .roadmap-year:nth-child(2) { padding-bottom: 70px !important; }
-.slide-clone .roadmap-year:nth-child(3) { padding-bottom: 140px !important; }
-.slide-clone .roadmap-year:nth-child(4) { padding-bottom: 210px !important; }
-```
-
-### 3.7 테이블 페이지 (경쟁, 시장)
-
-**문제:** 테이블이 고정 너비를 가지면 레이아웃 깨짐
-
-**해결:**
-```css
-/* print-preview.css */
-.slide-clone .comp-table,
-.slide-clone .mkt-table {
-  width: 100% !important;  /* 고정 너비 대신 100% */
-}
-```
-
----
-
-## 4. CSS 덮어쓰기 규칙
-
-### 4.1 print-preview.css 구조
-
-```css
-/* 1. 기본 슬라이드 스타일 */
-.slide-clone {
-  /* 원본 스타일 유지 */
-}
-
-/* 2. 타이틀 영역 (줌 영향 안받음) */
-.slide-clone .section-label,
-.slide-clone .section-title,
-.slide-clone .section-desc {
-  flex-shrink: 0 !important;
-  align-self: stretch !important;
-}
-
-/* 3. 페이지별 특별 처리 */
-.slide-clone .specific-element {
-  display: ... !important;
-  /* 필요한 속성만 덮어쓰기 */
-}
-```
-
-### 4.2 !important 사용 지침
-
-| 상황 | !important 사용 |
-|-----|----------------|
-| 레이아웃 깨짐 수정 | ✅ 필수 |
-| 인라인 스타일 덮어쓰기 | ✅ 필수 |
-| 단순 스타일 조정 | ❌ 지양 |
-
-### 4.3 width 설정 주의
-
-```css
-/* ❌ 나쁜 예: 고정 너비가 내부 그리드를 깨뜨림 */
-.slide-clone .gp-japan {
-  width: 1200px !important;
-}
-
-/* ✅ 좋은 예: 100%로 설정하고 부모에서 제어 */
-.slide-clone .gp-japan {
-  width: 100% !important;
-}
-```
-
----
-
-## 5. 이미지 경로
-
-### 5.1 상대 경로 자동 변환
-
-프린트 미리보기는 `app/` 폴더에서 실행되므로, IR 폴더의 이미지 경로가 자동 변환됩니다.
-
-```javascript
-// print-preview.js
-const irBasePath = `../ir/${irVersion}/`;
-slides.forEach(slide => {
-  slide.querySelectorAll('img').forEach(img => {
-    const src = img.getAttribute('src');
-    if (src && !src.startsWith('http') && !src.startsWith('data:')) {
-      img.setAttribute('src', irBasePath + src);
-    }
-  });
-});
-```
-
-### 5.2 이미지 경로 규칙
-
-| 경로 유형 | 예시 | 변환 |
-|---------|-----|-----|
-| 상대 경로 | `kjh.png` | `../ir/2601/kjh.png` |
-| 절대 URL | `https://...` | 변환 안함 |
-| Data URI | `data:image/...` | 변환 안함 |
-
----
-
-## 6. 다국어 처리
-
-### 6.1 언어별 표시
-
-```css
-/* print-preview.css */
-.slide-clone [data-lang] {
+/* display: none만 사용하여 원본 display 속성 유지 */
+.slide-clone [data-lang]:not(.lang-visible) {
   display: none !important;
 }
+/* 보이는 요소는 CSS 규칙이 자동 적용됨 (별도 지정 불필요) */
+```
 
-.slide-clone [data-lang].lang-visible {
-  display: block !important;
-  display: revert !important;
+> **경고**: `display: block !important`를 사용하면 flex 요소가 깨진다!
+> 예: `.ov-circle`은 `display: flex`가 필요한데 block으로 바뀌면 텍스트 정렬이 깨짐.
+
+### 2. slide-inner - 타이틀 고정
+
+```css
+.slide-clone .slide-inner {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important; /* 타이틀 항상 위에 */
 }
 ```
 
-### 6.2 JavaScript 처리
+### 3. content-wrapper - 줌/정렬 적용
+
+```css
+/* 기본: 세로 레이아웃, 너비 100% 유지 */
+.slide-clone .slide-inner > .content-wrapper {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch !important; /* 자식 너비 100% 유지 */
+  justify-content: flex-start; /* JS로 변경 가능 */
+}
+
+/* Cover/Hero 페이지만 가로 레이아웃 */
+.slide-clone.cover .slide-inner > .content-wrapper,
+.slide-clone.hero .slide-inner > .content-wrapper {
+  flex-direction: row !important;
+  gap: 48px;
+  align-items: stretch;
+}
+```
+
+### 4. 너비 유지 규칙
+
+```css
+/* 일반 페이지: 콘텐츠 너비 100% 유지 */
+.slide-clone:not(.cover):not(.hero) .slide-inner > .content-wrapper > * {
+  width: 100%;
+}
+/* Cover/Hero는 좌우 분할이므로 이 규칙 제외 */
+```
+
+---
+
+## print-preview.js 핵심 로직
+
+### 1. content-wrapper 생성
 
 ```javascript
-// print-preview.js
-function applyLanguageVisibility(element) {
-  element.querySelectorAll('[data-lang]').forEach(el => {
-    if (el.dataset.lang === lang) {
-      el.classList.add('lang-visible');
-    } else {
-      el.classList.remove('lang-visible');
-    }
-  });
+function applyContentZoom(idx, zoomPercent) {
+  // Cover/Hero 페이지 감지
+  const isCover = clone.classList.contains('cover') || clone.classList.contains('hero');
+
+  // Cover/Hero: 전체가 콘텐츠 (title 없음)
+  // 일반 페이지: title 제외
+  const titleSelectors = isCover ? [] : ['.section-label', '.section-title', '.section-desc'];
+
+  // content-wrapper 생성 후 title 아닌 요소들 이동
+  // ... wrapper 생성 로직 ...
+}
+```
+
+### 2. 정렬 적용
+
+```javascript
+function applyContentAlignmentToSlide(clone, alignV, alignH) {
+  const isCover = clone.classList.contains('cover') || clone.classList.contains('hero');
+
+  // 수직 정렬
+  if (isCover) {
+    // 가로 레이아웃: align-items로 수직 정렬
+    contentWrapper.style.setProperty('align-items', alignValue, 'important');
+  } else {
+    // 세로 레이아웃: justify-content로 수직 정렬
+    contentWrapper.style.setProperty('justify-content', justifyContent, 'important');
+    // 너비는 항상 stretch 유지
+    contentWrapper.style.setProperty('align-items', 'stretch', 'important');
+  }
 }
 ```
 
 ---
 
-## 7. 디버깅 체크리스트
+## Viewer 연동
 
-프린트 미리보기에서 특정 페이지가 깨질 때:
+### viewer.html이 iframe 내 IR 페이지와 통신하는 방법
 
-### 7.1 줌이 안 먹을 때
+1. **언어 전환**: `iframeWin.setLang(lang)` 호출
+2. **슬라이드 이동**: `iframeWin.goToSlide(idx)` 호출
 
-- [ ] `contentSelectors` 배열에 해당 셀렉터가 있는가?
-- [ ] 여러 독립 요소가 있는가? → wrapper로 감싸기
-- [ ] CSS에서 `transform`을 덮어쓰고 있는가?
+### IR 페이지에서 노출해야 하는 함수
 
-### 7.2 정렬이 안 먹을 때
+```javascript
+// 반드시 window 객체에 노출
+window.setLang = function(lang) { ... };
+window.goToSlide = function(idx) { ... };
+```
 
-- [ ] `contentSelectors` 배열에 해당 셀렉터가 있는가?
-- [ ] 첫 번째 콘텐츠 요소가 맞는가?
-- [ ] `margin-top`이 다른 CSS에서 덮어쓰여지는가?
+### 언어 CSS 규칙 (IR 페이지 내)
 
-### 7.3 레이아웃이 깨질 때
+```css
+/* 기본: 한국어 표시 */
+[data-lang="en"] { display: none !important; }
+[data-lang="ko"] { display: revert; }
+[data-lang="ja"] { display: none !important; }
 
-- [ ] `display` 속성이 원본과 다른가?
-- [ ] `grid-template-columns`가 제대로 적용되는가?
-- [ ] `width`가 고정값으로 설정되어 내부 레이아웃을 깨뜨리는가?
+/* 영어 모드 */
+body.en [data-lang="en"] { display: revert !important; }
+body.en [data-lang="ko"] { display: none !important; }
 
-### 7.4 이미지가 안 보일 때
+/* 일본어 모드 */
+body.ja [data-lang="ja"] { display: revert !important; }
+body.ja [data-lang="ko"] { display: none !important; }
 
-- [ ] 경로가 상대 경로인가?
-- [ ] 이미지 파일이 IR 폴더에 있는가?
-- [ ] `irBasePath` 변환이 제대로 되는가?
+/* flex 요소는 별도 처리 (예: 동그라미) */
+.ov-circle[data-lang="ko"] { display: flex !important; }
+body.en .ov-circle[data-lang="en"] { display: flex !important; }
+body.en .ov-circle[data-lang="ko"] { display: none !important; }
+```
+
+> **핵심**: body 클래스(en/ja)로 언어 전환, CSS 규칙이 display 처리
+> **경고**: JS에서 inline style로 display를 설정하면 안됨 (flex 요소 깨짐)
 
 ---
 
-## 8. 새 페이지 추가 시 체크리스트
+## 자주 발생하는 문제와 해결
 
-1. **HTML 구조**
-   - [ ] 콘텐츠를 단일 컨테이너로 감쌌는가?
-   - [ ] `data-lang` 속성이 모든 다국어 요소에 있는가?
+### 1. 동그라미 안 텍스트가 위로 올라감
+**원인**: `display: block`으로 오버라이드되어 flex 중앙정렬 깨짐
+**해결**: `display: none !important`만 사용, 보이는 요소는 원본 display 유지
 
-2. **print-preview.js**
-   - [ ] `applyContentZoom()`의 `contentSelectors`에 추가
-   - [ ] `applyContentAlignmentToSlide()`의 `contentSelectors`에 추가
-   - [ ] 특별 처리가 필요하면 조건문 추가
+### 2. Cover/Hero 페이지가 세로로 표시됨
+**원인**: `flex-direction: column` 강제 적용
+**해결**: `.cover`, `.hero` 클래스에 `flex-direction: row !important` 적용
 
-3. **print-preview.css**
-   - [ ] 레이아웃 깨짐 시 CSS 덮어쓰기 추가
-   - [ ] `!important` 최소화
+### 3. 콘텐츠 너비가 좁아짐
+**원인**: `align-items: center`가 자식 너비를 shrink
+**해결**: 일반 페이지는 `align-items: stretch !important` 유지
 
-4. **테스트**
-   - [ ] 줌 50% ~ 150% 테스트
-   - [ ] 수직 정렬 (top/middle/bottom) 테스트
-   - [ ] 수평 정렬 (left/center/right) 테스트
-   - [ ] Auto Fit 버튼 테스트
+### 4. 타이틀이 콘텐츠와 함께 움직임
+**원인**: slide-inner에 `justify-content: center` 적용
+**해결**: slide-inner는 `justify-content: flex-start` 고정, content-wrapper에서 정렬
+
+### 5. viewer에서 언어 전환 안됨
+**원인**: IR 페이지에 `setLang` 함수가 없음
+**해결**: `window.setLang` 함수를 전역으로 노출
+
+---
+
+## 새 IR 버전 생성 시 체크리스트
+
+### HTML
+- [ ] 첫 페이지는 `.hero` 또는 `.cover` 클래스 사용
+- [ ] 모든 슬라이드에 `data-title-ko`, `data-title-en` 속성
+- [ ] 다국어 요소에 `data-lang` 속성
+- [ ] flex 요소(동그라미 등)는 별도 CSS 규칙으로 display: flex 유지
+
+### JavaScript
+- [ ] `window.setLang` 함수 전역 노출
+- [ ] `window.goToSlide` 함수 전역 노출
+- [ ] 언어 전환 시 body 클래스 변경 (inline style 아님)
+- [ ] inline style 초기화: `el.style.display = ''`
+
+### CSS
+- [ ] 언어별 display 규칙 (body.en, body.ja)
+- [ ] flex 요소 특별 처리 (display: flex !important 유지)
 
 ---
 
@@ -429,3 +292,5 @@ function applyLanguageVisibility(element) {
 | 날짜 | 버전 | 내용 |
 |-----|-----|-----|
 | 2026-01-31 | 1.0 | 최초 작성 |
+| 2026-01-31 | 1.1 | Wrapper 패턴 전체 적용 |
+| 2026-02-01 | 2.0 | **전면 개정**: CSS 오버라이드 최소화 원칙, Cover/Hero 특별 처리, 언어 가시성 규칙, Viewer 연동 가이드, 2601 vs 2602 차이점 |

@@ -15,10 +15,14 @@ let contentAlignH = 'center';  // left, center, right
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-  // Get parameters from URL
+  // Get parameters from URL - check both query string and hash (hash survives redirects)
   const params = new URLSearchParams(window.location.search);
-  lang = params.get('lang') || 'ko';
-  irVersion = params.get('ir') || '2601';  // IR 버전 파라미터
+  const hash = window.location.hash.slice(1);
+  const hashParams = new URLSearchParams(hash);
+
+  // Hash params take precedence over query params
+  lang = hashParams.get('lang') || params.get('lang') || 'ko';
+  irVersion = hashParams.get('ir') || params.get('ir') || '2601';
 
   // Load saved zooms
   loadZooms();
@@ -167,7 +171,36 @@ function renderSlides() {
     applyContentAlignment();
     // Update global toolbar button states
     updateGlobalTitleAlignButtons();
+    // Fix gradient text for PDF compatibility
+    fixGradientTextForPDF();
   }, 100);
+}
+
+// Fix gradient text for PDF - auto-detect and fix background-clip: text
+function fixGradientTextForPDF() {
+  document.querySelectorAll('.slide-clone').forEach(clone => {
+    clone.querySelectorAll('*').forEach(el => {
+      const style = window.getComputedStyle(el);
+      const bgClip = style.getPropertyValue('-webkit-background-clip') ||
+                     style.getPropertyValue('background-clip');
+
+      if (bgClip === 'text') {
+        // Determine fallback color based on theme
+        // ir-2601 (dark theme) = #00D4AA (accent green)
+        // ir-2602 (light theme) = #4F46E5 (indigo)
+        const isDarkTheme = clone.classList.contains('ir-2601') ||
+                           !clone.classList.contains('ir-2602');
+        const fallbackColor = isDarkTheme ? '#00D4AA' : '#4F46E5';
+
+        // Remove gradient background and apply solid color
+        el.style.setProperty('background', 'none', 'important');
+        el.style.setProperty('-webkit-background-clip', 'unset', 'important');
+        el.style.setProperty('background-clip', 'unset', 'important');
+        el.style.setProperty('-webkit-text-fill-color', fallbackColor, 'important');
+        el.style.setProperty('color', fallbackColor, 'important');
+      }
+    });
+  });
 }
 
 // Create slide wrapper element
@@ -226,9 +259,14 @@ function createSlideWrapper(slide, idx) {
 
   // Clone slide
   const clone = slide.cloneNode(true);
-  clone.className = 'slide-clone';
   clone.removeAttribute('style');
   clone.classList.remove('active');
+
+  // Ensure slide-clone class is added
+  clone.classList.add('slide-clone');
+
+  // Add IR version class for theme detection
+  clone.classList.add('ir-' + irVersion);
 
   // Apply language visibility
   applyLanguageVisibility(clone);
@@ -264,6 +302,8 @@ function updateSlideScale(idx) {
 }
 
 // Apply content zoom (excludes title area)
+// 단순화: title 제외한 모든 요소를 .content-wrapper로 감싸서 줌 적용
+// Cover 페이지는 전체를 콘텐츠로 취급
 function applyContentZoom(idx, zoomPercent) {
   const frame = document.getElementById('previewFrame' + idx);
   if (!frame) return;
@@ -271,199 +311,47 @@ function applyContentZoom(idx, zoomPercent) {
   const clone = frame.querySelector('.slide-clone');
   if (!clone) return;
 
+  const slideInner = clone.querySelector('.slide-inner');
+  if (!slideInner) return;
+
   const zoom = zoomPercent / 100;
+  // 2601은 hero, 2602는 cover 클래스 사용
+  const isCover = clone.classList.contains('cover') || clone.classList.contains('hero');
 
-  // Content selectors - 메인 컨테이너만 (중첩 방지)
-  // gp-nda-row가 있으면 하위의 gp-nda, gp-top, gp-countries에는 적용하지 않음
-  const contentSelectors = [
-    '.hero-left', '.hero-right', '.hero-stats',
-    '.overview-layout', '.ov-layout', '.ov-badges',
-    '.problem-flow', '.solution-content', '.solution-flow',
-    '.svc-phases', '.svc-cloud-bar',
-    '.market-content', '.mkt-stages', '.mkt-table',
-    '.comp-table', '.traction-grid',
-    '.biz-diagram-wrap', '.biz-rev-summary',
-    '.pricing-grid', '.sales-layout',
-    '.team-layout', '.team-ceo', '.team-members',
-    '.gp-nda-row',  // gp-nda-row만 줌 적용 (하위 요소는 제외)
-    '.gp-top', '.gp-countries',  // gp-nda-row가 없는 경우 대비
-    '.exit-chart-area', '.ask-stats', '.ask-highlights',
-    '.roadmap-container',
-    '.contact-area'
-  ];
+  // Title 요소 목록 (Cover/Hero 페이지는 title 없음 - 전체가 콘텐츠)
+  const titleSelectors = isCover ? [] : ['.section-label', '.section-title', '.section-desc'];
 
-  // Reset previous transforms
-  clone.querySelectorAll('[data-content-zoom]').forEach(el => {
-    el.style.removeProperty('transform');
-    el.style.removeProperty('transform-origin');
-    el.removeAttribute('data-content-zoom');
-  });
+  // 이미 wrapper가 있으면 사용, 없으면 생성
+  let contentWrapper = slideInner.querySelector(':scope > .content-wrapper');
 
-  // Global Partners 페이지 특별 처리: 모든 콘텐츠를 wrapper로 감싸기
-  const gpNdaRow = clone.querySelector('.gp-nda-row');
-  const gpTop = clone.querySelector('.gp-top');
-  const gpCountries = clone.querySelector('.gp-countries');
+  if (!contentWrapper) {
+    contentWrapper = document.createElement('div');
+    contentWrapper.className = 'content-wrapper';
+    contentWrapper.style.cssText = 'width: 100%;';
 
-  if (gpNdaRow && gpTop && gpCountries) {
-    // 이미 wrapper가 있는지 확인
-    let gpWrapper = clone.querySelector('.gp-content-wrapper');
-    if (!gpWrapper) {
-      // wrapper 생성
-      gpWrapper = document.createElement('div');
-      gpWrapper.className = 'gp-content-wrapper';
-      gpWrapper.style.cssText = 'width: 100%;';
+    // Title이 아닌 모든 자식 요소를 wrapper로 이동
+    const children = Array.from(slideInner.children);
+    let inserted = false;
 
-      // 부모 요소 찾기
-      const parent = gpNdaRow.parentElement;
-
-      // wrapper에 콘텐츠 이동
-      parent.insertBefore(gpWrapper, gpNdaRow);
-      gpWrapper.appendChild(gpNdaRow);
-      gpWrapper.appendChild(gpTop);
-      gpWrapper.appendChild(gpCountries);
-    }
-
-    // wrapper에 줌 적용
-    gpWrapper.style.setProperty('transform-origin', 'top center', 'important');
-    gpWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-    gpWrapper.setAttribute('data-content-zoom', 'true');
-    return; // Global Partners는 여기서 끝
-  }
-
-  // Hero 페이지 특별 처리: hero-left, hero-right를 wrapper로 감싸기
-  const heroLeft = clone.querySelector('.hero-left');
-  const heroRight = clone.querySelector('.hero-right');
-
-  if (heroLeft && heroRight) {
-    let heroWrapper = clone.querySelector('.hero-content-wrapper');
-    if (!heroWrapper) {
-      heroWrapper = document.createElement('div');
-      heroWrapper.className = 'hero-content-wrapper';
-      heroWrapper.style.cssText = 'display: flex; gap: 40px; width: 100%; align-items: center;';
-
-      const parent = heroLeft.parentElement;
-      parent.insertBefore(heroWrapper, heroLeft);
-      heroWrapper.appendChild(heroLeft);
-      heroWrapper.appendChild(heroRight);
-    }
-
-    heroWrapper.style.setProperty('transform-origin', 'top center', 'important');
-    heroWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-    heroWrapper.setAttribute('data-content-zoom', 'true');
-    return;
-  }
-
-  // Ask 페이지 특별 처리: h2, ask-desc, ask-stats, ask-footer를 wrapper로 감싸기
-  const askStats = clone.querySelector('.ask-stats');
-  const askFooter = clone.querySelector('.ask-footer');
-
-  if (askStats && askFooter) {
-    let askWrapper = clone.querySelector('.ask-content-wrapper');
-    if (!askWrapper) {
-      askWrapper = document.createElement('div');
-      askWrapper.className = 'ask-content-wrapper';
-      askWrapper.style.cssText = 'width: 100%; text-align: center;';
-
-      const parent = askStats.parentElement;
-
-      // h2와 ask-desc 찾기
-      const h2Elements = parent.querySelectorAll('h2[data-lang]');
-      const askDescs = parent.querySelectorAll('.ask-desc');
-
-      // 첫 번째 h2 앞에 wrapper 삽입
-      if (h2Elements.length > 0) {
-        parent.insertBefore(askWrapper, h2Elements[0]);
-      } else {
-        parent.insertBefore(askWrapper, askStats);
+    children.forEach(child => {
+      const isTitle = titleSelectors.some(sel => child.matches && child.matches(sel));
+      if (!isTitle) {
+        if (!inserted) {
+          // 첫 번째 non-title 요소 위치에 wrapper 삽입
+          slideInner.insertBefore(contentWrapper, child);
+          inserted = true;
+        }
+        contentWrapper.appendChild(child);
       }
-
-      // 모든 요소를 wrapper로 이동
-      h2Elements.forEach(el => askWrapper.appendChild(el));
-      askDescs.forEach(el => askWrapper.appendChild(el));
-      askWrapper.appendChild(askStats);
-      askWrapper.appendChild(askFooter);
-    }
-
-    askWrapper.style.setProperty('transform-origin', 'top center', 'important');
-    askWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-    askWrapper.setAttribute('data-content-zoom', 'true');
-    return;
+    });
   }
 
-  // Product 페이지 특별 처리: svc-phases, svc-cloud-bar를 wrapper로 감싸기
-  const svcPhases = clone.querySelector('.svc-phases');
-  const svcCloudBar = clone.querySelector('.svc-cloud-bar');
-
-  if (svcPhases && svcCloudBar) {
-    let svcWrapper = clone.querySelector('.svc-content-wrapper');
-    if (!svcWrapper) {
-      svcWrapper = document.createElement('div');
-      svcWrapper.className = 'svc-content-wrapper';
-      svcWrapper.style.cssText = 'width: 100%;';
-
-      const parent = svcPhases.parentElement;
-      parent.insertBefore(svcWrapper, svcPhases);
-      svcWrapper.appendChild(svcPhases);
-      svcWrapper.appendChild(svcCloudBar);
-    }
-
-    svcWrapper.style.setProperty('transform-origin', 'top center', 'important');
-    svcWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-    svcWrapper.setAttribute('data-content-zoom', 'true');
-    return;
+  // Wrapper에 줌 적용
+  if (contentWrapper) {
+    contentWrapper.style.setProperty('transform-origin', 'top center', 'important');
+    contentWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
+    contentWrapper.setAttribute('data-content-zoom', 'true');
   }
-
-  // Business 페이지 특별 처리: biz-diagram-wrap, biz-rev-summary를 wrapper로 감싸기
-  const bizDiagram = clone.querySelector('.biz-diagram-wrap');
-  const bizRevSummary = clone.querySelector('.biz-rev-summary');
-
-  if (bizDiagram && bizRevSummary) {
-    let bizWrapper = clone.querySelector('.biz-content-wrapper');
-    if (!bizWrapper) {
-      bizWrapper = document.createElement('div');
-      bizWrapper.className = 'biz-content-wrapper';
-      bizWrapper.style.cssText = 'width: 100%;';
-
-      const parent = bizDiagram.parentElement;
-      parent.insertBefore(bizWrapper, bizDiagram);
-      bizWrapper.appendChild(bizDiagram);
-      bizWrapper.appendChild(bizRevSummary);
-    }
-
-    bizWrapper.style.setProperty('transform-origin', 'top center', 'important');
-    bizWrapper.style.setProperty('transform', `scale(${zoom})`, 'important');
-    bizWrapper.setAttribute('data-content-zoom', 'true');
-    return;
-  }
-
-  // Team 페이지 특별 처리: team-ceo, team-members를 wrapper로 감싸기
-  const teamCeo = clone.querySelector('.team-ceo');
-  const teamMembers = clone.querySelector('.team-members');
-
-  if (teamCeo && teamMembers) {
-    // team-layout이 이미 wrapper 역할을 하는지 확인
-    const teamLayout = clone.querySelector('.team-layout');
-    if (teamLayout) {
-      teamLayout.style.setProperty('transform-origin', 'top center', 'important');
-      teamLayout.style.setProperty('transform', `scale(${zoom})`, 'important');
-      teamLayout.setAttribute('data-content-zoom', 'true');
-      return;
-    }
-  }
-
-  // Apply new zoom with !important to override CSS
-  contentSelectors.forEach(selector => {
-    const el = clone.querySelector(selector);
-    if (el) {
-      // 이미 zoom이 적용된 부모가 있으면 스킵
-      if (el.closest('[data-content-zoom]')) {
-        return;
-      }
-      el.style.setProperty('transform-origin', 'top center', 'important');
-      el.style.setProperty('transform', `scale(${zoom})`, 'important');
-      el.setAttribute('data-content-zoom', 'true');
-    }
-  });
 }
 
 // Set page zoom
@@ -668,217 +556,40 @@ function applyContentAlignment() {
 }
 
 // Apply content alignment to a single slide element
+// 타이틀 고정, content-wrapper 내부에서 콘텐츠 수직 정렬만 적용
+// 수평 정렬은 transform-origin만 변경 (너비 유지)
 function applyContentAlignmentToSlide(clone, alignV, alignH) {
-  const slideInner = clone.querySelector('.slide-inner');
-  if (!slideInner) return;
+  const contentWrapper = clone.querySelector('.slide-inner > .content-wrapper');
+  if (!contentWrapper) return;
 
-  // 타이틀 요소들은 상단 고정
-  const titleSelectors = ['.section-label', '.section-title', '.section-desc'];
-  titleSelectors.forEach(selector => {
-    clone.querySelectorAll(selector).forEach(el => {
-      el.style.setProperty('width', '1200px', 'important');
-      el.style.setProperty('max-width', '1200px', 'important');
-      el.style.setProperty('min-width', '1200px', 'important');
-    });
-  });
+  // 2601은 hero, 2602는 cover 클래스 사용
+  const isCover = clone.classList.contains('cover') || clone.classList.contains('hero');
 
-  // 콘텐츠 요소 찾기 - 페이지별 메인 컨테이너만 (개별 하위 요소는 제외)
-  // 중요: 한 페이지에 여러 요소가 있으면 첫 번째만 margin-top 적용
-  const contentSelectors = [
-    // Hero
-    '.hero-left', '.hero-right',
-    // Overview
-    '.overview-layout', '.ov-layout',
-    // Problem
-    '.problem-flow',
-    // Solution
-    '.solution-content', '.solution-flow',
-    // Service
-    '.svc-phases',
-    // Market
-    '.market-content', '.mkt-stages',
-    // Competition
-    '.comp-table',
-    // Traction
-    '.traction-grid',
-    // Business
-    '.biz-diagram-wrap',
-    // Pricing
-    '.pricing-grid',
-    // Sales
-    '.sales-layout',
-    // Team
-    '.team-layout',
-    // Global Partners - gp-nda-row가 전체 컨테이너
-    '.gp-nda-row',
-    // Roadmap
-    '.roadmap-container',
-    // Exit
-    '.exit-chart-area',
-    // Ask
-    '.ask-stats'
-  ];
-
-  // 수평 정렬용 셀렉터 (너비 100%가 아닌 요소만)
-  // Global Partners 페이지 요소들(.gp-nda-row, .gp-top, .gp-countries)은
-  // 이미 너비 100%로 설정되어 있으므로 수평 정렬 대상에서 제외
-  const horizontalAlignSelectors = [
-    '.hero-left', '.hero-right',
-    '.overview-layout', '.ov-layout',
-    '.problem-flow',
-    '.solution-content', '.solution-flow',
-    '.svc-phases',
-    '.market-content', '.mkt-stages',
-    '.comp-table',
-    '.traction-grid',
-    '.biz-diagram-wrap',
-    '.pricing-grid',
-    '.sales-layout',
-    '.team-layout',
-    // '.gp-nda-row', '.gp-top', '.gp-countries' - 제외 (width: 100%)
-    '.roadmap-container',
-    '.exit-chart-area',
-    '.ask-stats'
-  ];
-
-  // slide-inner 기본 설정 - 타이틀은 항상 좌측 상단 고정
-  slideInner.style.setProperty('position', 'relative', 'important');
-  slideInner.style.setProperty('justify-content', 'flex-start', 'important');
-  slideInner.style.setProperty('align-items', 'flex-start', 'important');
-
-  // 타이틀은 항상 좌측 정렬 (align-self로 고정)
-  titleSelectors.forEach(selector => {
-    clone.querySelectorAll(selector).forEach(el => {
-      el.style.setProperty('align-self', 'flex-start', 'important');
-    });
-  });
-
-  // 콘텐츠 요소에만 수평 정렬 적용 (margin으로 처리)
-  const allContentSelectors = [...contentSelectors, '.gp-top', '.gp-countries'];
-  allContentSelectors.forEach(selector => {
-    clone.querySelectorAll(selector).forEach(el => {
-      switch (alignH) {
-        case 'left':
-          el.style.setProperty('align-self', 'flex-start', 'important');
-          break;
-        case 'center':
-          el.style.setProperty('align-self', 'center', 'important');
-          break;
-        case 'right':
-          el.style.setProperty('align-self', 'flex-end', 'important');
-          break;
-      }
-    });
-  });
-
-  // scale 값 가져오기
-  const transformMatch = clone.style.transform?.match(/scale\(([\d.]+)\)/);
-  const scale = transformMatch ? parseFloat(transformMatch[1]) : 1;
-
-  // 타이틀 실제 높이 계산 (scale 보정) - marginBottom 포함
-  let titleTotalHeight = 0;
-  titleSelectors.forEach(selector => {
-    clone.querySelectorAll(selector).forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const style = window.getComputedStyle(el);
-      const marginBottom = parseFloat(style.marginBottom) || 0;
-      titleTotalHeight += (rect.height / scale) + marginBottom;
-    });
-  });
-
-  // 콘텐츠 가용 공간 = 타이틀 바로 아래 ~ 프레임 하단(하단 패딩 제외)
-  // 슬라이드 높이 720 - 상단 패딩 30 - 타이틀 높이 - 하단 패딩 30
-  const slideHeight = 720;
-  const topPadding = 30;
-  const bottomPadding = 30;
-  const availableHeight = slideHeight - topPadding - titleTotalHeight - bottomPadding;
-
-  // 첫 번째 콘텐츠 요소 찾기 및 전체 콘텐츠 높이 계산
-  let firstContentElement = null;
-  let totalContentHeight = 0;
-
-  // Wrapper 기반 페이지들 확인 (applyContentZoom에서 생성된 wrapper 사용)
-  const wrapperSelectors = [
-    '.gp-content-wrapper',    // Global Partners
-    '.hero-content-wrapper',  // Hero
-    '.ask-content-wrapper',   // Ask
-    '.svc-content-wrapper',   // Product/Service
-    '.biz-content-wrapper'    // Business
-  ];
-
-  // 먼저 wrapper가 있는지 확인
-  for (const selector of wrapperSelectors) {
-    const wrapper = clone.querySelector(selector);
-    if (wrapper) {
-      firstContentElement = wrapper;
-      const rect = wrapper.getBoundingClientRect();
-      totalContentHeight = rect.height / scale;
-      break;
-    }
-  }
-
-  // wrapper가 없으면 기존 로직 사용
-  if (!firstContentElement) {
-    // Global Partners 페이지 특별 처리: 여러 요소의 총 높이 계산
-    const gpNdaRow = clone.querySelector('.gp-nda-row');
-    const gpTop = clone.querySelector('.gp-top');
-    const gpCountries = clone.querySelector('.gp-countries');
-
-    if (gpNdaRow) {
-      // Global Partners 페이지인 경우
-      firstContentElement = gpNdaRow;
-
-      // gp-nda-row + gp-top + gp-countries 전체 높이 계산
-      [gpNdaRow, gpTop, gpCountries].forEach(el => {
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          const style = window.getComputedStyle(el);
-          const marginTop = parseFloat(style.marginTop) || 0;
-          const marginBottom = parseFloat(style.marginBottom) || 0;
-          totalContentHeight += (rect.height / scale) + marginTop + marginBottom;
-        }
-      });
-      // 첫 번째 요소의 margin-top은 우리가 설정할 것이므로 제외
-      const firstStyle = window.getComputedStyle(gpNdaRow);
-      totalContentHeight -= parseFloat(firstStyle.marginTop) || 0;
-    } else {
-      // 일반 페이지: 첫 번째 콘텐츠 요소만 사용
-      for (const selector of contentSelectors) {
-        const el = clone.querySelector(selector);
-        if (el) {
-          firstContentElement = el;
-          const rect = el.getBoundingClientRect();
-          totalContentHeight = rect.height / scale;
-          break;
-        }
-      }
-    }
-  }
-
-  if (!firstContentElement) return;
-
-  // 수직 정렬 적용 (첫 번째 콘텐츠 요소에만)
-  // availableHeight = 타이틀 바로 아래 ~ 프레임 하단
-  // 콘텐츠가 가용 공간보다 크면 margin-top을 0으로 (짤림 방지)
-  const contentOverflow = totalContentHeight > availableHeight;
-
+  // 수직 정렬: content-wrapper의 justify-content 변경 (타이틀 영향 없음)
+  let justifyContent = 'flex-start';
   switch (alignV) {
-    case 'top':
-      // 상단 정렬: 타이틀 아래에 여백 20px (콘텐츠가 넘치면 0)
-      const topMargin = contentOverflow ? 0 : 20;
-      firstContentElement.style.setProperty('margin-top', topMargin + 'px', 'important');
-      break;
-    case 'middle':
-      // 가운데 정렬: 타이틀 바로 아래 ~ 프레임 하단 기준 가운데
-      const middleMargin = Math.max(0, (availableHeight - totalContentHeight) / 2);
-      firstContentElement.style.setProperty('margin-top', middleMargin + 'px', 'important');
-      break;
-    case 'bottom':
-      // 하단 정렬: 프레임 하단에 붙음
-      const bottomMargin = Math.max(0, availableHeight - totalContentHeight);
-      firstContentElement.style.setProperty('margin-top', bottomMargin + 'px', 'important');
-      break;
+    case 'top': justifyContent = 'flex-start'; break;
+    case 'middle': justifyContent = 'center'; break;
+    case 'bottom': justifyContent = 'flex-end'; break;
   }
+
+  if (isCover) {
+    // Cover 페이지: 가로 레이아웃이므로 align-items로 수직 정렬
+    let alignValue = 'stretch';
+    if (justifyContent === 'center') alignValue = 'center';
+    else if (justifyContent === 'flex-end') alignValue = 'flex-end';
+    contentWrapper.style.setProperty('align-items', alignValue, 'important');
+  } else {
+    // 일반 페이지: 세로 레이아웃이므로 justify-content로 수직 정렬
+    contentWrapper.style.setProperty('justify-content', justifyContent, 'important');
+    // 수평은 항상 stretch 유지 (너비 100%)
+    contentWrapper.style.setProperty('align-items', 'stretch', 'important');
+  }
+
+  // transform-origin만 변경 (줌 시 기준점, 너비에 영향 없음)
+  const originX = alignH === 'left' ? 'left' : alignH === 'right' ? 'right' : 'center';
+  const originY = alignV === 'top' ? 'top' : alignV === 'bottom' ? 'bottom' : 'center';
+  contentWrapper.style.setProperty('transform-origin', `${originX} ${originY}`, 'important');
 }
 
 // Set per-page content VERTICAL alignment

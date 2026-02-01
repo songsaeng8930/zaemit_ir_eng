@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEVEN IR Viewer</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Dark Theme (default) */
+      --bg-primary: #0A0E27;
+      --bg-secondary: rgba(10, 14, 39, 0.97);
+      --text-primary: #fff;
+      --text-secondary: #94A3B8;
+      --accent: #00D4AA;
+      --accent2: #0066FF;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(255, 255, 255, 0.12);
+    }
+
+    body.light-theme {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #FFFFFF;
+      --text-primary: #0F172A;
+      --text-secondary: #64748B;
+      --accent: #4F46E5;
+      --accent2: #0EA5E9;
+      --border: #E2E8F0;
+      --border-hover: #CBD5E1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-primary);
+      font-family: 'Pretendard', 'Plus Jakarta Sans', -apple-system, sans-serif;
+      color: var(--text-primary);
+    }
+
+    body.en { font-family: 'Plus Jakarta Sans', 'Pretendard', sans-serif; }
+
+    /* ── FLOATING MENU BUTTON ── */
+    .menu-floating {
+      position: fixed;
+      top: 24px; left: 24px;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .menu-btn {
+      width: 48px; height: 48px;
+      border: 1px solid var(--border-hover);
+      border-radius: 12px;
+      background: var(--bg-secondary);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.25s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .menu-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .menu-title span {
+      color: var(--accent);
+      font-weight: 500;
+      margin-left: 6px;
+      font-size: 14px;
+    }
+
+    body.light-theme .menu-title {
+      text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .menu-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--accent);
+    }
+
+    body.light-theme .menu-btn {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    body.light-theme .menu-btn:hover {
+      background: #F1F5F9;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .menu-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.active span:nth-child(2) { opacity: 0; }
+    .menu-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Lang Toggle in Sidebar */
+    .lang-toggle {
+      display: flex;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      transition: all 0.25s;
+      text-align: center;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #000;
+    }
+
+    body.light-theme .lang-btn.active {
+      color: #fff;
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.05);
+    }
+
+    body.light-theme .lang-btn:hover:not(.active) {
+      background: #F1F5F9;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 280px;
+      z-index: 250;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      backdrop-filter: blur(24px);
+      display: flex;
+      flex-direction: column;
+      padding: 80px 0 20px 0;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow-y: auto;
+      padding: 0 12px;
+    }
+
+    .sidebar-nav::-webkit-scrollbar { width: 4px; }
+    .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
+
+    .toc-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .toc-item:hover { background: rgba(255,255,255,0.05); }
+    body.light-theme .toc-item:hover { background: #F8FAFC; }
+
+    .toc-item.active { background: rgba(0, 102, 255, 0.15); }
+    body.light-theme .toc-item.active { background: #EEF2FF; }
+
+    .toc-item.active .toc-num {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .toc-item.active .toc-label {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .toc-num {
+      width: 26px; height: 26px;
+      border-radius: 7px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-hover);
+      transition: all 0.25s;
+    }
+
+    .toc-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.25s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Sidebar Footer */
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sidebar-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .sidebar-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0, 212, 170, 0.08);
+    }
+
+    body.light-theme .sidebar-btn:hover {
+      background: rgba(79, 70, 229, 0.08);
+    }
+
+    .sidebar-btn svg {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .sidebar-footer-text {
+      font-size: 11px;
+      color: var(--text-secondary);
+      opacity: 0.6;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    /* ── SIDEBAR OVERLAY ── */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 200;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .sidebar-overlay.active {
+      pointer-events: auto;
+    }
+
+    /* ── IR FRAME ── */
+    .ir-frame {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: var(--bg-primary);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* ── PAGE INDICATOR ── */
+    .page-indicator {
+      position: fixed;
+      bottom: 28px; right: 36px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .page-progress {
+      width: 100px; height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      overflow: hidden;
+    }
+
+    .page-progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .page-num {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .page-num .cur {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* ── POWERED BY ── */
+    .powered-badge {
+      position: fixed;
+      bottom: 28px; left: 36px;
+      z-index: 100;
+      font-size: 20px;
+      color: var(--text-secondary);
+      opacity: 0.4;
+      font-weight: 500;
+    }
+
+    .powered-badge span {
+      font-weight: 700;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- FLOATING MENU BUTTON -->
+<div class="menu-floating">
+  <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="menu-title">WEVEN<span>IR Deck</span></div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-nav" id="tocNav">
+    <!-- TOC items will be populated by JS -->
+  </div>
+  <div class="sidebar-footer">
+    <div class="lang-toggle" id="langToggle">
+      <!-- Language buttons dynamically built based on IR's irConfig.languages -->
+    </div>
+    <button class="sidebar-btn" id="motionToggle" onclick="toggleMotion()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M8 12l2 2 4-4"/>
+      </svg>
+      <span data-lang="ko">모션 켜짐</span>
+      <span data-lang="en" style="display:none">Motion On</span>
+      <span data-lang="ja" style="display:none">モーション ON</span>
+    </button>
+    <button class="sidebar-btn" onclick="openPrintPreview()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      <span data-lang="ko">인쇄 미리보기</span>
+      <span data-lang="en" style="display:none">Print Preview</span>
+      <span data-lang="ja" style="display:none">印刷プレビュー</span>
+    </button>
+    <div class="sidebar-footer-text">
+      WEVEN Inc. © 2025<br>Confidential
+    </div>
+  </div>
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- IR CONTENT FRAME -->
+<iframe class="ir-frame" id="irFrame" src="" scrolling="no" frameborder="0"></iframe>
+
+<!-- PAGE INDICATOR -->
+<div class="page-indicator">
+  <div class="page-progress"><div class="page-progress-fill" id="progressFill"></div></div>
+  <div class="page-num"><span class="cur" id="pageNum">01</span> / <span id="pageTotal">17</span></div>
+</div>
+
+<!-- POWERED BY -->
+<div class="powered-badge">Powered by <span>Zaemit</span></div>
+
+<script>
+  // State
+  let config = null;
+  let irVersion = '2601';
+  let lang = localStorage.getItem('irLang') || 'ko';
+  let motionEnabled = localStorage.getItem('irMotion') !== 'false';
+  let slides = [];
+  let current = 0;
+  let total = 0;
+
+  // Init
+  async function init() {
+    // Get URL params - check both query string and hash (hash survives redirects)
+    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash.slice(1); // Remove the # symbol
+    const hashParams = new URLSearchParams(hash);
+
+    // Hash params take precedence over query params
+    irVersion = hashParams.get('ir') || params.get('ir') || '2601';
+    lang = hashParams.get('lang') || params.get('lang') || localStorage.getItem('irLang') || 'ko';
+
+    // Load config
+    try {
+      const resp = await fetch('conf.json');
+      config = await resp.json();
+    } catch (e) {
+      console.error('Failed to load config:', e);
+    }
+
+    // Determine theme based on version
+    const versionConfig = config?.versions?.find(v => v.id === irVersion);
+    const isLightTheme = irVersion === '2602' || versionConfig?.theme === 'light';
+
+    if (isLightTheme) {
+      document.body.classList.add('light-theme');
+    }
+
+    // Update language UI
+    updateLangUI();
+
+    // Load IR content
+    loadIR();
+  }
+
+  function loadIR() {
+    const iframe = document.getElementById('irFrame');
+    // Use trailing slash to avoid redirect that strips query params
+    iframe.src = `../ir/${irVersion}/?embed=true&lang=${lang}`;
+
+    iframe.onload = () => {
+      // Wait for iframe content to be ready
+      setTimeout(() => {
+        try {
+          const iframeWin = iframe.contentWindow;
+          const iframeDoc = iframeWin.document;
+
+          // Read irConfig from iframe for language support
+          const irConfig = iframeWin.irConfig;
+          let languages = null;
+
+          if (irConfig && irConfig.languages && Array.isArray(irConfig.languages)) {
+            languages = irConfig.languages;
+          } else {
+            // Fallback based on version
+            if (irVersion === '2602') {
+              languages = ['en'];
+            } else {
+              languages = ['ko', 'en', 'ja'];
+            }
+          }
+
+          // Check if current lang is supported, otherwise use default
+          if (!languages.includes(lang)) {
+            lang = (irConfig && irConfig.defaultLang) || languages[0] || 'ko';
+            localStorage.setItem('irLang', lang);
+          }
+
+          buildLangToggle(languages);
+
+          // Get slide info from iframe
+          if (iframeWin.irSlideInfo) {
+            total = iframeWin.irSlideInfo.total;
+            current = iframeWin.irSlideInfo.current || 0;
+          } else {
+            slides = iframeDoc.querySelectorAll('.slide');
+            total = slides.length;
+          }
+
+          document.getElementById('pageTotal').textContent = total;
+          buildTOC(iframeDoc);
+          updatePageIndicator();
+
+          // Apply motion setting
+          if (!motionEnabled) {
+            iframeDoc.body.classList.add('no-motion');
+          }
+
+          // Apply language
+          updateLangUI();
+          applyLangToIframe();
+
+        } catch (e) {
+          console.error('Cannot access iframe content:', e);
+        }
+      }, 200);
+    };
+  }
+
+  function buildTOC(iframeDoc) {
+    const tocNav = document.getElementById('tocNav');
+    tocNav.innerHTML = '';
+
+    // Try to get slide info from iframe
+    const iframe = document.getElementById('irFrame');
+    let slideInfo = null;
+    try {
+      slideInfo = iframe.contentWindow.irSlideInfo;
+    } catch (e) {}
+
+    const slideCount = slideInfo ? slideInfo.slides.length : slides.length;
+
+    for (let i = 0; i < slideCount; i++) {
+      const item = document.createElement('div');
+      item.className = 'toc-item' + (i === 0 ? ' active' : '');
+
+      let title = `Slide ${i + 1}`;
+      if (slideInfo && slideInfo.slides[i]) {
+        const langKey = 'title' + lang.charAt(0).toUpperCase() + lang.slice(1);
+        title = slideInfo.slides[i][langKey] || slideInfo.slides[i].titleEn || title;
+      } else if (slides[i]) {
+        const titleKey = 'title' + lang.charAt(0).toUpperCase() + lang.slice(1);
+        title = slides[i].dataset[titleKey] || slides[i].dataset.titleEn || title;
+      }
+
+      item.innerHTML = `
+        <div class="toc-num">${String(i + 1).padStart(2, '0')}</div>
+        <div class="toc-label">${title}</div>
+      `;
+
+      item.onclick = () => goTo(i);
+      tocNav.appendChild(item);
+    }
+  }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+
+    current = idx;
+
+    // Call iframe's goToSlide function
+    const iframe = document.getElementById('irFrame');
+    try {
+      if (iframe.contentWindow.goToSlide) {
+        iframe.contentWindow.goToSlide(idx);
+      }
+    } catch (e) {
+      console.error('Cannot navigate iframe:', e);
+    }
+
+    // Update TOC
+    document.querySelectorAll('.toc-item').forEach((item, i) => {
+      item.classList.toggle('active', i === current);
+    });
+
+    updatePageIndicator();
+  }
+
+  function updatePageIndicator() {
+    document.getElementById('pageNum').textContent = String(current + 1).padStart(2, '0');
+    document.getElementById('progressFill').style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('menuBtn').classList.toggle('active');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+  }
+
+  function setLang(newLang) {
+    lang = newLang;
+    localStorage.setItem('irLang', lang);
+    updateLangUI();
+    applyLangToIframe();
+
+    // Rebuild TOC with new language
+    const iframe = document.getElementById('irFrame');
+    try {
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+      buildTOC(iframeDoc);
+    } catch (e) {}
+  }
+
+  function buildLangToggle(languages) {
+    const container = document.getElementById('langToggle');
+    container.innerHTML = '';
+
+    // If no languages or only one, show it but as single button
+    if (!languages || languages.length === 0) {
+      container.style.display = 'none';
+      return;
+    }
+
+    container.style.display = 'flex';
+    const labels = { ko: 'KO', en: 'EN', ja: 'JP' };
+
+    languages.forEach(l => {
+      const btn = document.createElement('button');
+      btn.className = 'lang-btn' + (l === lang ? ' active' : '');
+      btn.dataset.lang = l;
+      btn.textContent = labels[l] || l.toUpperCase();
+      btn.onclick = () => setLang(l);
+      container.appendChild(btn);
+    });
+  }
+
+  function updateLangUI() {
+    // Update body class
+    document.body.classList.remove('en', 'ja');
+    if (lang !== 'ko') document.body.classList.add(lang);
+
+    // Update lang buttons (highlight active)
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    // Update text elements (exclude lang-btn from hiding)
+    document.querySelectorAll('[data-lang]:not(.lang-btn)').forEach(el => {
+      el.style.display = el.dataset.lang === lang ? '' : 'none';
+    });
+  }
+
+  function applyLangToIframe() {
+    const iframe = document.getElementById('irFrame');
+    try {
+      const iframeWin = iframe.contentWindow;
+      if (iframeWin.setLang) {
+        iframeWin.setLang(lang);
+      } else {
+        // Manual language toggle
+        const iframeDoc = iframe.contentDocument;
+        iframeDoc.body.classList.remove('en', 'ja');
+        if (lang !== 'ko') iframeDoc.body.classList.add(lang);
+
+        iframeDoc.querySelectorAll('[data-lang]').forEach(el => {
+          el.style.display = el.dataset.lang === lang ? '' : 'none';
+        });
+      }
+    } catch (e) {}
+  }
+
+  function toggleMotion() {
+    motionEnabled = !motionEnabled;
+    localStorage.setItem('irMotion', motionEnabled);
+
+    const btn = document.getElementById('motionToggle');
+    btn.classList.toggle('active', motionEnabled);
+
+    // Update button text
+    const texts = {
+      ko: motionEnabled ? '모션 켜짐' : '모션 꺼짐',
+      en: motionEnabled ? 'Motion On' : 'Motion Off',
+      ja: motionEnabled ? 'モーション ON' : 'モーション OFF'
+    };
+    btn.querySelectorAll('[data-lang]').forEach(el => {
+      el.textContent = texts[el.dataset.lang];
+    });
+
+    // Apply to iframe
+    const iframe = document.getElementById('irFrame');
+    try {
+      const iframeDoc = iframe.contentDocument;
+      iframeDoc.body.classList.toggle('no-motion', !motionEnabled);
+    } catch (e) {}
+  }
+
+  function openPrintPreview() {
+    window.open(`print-preview#ir=${irVersion}&lang=${lang}`, '_blank');
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      goTo(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      goTo(current - 1);
+    }
+    if (e.key === 'Escape') {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar.classList.contains('open')) {
+        toggleSidebar();
+      }
+    }
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  });
+
+  // Listen for slide change messages from iframe
+  window.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'slideChange') {
+      current = e.data.current;
+      total = e.data.total;
+
+      // Update TOC
+      document.querySelectorAll('.toc-item').forEach((item, i) => {
+        item.classList.toggle('active', i === current);
+      });
+
+      updatePageIndicator();
+    }
+  });
+
+  // Initialize
+  init();
+</script>
+
+</body>
+</html>

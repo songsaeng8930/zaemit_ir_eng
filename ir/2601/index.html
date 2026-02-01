@@ -93,7 +93,7 @@ body.ja{font-family:'Noto Sans JP','Plus Jakarta Sans',-apple-system,BlinkMacSys
 
 /* ── SLIDES ── */
 .slide{
-  position:fixed;top:68px;left:0;right:0;bottom:0;
+  position:fixed;top:0;left:0;right:0;bottom:0;
   display:none;align-items:center;justify-content:center;
   padding:40px 100px;opacity:0;
   transition:left .35s cubic-bezier(.16,1,.3,1);
@@ -1081,47 +1081,6 @@ body.pdf-capturing .particles{display:none!important}
 </style>
 </head>
 <body>
-
-<!-- LANG TOGGLE -->
-<div class="lang-toggle">
-  <button class="lang-btn active" id="btnKo" onclick="setLang('ko')">KR</button>
-  <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
-  <button class="lang-btn" id="btnJa" onclick="setLang('ja')">JP</button>
-</div>
-
-<!-- MENU HEADER -->
-<div class="menu-header">
-  <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
-    <span></span><span></span><span></span>
-  </button>
-  <div class="menu-header-title">WEVEN<span>IR Deck</span></div>
-</div>
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-nav" id="tocNav"></div>
-  <div class="sidebar-footer">
-    <button class="motion-toggle-btn" id="motionToggle" onclick="toggleMotion()">
-      <svg class="motion-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
-      <svg class="motion-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-      <span data-lang="ko">모션 켜짐</span><span data-lang="en">Motion On</span><span data-lang="ja">モーション ON</span>
-    </button>
-    <button class="pdf-download-btn" onclick="openPrintPreview()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      <span data-lang="ko">인쇄 미리보기</span><span data-lang="en">Print Preview</span><span data-lang="ja">印刷プレビュー</span>
-    </button>
-    <p>WEVEN Inc. &copy; 2025<br>Confidential</p>
-  </div>
-</div>
-<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
-
-<!-- POWERED BY ZAEMIT -->
-<div class="powered-badge">Powered by <span>Zaemit</span></div>
-
-<!-- PAGE INDICATOR -->
-<div class="page-indicator">
-  <div class="page-progress"><div class="page-progress-fill" id="progressFill"></div></div>
-  <div class="page-num"><span class="cur" id="pageNum">01</span> / <span id="pageTotal">14</span></div>
-</div>
 
 <!-- ===== SLIDES ===== -->
 
@@ -2702,31 +2661,52 @@ body.pdf-capturing .particles{display:none!important}
 </div>
 
 <script>
+// ── IR 설정 (viewer.html에서 참조) ──
+window.irConfig = {
+  version: '2601',
+  theme: 'dark',
+  languages: ['ko', 'en', 'ja'],
+  defaultLang: 'ko'
+};
+
+// ── SLIDE NAVIGATION (viewer.html에서 제어) ──
+const urlParams = new URLSearchParams(window.location.search);
+const urlLang = urlParams.get('lang');
+
 const slides = document.querySelectorAll('.slide');
 const total = slides.length;
 let current = 0;
-let lang = 'ko';
+let lang = urlLang || 'ko';
 
-const tocNav = document.getElementById('tocNav');
-const pageNum = document.getElementById('pageNum');
-const pageTotal = document.getElementById('pageTotal');
-const progressFill = document.getElementById('progressFill');
-
-pageTotal.textContent = total;
-
-// Build TOC
-slides.forEach((s, i) => {
-  const d = document.createElement('div');
-  d.className = 'toc-item' + (i === 0 ? ' active' : '');
-  d.innerHTML = '<div class="toc-num">' + String(i+1).padStart(2,'0') + '</div><div class="toc-label">' + s.dataset['title' + lang.charAt(0).toUpperCase() + lang.slice(1)] + '</div>';
-  d.onclick = () => { goTo(i, 'toc-click'); };
-  tocNav.appendChild(d);
+// 언어 설정 적용
+if (lang !== 'ko') {
+  document.body.classList.add(lang);
+}
+document.querySelectorAll('[data-lang]').forEach(el => {
+  el.style.display = el.dataset.lang === lang ? '' : 'none';
 });
 
-// Open print preview page
-function openPrintPreview() {
-  window.open('../../app/print-preview.html?ir=2601&lang=' + lang, '_blank');
-}
+// viewer.html에서 호출할 수 있도록 전역 함수 노출
+window.setLang = function(newLang) {
+  lang = newLang;
+  document.body.classList.remove('en', 'ja', 'ko');
+  if (newLang !== 'ko') {
+    document.body.classList.add(newLang);
+  }
+  // CSS 규칙이 body 클래스에 따라 언어 표시를 제어함
+  // 추가로 inline style 초기화 (viewer.html이 설정했을 수 있음)
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = '';
+  });
+};
+
+window.goToSlide = function(idx) {
+  if (idx < 0 || idx >= total) return;
+  slides[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+  updatePageIndicator();
+};
 
 function loadScript(src) {
   return new Promise(function(resolve, reject) {
@@ -2823,21 +2803,14 @@ async function printPDF() {
   document.body.removeChild(overlay);
 }
 
-function goTo(idx, source, skipHash) {
+function goTo(idx, source) {
   if (idx === current || idx < 0 || idx >= total) return;
   slides[current].classList.remove('active');
   current = idx;
   var next = slides[current];
-  // Reset animations: briefly remove active, reflow, then add
   next.classList.remove('active');
   void next.offsetHeight;
   next.classList.add('active');
-  next.style.opacity = '0';
-  void next.offsetHeight;
-  next.style.opacity = '';
-  pageNum.textContent = String(current + 1).padStart(2, '0');
-  progressFill.style.width = ((current + 1) / total * 100) + '%';
-  tocNav.querySelectorAll('.toc-item').forEach((el, i) => el.classList.toggle('active', i === current));
   // Trigger chart drawing animation on market slide
   var chartArea = next.querySelector('.mkt-chart-area');
   if (chartArea) {
@@ -2845,73 +2818,42 @@ function goTo(idx, source, skipHash) {
     void chartArea.offsetHeight;
     chartArea.classList.add('animate');
   }
-  // Save current page to URL hash
-  if (!skipHash) {
-    history.replaceState(null, '', '#' + (current + 1));
+  // Update slide info and notify parent (for embed mode)
+  if (window.irSlideInfo) {
+    window.irSlideInfo.current = current;
+  }
+  if (window.parent !== window) {
+    try {
+      window.parent.postMessage({ type: 'slideChange', current: current, total: total }, '*');
+    } catch (e) {}
   }
 }
 
-// Language switch
+// Expose goToSlide for viewer.html (alias for goTo)
+window.goToSlide = function(idx) { goTo(idx, 'viewer'); };
+
+// Expose slide info for parent viewer
+window.irSlideInfo = {
+  slides: Array.from(slides).map((slide, i) => ({
+    index: i,
+    titleKo: slide.dataset.titleKo || slide.dataset.title || `슬라이드 ${i + 1}`,
+    titleEn: slide.dataset.titleEn || slide.dataset.title || `Slide ${i + 1}`,
+    titleJa: slide.dataset.titleJa || slide.dataset.title || `スライド ${i + 1}`
+  })),
+  total: total,
+  current: current
+};
+
+// Language switch (called by viewer.html)
 function setLang(l) {
   lang = l;
   document.body.classList.remove('en', 'ja');
   if (l === 'en') document.body.classList.add('en');
   if (l === 'ja') document.body.classList.add('ja');
-  document.getElementById('btnKo').classList.toggle('active', l === 'ko');
-  document.getElementById('btnEn').classList.toggle('active', l === 'en');
-  document.getElementById('btnJa').classList.toggle('active', l === 'ja');
-  // Update TOC labels
-  const key = 'title' + l.charAt(0).toUpperCase() + l.slice(1);
-  tocNav.querySelectorAll('.toc-item').forEach((el, i) => {
-    el.querySelector('.toc-label').textContent = slides[i].dataset[key] || slides[i].dataset.titleEn;
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = el.dataset.lang === l ? '' : 'none';
   });
 }
-
-// Motion Toggle
-var motionEnabled = true;
-
-function toggleMotion() {
-  motionEnabled = !motionEnabled;
-  var btn = document.getElementById('motionToggle');
-
-  if (motionEnabled) {
-    document.body.classList.remove('no-motion');
-    btn.classList.remove('off');
-    btn.querySelector('[data-lang="ko"]').textContent = '모션 켜짐';
-    btn.querySelector('[data-lang="en"]').textContent = 'Motion On';
-    btn.querySelector('[data-lang="ja"]').textContent = 'モーション ON';
-  } else {
-    document.body.classList.add('no-motion');
-    btn.classList.add('off');
-    btn.querySelector('[data-lang="ko"]').textContent = '모션 꺼짐';
-    btn.querySelector('[data-lang="en"]').textContent = 'Motion Off';
-    btn.querySelector('[data-lang="ja"]').textContent = 'モーション OFF';
-
-    // 현재 슬라이드의 차트 애니메이션 즉시 완료 처리
-    var chartArea = slides[current].querySelector('.mkt-chart-area');
-    if (chartArea) {
-      chartArea.classList.add('animate');
-    }
-  }
-
-  // localStorage에 설정 저장
-  try {
-    localStorage.setItem('zaemit-motion', motionEnabled ? 'on' : 'off');
-  } catch(e) {}
-}
-
-// 페이지 로드 시 저장된 모션 설정 복원
-(function() {
-  try {
-    var saved = localStorage.getItem('zaemit-motion');
-    if (saved === 'off') {
-      // DOM 로드 후 실행
-      setTimeout(function() {
-        toggleMotion();
-      }, 0);
-    }
-  } catch(e) {}
-})();
 
 // Keyboard
 document.addEventListener('keydown', function(e) {
@@ -2971,78 +2913,55 @@ document.addEventListener('touchmove', function(e) {
 }, { passive: true });
 
 document.addEventListener('touchend', function(e) {
-  // 드래그했으면 페이지 전환 안함 (스크롤 허용)
   if (hasMoved) return;
-
-  // 헤더, 사이드바, 버튼 등에서는 페이지 전환 안함
-  if (touchStartEl) {
-    const ignoreSelectors = '.menu-header, .sidebar, .lang-toggle, button, a, input, .toc-item';
-    if (touchStartEl.closest(ignoreSelectors)) return;
-  }
+  if (touchStartEl && touchStartEl.closest('button, a, input')) return;
 
   const dt = Date.now() - touchStartTime;
-  // 탭: 300ms 이내의 짧은 터치
   if (dt > 300) return;
 
   const screenWidth = window.innerWidth;
-  const tapZone = 60; // 가장자리 탭 영역 (60px)
+  const tapZone = 60;
 
-  // 왼쪽 가장자리 탭 = 이전 페이지
   if (touchStartX < tapZone) {
     goTo(current - 1, 'touch-tap-left');
-  }
-  // 오른쪽 가장자리 탭 = 다음 페이지
-  else if (touchStartX > screenWidth - tapZone) {
+  } else if (touchStartX > screenWidth - tapZone) {
     goTo(current + 1, 'touch-tap-right');
   }
 });
 
-// Sidebar toggle
-function toggleSidebar() {
-  var isOpen = document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('menuBtn').classList.toggle('active');
-  // 모바일에서는 콘텐츠를 밀지 않고 덮음 + 오버레이 표시
-  var overlay = document.querySelector('.sidebar-overlay');
-  if (window.innerWidth <= 600) {
-    if (overlay) overlay.classList.toggle('active', isOpen);
-  } else {
-    document.querySelectorAll('.slide').forEach(function(s) {
-      s.style.left = isOpen ? '260px' : '0';
-    });
-    if (overlay) overlay.classList.remove('active');
-  }
-}
+// ── EXPOSE FOR PARENT VIEWER ──
+window.irSlideInfo = {
+  slides: Array.from(slides).map(function(slide, i) {
+    return {
+      index: i,
+      titleKo: slide.dataset.titleKo || '슬라이드 ' + (i + 1),
+      titleEn: slide.dataset.titleEn || 'Slide ' + (i + 1),
+      titleJa: slide.dataset.titleJa || 'スライド ' + (i + 1)
+    };
+  }),
+  total: total,
+  get current() { return current; }
+};
 
-// Init
-pageNum.textContent = '01';
-progressFill.style.width = (1 / total * 100) + '%';
+// Expose goToSlide for parent viewer
+window.goToSlide = function(idx) {
+  goTo(idx, 'parent-viewer');
+};
 
-// Restore page from URL hash on load
-(function() {
-  var hash = window.location.hash;
-  if (hash) {
-    var pg = parseInt(hash.replace('#', ''), 10);
-    if (pg >= 1 && pg <= total) {
-      slides[0].classList.remove('active');
-      current = pg - 1;
-      slides[current].classList.add('active');
-      document.getElementById('pageNum').textContent = String(current + 1).padStart(2, '0');
-      progressFill.style.width = ((current + 1) / total * 100) + '%';
-      tocNav.querySelectorAll('.toc-item').forEach(function(el, i) {
-        el.classList.toggle('active', i === current);
-      });
-    }
+// Notify parent when slide changes
+var originalGoTo = goTo;
+goTo = function(idx, source) {
+  originalGoTo(idx, source);
+  if (window.parent !== window) {
+    try {
+      window.parent.postMessage({
+        type: 'slideChange',
+        current: current,
+        total: total
+      }, '*');
+    } catch (e) {}
   }
-})();
-
-// Detect browser language and set initial language
-(function() {
-  var browserLang = navigator.language || navigator.userLanguage || 'ko';
-  var initialLang = browserLang.toLowerCase().startsWith('ko') ? 'ko' : 'en';
-  if (initialLang === 'en') {
-    setLang('en');
-  }
-})();
+};
 </script>
 
 <!-- PRINT PREVIEW OVERLAY -->
