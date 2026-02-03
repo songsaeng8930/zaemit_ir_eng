@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WEVEN IR Viewer</title>
+  <title>Zaemit Product Line Up</title>
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -370,7 +370,7 @@
   <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
     <span></span><span></span><span></span>
   </button>
-  <div class="menu-title">WEVEN<span>IR Deck</span></div>
+  <div class="menu-title">Zaemit<span>Product Line Up</span></div>
 </div>
 
 <!-- SIDEBAR -->
@@ -403,7 +403,7 @@
       <span data-lang="ja" style="display:none">印刷プレビュー</span>
     </button>
     <div class="sidebar-footer-text">
-      WEVEN Inc. © 2025<br>Confidential
+      Zaemit © 2026
     </div>
   </div>
 </div>
@@ -453,7 +453,7 @@
 
     // Determine theme based on version
     const versionConfig = config?.versions?.find(v => v.id === irVersion);
-    const isLightTheme = irVersion === '2602' || versionConfig?.theme === 'light';
+    const isLightTheme = irVersion === '2602' || irVersion === '260202' || versionConfig?.theme === 'light';
 
     if (isLightTheme) {
       document.body.classList.add('light-theme');
@@ -719,13 +719,69 @@
     }
   });
 
-  // Touch support
+  // Mouse wheel navigation
+  let wheelTimeout = null;
+  let isWheelNavigating = false;
+  document.addEventListener('wheel', (e) => {
+    // Ignore if sidebar is open or already navigating
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.classList.contains('open')) return;
+    if (isWheelNavigating) return;
+
+    // Threshold for navigation (avoid accidental triggers)
+    if (Math.abs(e.deltaY) < 30) return;
+
+    isWheelNavigating = true;
+    if (e.deltaY > 0) {
+      goTo(current + 1); // Scroll down = next
+    } else {
+      goTo(current - 1); // Scroll up = prev
+    }
+
+    // Debounce to prevent rapid navigation
+    clearTimeout(wheelTimeout);
+    wheelTimeout = setTimeout(() => {
+      isWheelNavigating = false;
+    }, 500);
+  }, { passive: true });
+
+  // Touch support - TAP based navigation (allows scrolling)
+  // Left 1/4 tap = prev, Right 1/4 tap = next, Center = scroll allowed
   let touchStartX = 0;
-  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  let touchStartY = 0;
+  let touchStartTime = 0;
+
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+  });
+
   document.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? goTo(current + 1) : goTo(current - 1);
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const touchDuration = Date.now() - touchStartTime;
+
+    // Only handle quick taps (< 300ms) with minimal movement (< 20px)
+    const deltaX = Math.abs(touchEndX - touchStartX);
+    const deltaY = Math.abs(touchEndY - touchStartY);
+
+    if (touchDuration < 300 && deltaX < 20 && deltaY < 20) {
+      const screenWidth = window.innerWidth;
+      const tapZone = screenWidth / 4; // 1/4 of screen width
+
+      // Don't navigate if tapping on interactive elements
+      const target = e.target;
+      if (target.closest('button, a, input, .sidebar, .menu-btn, .toc-item')) return;
+
+      if (touchEndX < tapZone) {
+        // Left 1/4 - previous slide
+        goTo(current - 1);
+      } else if (touchEndX > screenWidth - tapZone) {
+        // Right 1/4 - next slide
+        goTo(current + 1);
+      }
+      // Center area - do nothing, allow normal scrolling
     }
   });
 

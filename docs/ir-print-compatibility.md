@@ -23,14 +23,19 @@
 
 ---
 
-## IR 버전별 차이점 (2601 vs 2602)
+## IR 버전별 차이점 (2601 vs 2602 vs 260202)
 
-| 항목 | 2601 (다크 테마) | 2602 (라이트 테마) |
-|-----|-----------------|------------------|
-| 첫 페이지 클래스 | `.hero` | `.cover` |
-| 테마 | dark | light |
-| ir-common.js | 미사용 (인라인 스크립트) | 사용 |
-| 언어 함수 | `window.setLang` 직접 정의 필요 | ir-common.js에서 제공 |
+| 항목 | 2601 (다크 테마) | 2602 (라이트 테마) | 260202 (라이트 테마) |
+|-----|-----------------|------------------|---------------------|
+| 첫 페이지 클래스 | `.hero` | `.cover` | `.cover` |
+| 테마 | dark | light | light |
+| ir-common.js | 미사용 (인라인 스크립트) | 사용 | 미사용 (인라인 스크립트) |
+| 언어 시스템 | `lang-visible` 클래스 | `body.ko/en` 클래스 | `body.ko/en` 클래스 |
+| 언어 함수 | `window.setLang` 직접 정의 필요 | ir-common.js에서 제공 | `window.setLang` 직접 정의 필요 |
+
+### ⚠️ 언어 시스템 차이 (핵심!)
+- **2601**: JS가 `lang-visible` 클래스 추가 → CSS가 `:not(.lang-visible)` 숨김
+- **260202/2602**: `body.ko`/`body.en` 클래스 → CSS 규칙으로 언어 표시
 
 ### 2601 필수 요소
 ```javascript
@@ -102,6 +107,18 @@ Cover/Hero 페이지는 타이틀이 없고, 가로 레이아웃을 사용:
 ---
 
 ## print-preview.css 핵심 규칙
+
+### 🚨 0. 슬라이드 기본 표시 규칙 (필수!)
+
+> **IR 원본 CSS에서 `.slide { visibility: hidden; opacity: 0; }` 설정이 있으면 print-preview에서 안 보임!**
+> **반드시 다음 규칙으로 오버라이드해야 함:**
+
+```css
+.slide-clone.slide {
+  opacity: 1 !important;
+  visibility: visible !important;  /* 필수! 이거 빠지면 아무것도 안보임 */
+}
+```
 
 ### 1. 언어 가시성 - display:none만 사용
 
@@ -265,6 +282,26 @@ body.en .ov-circle[data-lang="ko"] { display: none !important; }
 **원인**: IR 페이지에 `setLang` 함수가 없음
 **해결**: `window.setLang` 함수를 전역으로 노출
 
+### 6. 🚨 프린트 미리보기에서 슬라이드가 완전히 안 보임
+**원인**: IR 원본 CSS에 `.slide { visibility: hidden; opacity: 0; }` 설정
+**해결**: print-preview.css에 `visibility: visible !important;` 추가 필수
+```css
+.slide-clone.slide {
+  opacity: 1 !important;
+  visibility: visible !important;  /* 이거 빠지면 아무것도 안보임! */
+}
+```
+
+### 7. 260202/2602 언어 요소가 안 보임
+**원인**: print-preview의 언어 숨김 규칙이 260202/2602에도 적용됨
+**해결**: 260202/2602는 언어 규칙에서 제외
+```css
+/* 2601용 규칙 - 260202/2602 제외 */
+.slide-clone:not(.ir-260202):not(.ir-2602) [data-lang]:not(.lang-visible) {
+  display: none !important;
+}
+```
+
 ---
 
 ## 새 IR 버전 생성 시 체크리스트
@@ -281,9 +318,15 @@ body.en .ov-circle[data-lang="ko"] { display: none !important; }
 - [ ] 언어 전환 시 body 클래스 변경 (inline style 아님)
 - [ ] inline style 초기화: `el.style.display = ''`
 
-### CSS
+### CSS (IR 원본)
 - [ ] 언어별 display 규칙 (body.en, body.ja)
 - [ ] flex 요소 특별 처리 (display: flex !important 유지)
+
+### print-preview.css (프린트 미리보기 호환성)
+- [ ] 🚨 `.slide-clone.slide`에 `visibility: visible !important` 포함 확인
+- [ ] 🚨 `.slide-clone.slide`에 `opacity: 1 !important` 포함 확인
+- [ ] 새 IR 버전의 언어 시스템 확인 (lang-visible vs body.ko/en)
+- [ ] 언어 숨김 규칙에서 새 IR 버전 제외 필요 여부 확인
 
 ---
 
@@ -294,3 +337,4 @@ body.en .ov-circle[data-lang="ko"] { display: none !important; }
 | 2026-01-31 | 1.0 | 최초 작성 |
 | 2026-01-31 | 1.1 | Wrapper 패턴 전체 적용 |
 | 2026-02-01 | 2.0 | **전면 개정**: CSS 오버라이드 최소화 원칙, Cover/Hero 특별 처리, 언어 가시성 규칙, Viewer 연동 가이드, 2601 vs 2602 차이점 |
+| 2026-02-03 | 2.1 | **🚨 치명적 버그 수정**: `visibility: visible !important` 필수 규칙 추가, 260202 언어 시스템 차이 문서화, 새 IR 생성 시 체크리스트 확장 |

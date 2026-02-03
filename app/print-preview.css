@@ -8,6 +8,16 @@
   --pp-border: rgba(255,255,255,0.1);
 }
 
+/* Light theme variables */
+body.light-theme {
+  --pp-dark: #F1F5F9;
+  --pp-darker: #F8FAFC;
+  --pp-accent: #6366F1;
+  --pp-text: #0F172A;
+  --pp-muted: #64748B;
+  --pp-border: #E2E8F0;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -40,7 +50,7 @@ html {
   z-index: 100;
   background: rgba(10,14,39,0.98);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--pp-border);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
   padding: 16px 24px;
   display: flex;
   align-items: center;
@@ -456,6 +466,11 @@ html {
   overflow: hidden;
 }
 
+/* Light theme frame background */
+body.light-theme .preview-slide-frame {
+  background: #E2E8F0;
+}
+
 .slide-clone {
   position: absolute;
   top: 0;
@@ -467,9 +482,101 @@ html {
 }
 
 /* Language visibility - hide non-selected language elements */
-/* display: none 사용하되, flex 요소는 JS에서 별도 처리 */
-.slide-clone [data-lang]:not(.lang-visible) {
+/* lang-visible 클래스 또는 body.ko/body.en 클래스로 언어 표시 */
+/* 260202 제외 - body class 시스템 사용 */
+.slide-clone:not(.ir-260202):not(.ir-2602) [data-lang]:not(.lang-visible) {
   display: none !important;
+}
+
+/* body.ko가 있으면 한국어 요소 표시 */
+body.ko .slide-clone [data-lang="ko"] {
+  display: revert !important;
+}
+body.ko .slide-clone div[data-lang="ko"],
+body.ko .slide-clone p[data-lang="ko"],
+body.ko .slide-clone h1[data-lang="ko"],
+body.ko .slide-clone h2[data-lang="ko"],
+body.ko .slide-clone h3[data-lang="ko"],
+body.ko .slide-clone h4[data-lang="ko"],
+body.ko .slide-clone li[data-lang="ko"] {
+  display: block !important;
+}
+body.ko .slide-clone span[data-lang="ko"] {
+  display: inline !important;
+}
+body.ko .slide-clone [data-lang="en"] {
+  display: none !important;
+}
+
+/* body.en이 있으면 영어 요소 표시 */
+body.en .slide-clone [data-lang="en"] {
+  display: revert !important;
+}
+body.en .slide-clone div[data-lang="en"],
+body.en .slide-clone p[data-lang="en"],
+body.en .slide-clone h1[data-lang="en"],
+body.en .slide-clone h2[data-lang="en"],
+body.en .slide-clone h3[data-lang="en"],
+body.en .slide-clone h4[data-lang="en"],
+body.en .slide-clone li[data-lang="en"] {
+  display: block !important;
+}
+body.en .slide-clone span[data-lang="en"] {
+  display: inline !important;
+}
+body.en .slide-clone [data-lang="ko"] {
+  display: none !important;
+}
+
+/* 260202/2602 전용 언어 규칙 - 높은 특수성 */
+body.ko .slide-clone.ir-260202 [data-lang="ko"],
+body.ko .slide-clone.ir-2602 [data-lang="ko"] {
+  display: revert !important;
+}
+body.ko .slide-clone.ir-260202 div[data-lang="ko"],
+body.ko .slide-clone.ir-260202 p[data-lang="ko"],
+body.ko .slide-clone.ir-260202 h1[data-lang="ko"],
+body.ko .slide-clone.ir-260202 h2[data-lang="ko"],
+body.ko .slide-clone.ir-260202 h3[data-lang="ko"],
+body.ko .slide-clone.ir-260202 h4[data-lang="ko"],
+body.ko .slide-clone.ir-260202 li[data-lang="ko"],
+body.ko .slide-clone.ir-2602 div[data-lang="ko"],
+body.ko .slide-clone.ir-2602 p[data-lang="ko"],
+body.ko .slide-clone.ir-2602 h1[data-lang="ko"],
+body.ko .slide-clone.ir-2602 h2[data-lang="ko"],
+body.ko .slide-clone.ir-2602 h3[data-lang="ko"],
+body.ko .slide-clone.ir-2602 h4[data-lang="ko"],
+body.ko .slide-clone.ir-2602 li[data-lang="ko"] {
+  display: block !important;
+}
+body.ko .slide-clone.ir-260202 span[data-lang="ko"],
+body.ko .slide-clone.ir-2602 span[data-lang="ko"] {
+  display: inline !important;
+}
+
+body.en .slide-clone.ir-260202 [data-lang="en"],
+body.en .slide-clone.ir-2602 [data-lang="en"] {
+  display: revert !important;
+}
+body.en .slide-clone.ir-260202 div[data-lang="en"],
+body.en .slide-clone.ir-260202 p[data-lang="en"],
+body.en .slide-clone.ir-260202 h1[data-lang="en"],
+body.en .slide-clone.ir-260202 h2[data-lang="en"],
+body.en .slide-clone.ir-260202 h3[data-lang="en"],
+body.en .slide-clone.ir-260202 h4[data-lang="en"],
+body.en .slide-clone.ir-260202 li[data-lang="en"],
+body.en .slide-clone.ir-2602 div[data-lang="en"],
+body.en .slide-clone.ir-2602 p[data-lang="en"],
+body.en .slide-clone.ir-2602 h1[data-lang="en"],
+body.en .slide-clone.ir-2602 h2[data-lang="en"],
+body.en .slide-clone.ir-2602 h3[data-lang="en"],
+body.en .slide-clone.ir-2602 h4[data-lang="en"],
+body.en .slide-clone.ir-2602 li[data-lang="en"] {
+  display: block !important;
+}
+body.en .slide-clone.ir-260202 span[data-lang="en"],
+body.en .slide-clone.ir-2602 span[data-lang="en"] {
+  display: inline !important;
 }
 
 /* Content wrapper - 줌/정렬 적용 대상 */
@@ -610,10 +717,12 @@ html {
 
 /* ── SLIDE OVERRIDES FOR PREVIEW ── */
 /* Override index.html slide styles for preview mode */
+/* 배경색은 JS에서 직접 설정 (다크/라이트 테마) */
 .slide-clone.slide {
   position: absolute !important;
   display: flex !important;
   opacity: 1 !important;
+  visibility: visible !important;
   top: 0 !important;
   left: 0 !important;
   right: auto !important;
@@ -621,7 +730,28 @@ html {
   width: 1280px !important;
   height: 720px !important;
   padding: 30px 40px !important;
-  background: var(--dark, #0A0E27) !important;
+  /* background 제거 - JS에서 설정 */
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES (2602, 260202)
+   ir-260202, ir-2602 클래스 또는 body.light-theme으로 적용
+   ══════════════════════════════════════════════════════════════════ */
+
+/* 라이트 테마 슬라이드 - 흰색 배경 */
+body.light-theme .slide-clone.slide,
+.slide-clone.ir-2602.slide,
+.slide-clone.ir-260202.slide {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+/* 라이트 테마 Cover 슬라이드 - 그라데이션 배경 */
+body.light-theme .slide-clone.slide.cover,
+.slide-clone.ir-2602.slide.cover,
+.slide-clone.ir-260202.slide.cover {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A855F7 100%) !important;
+  color: #FFFFFF !important;
 }
 
 /* slide-inner: 전체 높이, 타이틀은 위에 고정 */
@@ -697,16 +827,181 @@ html {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   IR-2602 LIGHT THEME OVERRIDES
+   IR-2602/260202 LIGHT THEME OVERRIDES
    ══════════════════════════════════════════════════════════════════ */
 
 /* 2602 Cover slide - gradient background */
-.slide-clone.ir-2602.slide.cover {
-  background: linear-gradient(135deg, #4F46E5 0%, #0EA5E9 100%) !important;
+.slide-clone.ir-2602.slide.cover,
+.slide-clone.ir-260202.slide.cover {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A855F7 100%) !important;
+  color: #FFFFFF !important;
 }
 
-/* 2602 Non-cover slides - white background */
-.slide-clone.ir-2602.slide:not(.cover) {
+/* 2602/260202 Non-cover slides - white background */
+.slide-clone.ir-2602.slide:not(.cover),
+.slide-clone.ir-260202.slide:not(.cover) {
   background: #FFFFFF !important;
-  color: #1E293B !important;
+  color: #0F172A !important;
+}
+
+/* Light theme text colors for 260202 */
+.slide-clone.ir-260202 .section-label {
+  color: #6366F1 !important;
+}
+
+.slide-clone.ir-260202 .section-title {
+  color: #0F172A !important;
+}
+
+.slide-clone.ir-260202 .section-desc {
+  color: #475569 !important;
+}
+
+/* Light theme feature cards */
+.slide-clone.ir-260202 .feature-card {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+.slide-clone.ir-260202 .feature-title {
+  color: #0F172A !important;
+}
+
+.slide-clone.ir-260202 .feature-desc {
+  color: #475569 !important;
+}
+
+/* Light theme pricing cards */
+.slide-clone.ir-260202 .pricing-card {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+.slide-clone.ir-260202 .pricing-card.featured {
+  background: #EEF2FF !important;
+  border: 2px solid #6366F1 !important;
+}
+
+/* Light theme product status */
+.slide-clone.ir-260202 .product-status {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+/* Light theme tables */
+.slide-clone.ir-260202 .compare-table th {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+}
+
+.slide-clone.ir-260202 .compare-table td {
+  color: #475569 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.slide-clone.ir-260202 .compare-table .highlight {
+  background: #EEF2FF !important;
+  color: #6366F1 !important;
+}
+
+/* Light theme core features */
+.slide-clone.ir-260202 .core-feature {
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+.slide-clone.ir-260202 .core-feature h4 {
+  color: #6366F1 !important;
+}
+
+.slide-clone.ir-260202 .core-feature p {
+  color: #475569 !important;
+}
+
+/* Light theme contact */
+.slide-clone.ir-260202 .contact-info h3,
+.slide-clone.ir-260202 .contact-item {
+  color: #0F172A !important;
+}
+
+.slide-clone.ir-260202 .contact-item a {
+  color: #6366F1 !important;
+}
+
+/* 260202 Cover page elements */
+.slide-clone.ir-260202.slide.cover .cover-title,
+.slide-clone.ir-260202.slide.cover .cover-sub,
+.slide-clone.ir-260202.slide.cover .cover-badge {
+  color: #FFFFFF !important;
+}
+
+.slide-clone.ir-260202.slide.cover .cover-product-tag {
+  background: rgba(255,255,255,0.15) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+}
+
+/* 260202 Generic element visibility - ensure all text is visible */
+.slide-clone.ir-260202 * {
+  color: inherit;
+}
+
+.slide-clone.ir-260202 strong {
+  color: var(--text-primary, #0F172A) !important;
+}
+
+/* 260202 Feature icons */
+.slide-clone.ir-260202 .feature-icon {
+  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%) !important;
+}
+
+/* 260202 Product info elements */
+.slide-clone.ir-260202 .product-price {
+  color: #6366F1 !important;
+}
+
+.slide-clone.ir-260202 .product-period,
+.slide-clone.ir-260202 .product-spec {
+  color: #64748B !important;
+}
+
+.slide-clone.ir-260202 .product-features li {
+  color: #475569 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.slide-clone.ir-260202 .product-features .icon {
+  background: #10B981 !important;
+  color: #FFFFFF !important;
+}
+
+/* 260202 Status badges */
+.slide-clone.ir-260202 .status-badge.active {
+  background: #DCFCE7 !important;
+  color: #166534 !important;
+}
+
+.slide-clone.ir-260202 .status-badge.progress {
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+}
+
+.slide-clone.ir-260202 .status-badge.nda {
+  background: #EDE9FE !important;
+  color: #6D28D9 !important;
+}
+
+.slide-clone.ir-260202 .status-title {
+  color: #0F172A !important;
+}
+
+.slide-clone.ir-260202 .status-desc {
+  color: #475569 !important;
+}
+
+/* 260202 Partner tags */
+.slide-clone.ir-260202 .status-partners span {
+  background: #F1F5F9 !important;
+  color: #64748B !important;
 }

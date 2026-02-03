@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zaemit IR Library</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0A0E27;
+      --bg-secondary: rgba(10, 14, 39, 0.97);
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --text-primary: #fff;
+      --text-secondary: #94A3B8;
+      --accent: #00D4AA;
+      --accent2: #0066FF;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(255, 255, 255, 0.12);
+    }
+
+    body.light-theme {
+      --bg-primary: #F8FAFC;
+      --bg-secondary: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --text-primary: #0F172A;
+      --text-secondary: #64748B;
+      --accent: #4F46E5;
+      --accent2: #0EA5E9;
+      --border: #E2E8F0;
+      --border-hover: #CBD5E1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg-primary);
+      font-family: 'Pretendard', 'Plus Jakarta Sans', -apple-system, sans-serif;
+      color: var(--text-primary);
+    }
+
+    body.en { font-family: 'Plus Jakarta Sans', 'Pretendard', sans-serif; }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--accent);
+      font-weight: 500;
+      margin-left: 8px;
+      font-size: 16px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--accent);
+      background: rgba(0, 212, 170, 0.08);
+    }
+
+    body.light-theme .theme-btn:hover {
+      background: rgba(79, 70, 229, 0.08);
+    }
+
+    .theme-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-secondary);
+    }
+
+    .theme-btn:hover svg {
+      stroke: var(--accent);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      padding: 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .section-heading {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    body.light-theme .card:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(0, 212, 170, 0.1);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    body.light-theme .card-badge {
+      background: rgba(79, 70, 229, 0.1);
+    }
+
+    .card-badge.new {
+      background: rgba(239, 68, 68, 0.1);
+      color: #EF4444;
+    }
+
+    .card-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .card-id {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-family: 'SF Mono', 'Consolas', monospace;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-date {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-date svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-secondary);
+    }
+
+    .card-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+
+    .card:hover .card-arrow {
+      background: var(--accent);
+    }
+
+    .card-arrow svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-secondary);
+      transition: all 0.25s;
+    }
+
+    .card:hover .card-arrow svg {
+      stroke: #000;
+      transform: translateX(2px);
+    }
+
+    body.light-theme .card:hover .card-arrow svg {
+      stroke: #fff;
+    }
+
+    /* ── THEME BADGE ── */
+    .theme-tag {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+
+    .theme-tag.dark {
+      background: rgba(15, 23, 42, 0.8);
+      color: #fff;
+    }
+
+    .theme-tag.light {
+      background: rgba(241, 245, 249, 1);
+      color: #334155;
+      border: 1px solid #E2E8F0;
+    }
+
+    body.light-theme .theme-tag.dark {
+      background: #1E293B;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .header {
+        padding: 24px;
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
+      .main {
+        padding: 24px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        font-size: 24px;
+      }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(5) { animation-delay: 0.5s; }
+    .card:nth-child(6) { animation-delay: 0.6s; }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="logo">Zaemit<span>IR Library</span></div>
+  </div>
+  <div class="header-right">
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle Theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="themeIcon">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main class="main">
+  <div class="section-title">IR Collection</div>
+  <h1 class="section-heading">투자자료 라이브러리</h1>
+  <p class="section-desc">Zaemit 제품 소개 및 투자자료를 확인하세요.</p>
+
+  <div class="card-grid" id="cardGrid">
+    <!-- Cards will be populated by JS -->
+  </div>
+</main>
+
+<footer class="footer">
+  Zaemit © 2026 · Powered by WEVEN
+</footer>
+
+<script>
+  let config = null;
+  let isDark = localStorage.getItem('irTheme') !== 'light';
+
+  async function init() {
+    // Apply saved theme
+    if (!isDark) {
+      document.body.classList.add('light-theme');
+      updateThemeIcon();
+    }
+
+    // Load config
+    try {
+      const resp = await fetch('conf.json');
+      config = await resp.json();
+      renderCards();
+    } catch (e) {
+      console.error('Failed to load config:', e);
+    }
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('cardGrid');
+    grid.innerHTML = '';
+
+    if (!config || !config.versions) return;
+
+    // Sort by date descending (newest first)
+    const sorted = [...config.versions].sort((a, b) => {
+      const dateA = new Date(a.date || '1970-01-01');
+      const dateB = new Date(b.date || '1970-01-01');
+      return dateB - dateA;
+    });
+
+    // Find newest date for "NEW" badge
+    const newestDate = sorted.length > 0 ? sorted[0].date : null;
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    sorted.forEach((version, idx) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.onclick = () => openViewer(version.id);
+
+      const isNew = version.date && new Date(version.date) >= oneWeekAgo;
+      const isNewest = version.date === newestDate && idx === 0;
+      const theme = version.theme || (version.id === '2601' ? 'dark' : 'light');
+      const themeLabel = theme === 'dark' ? 'Dark' : 'Light';
+
+      const badgeHTML = isNewest
+        ? `<div class="card-badge new">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+             </svg>
+             NEW
+           </div>`
+        : `<div class="card-badge">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+               <polyline points="14 2 14 8 20 8"/>
+             </svg>
+             IR Document
+           </div>`;
+
+      card.innerHTML = `
+        ${badgeHTML}
+        <div class="card-id">#${version.id}</div>
+        <div class="card-title">
+          ${version.name || version.nameEn}
+          <span class="theme-tag ${theme}">${themeLabel}</span>
+        </div>
+        <div class="card-desc">${version.description || version.descriptionEn || version.nameEn || ''}</div>
+        <div class="card-meta">
+          <div class="card-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            ${formatDate(version.date)}
+          </div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '-';
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}.${String(month).padStart(2, '0')}.${String(day).padStart(2, '0')}`;
+  }
+
+  function openViewer(id) {
+    window.location.href = `viewer.html?ir=${id}`;
+  }
+
+  function toggleTheme() {
+    isDark = !isDark;
+    document.body.classList.toggle('light-theme', !isDark);
+    localStorage.setItem('irTheme', isDark ? 'dark' : 'light');
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    const icon = document.getElementById('themeIcon');
+    if (isDark) {
+      // Sun icon for dark mode (click to switch to light)
+      icon.innerHTML = `
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      `;
+    } else {
+      // Moon icon for light mode (click to switch to dark)
+      icon.innerHTML = `
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      `;
+    }
+  }
+
+  init();
+</script>
+
+</body>
+</html>

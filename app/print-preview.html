@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Print Preview - WEVEN Zaemit IR</title>
+  <title>Print Preview - Zaemit</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -23,6 +23,31 @@
       --accent2: #7C3AED;
       --gradient1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       --gradient2: linear-gradient(135deg, #00D4AA 0%, #7C3AED 100%);
+    }
+
+    /* Light theme variables for 2602/260202 */
+    body.light-theme {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --bg-tertiary: #F1F5F9;
+      --bg-accent: #EEF2FF;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --accent-primary: #6366F1;
+      --accent-secondary: #8B5CF6;
+      --accent-success: #10B981;
+      --accent: #6366F1;
+      --border-light: #E2E8F0;
+      --border-medium: #CBD5E1;
+      --gradient-hero: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A855F7 100%);
+      --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+      --gradient-accent: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+    }
+
+    body.light-theme .slide-clone {
+      background: #FFFFFF !important;
+      color: #0F172A !important;
     }
 
     /* Slide base - 배경/글자색은 IR의 CSS에서 정의됨 (테마 중립) */
@@ -60,11 +85,12 @@
       margin-bottom: 32px;
     }
 
-    /* Hide elements based on language */
-    [data-lang] { display: none; }
-    [data-lang="ko"] { display: revert; }
-    body.en [data-lang="ko"] { display: none; }
-    body.en [data-lang="en"] { display: revert; }
+    /* Hide elements based on language - 2601용 (lang-visible 시스템) */
+    /* 260202/2602는 body.ko/body.en 시스템 사용 - 제외 */
+    .slide-clone:not(.ir-260202):not(.ir-2602) [data-lang] { display: none; }
+    .slide-clone:not(.ir-260202):not(.ir-2602) [data-lang="ko"] { display: revert; }
+    body.en .slide-clone:not(.ir-260202):not(.ir-2602) [data-lang="ko"] { display: none; }
+    body.en .slide-clone:not(.ir-260202):not(.ir-2602) [data-lang="en"] { display: revert; }
 
     /* Powered badge */
     .powered-badge {

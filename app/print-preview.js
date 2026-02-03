@@ -106,9 +106,14 @@ async function fetchSlides() {
       document.head.appendChild(newStyle);
     }
 
-    // Apply language class to body
-    if (lang === 'en') {
-      document.body.classList.add('en');
+    // Apply language class to body (required for 260202 CSS rules)
+    document.body.classList.remove('ko', 'en');
+    document.body.classList.add(lang);
+
+    // Apply theme class based on IR version
+    const isLightTheme = irVersion === '2602' || irVersion === '260202';
+    if (isLightTheme) {
+      document.body.classList.add('light-theme');
     }
 
     // Get all slides
@@ -187,10 +192,10 @@ function fixGradientTextForPDF() {
       if (bgClip === 'text') {
         // Determine fallback color based on theme
         // ir-2601 (dark theme) = #00D4AA (accent green)
-        // ir-2602 (light theme) = #4F46E5 (indigo)
-        const isDarkTheme = clone.classList.contains('ir-2601') ||
-                           !clone.classList.contains('ir-2602');
-        const fallbackColor = isDarkTheme ? '#00D4AA' : '#4F46E5';
+        // ir-2602, ir-260202 (light theme) = #6366F1 (indigo)
+        const isLightTheme = clone.classList.contains('ir-2602') ||
+                            clone.classList.contains('ir-260202');
+        const fallbackColor = isLightTheme ? '#6366F1' : '#00D4AA';
 
         // Remove gradient background and apply solid color
         el.style.setProperty('background', 'none', 'important');
@@ -267,6 +272,27 @@ function createSlideWrapper(slide, idx) {
 
   // Add IR version class for theme detection
   clone.classList.add('ir-' + irVersion);
+
+  // 테마 배경색 직접 적용 (CSS 규칙보다 확실하게)
+  const isLightTheme = irVersion === '2602' || irVersion === '260202';
+  const isCover = clone.classList.contains('cover');
+
+  if (isLightTheme) {
+    // 라이트 테마 (2602, 260202)
+    if (isCover) {
+      clone.style.background = 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A855F7 100%)';
+      clone.style.color = '#FFFFFF';
+    } else {
+      clone.style.background = '#FFFFFF';
+      clone.style.color = '#0F172A';
+    }
+  } else {
+    // 다크 테마 (2601 등)
+    clone.style.background = '#0A0E27';
+    clone.style.color = '#FFFFFF';
+  }
+
+  console.log('Slide', idx, 'irVersion:', irVersion, 'isLightTheme:', isLightTheme, 'isCover:', isCover);
 
   // Apply language visibility
   applyLanguageVisibility(clone);
@@ -1006,11 +1032,15 @@ async function exportPDF() {
       clone.style.transform = 'none';
       clone.style.position = 'relative';
 
+      // Determine background color based on IR version (light vs dark theme)
+      const isLightTheme = irVersion === '2602' || irVersion === '260202';
+      const bgColor = isLightTheme ? '#FFFFFF' : '#0A0E27';
+
       const canvas = await html2canvas(clone, {
         scale: 2,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: '#0A0E27',
+        backgroundColor: bgColor,
         width: 1280,
         height: 720,
         logging: false
@@ -1030,7 +1060,7 @@ async function exportPDF() {
   }
 
   // Save PDF
-  const filename = 'WEVEN_Zaemit_IR_' + new Date().toISOString().slice(0, 10) + '.pdf';
+  const filename = 'Zaemit_' + irVersion + '_' + new Date().toISOString().slice(0, 10) + '.pdf';
   pdf.save(filename);
 
   hideLoading();
