@@ -34,11 +34,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg-primary)}
 body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-primary)}
 
 [data-lang]{display:none}
-body.ko [data-lang="ko"],body.en [data-lang="en"]{display:inline}
+body.ko [data-lang="ko"],body.en [data-lang="en"],body.ja [data-lang="ja"]{display:inline}
 div[data-lang],p[data-lang],h1[data-lang],h2[data-lang],h3[data-lang],h4[data-lang],li[data-lang],span[data-lang]{display:none}
 body.ko div[data-lang="ko"],body.ko p[data-lang="ko"],body.ko h1[data-lang="ko"],body.ko h2[data-lang="ko"],body.ko h3[data-lang="ko"],body.ko h4[data-lang="ko"],body.ko li[data-lang="ko"],body.ko span[data-lang="ko"]{display:block}
 body.en div[data-lang="en"],body.en p[data-lang="en"],body.en h1[data-lang="en"],body.en h2[data-lang="en"],body.en h3[data-lang="en"],body.en h4[data-lang="en"],body.en li[data-lang="en"],body.en span[data-lang="en"]{display:block}
-body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
+body.ja div[data-lang="ja"],body.ja p[data-lang="ja"],body.ja h1[data-lang="ja"],body.ja h2[data-lang="ja"],body.ja h3[data-lang="ja"],body.ja h4[data-lang="ja"],body.ja li[data-lang="ja"],body.ja span[data-lang="ja"]{display:block}
+body.ko span[data-lang="ko"],body.en span[data-lang="en"],body.ja span[data-lang="ja"]{display:inline}
 
 .slides{width:100%;height:100%;position:relative;overflow:hidden}
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s ease;display:flex;align-items:center;justify-content:center;padding:60px;overflow-y:auto;background:var(--bg-primary)}
@@ -155,14 +156,16 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 <div class="slides">
 
 <!-- SLIDE 1: Cover -->
-<div class="slide cover active" data-title-ko="상품 소개" data-title-en="Product Catalog">
+<div class="slide cover active" data-title-ko="상품 소개" data-title-en="Product Catalog" data-title-ja="製品カタログ">
   <div class="slide-inner">
     <div class="cover-left">
       <div class="cover-badge">PRODUCT CATALOG 2026</div>
       <h1 class="cover-title" data-lang="ko">Zaemit<br>상품 라인업</h1>
       <h1 class="cover-title" data-lang="en">Zaemit<br>Product Lineup</h1>
+      <h1 class="cover-title" data-lang="ja">Zaemit<br>製品ラインナップ</h1>
       <p class="cover-sub" data-lang="ko">바이브 코딩으로 웹사이트를 쉽고 빠르게 만들고,<br>전문가 협업 도구에서 운영하세요.</p>
       <p class="cover-sub" data-lang="en">Build websites quickly with vibe coding,<br>and operate them with professional collaboration tools.</p>
+      <p class="cover-sub" data-lang="ja">バイブコーディングでWebサイトを簡単・迅速に作成し、<br>プロフェッショナルなコラボレーションツールで運営しましょう。</p>
       <div class="cover-products">
         <div class="cover-product-tag">Zaemit Hosting</div>
         <div class="cover-product-tag">Zaemit Rental</div>
@@ -182,57 +185,70 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 </div>
 
 <!-- SLIDE 2: Zaemit Hosting 소개 -->
-<div class="slide" data-title-ko="Zaemit Hosting 소개" data-title-en="Zaemit Hosting Intro">
+<div class="slide" data-title-ko="Zaemit Hosting 소개" data-title-en="Zaemit Hosting Intro" data-title-ja="Zaemit Hosting紹介">
   <div class="slide-inner">
     <div class="section-label">PRODUCT 01</div>
     <div class="section-title" data-lang="ko">From Any HTML to<br><span class="gradient-text">Self-Operating Service</span></div>
     <div class="section-title" data-lang="en">From Any HTML to<br><span class="gradient-text">Self-Operating Service</span></div>
+    <div class="section-title" data-lang="ja">あらゆるHTMLから<br><span class="gradient-text">自動運営サービスへ</span></div>
     <div class="section-desc" data-lang="ko">바이브 코딩(Claude, Cursor, v0) 또는 프로 에디터(Z.STUDIO, Webflow)에서 HTML을 업로드하면,<br>AI 플랫폼이 정적 웹사이트를 살아있는 지능형 웹 서비스로 변환합니다.</div>
     <div class="section-desc" data-lang="en">Whether from Vibe Coding (Claude, Cursor, v0) or Pro Web Editors (Z.STUDIO, Webflow),<br>our AI platform transforms static output into living, intelligent web services.</div>
+    <div class="section-desc" data-lang="ja">バイブコーディング（Claude、Cursor、v0）またはプロエディター（Z.STUDIO、Webflow）からHTMLをアップロードすると、<br>AIプラットフォームが静的なWebサイトをインテリジェントなWebサービスに変換します。</div>
 
     <div class="feature-grid">
       <div class="feature-card">
         <div class="feature-icon">🔄</div>
         <div class="feature-title" data-lang="ko">Any Source, One Platform</div>
         <div class="feature-title" data-lang="en">Any Source, One Platform</div>
+        <div class="feature-title" data-lang="ja">あらゆるソース、ワンプラットフォーム</div>
         <div class="feature-desc" data-lang="ko">Claude Artifacts, Cursor, v0, Bolt 등 바이브 코딩 도구 또는 Z.STUDIO, Webflow, Framer 같은 프로 에디터에서 HTML을 업로드하세요.</div>
         <div class="feature-desc" data-lang="en">Upload HTML from Vibe Coding tools (Claude Artifacts, Cursor, v0, Bolt) or professional editors (Z.STUDIO, Webflow, Framer).</div>
+        <div class="feature-desc" data-lang="ja">バイブコーディングツール（Claude Artifacts、Cursor、v0、Bolt）またはプロエディター（Z.STUDIO、Webflow、Framer）からHTMLをアップロード。</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🧠</div>
         <div class="feature-title" data-lang="ko">RAG-Based AI Engine</div>
         <div class="feature-title" data-lang="en">RAG-Based AI Engine</div>
+        <div class="feature-title" data-lang="ja">RAGベースAIエンジン</div>
         <div class="feature-desc" data-lang="ko">RAG(검색 증강 생성) 기반 AI가 각 방문자에게 맥락 인지 응답과 개인화된 콘텐츠를 제공합니다.</div>
         <div class="feature-desc" data-lang="en">Retrieval-Augmented Generation provides context-aware responses and personalized content for each visitor.</div>
+        <div class="feature-desc" data-lang="ja">RAG（検索拡張生成）ベースのAIが各訪問者にコンテキスト認識応答とパーソナライズされたコンテンツを提供します。</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📱</div>
         <div class="feature-title" data-lang="ko">CMS 포함</div>
         <div class="feature-title" data-lang="en">CMS Included</div>
+        <div class="feature-title" data-lang="ja">CMS内蔵</div>
         <div class="feature-desc" data-lang="ko">콘텐츠 관리 시스템이 기본 제공되어 비개발자도 쉽게 콘텐츠를 관리할 수 있습니다.</div>
         <div class="feature-desc" data-lang="en">Built-in CMS allows non-developers to easily manage content.</div>
+        <div class="feature-desc" data-lang="ja">コンテンツ管理システムが標準搭載され、非開発者でも簡単にコンテンツを管理できます。</div>
       </div>
     </div>
 
     <div style="margin-top:24px;background:var(--bg-secondary);border-radius:16px;padding:24px">
       <div style="font-size:14px;font-weight:700;color:var(--accent-primary);margin-bottom:16px" data-lang="ko">💡 우리가 해결하는 문제</div>
       <div style="font-size:14px;font-weight:700;color:var(--accent-primary);margin-bottom:16px" data-lang="en">💡 The Problem We Solve</div>
+      <div style="font-size:14px;font-weight:700;color:var(--accent-primary);margin-bottom:16px" data-lang="ja">💡 私たちが解決する問題</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center">
         <div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="ko">바이브 코딩은 만들 수 있지만<br><strong style="color:var(--text-primary)">운영할 수 없다</strong></div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="en">Vibe coding creates,<br><strong style="color:var(--text-primary)">but can't operate</strong></div>
+          <div style="font-size:13px;color:var(--text-secondary)" data-lang="ja">バイブコーディングは作れるが<br><strong style="color:var(--text-primary)">運営はできない</strong></div>
         </div>
         <div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="ko">수동 업데이트는<br><strong style="color:var(--text-primary)">SMB에게 비용 부담</strong></div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="en">Manual updates<br><strong style="color:var(--text-primary)">costly for SMBs</strong></div>
+          <div style="font-size:13px;color:var(--text-secondary)" data-lang="ja">手動更新は<br><strong style="color:var(--text-primary)">中小企業には高コスト</strong></div>
         </div>
         <div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="ko">방문자를 위한<br><strong style="color:var(--text-primary)">개인화 부재</strong></div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="en">No personalization<br><strong style="color:var(--text-primary)">for visitors</strong></div>
+          <div style="font-size:13px;color:var(--text-secondary)" data-lang="ja">訪問者への<br><strong style="color:var(--text-primary)">パーソナライズなし</strong></div>
         </div>
         <div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="ko">웹사이트의 80%가<br><strong style="color:var(--text-primary)">6개월 내 방치</strong></div>
           <div style="font-size:13px;color:var(--text-secondary)" data-lang="en">80% of websites<br><strong style="color:var(--text-primary)">abandoned in 6 months</strong></div>
+          <div style="font-size:13px;color:var(--text-secondary)" data-lang="ja">Webサイトの80%が<br><strong style="color:var(--text-primary)">6ヶ月以内に放置</strong></div>
         </div>
       </div>
     </div>
@@ -240,12 +256,14 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 </div>
 
 <!-- SLIDE 3: Zaemit Hosting 가격 & 현황 -->
-<div class="slide" data-title-ko="Hosting 가격" data-title-en="Hosting Pricing">
+<div class="slide" data-title-ko="Hosting 가격" data-title-en="Hosting Pricing" data-title-ja="Hosting価格">
   <div class="slide-inner">
     <div class="section-label" data-lang="ko">가격 & 서비스 현황</div>
     <div class="section-label" data-lang="en">PRICING & STATUS</div>
+    <div class="section-label" data-lang="ja">価格＆サービス状況</div>
     <div class="section-title" data-lang="ko">Zaemit Hosting</div>
     <div class="section-title" data-lang="en">Zaemit Hosting</div>
+    <div class="section-title" data-lang="ja">Zaemit Hosting</div>
 
     <div class="product-layout">
       <div class="product-info">
@@ -253,8 +271,10 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
           <span class="product-price">$20</span>
           <span class="product-period" data-lang="ko">/ 월</span>
           <span class="product-period" data-lang="en">/ month</span>
+          <span class="product-period" data-lang="ja">/ 月</span>
           <div class="product-spec" data-lang="ko">1 유저 · 1 사이트</div>
           <div class="product-spec" data-lang="en">1 User · 1 Site</div>
+          <div class="product-spec" data-lang="ja">1ユーザー · 1サイト</div>
         </div>
         <ul class="product-features">
           <li><span class="icon">✓</span> AI Credit 0.5M / month</li>
@@ -269,25 +289,33 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
         <div class="product-status">
           <div class="status-badge active" data-lang="ko">서비스 중</div>
           <div class="status-badge active" data-lang="en">ACTIVE</div>
+          <div class="status-badge active" data-lang="ja">サービス中</div>
           <div class="status-title" data-lang="ko">🇰🇷 한국 정식 서비스 운영 중</div>
           <div class="status-title" data-lang="en">🇰🇷 Official service in Korea</div>
+          <div class="status-title" data-lang="ja">🇰🇷 韓国で正式サービス運営中</div>
           <div class="status-desc" data-lang="ko">현재 한국에서 Zaemit Hosting 서비스를 정식으로 운영하고 있습니다.</div>
           <div class="status-desc" data-lang="en">Currently operating Zaemit Hosting service officially in Korea.</div>
+          <div class="status-desc" data-lang="ja">現在、韓国でZaemit Hostingサービスを正式に運営しています。</div>
         </div>
         <div class="product-status">
           <div class="status-badge nda">NDA</div>
           <div class="status-title" data-lang="ko">🇯🇵 일본 결제 게이트웨이 연동 추진</div>
           <div class="status-title" data-lang="en">🇯🇵 Japan Payment Gateway Integration</div>
+          <div class="status-title" data-lang="ja">🇯🇵 日本決済ゲートウェイ連携推進</div>
           <div class="status-desc" data-lang="ko">일본 페이 게이트웨이 회사와 NDA를 체결하고 결제 시스템 연동을 추진 중입니다.</div>
           <div class="status-desc" data-lang="en">NDA signed with Japanese payment gateway company.</div>
+          <div class="status-desc" data-lang="ja">日本の決済ゲートウェイ会社とNDAを締結し、決済システム連携を推進中です。</div>
         </div>
         <div class="product-status">
           <div class="status-badge progress" data-lang="ko">준비중</div>
           <div class="status-badge progress" data-lang="en">IN PROGRESS</div>
+          <div class="status-badge progress" data-lang="ja">準備中</div>
           <div class="status-title" data-lang="ko">🇺🇸 미국 Paddle 결제 서비스 연동</div>
           <div class="status-title" data-lang="en">🇺🇸 US Paddle Payment Integration</div>
+          <div class="status-title" data-lang="ja">🇺🇸 米国Paddle決済サービス連携</div>
           <div class="status-desc" data-lang="ko">미국 Paddle 결제 서비스와 연동하여 글로벌 서비스 출시를 준비하고 있습니다.</div>
           <div class="status-desc" data-lang="en">Preparing global service launch with Paddle payment integration.</div>
+          <div class="status-desc" data-lang="ja">米国Paddle決済サービスと連携し、グローバルサービス開始を準備しています。</div>
         </div>
       </div>
     </div>
@@ -295,13 +323,15 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 </div>
 
 <!-- SLIDE 4: Zaemit Rental 소개 -->
-<div class="slide" data-title-ko="Zaemit Rental 소개" data-title-en="Zaemit Rental Intro">
+<div class="slide" data-title-ko="Zaemit Rental 소개" data-title-en="Zaemit Rental Intro" data-title-ja="Zaemit Rental紹介">
   <div class="slide-inner">
     <div class="section-label">PRODUCT 02</div>
     <div class="section-title" data-lang="ko">에이전시를 위한<br><span class="gradient-text">AI 웹 운영 플랫폼</span></div>
     <div class="section-title" data-lang="en">AI Web Operations Platform<br><span class="gradient-text">for Agencies</span></div>
+    <div class="section-title" data-lang="ja">エージェンシー向け<br><span class="gradient-text">AI Web運営プラットフォーム</span></div>
     <div class="section-desc" data-lang="ko">바이브 코딩과 AI 도구는 웹사이트를 만들 수 있지만, 운영할 수는 없습니다.<br>Zaemit Rental은 정적 출력을 살아있는 서비스로 변환하는 AI 레이어입니다.</div>
     <div class="section-desc" data-lang="en">Vibe coding and AI tools can create websites — but they can't operate them.<br>Zaemit Rental is the AI layer that transforms static output into living services.</div>
+    <div class="section-desc" data-lang="ja">バイブコーディングとAIツールはWebサイトを作れますが、運営はできません。<br>Zaemit Rentalは静的出力を生きたサービスに変換するAIレイヤーです。</div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
       <div>
@@ -310,29 +340,37 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
             <div class="feature-icon">♾️</div>
             <div class="feature-title" data-lang="ko">무제한 사이트</div>
             <div class="feature-title" data-lang="en">Unlimited Sites</div>
+            <div class="feature-title" data-lang="ja">無制限サイト</div>
             <div class="feature-desc" data-lang="ko">하나의 계정으로 클라이언트별 웹사이트를 무제한 생성</div>
             <div class="feature-desc" data-lang="en">Create unlimited client websites with one account</div>
+            <div class="feature-desc" data-lang="ja">1アカウントでクライアント別Webサイトを無制限作成</div>
           </div>
           <div class="feature-card">
             <div class="feature-icon">🔧</div>
             <div class="feature-title" data-lang="ko">FTP / DB 접근</div>
             <div class="feature-title" data-lang="en">FTP / DB Access</div>
+            <div class="feature-title" data-lang="ja">FTP / DBアクセス</div>
             <div class="feature-desc" data-lang="ko">커스텀 백엔드 개발을 위한 직접 접근</div>
             <div class="feature-desc" data-lang="en">Direct access for custom backend development</div>
+            <div class="feature-desc" data-lang="ja">カスタムバックエンド開発のための直接アクセス</div>
           </div>
           <div class="feature-card">
             <div class="feature-icon">💾</div>
             <div class="feature-title" data-lang="ko">100GB 스토리지</div>
             <div class="feature-title" data-lang="en">100GB Storage</div>
+            <div class="feature-title" data-lang="ja">100GBストレージ</div>
             <div class="feature-desc" data-lang="ko">대용량 미디어 파일을 위한 충분한 공간</div>
             <div class="feature-desc" data-lang="en">Ample space for large media files</div>
+            <div class="feature-desc" data-lang="ja">大容量メディアファイルのための十分な容量</div>
           </div>
           <div class="feature-card">
             <div class="feature-icon">🎯</div>
             <div class="feature-title" data-lang="ko">AI Credit 2.5M</div>
             <div class="feature-title" data-lang="en">AI Credit 2.5M</div>
+            <div class="feature-title" data-lang="ja">AIクレジット250万</div>
             <div class="feature-desc" data-lang="ko">강력한 AI 기능 활용을 위한 월간 크레딧</div>
             <div class="feature-desc" data-lang="en">Monthly credits for powerful AI features</div>
+            <div class="feature-desc" data-lang="ja">強力なAI機能活用のための月間クレジット</div>
           </div>
         </div>
       </div>
@@ -340,13 +378,17 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
         <div style="background:var(--gradient-hero);border-radius:16px;padding:24px;color:#fff;margin-bottom:16px">
           <div style="font-size:14px;opacity:0.9;margin-bottom:12px" data-lang="ko">💡 왜 지금인가?</div>
           <div style="font-size:14px;opacity:0.9;margin-bottom:12px" data-lang="en">💡 Why Now?</div>
+          <div style="font-size:14px;opacity:0.9;margin-bottom:12px" data-lang="ja">💡 なぜ今なのか？</div>
           <ul style="font-size:13px;line-height:1.8;padding-left:16px">
             <li data-lang="ko">전 세계 21억 개 웹사이트, 65%가 노코드/로우코드로 구축</li>
             <li data-lang="en">2.1B websites globally, 65% built with No-Code/Low-Code</li>
+            <li data-lang="ja">世界21億Webサイト、65%がノーコード/ローコードで構築</li>
             <li data-lang="ko">포스트 AI 시대가 새로운 패러다임 탄생: 바이브 코딩</li>
             <li data-lang="en">Post-AI era births a new paradigm: Vibe Coding</li>
+            <li data-lang="ja">ポストAI時代が新パラダイム誕生：バイブコーディング</li>
             <li data-lang="ko">정적 출력물에는 지능형 운영 레이어가 필요</li>
             <li data-lang="en">Static output needs intelligent operation layer</li>
+            <li data-lang="ja">静的出力にはインテリジェント運営レイヤーが必要</li>
           </ul>
         </div>
         <div style="background:var(--bg-secondary);border-radius:16px;padding:20px">
@@ -371,12 +413,14 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 </div>
 
 <!-- SLIDE 5: Zaemit Rental 가격 & 현황 -->
-<div class="slide" data-title-ko="Rental 가격" data-title-en="Rental Pricing">
+<div class="slide" data-title-ko="Rental 가격" data-title-en="Rental Pricing" data-title-ja="Rental価格">
   <div class="slide-inner">
     <div class="section-label" data-lang="ko">가격 & 서비스 현황</div>
     <div class="section-label" data-lang="en">PRICING & STATUS</div>
+    <div class="section-label" data-lang="ja">価格＆サービス状況</div>
     <div class="section-title" data-lang="ko">Zaemit Rental Pack</div>
     <div class="section-title" data-lang="en">Zaemit Rental Pack</div>
+    <div class="section-title" data-lang="ja">Zaemit Rental Pack</div>
 
     <div class="product-layout">
       <div class="product-info">
@@ -384,8 +428,10 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
           <span class="product-price">$300</span>
           <span class="product-period" data-lang="ko">/ 월</span>
           <span class="product-period" data-lang="en">/ month</span>
+          <span class="product-period" data-lang="ja">/ 月</span>
           <div class="product-spec" data-lang="ko">1 유저 · 무제한 사이트</div>
           <div class="product-spec" data-lang="en">1 User · Unlimited Sites</div>
+          <div class="product-spec" data-lang="ja">1ユーザー · 無制限サイト</div>
         </div>
         <ul class="product-features">
           <li><span class="icon">✓</span> AI Credit 2.5M / month</li>
@@ -397,18 +443,13 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
         </ul>
       </div>
       <div>
-        <div class="product-status">
-          <div class="status-badge nda">NDA</div>
-          <div class="status-title" data-lang="ko">🇯🇵 일본 대기업과 공동상품 출시 추진</div>
-          <div class="status-title" data-lang="en">🇯🇵 Joint Product with Major Japanese Corp</div>
-          <div class="status-desc" data-lang="ko">일본 대기업과 호스팅 렌탈 팩 공동협력 사업을 추진하고 있습니다. NDA 계약이 체결되어 상세 내용은 비공개입니다.</div>
-          <div class="status-desc" data-lang="en">Pursuing hosting rental pack joint cooperation with a major Japanese corporation. Details confidential under NDA.</div>
-        </div>
         <div style="background:var(--gradient-accent);border-radius:16px;padding:24px;text-align:center">
           <div style="font-size:14px;font-weight:700;color:var(--accent-primary);margin-bottom:8px" data-lang="ko">예상 연 매출</div>
           <div style="font-size:14px;font-weight:700;color:var(--accent-primary);margin-bottom:8px" data-lang="en">Expected Annual Revenue</div>
+          <div style="font-size:14px;font-weight:700;color:var(--accent-primary);margin-bottom:8px" data-lang="ja">予想年間売上</div>
           <div style="font-size:32px;font-weight:800;color:var(--text-primary)" data-lang="ko">50억원 이상</div>
           <div style="font-size:32px;font-weight:800;color:var(--text-primary)" data-lang="en">$4M+</div>
+          <div style="font-size:32px;font-weight:800;color:var(--text-primary)" data-lang="ja">5億円以上</div>
         </div>
       </div>
     </div>
@@ -416,13 +457,15 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 </div>
 
 <!-- SLIDE 6: Z.STUDIO 소개 1 -->
-<div class="slide" data-title-ko="Z.STUDIO 소개" data-title-en="Z.STUDIO Intro">
+<div class="slide" data-title-ko="Z.STUDIO 소개" data-title-en="Z.STUDIO Intro" data-title-ja="Z.STUDIO紹介">
   <div class="slide-inner">
     <div class="section-label">PRODUCT 03</div>
     <div class="section-title" data-lang="ko">Z.STUDIO</div>
     <div class="section-title" data-lang="en">Z.STUDIO</div>
+    <div class="section-title" data-lang="ja">Z.STUDIO</div>
     <div class="section-desc" data-lang="ko">바이브 코딩 기반 협업에 최적화된 웹 스튜디오.<br>전문가와 SME를 위해 설계된 웹 프로덕션 플랫폼입니다.</div>
     <div class="section-desc" data-lang="en">A Vibe-Coding Web Studio Optimized for Collaboration.<br>A web production platform designed for experts and SMEs.</div>
+    <div class="section-desc" data-lang="ja">バイブコーディング基盤のコラボレーションに最適化されたWebスタジオ。<br>専門家と中小企業向けに設計されたWeb制作プラットフォームです。</div>
 
     <table class="compare-table">
       <thead>
@@ -430,6 +473,7 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
           <th></th>
           <th data-lang="ko">기존 웹 개발</th>
           <th data-lang="en">Traditional Web Dev</th>
+          <th data-lang="ja">従来のWeb開発</th>
           <th class="highlight">Z.STUDIO</th>
         </tr>
       </thead>
@@ -437,23 +481,29 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
         <tr>
           <td class="label" data-lang="ko">개발 기간</td>
           <td class="label" data-lang="en">Development Time</td>
+          <td class="label" data-lang="ja">開発期間</td>
           <td data-lang="ko">6주</td>
           <td data-lang="en">6 Weeks</td>
+          <td data-lang="ja">6週間</td>
           <td class="highlight">6 Hours</td>
         </tr>
         <tr>
           <td class="label" data-lang="ko">제작 비용</td>
           <td class="label" data-lang="en">Production Cost</td>
+          <td class="label" data-lang="ja">制作コスト</td>
           <td>$2,500 ~ $8,000</td>
           <td class="highlight">$150</td>
         </tr>
         <tr>
           <td class="label" data-lang="ko">유지보수</td>
           <td class="label" data-lang="en">Maintenance</td>
+          <td class="label" data-lang="ja">メンテナンス</td>
           <td data-lang="ko">전문가 의존</td>
           <td data-lang="en">Dependent on Experts</td>
+          <td data-lang="ja">専門家に依存</td>
           <td class="highlight" data-lang="ko">쉬운 셀프 유지보수</td>
           <td class="highlight" data-lang="en">Easy Self-Maintenance</td>
+          <td class="highlight" data-lang="ja">簡単セルフメンテナンス</td>
         </tr>
       </tbody>
     </table>
@@ -462,73 +512,91 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
       <div style="font-size:48px;font-weight:800;color:var(--accent-primary)">500%+</div>
       <div style="font-size:16px;color:var(--text-secondary);margin-top:8px" data-lang="ko">생산성 향상 · 다양한 템플릿 조합으로 웹사이트 제작 생산성 대폭 증가</div>
       <div style="font-size:16px;color:var(--text-secondary);margin-top:8px" data-lang="en">Productivity Boost · Dramatically increased website creation productivity with diverse templates</div>
+      <div style="font-size:16px;color:var(--text-secondary);margin-top:8px" data-lang="ja">生産性向上 · 多様なテンプレート組み合わせでWebサイト制作生産性が大幅アップ</div>
     </div>
   </div>
 </div>
 
 <!-- SLIDE 7: Z.STUDIO 6대 핵심 기능 -->
-<div class="slide" data-title-ko="Z.STUDIO 기능" data-title-en="Z.STUDIO Features">
+<div class="slide" data-title-ko="Z.STUDIO 기능" data-title-en="Z.STUDIO Features" data-title-ja="Z.STUDIO機能">
   <div class="slide-inner">
     <div class="section-label">Z.STUDIO CORE FEATURES</div>
     <div class="section-title" data-lang="ko">6대 핵심 기능</div>
     <div class="section-title" data-lang="en">6 Core Features</div>
+    <div class="section-title" data-lang="ja">6つのコア機能</div>
     <div class="section-desc" data-lang="ko">웹 프로젝트를 혁신하는 6가지 핵심 기능</div>
     <div class="section-desc" data-lang="en">6 Core Features Revolutionizing Web Projects</div>
+    <div class="section-desc" data-lang="ja">Webプロジェクトを革新する6つのコア機能</div>
 
     <div class="core-features">
       <div class="core-feature">
         <h4 data-lang="ko">워크스페이스 기반 협업</h4>
         <h4 data-lang="en">Workspace-Based Collaboration</h4>
+        <h4 data-lang="ja">ワークスペースベースのコラボレーション</h4>
         <p data-lang="ko">팀과 함께 프로젝트를 관리하고 클라이언트별 업무를 효율적으로 배분하세요.</p>
         <p data-lang="en">Manage projects with your team and efficiently distribute tasks for each client.</p>
+        <p data-lang="ja">チームでプロジェクトを管理し、クライアント別の業務を効率的に配分します。</p>
       </div>
       <div class="core-feature">
         <h4 data-lang="ko">AI 웹사이트 생성</h4>
         <h4 data-lang="en">AI-Powered Website Generation</h4>
+        <h4 data-lang="ja">AIによるWebサイト生成</h4>
         <p data-lang="ko">기본 클라이언트 정보만 입력하면 AI가 자동으로 사이트를 구축하여 빠르게 시작할 수 있습니다.</p>
         <p data-lang="en">Simply enter basic client info, and AI automatically builds the site for a quick start.</p>
+        <p data-lang="ja">基本的なクライアント情報を入力するだけで、AIが自動的にサイトを構築し、迅速にスタートできます。</p>
       </div>
       <div class="core-feature">
         <h4 data-lang="ko">전문가용 Pro Editor</h4>
         <h4 data-lang="en">Pro Editor for Experts</h4>
+        <h4 data-lang="ja">専門家向けPro Editor</h4>
         <p data-lang="ko">반응형 디자인을 기본 지원하는 웹 에디터로 디자인과 개발을 동시에 처리하세요.</p>
         <p data-lang="en">Handle design and development simultaneously with a responsive web editor.</p>
+        <p data-lang="ja">レスポンシブデザインを標準サポートするWebエディターで、デザインと開発を同時に処理。</p>
       </div>
       <div class="core-feature">
         <h4 data-lang="ko">내장 CRM</h4>
         <h4 data-lang="en">Built-in CRM</h4>
+        <h4 data-lang="ja">内蔵CRM</h4>
         <p data-lang="ko">클라이언트 정보 요청, 피드백, 업무 처리를 한 곳에서 관리하세요.</p>
         <p data-lang="en">Handle client info requests, feedback, and task processing—all in one place.</p>
+        <p data-lang="ja">クライアント情報リクエスト、フィードバック、業務処理を一か所で管理。</p>
       </div>
       <div class="core-feature">
         <h4 data-lang="ko">프로젝트 기반 코멘트</h4>
         <h4 data-lang="en">Project-Based Comments</h4>
+        <h4 data-lang="ja">プロジェクトベースのコメント</h4>
         <p data-lang="ko">팀과 실시간 피드백을 공유하고 협업하세요.</p>
         <p data-lang="en">Enable real-time feedback sharing and collaboration with your team.</p>
+        <p data-lang="ja">チームとリアルタイムフィードバックを共有し、協業します。</p>
       </div>
       <div class="core-feature">
         <h4 data-lang="ko">콘텐츠 재사용</h4>
         <h4 data-lang="en">Content Reusability</h4>
+        <h4 data-lang="ja">コンテンツの再利用</h4>
         <p data-lang="ko">'My Block' 기능으로 콘텐츠를 재사용하여 효율성을 극대화하세요.</p>
         <p data-lang="en">Maximize efficiency by reusing content via the 'My Block' feature.</p>
+        <p data-lang="ja">「My Block」機能でコンテンツを再利用し、効率を最大化。</p>
       </div>
     </div>
   </div>
 </div>
 
 <!-- SLIDE 8: Z.STUDIO 가격 & 현황 -->
-<div class="slide" data-title-ko="Z.STUDIO 가격" data-title-en="Z.STUDIO Pricing">
+<div class="slide" data-title-ko="Z.STUDIO 가격" data-title-en="Z.STUDIO Pricing" data-title-ja="Z.STUDIO価格">
   <div class="slide-inner">
     <div class="section-label" data-lang="ko">가격 & 서비스 현황</div>
     <div class="section-label" data-lang="en">PRICING & STATUS</div>
+    <div class="section-label" data-lang="ja">価格＆サービス状況</div>
     <div class="section-title" data-lang="ko">Z.STUDIO 가격 플랜</div>
     <div class="section-title" data-lang="en">Z.STUDIO Pricing Plans</div>
+    <div class="section-title" data-lang="ja">Z.STUDIO 料金プラン</div>
 
     <div class="pricing-grid">
       <div class="pricing-card">
         <div class="pricing-card-name">Free Trial</div>
         <div class="pricing-card-sub" data-lang="ko">1 Seat · 3 사이트</div>
         <div class="pricing-card-sub" data-lang="en">1 Seat · 3 Sites</div>
+        <div class="pricing-card-sub" data-lang="ja">1シート · 3サイト</div>
         <div class="pricing-price">Free</div>
         <ul class="pricing-features">
           <li>AI Credit 200K / mo</li>
@@ -542,6 +610,7 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
         <div class="pricing-card-name">Pro (Team)</div>
         <div class="pricing-card-sub" data-lang="ko">3 Seat · 무제한 사이트</div>
         <div class="pricing-card-sub" data-lang="en">3 Seat · Unlimited Sites</div>
+        <div class="pricing-card-sub" data-lang="ja">3シート · 無制限サイト</div>
         <div class="pricing-price">$25<span style="font-size:14px;font-weight:400">/seat/mo</span></div>
         <ul class="pricing-features">
           <li>AI Credit 2.5M / mo (per seat)</li>
@@ -556,6 +625,7 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
         <div class="pricing-card-name">Enterprise</div>
         <div class="pricing-card-sub" data-lang="ko">10+ Seat · 전용 인프라</div>
         <div class="pricing-card-sub" data-lang="en">10+ Seat · Dedicated Infra</div>
+        <div class="pricing-card-sub" data-lang="ja">10+シート · 専用インフラ</div>
         <div class="pricing-price">$70<span style="font-size:14px;font-weight:400">/seat/mo</span></div>
         <ul class="pricing-features">
           <li>AI Credit 7M / mo (per seat)</li>
@@ -570,8 +640,10 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
     <div class="product-status" style="margin-top:32px">
       <div class="status-badge progress" data-lang="ko">글로벌 확장</div>
       <div class="status-badge progress" data-lang="en">GLOBAL EXPANSION</div>
+      <div class="status-badge progress" data-lang="ja">グローバル展開</div>
       <div class="status-title" data-lang="ko">다국적 파트너십 체결</div>
       <div class="status-title" data-lang="en">Multinational Partnerships Established</div>
+      <div class="status-title" data-lang="ja">多国籍パートナーシップ締結</div>
       <div class="status-partners">
         <span class="status-partner">🇯🇵 IYP</span>
         <span class="status-partner">🇯🇵 유니전자</span>
@@ -588,17 +660,20 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 </div>
 
 <!-- SLIDE 9: Contact -->
-<div class="slide" data-title-ko="문의하기" data-title-en="Contact Us">
+<div class="slide" data-title-ko="문의하기" data-title-en="Contact Us" data-title-ja="お問い合わせ">
   <div class="slide-inner">
     <div class="section-label" data-lang="ko">문의하기</div>
     <div class="section-label" data-lang="en">CONTACT US</div>
+    <div class="section-label" data-lang="ja">お問い合わせ</div>
     <div class="section-title" data-lang="ko">지금 시작하세요</div>
     <div class="section-title" data-lang="en">Get Started Today</div>
+    <div class="section-title" data-lang="ja">今すぐ始めましょう</div>
 
     <div class="contact-layout">
       <div class="contact-info">
         <h3 data-lang="ko">연락처</h3>
         <h3 data-lang="en">Contact Information</h3>
+        <h3 data-lang="ja">連絡先</h3>
         <div class="contact-item">
           <span>📧</span>
           <a href="mailto:kjh@weven.kr">kjh@weven.kr</a>
@@ -618,18 +693,23 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
         <div style="margin-top:32px">
           <h3 data-lang="ko" style="margin-bottom:16px">김정환 박사</h3>
           <h3 data-lang="en" style="margin-bottom:16px">James Kim, Ph.D</h3>
+          <h3 data-lang="ja" style="margin-bottom:16px">キム・ジョンファン博士</h3>
           <p style="color:var(--text-secondary);font-size:14px;line-height:1.6" data-lang="ko">대표이사 & 창업자<br>고려대 MBA · 블루스트림 대표 9년 · 웹어워드코리아 대상</p>
           <p style="color:var(--text-secondary);font-size:14px;line-height:1.6" data-lang="en">CEO & Founder<br>Korea Univ. MBA · Ex-CEO BlueStream (9 yrs) · Web Award Korea</p>
+          <p style="color:var(--text-secondary);font-size:14px;line-height:1.6" data-lang="ja">代表取締役 & 創業者<br>高麗大MBA · ブルーストリーム代表9年 · Webアワードコリア大賞</p>
         </div>
       </div>
 
       <div class="contact-cta">
         <h3 data-lang="ko">무료 상담 신청</h3>
         <h3 data-lang="en">Request Free Consultation</h3>
+        <h3 data-lang="ja">無料相談申請</h3>
         <p data-lang="ko">귀사의 비즈니스에 맞는<br>최적의 솔루션을 제안해 드립니다.</p>
         <p data-lang="en">We'll propose the optimal solution<br>tailored to your business needs.</p>
+        <p data-lang="ja">貴社のビジネスに合った<br>最適なソリューションをご提案します。</p>
         <a href="mailto:kjh@weven.kr" class="contact-btn" data-lang="ko">상담 신청하기</a>
         <a href="mailto:kjh@weven.kr" class="contact-btn" data-lang="en">Request Consultation</a>
+        <a href="mailto:kjh@weven.kr" class="contact-btn" data-lang="ja">相談を申請する</a>
       </div>
     </div>
   </div>
@@ -641,7 +721,7 @@ body.ko span[data-lang="ko"],body.en span[data-lang="en"]{display:inline}
 const irConfig = {
   version: '260202',
   theme: 'light',
-  languages: ['ko', 'en'],
+  languages: ['ko', 'en', 'ja'],
   defaultLang: 'ko'
 };
 
@@ -658,7 +738,7 @@ function goTo(idx) {
 function goToSlide(idx) { goTo(idx); }
 
 function setLang(lang) {
-  document.body.classList.remove('ko', 'en');
+  document.body.classList.remove('ko', 'en', 'ja');
   document.body.classList.add(lang);
 }
 

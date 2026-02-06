@@ -370,7 +370,7 @@
   <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
     <span></span><span></span><span></span>
   </button>
-  <div class="menu-title">Zaemit<span>Product Line Up</span></div>
+  <div class="menu-title" id="menuTitle">Zaemit<span id="menuTitleSub">IR Deck</span></div>
 </div>
 
 <!-- SIDEBAR -->
@@ -431,6 +431,16 @@
   let slides = [];
   let current = 0;
   let total = 0;
+  let initialPage = 0; // Page to navigate to after iframe loads
+
+  // Update URL hash with current state (for sharing/refresh)
+  function updateURLHash() {
+    const hashParams = new URLSearchParams();
+    hashParams.set('ir', irVersion);
+    hashParams.set('lang', lang);
+    hashParams.set('page', current + 1); // 1-based for user-friendly URLs
+    window.history.replaceState(null, '', '#' + hashParams.toString());
+  }
 
   // Init
   async function init() {
@@ -442,6 +452,10 @@
     // Hash params take precedence over query params
     irVersion = hashParams.get('ir') || params.get('ir') || '2601';
     lang = hashParams.get('lang') || params.get('lang') || localStorage.getItem('irLang') || 'ko';
+
+    // Get initial page (1-based in URL, convert to 0-based)
+    const pageParam = hashParams.get('page') || params.get('page');
+    initialPage = pageParam ? Math.max(0, parseInt(pageParam, 10) - 1) : 0;
 
     // Load config
     try {
@@ -457,6 +471,12 @@
 
     if (isLightTheme) {
       document.body.classList.add('light-theme');
+    }
+
+    // Update menu title based on version config
+    if (versionConfig) {
+      const titleText = lang === 'ko' ? versionConfig.name : (versionConfig.nameEn || versionConfig.name);
+      document.getElementById('menuTitleSub').textContent = titleText;
     }
 
     // Update language UI
@@ -523,6 +543,14 @@
           updateLangUI();
           applyLangToIframe();
 
+          // Navigate to initial page if specified in URL
+          if (initialPage > 0 && initialPage < total) {
+            goTo(initialPage);
+          } else {
+            // Update URL hash with current state
+            updateURLHash();
+          }
+
         } catch (e) {
           console.error('Cannot access iframe content:', e);
         }
@@ -587,6 +615,7 @@
     });
 
     updatePageIndicator();
+    updateURLHash();
   }
 
   function updatePageIndicator() {
@@ -605,6 +634,14 @@
     localStorage.setItem('irLang', lang);
     updateLangUI();
     applyLangToIframe();
+    updateURLHash();
+
+    // Update menu title based on language
+    const versionConfig = config?.versions?.find(v => v.id === irVersion);
+    if (versionConfig) {
+      const titleText = lang === 'ko' ? versionConfig.name : (versionConfig.nameEn || versionConfig.name);
+      document.getElementById('menuTitleSub').textContent = titleText;
+    }
 
     // Rebuild TOC with new language
     const iframe = document.getElementById('irFrame');
@@ -698,7 +735,7 @@
   }
 
   function openPrintPreview() {
-    window.open(`print-preview#ir=${irVersion}&lang=${lang}`, '_blank');
+    window.open(`print-preview#ir=${irVersion}&lang=${lang}&page=${current + 1}`, '_blank');
   }
 
   // Keyboard navigation
@@ -797,6 +834,7 @@
       });
 
       updatePageIndicator();
+      updateURLHash();
     }
   });
 
