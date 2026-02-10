@@ -97,15 +97,19 @@ margin-bottom: 32px;  /* section-desc */
 | 솔루션 | `.solution` | `.solution-content` |
 | 서비스 | `.service` | `.svc-phases` |
 | 시장 | `.market` | `.market-content`, `.mkt-table` |
+| 바이브코딩 시장 | `.vibe-market` | `.mkt-timeline`, `.mkt-stages` |
 | 경쟁 | `.competition` | `.comp-table` |
 | 트랙션 | `.traction` | `.traction-grid` |
 | 비즈니스 | `.business` | `.biz-diagram-wrap` |
-| 가격 | `.pricing` | `.pricing-grid` |
-| 영업 | `.sales` | `.sales-layout` |
+| 가격 | `.pricing-plan` | `.pricing-grid` |
+| 판매 현황 | `.sales-overview` | `.sales-layout` |
+| 판매 상세 | `.sales-detail` | `.sd-layout`, `.sd-circles` |
 | 팀 | `.team` | `.team-layout` |
-| 글로벌 | `.global-partners` | `.gp-nda-row`, `.gp-top`, `.gp-countries` |
-| 로드맵 | `.roadmap` | `.roadmap-container` |
-| Exit | `.exit` | `.exit-chart-area` |
+| 글로벌 | `.global-partners` | `.gp-nda-row`, `.gp-countries` |
+| 로드맵/스케일업 | `.roadmap` | `.roadmap-container` |
+| 데모 영상 | `.plugin-demo-video` | `.demo-video-container` |
+| Exit (IPO) | `.exit` | `.exit-chart-area` |
+| Exit (M&A) | `.exit-ma` | `.ma-columns`, `.ma-synergy` |
 | Ask | `.ask` | `.ask-stats` |
 
 ---
@@ -727,3 +731,4 @@ body.ja [data-lang="ja"] { display: revert; }
 | 2026-01-31 | 1.0 | 최초 작성 |
 | 2026-01-31 | 1.1 | 라이트 테마 스타일 가이드 분리 (ir-style-guide-light.md) |
 | 2026-02-01 | 2.0 | **모션 시스템 전면 문서화**: 2601의 모든 애니메이션 키프레임, 페이지별 애니메이션 규칙, SVG 차트 애니메이션, 모션 감소 모드, 타이밍 가이드 추가 |
+| 2026-02-11 | 2.1 | 260203 슬라이드 타입 추가: vibe-market, sales-detail, plugin-demo-video, exit-ma, pricing-plan 등 |

@@ -212,7 +212,10 @@
 
         document.title = config.title;
 
-        if (config.versions.length === 1) {
+        // defaultIR이 설정되어 있으면 바로 해당 IR로 이동
+        if (config.defaultIR) {
+          redirectToIR(config.defaultIR);
+        } else if (config.versions.length === 1) {
           // 버전이 1개면 바로 이동
           const version = config.versions[0];
           redirectToIR(version.id);

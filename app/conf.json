@@ -1,13 +1,24 @@
 {
   "title": "WEVEN Zaemit IR",
   "defaultLang": "ko",
+  "defaultIR": "260203",
   "versions": [
+    {
+      "id": "260203",
+      "name": "IR Deck (Full)",
+      "nameEn": "IR Deck (Full)",
+      "description": "다크 테마 풀버전 최신 IR",
+      "descriptionEn": "Dark theme full version IR (Latest)",
+      "date": "2026-02-10",
+      "theme": "dark",
+      "default": true
+    },
     {
       "id": "260202",
       "name": "Zaemit Product Line up",
       "nameEn": "Zaemit Product Line up",
-      "description": "화려한 모션이 적용된 최신 IR",
-      "descriptionEn": "Latest IR with Rich Motion",
+      "description": "화려한 모션이 적용된 IR",
+      "descriptionEn": "IR with Rich Motion",
       "date": "2026-02-03",
       "theme": "light",
       "default": false
@@ -20,7 +31,7 @@
       "descriptionEn": "Dark theme full version IR",
       "date": "2026-01-31",
       "theme": "dark",
-      "default": true
+      "default": false
     },
     {
       "id": "2602",
