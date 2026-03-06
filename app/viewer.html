@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1280">
-  <title>Zaemit Product Line Up</title>
+  <title>WEVEN Zaemit IR</title>
+  <meta name="description" content="AI 노코드 웹 빌더 Zaemit - Investor Relations">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="WEVEN Zaemit">
+  <meta property="og:title" content="WEVEN Zaemit IR">
+  <meta property="og:description" content="AI 노코드 웹 빌더 Zaemit - Investor Relations">
+  <meta property="og:image" content="">
+  <meta property="og:url" content="">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WEVEN Zaemit IR">
+  <meta name="twitter:description" content="AI 노코드 웹 빌더 Zaemit - Investor Relations">
+  <meta name="twitter:image" content="">
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -13,8 +28,8 @@
       --bg-secondary: rgba(10, 14, 39, 0.97);
       --text-primary: #fff;
       --text-secondary: #94A3B8;
-      --accent: #00D4AA;
-      --accent2: #0066FF;
+      --accent: #6366F1;
+      --accent2: #8B5CF6;
       --border: rgba(255, 255, 255, 0.06);
       --border-hover: rgba(255, 255, 255, 0.12);
     }
@@ -77,10 +92,13 @@
     }
 
     .menu-title span {
-      color: var(--accent);
-      font-weight: 500;
-      margin-left: 6px;
-      font-size: 14px;
+      font-weight: 600;
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 360px;
+      display: inline-block;
     }
 
     body.light-theme .menu-title {
@@ -135,7 +153,7 @@
 
     .lang-btn.active {
       background: var(--accent);
-      color: #000;
+      color: #fff;
     }
 
     body.light-theme .lang-btn.active {
@@ -195,7 +213,7 @@
     .toc-item:hover { background: rgba(255,255,255,0.05); }
     body.light-theme .toc-item:hover { background: #F8FAFC; }
 
-    .toc-item.active { background: rgba(0, 102, 255, 0.15); }
+    .toc-item.active { background: rgba(99, 102, 241, 0.15); }
     body.light-theme .toc-item.active { background: #EEF2FF; }
 
     .toc-item.active .toc-num {
@@ -367,7 +385,7 @@
   <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
     <span></span><span></span><span></span>
   </button>
-  <div class="menu-title" id="menuTitle">Zaemit<span id="menuTitleSub">IR Deck</span></div>
+  <div class="menu-title" id="menuTitle"><span id="menuTitleSub"></span></div>
 </div>
 
 <!-- SIDEBAR -->
@@ -479,10 +497,40 @@
       document.body.classList.add('light-theme');
     }
 
-    // Update menu title based on version config
+    // Update menu title and OG meta tags based on version config
     if (versionConfig) {
       const titleText = lang === 'ko' ? versionConfig.name : (versionConfig.nameEn || versionConfig.name);
-      document.getElementById('menuTitleSub').textContent = titleText;
+      // menuTitleSub now shows current slide title, set by updateSlideTitle()
+
+      const descText = lang === 'ko' ? versionConfig.description : (versionConfig.descriptionEn || versionConfig.description);
+      const fullTitle = titleText + ' - WEVEN Zaemit IR';
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = baseUrl + '?ir=' + irVersion;
+      const ogImageUrl = window.location.origin + '/ir/' + irVersion + '/og-image.png';
+
+      // Update document title
+      document.title = fullTitle;
+
+      // Update OG meta tags
+      const metaMap = {
+        'og:title': fullTitle,
+        'og:description': descText,
+        'og:url': shareUrl,
+        'og:image': ogImageUrl,
+        'twitter:title': fullTitle,
+        'twitter:description': descText,
+        'twitter:image': ogImageUrl,
+      };
+      for (const [prop, val] of Object.entries(metaMap)) {
+        const sel = prop.startsWith('twitter:')
+          ? `meta[name="${prop}"]`
+          : `meta[property="${prop}"]`;
+        const el = document.querySelector(sel);
+        if (el) el.setAttribute('content', val);
+      }
+      // Also update plain description
+      const descMeta = document.querySelector('meta[name="description"]');
+      if (descMeta) descMeta.setAttribute('content', descText);
     }
 
     // Update language UI
@@ -596,6 +644,7 @@
             });
             updatePageIndicator();
           }
+          updateSlideTitle();
           updateURLHash();
 
           // Show iframe now that correct page is displayed
@@ -668,7 +717,23 @@
     });
 
     updatePageIndicator();
+    updateSlideTitle();
     updateURLHash();
+  }
+
+  function updateSlideTitle() {
+    const iframe = document.getElementById('irFrame');
+    const el = document.getElementById('menuTitleSub');
+    if (!el) return;
+    try {
+      const slides = iframe.contentDocument.querySelectorAll('.slide');
+      const slide = slides[current];
+      if (slide) {
+        const langKey = lang || 'ko';
+        const title = slide.getAttribute('data-title-' + langKey) || slide.getAttribute('data-title-ko') || '';
+        el.textContent = title;
+      }
+    } catch (e) {}
   }
 
   function updatePageIndicator() {
@@ -699,12 +764,8 @@
     applyLangToIframe();
     updateURLHash();
 
-    // Update menu title based on language
-    const versionConfig = config?.versions?.find(v => v.id === irVersion);
-    if (versionConfig) {
-      const titleText = lang === 'ko' ? versionConfig.name : (versionConfig.nameEn || versionConfig.name);
-      document.getElementById('menuTitleSub').textContent = titleText;
-    }
+    // Update slide title in menu based on language
+    updateSlideTitle();
 
     // Rebuild TOC with new language
     const iframe = document.getElementById('irFrame');
@@ -798,7 +859,7 @@
   }
 
   function openPrintPreview() {
-    window.open(`print-preview#ir=${irVersion}&lang=${lang}&page=${current + 1}`, '_blank');
+    window.open(`print-preview.html#ir=${irVersion}&lang=${lang}&page=${current + 1}`, '_blank');
   }
 
   // Check if iframe's editor slide wants to consume forward navigation
@@ -814,13 +875,21 @@
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
       e.preventDefault();
       if (!tryEditorForward()) goTo(current + 1);
     }
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
       e.preventDefault();
       goTo(current - 1);
+    }
+    if (e.key === 'Home') {
+      e.preventDefault();
+      goTo(0);
+    }
+    if (e.key === 'End') {
+      e.preventDefault();
+      goTo(total - 1);
     }
     if (e.key === 'Escape') {
       const sidebar = document.getElementById('sidebar');

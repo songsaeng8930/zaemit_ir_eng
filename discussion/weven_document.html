@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEVEN 사전 공유 자료</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --surface-alt: #F5F3EF;
+    --border: #E8E4DD;
+    --border-light: #F0EDE8;
+    --text-primary: #1A1A1A;
+    --text-secondary: #5C5C5C;
+    --text-tertiary: #8A8A8A;
+    --accent: #E85D2A;
+    --accent-light: #FFF0EB;
+    --accent-dark: #C94D20;
+    --blue: #2A6FE8;
+    --blue-light: #EBF2FF;
+    --green: #1D8A54;
+    --green-light: #EBFAF2;
+    --tag-bg: #F0EDE8;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.8;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, #1A1A1A 0%, #2D2520 50%, #3A2A1F 100%);
+    color: #fff;
+    padding: 80px 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(232,93,42,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(42,111,232,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero-label::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.4s;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    max-width: 500px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.6s;
+  }
+
+  /* === CONTAINER === */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* === SECTION === */
+  .section {
+    padding: 56px 0;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--border-light);
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 16px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 32px;
+    line-height: 1.3;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: -24px;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  /* === TABLE === */
+  .table-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 900px;
+  }
+
+  thead th {
+    background: var(--surface-alt);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    padding: 14px 16px;
+    text-align: center;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+  }
+
+  thead th:first-child {
+    text-align: left;
+    padding-left: 24px;
+    min-width: 80px;
+    background: var(--surface-alt);
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  tbody td {
+    padding: 14px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  tbody td:first-child {
+    text-align: left;
+    padding-left: 24px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: var(--surface);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody tr:hover td {
+    background: var(--accent-light);
+  }
+
+  tbody tr:hover td:first-child {
+    background: var(--accent-light);
+  }
+
+  .row-members td:not(:first-child) { color: var(--text-primary); }
+  .row-new td:not(:first-child) { color: var(--accent-dark); font-weight: 500; }
+
+  .table-note {
+    padding: 12px 24px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    background: var(--surface-alt);
+    border-top: 1px solid var(--border-light);
+  }
+
+  /* === TREND INDICATORS === */
+  .trend-down {
+    color: var(--accent-dark);
+  }
+
+  /* === QUESTION LIST === */
+  .question-group {
+    margin-bottom: 36px;
+  }
+
+  .question-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .question-group-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--blue);
+    background: var(--blue-light);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .question-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .question-number {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .question-number.tech {
+    background: var(--blue);
+  }
+
+  .question-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    font-weight: 400;
+  }
+
+  .question-note {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* === FEEDBACK === */
+  .feedback-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .feedback-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feedback-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .feedback-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .feedback-card:hover::before {
+    opacity: 1;
+  }
+
+  .feedback-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .feedback-icon.locale { background: #FFF0EB; }
+  .feedback-icon.input { background: #EBF2FF; }
+  .feedback-icon.visual { background: #F5EBFF; }
+  .feedback-icon.domain { background: #EBFAF2; }
+  .feedback-icon.store { background: #FFF8EB; }
+
+  .feedback-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+
+  .feedback-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .feedback-card .example {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: var(--surface-alt);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--accent);
+  }
+
+  /* === PRODUCT PLAN === */
+  .plan-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    font-weight: 300;
+    max-width: 760px;
+  }
+
+  .reason-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .reason-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: all 0.2s ease;
+  }
+
+  .reason-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .reason-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .reason-content h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  .reason-content p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* === SERVICE SITE === */
+  .service-note {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .service-note h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .service-note p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .service-note p:last-child { margin-bottom: 0; }
+
+  .caution-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: 12px;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero { padding: 60px 0 48px; }
+    .hero h1 { font-size: 32px; }
+    .container { padding: 0 24px; }
+    .section { padding: 40px 0; }
+    .section-title { font-size: 22px; }
+    .feedback-grid { grid-template-columns: 1fr; }
+    .hero-inner { padding: 0 24px; }
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+  .fade-in:nth-child(5) { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">PRE-MEETING DOCUMENT</div>
+    <h1>WEVEN <span>사전 공유 자료</span></h1>
+    <p class="hero-desc">롤리팝! 렌탈서버 실적 현황, 질문 리스트, 일본 전개 피드백 및 프로덕트 구상</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- SECTION 1: 실적/전망 -->
+  <section class="section">
+    <div class="section-label">Performance Data</div>
+    <h2 class="section-title">롤리팝! 렌탈서버 회원 수 및 신규 계약 수 실적 / 전망</h2>
+
+    <div class="table-wrapper">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>2025/01</th><th>2025/02</th><th>2025/03</th><th>2025/04</th>
+              <th>2025/05</th><th>2025/06</th><th>2025/07</th><th>2025/08</th>
+              <th>2025/09</th><th>2025/10</th><th>2025/11</th><th>2025/12</th>
+              <th>2026/01</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-members">
+              <td>회원 수</td>
+              <td>404,674</td><td>403,267</td><td>403,622</td><td>402,405</td>
+              <td>401,246</td><td>399,918</td><td>399,399</td><td>398,045</td>
+              <td>396,543</td><td>395,065</td><td>393,411</td><td>392,002</td>
+              <td>389,999</td>
+            </tr>
+            <tr class="row-new">
+              <td>신규 계약</td>
+              <td>3,338</td><td>3,242</td><td>3,918</td><td>3,426</td>
+              <td>2,995</td><td>2,801</td><td>3,036</td><td>2,594</td>
+              <td>2,354</td><td>2,454</td><td>2,229</td><td>2,223</td>
+              <td>2,212</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-note">※ 회원 수는 점진적 감소 추세, 신규 계약은 2025년 3월 이후 하락세</div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: 질문 리스트 -->
+  <section class="section">
+    <div class="section-label">Questions</div>
+    <h2 class="section-title">질문 리스트</h2>
+
+    <div class="question-group">
+      <div class="question-card fade-in">
+        <div class="question-number">1</div>
+        <div>
+          <p class="question-text">이미지 생성까지의 시간이 매우 짧아 사용자 경험이 매우 좋다고 느꼈는데, 이를 어떻게 구현하고 있는지 알려주세요.</p>
+        </div>
+      </div>
+      <div class="question-card fade-in">
+        <div class="question-number">2</div>
+        <div>
+          <p class="question-text">애플리케이션 기능 중 하나인 Pro Editor만 분리하여 독립된 서비스로 제공하는 것이 가능할까요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-group">
+      <div class="question-group-title">🔧 기술 측면</div>
+      <p class="question-note" style="margin-bottom: 16px;">가능한 범위 내에서 답변해 주세요.</p>
+
+      <div class="question-card fade-in">
+        <div class="question-number tech">3</div>
+        <div>
+          <p class="question-text">현재 생각하고 계신 인프라 구성도를 알려주세요.</p>
+        </div>
+      </div>
+      <div class="question-card fade-in">
+        <div class="question-number tech">4</div>
+        <div>
+          <p class="question-text">현재 인프라로 일본 시장에 전개할 경우의 예상되는 과제를 알려주세요.</p>
+        </div>
+      </div>
+      <div class="question-card fade-in">
+        <div class="question-number tech">5</div>
+        <div>
+          <p class="question-text">사용 중인 LLM을 알려주세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: 일본 전개 피드백 -->
+  <section class="section">
+    <div class="section-label">Feedback</div>
+    <h2 class="section-title">일본 전개를 위한 피드백</h2>
+
+    <div class="feedback-grid">
+      <div class="feedback-card fade-in">
+        <div class="feedback-icon locale">🌐</div>
+        <h3>로컬라이즈 대응 강화</h3>
+        <p>일본어 상용 한자를 정확하게 표시할 수 있는 폰트(Noto Sans JP, Hiragino 등) 지원이 필요합니다. 내비게이션 및 UI 문구를 자연스러운 일본어 표현으로 수정해야 합니다.</p>
+        <div class="example">예시: 「이전」이 아니라 「돌아가기(戻る)」</div>
+      </div>
+
+      <div class="feedback-card fade-in">
+        <div class="feedback-icon input">⌨️</div>
+        <h3>일본어 입력 특유의 UX 배려</h3>
+        <p>일본에서는 문장 작성 시 변환 확정을 위해 Enter 키를 자주 사용하므로, 글로벌 표준인 「Enter = 전송」 UI는 오발송을 유발하기 쉽습니다.</p>
+      </div>
+
+      <div class="feedback-card fade-in">
+        <div class="feedback-icon visual">🎨</div>
+        <h3>비주얼 측면의 일본향 최적화</h3>
+        <p>이미지·테마가 글로벌 지향적이기 때문에, 일본 사용자 감각에 맞는 비주얼 및 이미지 생성 튜닝이 바람직합니다.</p>
+      </div>
+
+      <div class="feedback-card fade-in">
+        <div class="feedback-icon domain">🔗</div>
+        <h3>일본 시장을 위한 전개 준비</h3>
+        <p>.jp 도메인 및 .co.jp 도메인을 구매·이용할 수 있도록 지원이 필요합니다.</p>
+      </div>
+
+      <div class="feedback-card fade-in" style="grid-column: 1 / -1;">
+        <div class="feedback-icon store">📱</div>
+        <h3>스토어 경험의 최적화</h3>
+        <p>일본에서는 일반적으로 크게 사용되지 않는 Naver·Kakao 등 해외 서비스 연동이 전면에 노출되어 있어, 일본 사용자 이용 실태에 부합하는 앱을 상위에 노출하는 전략이 필요합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: 프로덕트 구상 -->
+  <section class="section">
+    <div class="section-label">Product Plan</div>
+    <h2 class="section-title">페파보의 프로덕트로 제공하는 경우의 구상</h2>
+    <p class="plan-intro">현재 사내에서 개발 중인 AI 사이트 빌더의 상위 플랜이 아닌, <strong>하나의 상품 라인업</strong>으로 제공할 예정입니다. 그 이유는 아래와 같습니다.</p>
+
+    <div class="reason-list">
+      <div class="reason-item fade-in">
+        <div class="reason-num">1</div>
+        <div class="reason-content">
+          <h4>사이트 구조 설계를 양쪽에 맞출 필요가 있음</h4>
+          <p>ProEditor를 사용할 수 있도록 하려면 사이트 구조 자체를 전용 설계에 맞춰야 합니다. 이로 인해 기존 사이트를 그대로 이어받기 어렵고, 기존 플랜에서의 단순한 업그레이드에는 적합하지 않습니다.</p>
+        </div>
+      </div>
+
+      <div class="reason-item fade-in">
+        <div class="reason-num">2</div>
+        <div class="reason-content">
+          <h4>테마(템플릿) 개념이 존재하지 않음</h4>
+          <p>현재 사양에서는 테마나 템플릿과 같은 개념을 두고 있지 않습니다. 따라서 특정 구조를 전제로 한 에디터 설계와의 정합성을 맞추기 어렵습니다.</p>
+        </div>
+      </div>
+
+      <div class="reason-item fade-in">
+        <div class="reason-num">3</div>
+        <div class="reason-content">
+          <h4>크레딧 개념을 전제로 하지 않음</h4>
+          <p>이용량이나 작업량에 따라 크레딧을 소모하는 구조는 현행 사양에서 고려하고 있지 않습니다. 따라서 크레딧을 전제로 한 설계나 과금 모델과는 분리해서 검토할 필요가 있습니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-note">
+      <h3>서비스 사이트의 이미지</h3>
+      <p>기존 롤리팝 브랜드 안에 서비스 동선을 마련해 노출·어필하는 방향으로 고려하고 있습니다.</p>
+      <div class="caution-badge">⚠️ 현재는 가설 단계의 구상이므로, 추후 변경될 가능성이 있음</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>WEVEN 사전 공유 자료 — Confidential</p>
+  </div>
+</footer>
+
+</body>
+</html>

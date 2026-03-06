@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>ReelBam - AI Video Production Platform</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#FF6B35;--accent:#00D4AA;--accent2:#E040FB;
+  --dark:#0A0E27;--dark2:#111633;--text:#E2E8F0;--text-muted:#94A3B8;
+  --gradient1:linear-gradient(135deg,#FF6B35 0%,#E040FB 50%,#00D4AA 100%);
+  --gradient2:linear-gradient(135deg,#00D4AA 0%,#FF6B35 100%);
+  --gradient3:linear-gradient(135deg,#E040FB 0%,#FF6B35 100%);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text)}
+body.en{font-family:'Plus Jakarta Sans','Pretendard Variable',-apple-system,BlinkMacSystemFont,sans-serif}
+body.ja{font-family:'Noto Sans JP','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif}
+
+/* ── SLIDES ── */
+.slide{position:fixed;top:0;left:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;padding:40px 100px;opacity:0;transition:left .35s cubic-bezier(.16,1,.3,1)}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{max-width:1280px;width:100%;opacity:0;transform:translateY(20px);transition:opacity .45s ease .1s,transform .45s ease .1s}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes aTypeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes aLineDraw{from{stroke-dashoffset:var(--dash)}to{stroke-dashoffset:0}}
+@keyframes aAreaReveal{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes fl{0%,100%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}50%{transform:translateY(-200px) translateX(50px)}}
+
+/* All animatable children start hidden */
+.slide .section-label,.slide .section-title,.slide .section-desc,
+.slide .hero-left,.slide .hero-right,.slide .hero-stats,
+.slide .problem-flow,.slide .problem-col,
+.slide .solution-content,.slide .solution-step,
+.slide .svc-phases,.slide .svc-phase,.slide .svc-cloud-bar,
+.slide .comp-table,.slide .comp-zaemit-cell,
+.slide .market-content,.slide .mkt-bullets,.slide .mkt-stages,.slide .mkt-stage,.slide .mkt-maturity-label,
+.slide .traction-grid,.slide .traction-card,
+.slide .biz-diagram-wrap,.slide .biz-rev-summary,
+.slide .pricing-grid,.slide .pricing-card,
+.slide .team-layout,.slide .roadmap-container,.slide .roadmap-year,
+.slide .exit-chart-area,.slide .ask-stats,.slide .cta-buttons,
+.slide .pipeline-flow,.slide .pipeline-step,
+.slide .patent-grid,.slide .patent-card,
+.slide .tam-visual,.slide .growth-layout,
+.slide .fin-projection,.slide .uof-layout,.slide .uof-chart,.slide .uof-item,
+.slide .mkt-table-wrap,.slide .mkt-chart-area{opacity:0}
+
+/* Title animations */
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+
+/* Hero */
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .7s both}
+
+/* Problem columns stagger */
+.slide.active .problem-flow{animation:aFadeIn .3s ease .5s both}
+.slide.active .problem-col:nth-child(1){animation:aFadeUp .5s ease .5s both}
+.slide.active .problem-col:nth-child(2){animation:aFadeUp .5s ease .9s both}
+.slide.active .problem-col:nth-child(3){animation:aFadeUp .5s ease 1.3s both}
+
+/* Solution steps stagger */
+.slide.active .solution-content{animation:aFadeIn .3s ease .5s both}
+.slide.active .solution-step:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .solution-step:nth-child(2){animation:aFadeUp .5s ease .75s both}
+.slide.active .solution-step:nth-child(3){animation:aFadeUp .5s ease .95s both}
+
+/* Service phases stagger */
+.slide.active .svc-phases{animation:aFadeIn .3s ease .5s both}
+.slide.active .svc-phase:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .svc-phase:nth-child(2){animation:aFadeUp .5s ease .7s both}
+.slide.active .svc-phase:nth-child(3){animation:aFadeUp .5s ease .85s both}
+.slide.active .svc-cloud-bar{animation:aFadeUp .4s ease 1.1s both}
+
+/* Pipeline flow stagger */
+.slide.active .pipeline-flow{animation:aFadeIn .3s ease .5s both}
+.slide.active .pipeline-step:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .pipeline-step:nth-child(2){animation:aFadeUp .4s ease .7s both}
+.slide.active .pipeline-step:nth-child(3){animation:aFadeUp .4s ease .85s both}
+.slide.active .pipeline-step:nth-child(4){animation:aFadeUp .4s ease 1.0s both}
+.slide.active .pipeline-step:nth-child(5){animation:aFadeUp .4s ease 1.15s both}
+.slide.active .pipeline-step:nth-child(6){animation:aFadeUp .4s ease 1.3s both}
+
+/* Patent cards stagger */
+.slide.active .patent-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .patent-card:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .patent-card:nth-child(2){animation:aFadeUp .4s ease .65s both}
+.slide.active .patent-card:nth-child(3){animation:aFadeUp .4s ease .75s both}
+.slide.active .patent-card:nth-child(4){animation:aFadeUp .4s ease .85s both}
+.slide.active .patent-card:nth-child(5){animation:aFadeUp .4s ease .95s both}
+.slide.active .patent-card:nth-child(6){animation:aFadeUp .4s ease 1.05s both}
+.slide.active .patent-card:nth-child(7){animation:aFadeUp .4s ease 1.15s both}
+
+/* Competition table */
+.slide.active .comp-table{animation:aFadeUp .6s ease .5s both}
+.slide.active .comp-table tbody tr:nth-child(1) .comp-zaemit-cell{animation:aTypeDown .35s ease .6s both}
+.slide.active .comp-table tbody tr:nth-child(2) .comp-zaemit-cell{animation:aTypeDown .35s ease .75s both}
+.slide.active .comp-table tbody tr:nth-child(3) .comp-zaemit-cell{animation:aTypeDown .35s ease .9s both}
+.slide.active .comp-table tbody tr:nth-child(4) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.05s both}
+.slide.active .comp-table tbody tr:nth-child(5) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.2s both}
+.slide.active .comp-table tbody tr:nth-child(6) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.35s both}
+.slide.active .comp-table tbody tr:nth-child(7) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.5s both}
+
+/* Market */
+.slide.active .market-content{animation:aFadeUp .5s ease .5s both}
+.slide.active .tam-visual{animation:aScaleIn .6s ease .5s both}
+.slide.active .mkt-bullets{animation:aFadeUp .5s ease .55s both}
+.slide.active .mkt-table-wrap{animation:aFadeUp .5s ease .6s both}
+.slide.active .mkt-chart-area{animation:aFadeIn .6s ease .7s both}
+.slide.active .mkt-maturity-label{animation:aFadeUp .4s ease .7s both}
+.slide.active .mkt-stages{animation:aFadeIn .3s ease .85s both}
+.slide.active .mkt-stage:nth-child(1){animation:aFadeUp .4s ease .9s both}
+.slide.active .mkt-stage:nth-child(2){animation:aFadeUp .4s ease 1.05s both}
+.slide.active .mkt-stage:nth-child(3){animation:aScaleIn .5s ease 1.2s both}
+.slide.active .mkt-stage:nth-child(4){animation:aFadeUp .4s ease 1.5s both}
+
+/* Traction cards stagger */
+.slide.active .traction-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .traction-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .traction-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .traction-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .traction-card:nth-child(4){animation:aFadeUp .45s ease 1.0s both}
+
+/* Pricing cards stagger */
+.slide.active .pricing-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .pricing-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .pricing-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .pricing-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .pricing-card:nth-child(4){animation:aFadeUp .45s ease 1.0s both}
+
+/* Business model */
+.slide.active .biz-diagram-wrap{animation:aScaleIn .6s ease .5s both}
+.slide.active .biz-rev-summary{animation:aFadeUp .4s ease 1.0s both}
+
+/* Growth layout */
+.slide.active .growth-layout{animation:aFadeUp .5s ease .5s both}
+
+/* Financial projection */
+.slide.active .fin-projection{animation:aFadeUp .5s ease .5s both}
+
+/* Use of funds */
+.slide.active .uof-layout{animation:aFadeIn .3s ease .4s both}
+.slide.active .uof-chart{animation:aScaleIn .6s ease .5s both}
+.slide.active .uof-item:nth-child(1){animation:aFadeUp .4s ease .6s both}
+.slide.active .uof-item:nth-child(2){animation:aFadeUp .4s ease .75s both}
+.slide.active .uof-item:nth-child(3){animation:aFadeUp .4s ease .9s both}
+.slide.active .uof-item:nth-child(4){animation:aFadeUp .4s ease 1.05s both}
+
+/* Roadmap */
+.slide.active .roadmap-container{animation:aFadeIn .6s ease .4s both}
+.slide.active .roadmap-year:nth-child(1){animation:aFadeUp .4s ease .6s both}
+.slide.active .roadmap-year:nth-child(2){animation:aFadeUp .4s ease .8s both}
+.slide.active .roadmap-year:nth-child(3){animation:aFadeUp .4s ease 1.0s both}
+.slide.active .roadmap-year:nth-child(4){animation:aFadeUp .4s ease 1.2s both}
+
+/* Exit */
+.slide.active .exit-chart-area{animation:aFadeIn .7s ease .5s both}
+
+/* SVG chart animations */
+.svg-draw{stroke-dasharray:var(--dash);stroke-dashoffset:var(--dash)}
+.slide.active .svg-draw{animation:aLineDraw 2s cubic-bezier(.25,.1,.25,1) .6s both}
+.svg-area{opacity:0}
+.slide.active .svg-area{animation:aAreaReveal .8s ease 1.8s both}
+.svg-draw-rev{stroke-dasharray:var(--dash);stroke-dashoffset:var(--dash)}
+.svg-draw-sub{stroke-dasharray:var(--dash);stroke-dashoffset:var(--dash)}
+.slide.active .svg-draw-rev{animation:aLineDraw 2.2s cubic-bezier(.25,.1,.25,1) .6s both}
+.slide.active .svg-draw-sub{animation:aLineDraw 2.2s cubic-bezier(.25,.1,.25,1) .8s both}
+
+/* Team */
+.slide.active .team-layout{animation:aFadeUp .55s ease .5s both}
+
+/* Ask */
+.slide.active .ask-stats{animation:aFadeUp .5s ease .55s both}
+.slide.active .cta-buttons{animation:aFadeUp .45s ease .8s both}
+/* Thanks */
+.slide .thanks-title,.slide .thanks-sub,.slide .thanks-divider,.slide .thanks-contact,.slide .thanks-logo{opacity:0}
+.slide.active .thanks-title{animation:aFadeUp .6s ease .2s both}
+.slide.active .thanks-sub{animation:aFadeUp .5s ease .4s both}
+.slide.active .thanks-divider{animation:aScaleIn .4s ease .5s both}
+.slide.active .thanks-contact{animation:aFadeUp .5s ease .6s both}
+.slide.active .thanks-logo{animation:aFadeIn .5s ease .8s both}
+
+/* ── LANG VISIBILITY ── */
+[data-lang="en"]{display:none !important}
+[data-lang="ko"]{display:revert}
+[data-lang="ja"]{display:none !important}
+body.en [data-lang="en"]{display:revert !important}
+body.en [data-lang="ko"]{display:none !important}
+body.en [data-lang="ja"]{display:none !important}
+body.ja [data-lang="ja"]{display:revert !important}
+body.ja [data-lang="ko"]{display:none !important}
+body.ja [data-lang="en"]{display:none !important}
+
+/* ── MOTION REDUCTION ── */
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,body.no-motion .slide.active .section-title,body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .hero-left,body.no-motion .slide.active .hero-right,body.no-motion .slide.active .hero-stats,
+body.no-motion .slide.active .problem-flow,body.no-motion .slide.active .problem-col,
+body.no-motion .slide.active .solution-step,body.no-motion .slide.active .solution-content,
+body.no-motion .slide.active .svc-phase,body.no-motion .slide.active .svc-phases,body.no-motion .slide.active .svc-cloud-bar,
+body.no-motion .slide.active .pipeline-flow,body.no-motion .slide.active .pipeline-step,
+body.no-motion .slide.active .patent-grid,body.no-motion .slide.active .patent-card,
+body.no-motion .slide.active .comp-table,body.no-motion .slide.active .comp-zaemit-cell,
+body.no-motion .slide.active .market-content,body.no-motion .slide.active .tam-visual,
+body.no-motion .slide.active .mkt-bullets,body.no-motion .slide.active .mkt-stage,
+body.no-motion .slide.active .traction-card,body.no-motion .slide.active .traction-grid,
+body.no-motion .slide.active .biz-diagram-wrap,body.no-motion .slide.active .biz-rev-summary,
+body.no-motion .slide.active .pricing-card,body.no-motion .slide.active .pricing-grid,
+body.no-motion .slide.active .growth-layout,body.no-motion .slide.active .fin-projection,
+body.no-motion .slide.active .uof-layout,body.no-motion .slide.active .uof-chart,body.no-motion .slide.active .uof-item,
+body.no-motion .slide.active .roadmap-container,body.no-motion .slide.active .roadmap-year,
+body.no-motion .slide.active .exit-chart-area,
+body.no-motion .slide.active .team-layout,
+body.no-motion .slide.active .ask-stats,body.no-motion .slide.active .cta-buttons,
+body.no-motion .slide.active .thanks-title,body.no-motion .slide.active .thanks-sub,body.no-motion .slide.active .thanks-divider,body.no-motion .slide.active .thanks-contact,body.no-motion .slide.active .thanks-logo,
+body.no-motion .slide.active .svg-draw,body.no-motion .slide.active .svg-area{opacity:1 !important;transform:none !important}
+body.no-motion .svg-draw,body.no-motion .svg-draw-rev,body.no-motion .svg-draw-sub{stroke-dashoffset:0 !important}
+body.no-motion .orbit-ring,body.no-motion .particle,body.no-motion .hero-badge::before{animation:none !important}
+body.no-motion .particles{display:none !important}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 50%,rgba(255,107,53,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(224,64,251,0.1) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px}
+.hero .slide-inner{display:flex;align-items:center;gap:100px}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:50px;background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);color:var(--primary);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:36px}
+.hero-badge::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--primary);animation:pulse 2s infinite}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:clamp(48px,5vw,72px);font-weight:800;line-height:1.05;color:#fff;margin-bottom:28px;letter-spacing:-2.5px;white-space:nowrap}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:21px;color:var(--text-muted);line-height:1.7;margin-bottom:52px;max-width:620px}
+.hero-stats{display:flex;gap:48px}
+.hero-stats>div{text-align:center;min-width:120px}
+.hero-stat-value{font-family:'Plus Jakarta Sans';font-size:44px;font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-stat-label{font-size:14px;color:var(--text-muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+.hero-contact{margin-top:28px;font-size:14px;color:var(--text-muted);display:flex;align-items:center;gap:24px}
+.hero-contact .contact-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hero-contact .sep{color:rgba(255,255,255,0.15)}
+.hero-right{flex:.7;position:relative}
+.hero-visual{width:100%;aspect-ratio:1;position:relative;background:radial-gradient(circle at center,rgba(255,107,53,0.2),transparent 70%);border-radius:50%}
+.orbit-ring{position:absolute;border:1px solid rgba(255,255,255,0.06);border-radius:50%;animation:rot 20s linear infinite}
+.orbit-ring:nth-child(1){inset:10%}.orbit-ring:nth-child(2){inset:25%;animation-duration:30s;animation-direction:reverse}.orbit-ring:nth-child(3){inset:40%;animation-duration:25s}
+.orbit-dot{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--primary);box-shadow:0 0 20px var(--primary)}
+.orbit-ring:nth-child(1) .orbit-dot{top:0;left:50%;transform:translate(-50%,-50%)}
+.orbit-ring:nth-child(2) .orbit-dot{bottom:10%;right:0;background:var(--accent2);box-shadow:0 0 20px var(--accent2)}
+.orbit-ring:nth-child(3) .orbit-dot{top:50%;left:0;transform:translate(-50%,-50%);background:var(--accent);box-shadow:0 0 20px var(--accent)}
+.center-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:28px;background:var(--gradient1);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:34px;font-weight:800;color:#fff;box-shadow:0 20px 60px rgba(255,107,53,0.4)}
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(255,107,53,0.3);animation:fl 8s ease-in-out infinite}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:2.5px;color:var(--primary);margin-bottom:18px}
+.section-label::before{content:'';width:28px;height:2px;background:var(--primary)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:48px;font-weight:700;color:#fff;line-height:1.12;margin-bottom:24px;letter-spacing:-1.5px}
+.section-desc{font-size:20px;color:var(--text-muted);line-height:1.75;max-width:100%;margin-bottom:40px}
+
+/* ── PROBLEM ── */
+.problem{background:radial-gradient(ellipse at 70% 50%,rgba(236,72,153,0.08) 0%,transparent 60%),var(--dark)}
+.problem-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:40px}
+.problem-col{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.problem-col .p-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:12px;min-height:36px;display:flex;align-items:center;justify-content:center}
+.problem-col .p-desc{font-size:15px;color:var(--text-muted);line-height:1.65;margin-bottom:16px;max-width:300px;min-height:80px;display:flex;align-items:center;justify-content:center}
+.problem-col .p-arrow{font-size:22px;color:var(--text-muted);margin-bottom:14px}
+.problem-col .p-box{width:100%;min-height:120px;padding:34px 24px;border-radius:20px;background:linear-gradient(145deg,rgba(255,107,53,0.35),rgba(224,64,251,0.25));border:1px solid rgba(255,107,53,0.3);margin-bottom:16px;box-shadow:0 8px 32px rgba(255,107,53,0.2);display:flex;align-items:center;justify-content:center}
+.problem-col .p-box-text{font-size:24px;font-weight:800;color:#fff;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,0.3);text-align:center}
+.problem-col .p-need{font-size:18px;font-weight:700;line-height:1.45;min-height:55px;display:flex;align-items:center;justify-content:center}
+.problem-col .p-need.red{color:#EF4444}
+.problem-col .p-need.orange{color:#F59E0B}
+.problem-col .p-need.purple{color:var(--accent2)}
+
+/* ── SOLUTION ── */
+.solution{background:radial-gradient(ellipse at 30% 50%,rgba(255,107,53,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark)}
+.solution-flow{display:flex;justify-content:center;gap:24px;margin-top:40px}
+.solution-step{flex:0 1 320px;text-align:center;padding:40px 24px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:18px;transition:transform .4s,background .4s}
+.solution-step:hover{transform:translateY(-6px);background:rgba(255,255,255,0.04)}
+.step-number{font-family:'Plus Jakarta Sans';font-size:16px;font-weight:800;color:var(--primary);margin-bottom:16px;letter-spacing:2px}
+.step-icon{margin-bottom:16px;display:flex;align-items:center;justify-content:center}
+.solution-step h3{font-size:24px;font-weight:800;color:#fff;margin-bottom:10px}
+.solution-step p{font-size:16px;color:var(--text-muted);line-height:1.65}
+
+/* ── PRODUCT (SERVICE PHASES) ── */
+.product{background:radial-gradient(ellipse at 50% 30%,rgba(224,64,251,0.1) 0%,transparent 60%),var(--dark)}
+.svc-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
+.svc-phase{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.svc-phase::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:18px 18px 0 0}
+.svc-phase:nth-child(1)::before{background:var(--primary)}
+.svc-phase:nth-child(2)::before{background:var(--accent)}
+.svc-phase:nth-child(3)::before{background:var(--accent2)}
+.svc-phase-num{font-family:'Plus Jakarta Sans';font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.svc-phase:nth-child(1) .svc-phase-num{color:var(--primary)}
+.svc-phase:nth-child(2) .svc-phase-num{color:var(--accent)}
+.svc-phase:nth-child(3) .svc-phase-num{color:var(--accent2)}
+.svc-phase h3{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3}
+.svc-phase-sub{font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.5}
+.svc-feature-list{list-style:none;display:flex;flex-direction:column;gap:10px;flex:1}
+.svc-feature-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);line-height:1.5}
+.svc-ficon{flex-shrink:0;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.svc-phase:nth-child(1) .svc-ficon{background:rgba(255,107,53,0.15)}
+.svc-phase:nth-child(2) .svc-ficon{background:rgba(0,212,170,0.15)}
+.svc-phase:nth-child(3) .svc-ficon{background:rgba(224,64,251,0.15)}
+.svc-phase-badge{display:inline-block;margin-top:auto;padding-top:14px}
+.svc-phase-badge span{font-size:11px;font-weight:600;padding:5px 12px;border-radius:50px;letter-spacing:0.5px}
+.svc-phase:nth-child(1) .svc-phase-badge span{background:rgba(255,107,53,0.15);color:var(--primary)}
+.svc-phase:nth-child(2) .svc-phase-badge span{background:rgba(0,212,170,0.12);color:var(--accent)}
+.svc-phase:nth-child(3) .svc-phase-badge span{background:rgba(224,64,251,0.15);color:var(--accent2)}
+.svc-cloud-bar{margin-top:20px;padding:14px 24px;border-radius:12px;background:linear-gradient(135deg,rgba(255,107,53,0.08),rgba(0,212,170,0.06));border:1px solid rgba(255,255,255,0.06);text-align:center;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.svc-cloud-bar span{font-size:13px;font-weight:600;color:var(--text-muted)}
+.svc-cloud-bar b{color:var(--accent);font-weight:700}
+
+/* ── PIPELINE FLOW (How It Works) ── */
+.pipeline-flow{display:flex;align-items:stretch;gap:8px;margin-top:32px}
+.pipeline-step{flex:1;padding:20px 14px;background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:14px;text-align:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:8px}
+.pipeline-step:not(:last-child)::after{content:'';position:absolute;right:-8px;top:50%;width:8px;height:2px;background:rgba(255,255,255,0.2);z-index:1}
+.pipeline-step-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.pipeline-step:nth-child(1) .pipeline-step-icon{background:rgba(255,107,53,0.15)}
+.pipeline-step:nth-child(2) .pipeline-step-icon{background:rgba(59,130,246,0.15)}
+.pipeline-step:nth-child(3) .pipeline-step-icon{background:rgba(0,212,170,0.15)}
+.pipeline-step:nth-child(4) .pipeline-step-icon{background:rgba(224,64,251,0.15)}
+.pipeline-step:nth-child(5) .pipeline-step-icon{background:rgba(245,158,11,0.15)}
+.pipeline-step:nth-child(6) .pipeline-step-icon{background:rgba(239,68,68,0.15)}
+.pipeline-step h4{font-size:14px;font-weight:700;color:#fff;line-height:1.3}
+.pipeline-step p{font-size:11px;color:var(--text-muted);line-height:1.4}
+.pipeline-cost{margin-top:auto;padding-top:8px;font-size:11px;font-weight:700;color:var(--accent)}
+
+/* ── PATENT GRID ── */
+.patent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+.patent-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.patent-card-num{font-family:'Plus Jakarta Sans';font-size:13px;font-weight:800;color:var(--primary);letter-spacing:1px}
+.patent-card h4{font-size:16px;font-weight:700;color:#fff;line-height:1.35}
+.patent-card p{font-size:13px;color:var(--text-muted);line-height:1.5}
+.patent-mcp{border-color:rgba(255,107,53,0.3);background:rgba(255,107,53,0.06)}
+
+/* ── COMPETITIVE ── */
+.comp-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:28px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+.comp-table th,.comp-table td{padding:16px 18px;text-align:center;vertical-align:middle;line-height:1.5}
+.comp-table thead th{background:rgba(255,255,255,0.04);font-size:16px;font-weight:700;color:var(--text-muted);border-bottom:2px solid rgba(255,255,255,0.1)}
+.comp-table thead th.comp-zaemit{background:rgba(255,107,53,0.15);color:#fff;font-size:28px;font-weight:800;font-family:'Plus Jakarta Sans'}
+.comp-table tbody td{font-size:15px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.05)}
+.comp-table .comp-row-label{color:#fff;font-weight:600;font-size:14px;text-align:center;white-space:nowrap;background:rgba(255,255,255,0.02)}
+.comp-table .comp-zaemit-cell{color:#fff;font-weight:600;font-size:20px;line-height:1.5;background:rgba(255,107,53,0.06);border-left:1px solid rgba(255,107,53,0.15);border-right:1px solid rgba(255,107,53,0.15)}
+.comp-table .comp-zaemit-cell b{color:var(--accent);font-weight:700}
+.comp-table tbody tr:hover td{background:rgba(255,255,255,0.02)}
+.comp-table tbody tr:hover .comp-zaemit-cell{background:rgba(255,107,53,0.1)}
+
+/* ── MARKET ── */
+.market-content{margin-top:20px;display:flex;flex-direction:column;gap:0}
+.mkt-bullets{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.mkt-bullet{font-size:17px;color:var(--text);line-height:1.6;padding-left:22px;position:relative}
+.mkt-bullet::before{content:'•';position:absolute;left:0;color:var(--primary);font-weight:700}
+.mkt-bullet b{color:#fff}
+.mkt-bullet .highlight{color:#EF4444;font-weight:700}
+.mkt-bullet .blue{color:var(--primary);font-weight:700}
+.trend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:16px}
+.trend-card{background:rgba(17,22,51,0.7);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;display:flex;gap:18px;align-items:flex-start}
+.trend-card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trend-card-body{flex:1;display:flex;flex-direction:column;gap:6px}
+.trend-card-body h4{font-size:17px;font-weight:700;color:#fff;line-height:1.3}
+.trend-card-body p{font-size:14px;color:var(--text-muted);line-height:1.55}
+.trend-card-body .trend-tag{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:0.3px}
+.trend-bottom{margin-top:20px;background:linear-gradient(135deg,rgba(255,107,53,0.12) 0%,rgba(0,212,170,0.08) 100%);border:1px solid rgba(255,107,53,0.25);border-radius:16px;padding:22px 28px;display:flex;align-items:center;gap:18px}
+.trend-bottom-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,107,53,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trend-bottom p{font-size:16px;color:var(--text);line-height:1.6}
+.trend-bottom b{color:#fff}
+.trend-bottom .highlight{color:var(--primary);font-weight:700}
+
+/* TAM/SAM/SOM circles */
+.tam-visual{display:flex;align-items:center;gap:60px;margin-top:32px}
+.tam-circles{position:relative;width:400px;height:400px;flex-shrink:0}
+.tam-circle{position:absolute;border-radius:50%;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12%}
+.tam-circle.tam{width:400px;height:400px;background:rgba(255,107,53,0.08);border:2px solid rgba(255,107,53,0.3);top:0;left:0}
+.tam-circle.sam{width:280px;height:280px;background:rgba(0,212,170,0.1);border:2px solid rgba(0,212,170,0.4);top:60px;left:60px}
+.tam-circle.som{width:160px;height:160px;background:rgba(224,64,251,0.15);border:2px solid rgba(224,64,251,0.5);top:120px;left:120px}
+.tam-circle-label{font-family:'Plus Jakarta Sans';font-weight:800;text-align:center}
+.tam-circle.tam .tam-circle-label{font-size:16px;color:var(--primary)}
+.tam-circle.sam .tam-circle-label{font-size:15px;color:var(--accent)}
+.tam-circle.som .tam-circle-label{font-size:14px;color:var(--accent2)}
+.tam-circle-label span{display:block;font-size:28px}
+.tam-details{display:flex;flex-direction:column;gap:20px;flex:1}
+.tam-detail{padding:18px 24px;border-radius:14px;border:1px solid rgba(255,255,255,0.06);background:rgba(17,22,51,0.6)}
+.tam-detail-title{font-size:14px;font-weight:800;letter-spacing:1px;margin-bottom:6px}
+.tam-detail.t .tam-detail-title{color:var(--primary)}
+.tam-detail.s .tam-detail-title{color:var(--accent)}
+.tam-detail.so .tam-detail-title{color:var(--accent2)}
+.tam-detail-value{font-family:'Plus Jakarta Sans';font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+.tam-detail-desc{font-size:13px;color:var(--text-muted);line-height:1.5}
+
+/* Market timeline */
+.mkt-timeline{position:relative;padding:24px 0 0;overflow:hidden}
+.mkt-chart-area{position:relative;height:270px;border-bottom:2px solid rgba(255,255,255,0.15);margin-bottom:0}
+.mkt-chart-area svg{position:absolute;inset:0;width:100%;height:100%}
+.mkt-line{stroke-dasharray:2000;stroke-dashoffset:2000}
+.mkt-chart-area.animate .mkt-line{stroke-dashoffset:0;transition:stroke-dashoffset 3.9s cubic-bezier(.25,.1,.25,1)}
+.mkt-chart-area.animate .mkt-line-vibe{transition-delay:0.6s;transition-duration:3.3s}
+.mkt-chart-labels{position:absolute;right:8px;top:0;bottom:0;pointer-events:none;z-index:5}
+.mkt-clabel{position:absolute;right:0;font-size:15px;font-weight:700;padding:6px 16px;border-radius:6px;white-space:nowrap;opacity:0;transform:translateX(10px);transition:opacity .4s ease,transform .4s ease;backdrop-filter:blur(8px);text-shadow:0 2px 6px rgba(0,0,0,0.8);border:1px solid rgba(255,255,255,0.12)}
+.mkt-chart-area.animate .mkt-clabel{opacity:1;transform:translateX(0)}
+.mkt-chart-area.animate .mkt-clabel.green{transition-delay:1.5s}
+.mkt-chart-area.animate .mkt-clabel.orange{transition-delay:1.7s}
+.mkt-clabel.green{color:#22C55E;background:rgba(10,14,39,0.85);border-color:rgba(34,197,94,0.3)}
+.mkt-clabel.orange{color:#F97316;background:rgba(10,14,39,0.85);border-color:rgba(249,115,22,0.3)}
+.mkt-years{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid rgba(255,255,255,0.15)}
+.mkt-year{text-align:center;padding-top:12px;position:relative}
+.mkt-year::before{content:'';position:absolute;top:-6px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--dark);border:2px solid rgba(255,255,255,0.3);transform:translateX(-50%)}
+.mkt-year:last-child::before{background:var(--primary);border-color:var(--primary)}
+.mkt-year-num{font-family:'Plus Jakarta Sans';font-size:20px;font-weight:700;color:#fff}
+.mkt-year:last-child .mkt-year-num{color:var(--primary)}
+.mkt-year-label{font-size:14px;color:var(--text-muted);margin-top:4px}
+.mkt-year:last-child .mkt-year-label{color:var(--primary);font-weight:600}
+
+/* ── TRACTION / METRICS ── */
+.traction{background:radial-gradient(ellipse at 50% 50%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)}
+.traction .section-title{margin-bottom:12px}
+.traction .section-desc{font-size:16px;margin-bottom:20px}
+.traction-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
+.traction-card{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px 22px;transition:transform .3s}
+.traction-card:hover{transform:translateY(-4px)}
+.traction-card h3{font-size:17px;font-weight:600;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.metric-row:last-child{border:none}
+.metric-label{font-size:13px;color:var(--text-muted)}
+.metric-value{font-family:'Plus Jakarta Sans';font-size:16px;font-weight:700;color:#fff}
+.metric-value.accent{color:var(--accent)}
+
+/* ── BUSINESS MODEL ── */
+.business{background:radial-gradient(ellipse at 80% 30%,rgba(255,107,53,0.1) 0%,transparent 60%),var(--dark)}
+.biz-diagram-wrap{margin-top:20px;width:100%;max-width:900px;margin-left:auto;margin-right:auto}
+.biz-rev-summary{margin-top:16px;padding:14px 18px;background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.2);border-radius:12px;max-width:900px;margin-left:auto;margin-right:auto}
+.biz-rev-summary p{font-size:14px;color:var(--text);line-height:1.6}
+.biz-rev-summary b{color:var(--accent);font-weight:700}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+.pricing-card{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;transition:transform .3s}
+.pricing-card:hover{transform:translateY(-6px)}
+.pricing-card.popular{border-color:rgba(255,107,53,0.4);background:linear-gradient(180deg,rgba(255,107,53,0.08),rgba(17,22,51,0.8));box-shadow:0 0 30px rgba(255,107,53,0.15)}
+.pricing-card-name{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
+.pricing-card-price{font-family:'Plus Jakarta Sans';font-size:36px;font-weight:800;margin-bottom:4px}
+.pricing-card:nth-child(1) .pricing-card-price{color:var(--text-muted)}
+.pricing-card:nth-child(2) .pricing-card-price{color:var(--primary)}
+.pricing-card:nth-child(3) .pricing-card-price{color:var(--accent)}
+.pricing-card:nth-child(4) .pricing-card-price{color:var(--accent2)}
+.pricing-card-unit{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:8px;text-align:left;flex:1}
+.pricing-features li{font-size:13px;color:var(--text-muted);padding-left:16px;position:relative;line-height:1.4}
+.pricing-features li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;font-size:12px}
+
+/* ── GROWTH ── */
+.growth-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:28px;align-items:start}
+.growth-chart{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px}
+.growth-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+.growth-table th{padding:10px 8px;font-weight:700;color:var(--text-muted);text-align:center;border-bottom:2px solid rgba(255,255,255,0.1);font-size:12px}
+.growth-table td{padding:10px 8px;text-align:center;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04)}
+.growth-table .g-label{color:#fff;font-weight:600;text-align:left;font-size:13px}
+.growth-table .g-highlight{color:var(--accent);font-weight:700}
+.growth-table .g-val{font-family:'Plus Jakarta Sans';font-weight:700;color:#fff}
+
+/* ── FINANCIAL PROJECTION ── */
+.fin-projection{margin-top:20px}
+.fin-chart{margin-top:4px}
+.fin-chart-legend{display:flex;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+.fin-leg{font-size:10px;color:var(--text-muted);display:flex;align-items:center;gap:4px}
+.fin-leg::before{content:'';width:8px;height:8px;border-radius:2px;background:var(--lc)}
+.fin-bar-svg{width:100%;height:auto}
+.fin-chart-unit{font-size:9px;color:var(--text-muted);text-align:right;margin-top:2px}
+.fin-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:12px}
+.fin-table th{padding:10px 8px;font-weight:700;color:var(--text-muted);text-align:center;border-bottom:2px solid rgba(255,255,255,0.1);font-size:11px}
+.fin-table td{padding:10px 8px;text-align:center;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
+.fin-table .f-label{color:#fff;font-weight:600;text-align:left}
+.fin-table .f-val{font-family:'Plus Jakarta Sans';font-weight:700;color:#fff}
+.fin-table .f-accent{color:var(--accent);font-weight:700}
+
+/* ── USE OF FUNDS ── */
+.uof-layout{display:grid;grid-template-columns:auto 1fr;gap:40px;margin-top:32px;align-items:center}
+.uof-chart{width:280px;height:280px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center}
+.uof-chart-center{position:absolute;text-align:center}
+.uof-chart-center div:first-child{font-family:'Plus Jakarta Sans';font-size:32px;font-weight:800;color:#fff}
+.uof-chart-center div:last-child{font-size:13px;color:var(--text-muted)}
+.uof-items{display:flex;flex-direction:column;gap:16px}
+.uof-item{display:flex;align-items:center;gap:16px;padding:16px 20px;background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:12px}
+.uof-item-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.uof-item-info{flex:1}
+.uof-item-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px}
+.uof-item-desc{font-size:12px;color:var(--text-muted);line-height:1.4}
+.uof-item-pct{font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800;color:#fff}
+
+/* ── ROADMAP ── */
+.roadmap{background:radial-gradient(ellipse at 50% 50%,rgba(255,107,53,0.08) 0%,transparent 60%),var(--dark)}
+.roadmap-container{position:relative;margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.roadmap-year{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;position:relative;overflow:hidden}
+.roadmap-year::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.roadmap-year:nth-child(1)::before{background:var(--primary)}
+.roadmap-year:nth-child(2)::before{background:var(--accent)}
+.roadmap-year:nth-child(3)::before{background:var(--accent2)}
+.roadmap-year:nth-child(4)::before{background:linear-gradient(90deg,var(--primary),var(--accent))}
+.roadmap-year-title{font-family:'Plus Jakarta Sans';font-size:20px;font-weight:800;color:#fff;margin-bottom:6px}
+.roadmap-year-sub{font-size:13px;font-weight:700;margin-bottom:14px}
+.roadmap-year:nth-child(1) .roadmap-year-sub{color:var(--primary)}
+.roadmap-year:nth-child(2) .roadmap-year-sub{color:var(--accent)}
+.roadmap-year:nth-child(3) .roadmap-year-sub{color:var(--accent2)}
+.roadmap-year:nth-child(4) .roadmap-year-sub{color:var(--primary)}
+.roadmap-items{list-style:none;display:flex;flex-direction:column;gap:6px}
+.roadmap-items li{font-size:12px;color:var(--text-muted);line-height:1.45;padding-left:12px;position:relative}
+.roadmap-items li::before{content:'-';position:absolute;left:0;color:var(--text-muted)}
+
+/* ── EXIT STRATEGY ── */
+.exit-chart-area{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.exit-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px}
+.exit-card-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.exit-card-sub{font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.5}
+.exit-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.exit-item:last-child{border:none}
+.exit-item-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.exit-item-text{flex:1}
+.exit-item-text h4{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px}
+.exit-item-text p{font-size:12px;color:var(--text-muted);line-height:1.4}
+
+/* ── TEAM ── */
+.team{background:radial-gradient(ellipse at 50% 50%,rgba(255,107,53,0.06) 0%,transparent 60%),var(--dark)}
+.team-layout{display:grid;grid-template-columns:1fr 2fr;gap:36px;margin-top:28px;align-items:start}
+.team-ceo{text-align:center}
+.team-ceo h4{font-size:22px;font-weight:700;color:#fff;margin-bottom:2px;margin-top:14px}
+.team-ceo .team-title{font-size:17px;font-weight:700;color:var(--primary);margin-bottom:10px}
+.team-ceo .team-bio{text-align:left;max-width:440px;margin:0 auto}
+.team-photo{width:140px;height:140px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.1);margin:0 auto;display:flex;align-items:center;justify-content:center;background:rgba(255,107,53,0.1)}
+.team-photo-text{font-family:'Plus Jakarta Sans';font-size:48px;font-weight:800;color:var(--primary)}
+.team-members{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.team-member{display:flex;gap:16px;align-items:flex-start;padding:16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px}
+.team-member .team-photo{width:56px;height:56px;margin:0}
+.team-member .team-photo-text{font-size:20px}
+.team-info{flex:1;min-width:0}
+.team-info h4{font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.team-role-tag{font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:6px}
+.team-bio{list-style:none;padding:0;margin:0}
+.team-bio li{font-size:13px;color:var(--text-muted);line-height:1.6;padding-left:12px;position:relative}
+.team-bio li::before{content:'-';position:absolute;left:0;color:var(--text-muted)}
+
+/* ── ASK ── */
+.ask{background:radial-gradient(ellipse at 50% 50%,rgba(255,107,53,0.12) 0%,transparent 50%),radial-gradient(ellipse at 20% 80%,rgba(224,64,251,0.08) 0%,transparent 50%),var(--dark)}
+.ask .slide-inner{text-align:center;display:flex;flex-direction:column;align-items:center}
+.ask .section-label{text-align:left;align-self:stretch}
+.ask .section-title{text-align:left;align-self:stretch}
+.ask .section-desc{text-align:left;align-self:stretch;max-width:none}
+.ask-stats{display:flex;gap:48px;margin-bottom:44px}
+.ask-stats>div{text-align:center}
+.ask-stat-value{font-family:'Plus Jakarta Sans';font-size:48px;font-weight:800;color:#fff;margin-bottom:6px}
+.ask-stat-label{font-size:15px;color:var(--text-muted)}
+.cta-buttons{display:flex;gap:16px;margin-bottom:32px}
+.cta-btn{padding:16px 48px;border-radius:14px;font-size:18px;font-weight:700;cursor:pointer;transition:transform .3s,box-shadow .3s;border:none}
+.cta-btn.primary{background:var(--gradient1);color:#fff;box-shadow:0 8px 32px rgba(255,107,53,0.3)}
+.cta-btn.primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(255,107,53,0.4)}
+.cta-btn.outline{background:transparent;border:2px solid rgba(255,255,255,0.2);color:#fff}
+.cta-btn.outline:hover{border-color:rgba(255,255,255,0.4);transform:translateY(-3px)}
+.ask-footer{margin-top:24px;font-size:14px;color:var(--text-muted)}
+.thanks{background:radial-gradient(ellipse at 50% 50%,rgba(0,212,170,0.1) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(255,107,53,0.06) 0%,transparent 50%),var(--dark)}
+.thanks .slide-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%}
+.thanks-title{font-family:'Plus Jakarta Sans';font-size:72px;font-weight:800;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
+.thanks-sub{font-size:22px;color:var(--text-muted);margin-bottom:56px;line-height:1.6}
+.thanks-divider{width:80px;height:3px;background:var(--gradient2);border-radius:2px;margin-bottom:48px}
+.thanks-contact{display:flex;flex-direction:column;gap:12px;align-items:center}
+.thanks-contact-name{font-size:20px;font-weight:700;color:#fff}
+.thanks-contact-info{font-size:16px;color:var(--text-muted);display:flex;gap:24px;align-items:center}
+.thanks-contact-info a{color:var(--primary);text-decoration:none}
+.thanks-logo{margin-top:48px;font-family:'Plus Jakarta Sans';font-size:14px;font-weight:600;color:rgba(255,255,255,0.25);letter-spacing:4px;text-transform:uppercase}
+.ask-footer b{color:#fff}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 01: COVER -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide hero active" data-title-ko="표지" data-title-en="Cover" data-title-ja="表紙">
+  <div class="hero-grid"></div>
+  <div class="particles"><div class="particle" style="left:10%;top:20%"></div><div class="particle" style="left:30%;top:60%;animation-delay:2s"></div><div class="particle" style="left:60%;top:30%;animation-delay:4s"></div><div class="particle" style="left:80%;top:70%;animation-delay:1s"></div><div class="particle" style="left:50%;top:80%;animation-delay:3s"></div></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge" data-lang="ko">AI 영상 자동 제작 플랫폼</div>
+      <div class="hero-badge" data-lang="en">AI Video Production Platform</div>
+      <div class="hero-badge" data-lang="ja">AI動画自動制作プラットフォーム</div>
+      <h1 data-lang="ko">대본 하나로,<br><span class="gradient-text">영상 완성</span></h1>
+      <h1 data-lang="en">From Script to Screen,<br><span class="gradient-text">Automatically</span></h1>
+      <h1 data-lang="ja">台本ひとつで、<br><span class="gradient-text">動画完成</span></h1>
+      <p class="hero-sub" data-lang="ko">MCP 오케스트레이션 기반 AI 자동 영상 제작 — 대본만 넣으면 이미지, 나레이션, 자막, 편집까지 5분 안에 완성</p>
+      <p class="hero-sub" data-lang="en">MCP orchestration-based AI video production — input a script, get images, narration, subtitles, and editing done in 5 minutes</p>
+      <p class="hero-sub" data-lang="ja">MCPオーケストレーション基盤AI自動動画制作 — 台本を入れるだけで画像、ナレーション、字幕、編集まで5分で完成</p>
+      <div class="hero-stats">
+        <div><div class="hero-stat-value">7</div><div class="hero-stat-label" data-lang="ko">특허 출원</div><div class="hero-stat-label" data-lang="en">Patents Filed</div><div class="hero-stat-label" data-lang="ja">特許出願</div></div>
+        <div><div class="hero-stat-value">5min</div><div class="hero-stat-label" data-lang="ko">영상 1편 제작</div><div class="hero-stat-label" data-lang="en">Per Video</div><div class="hero-stat-label" data-lang="ja">動画1本制作</div></div>
+        <div><div class="hero-stat-value" data-lang="ko">12조원</div><div class="hero-stat-value" data-lang="en">12T KRW</div><div class="hero-stat-value" data-lang="ja">12兆ウォン</div><div class="hero-stat-label" data-lang="ko">2030 시장 규모</div><div class="hero-stat-label" data-lang="en">Market 2030</div><div class="hero-stat-label" data-lang="ja">2030年市場規模</div></div>
+      </div>
+      <div class="hero-contact">
+        <div class="contact-info">
+          <span>CEO 김화정</span><span class="sep">|</span><span>kjh@weven.kr</span><span class="sep">|</span><span>+82-10-8447-4567</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual"><div class="orbit-ring"><div class="orbit-dot"></div></div><div class="orbit-ring"><div class="orbit-dot"></div></div><div class="orbit-ring"><div class="orbit-dot"></div></div><div class="center-logo">R</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 02: PROBLEM 1 — Creator Market Pain -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide problem" data-title-ko="크리에이터 시장 문제" data-title-en="Creator Market Problem" data-title-ja="クリエイター市場の課題">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">문제 인식</div><div class="section-label" data-lang="en">The Problem</div><div class="section-label" data-lang="ja">課題認識</div>
+    <div class="section-title" data-lang="ko">크리에이터 이코노미 <span style="color:var(--primary)">350조원+</span> 시장,<br>영상 제작은 여전히 <span style="color:#EF4444">수작업</span></div>
+    <div class="section-title" data-lang="en">Creator Economy at <span style="color:var(--primary)">350T+ KRW</span>,<br>Video Production Still <span style="color:#EF4444">Manual</span></div>
+    <div class="section-title" data-lang="ja">クリエイターエコノミー <span style="color:var(--primary)">350兆+ウォン</span> 市場、<br>動画制作はいまだに<span style="color:#EF4444">手作業</span></div>
+    <div class="section-desc" data-lang="ko">역사/다큐/동화/공포/시사 채널 — 이미지+나레이션 영상 포맷이 YouTube에서 폭발적으로 성장 중이지만, 1편 제작에 10~20시간 소요</div>
+    <div class="section-desc" data-lang="en">History, documentary, story, horror, news channels — image+narration format is exploding on YouTube, but each video takes 10-20 hours to produce</div>
+    <div class="section-desc" data-lang="ja">歴史/ドキュメンタリー/物語/ホラー/時事チャンネル — 画像+ナレーション動画がYouTubeで爆発的に成長中、しかし1本制作に10〜20時間</div>
+    <div class="problem-flow">
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">이미지 제작</div><div class="p-title" data-lang="en">Image Creation</div><div class="p-title" data-lang="ja">画像制作</div>
+        <div class="p-desc" data-lang="ko">씬별 이미지를 하나씩 검색하거나 생성 — 인물 일관성을 유지하기 어려움</div>
+        <div class="p-desc" data-lang="en">Search or generate images scene by scene — maintaining character consistency is extremely difficult</div>
+        <div class="p-desc" data-lang="ja">シーンごとに画像を検索・生成 — 人物の一貫性維持が困難</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box"><div class="p-box-text" data-lang="ko">4~8시간<br>소요</div><div class="p-box-text" data-lang="en">4-8 Hours<br>Spent</div><div class="p-box-text" data-lang="ja">4〜8時間<br>消費</div></div>
+        <div class="p-need red" data-lang="ko">AI 인물 일관성 필요</div><div class="p-need red" data-lang="en">AI Character Consistency Needed</div><div class="p-need red" data-lang="ja">AI人物一貫性が必要</div>
+      </div>
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">음성 녹음</div><div class="p-title" data-lang="en">Voice Recording</div><div class="p-title" data-lang="ja">音声録音</div>
+        <div class="p-desc" data-lang="ko">성우 섭외 또는 직접 녹음 — 캐릭터별 다중 음성 구현이 비용과 시간 소모</div>
+        <div class="p-desc" data-lang="en">Hire voice actors or record yourself — multi-character voices are costly and time-consuming</div>
+        <div class="p-desc" data-lang="ja">声優手配か自己録音 — キャラクター別多重音声はコストと時間を消費</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box"><div class="p-box-text" data-lang="ko">3~6시간<br>소요</div><div class="p-box-text" data-lang="en">3-6 Hours<br>Spent</div><div class="p-box-text" data-lang="ja">3〜6時間<br>消費</div></div>
+        <div class="p-need orange" data-lang="ko">다중 캐릭터 TTS 필요</div><div class="p-need orange" data-lang="en">Multi-Character TTS Needed</div><div class="p-need orange" data-lang="ja">多重キャラクターTTSが必要</div>
+      </div>
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">편집 & 합성</div><div class="p-title" data-lang="en">Edit & Compose</div><div class="p-title" data-lang="ja">編集 & 合成</div>
+        <div class="p-desc" data-lang="ko">자막 작업, 타이밍 동기화, 트랜지션 — 반복적이지만 높은 집중도 필요</div>
+        <div class="p-desc" data-lang="en">Subtitles, timing sync, transitions — repetitive yet requires high concentration</div>
+        <div class="p-desc" data-lang="ja">字幕作業、タイミング同期、トランジション — 繰り返しだが高い集中力が必要</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box"><div class="p-box-text" data-lang="ko">3~6시간<br>소요</div><div class="p-box-text" data-lang="en">3-6 Hours<br>Spent</div><div class="p-box-text" data-lang="ja">3〜6時間<br>消費</div></div>
+        <div class="p-need purple" data-lang="ko">자동 합성 파이프라인 필요</div><div class="p-need purple" data-lang="en">Auto Composition Pipeline Needed</div><div class="p-need purple" data-lang="ja">自動合成パイプラインが必要</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 03: PROBLEM 2 — Existing Tools -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="기존 도구의 한계" data-title-en="Limitations of Existing Tools" data-title-ja="既存ツールの限界" style="background:radial-gradient(ellipse at 40% 60%,rgba(224,64,251,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">시장 공백</div><div class="section-label" data-lang="en">Market Gap</div><div class="section-label" data-lang="ja">市場の空白</div>
+    <div class="section-title" data-lang="ko">Vrew가 시장을 검증했지만,<br><span style="color:var(--primary)">핵심 기능이 부재</span></div>
+    <div class="section-title" data-lang="en">Vrew Validated the Market,<br><span style="color:var(--primary)">But Key Features Are Missing</span></div>
+    <div class="section-title" data-lang="ja">Vrewが市場を検証したが、<br><span style="color:var(--primary)">核心機能が不在</span></div>
+    <div class="section-desc" data-lang="ko">기존 도구에 이미지·음성·자막 기능이 있어도, <b style="color:var(--primary)">원스톱 자동 삽입</b>은 불가능 — 무엇보다 <b style="color:var(--accent)">Vibe Coding / MCP</b>와의 연계가 전무하여 초거대 LLM 시대에 대응 불가</div>
+    <div class="section-desc" data-lang="en">Even if existing tools have image/voice/subtitle features, <b style="color:var(--primary)">one-stop auto-insertion</b> is impossible — and zero integration with <b style="color:var(--accent)">Vibe Coding / MCP</b>, unable to serve the era of frontier LLMs</div>
+    <div class="section-desc" data-lang="ja">既存ツールに画像・音声・字幕機能があっても<b style="color:var(--primary)">ワンストップ自動挿入</b>は不可能 — 何より<b style="color:var(--accent)">Vibeコーディング / MCP</b>との連携が皆無で超巨大LLM時代に対応不可</div>
+    <table class="comp-table">
+      <thead><tr>
+        <th data-lang="ko">비교 항목</th><th data-lang="en">Feature</th><th data-lang="ja">比較項目</th>
+        <th>Vrew</th>
+        <th data-lang="ko">캐럿 AI</th><th data-lang="en">Carat AI</th><th data-lang="ja">Carat AI</th>
+        <th>LTX Studio</th>
+        <th data-lang="ko">수작업</th><th data-lang="en">Manual</th><th data-lang="ja">手作業</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="comp-row-label" data-lang="ko">고품질 이미지</td><td class="comp-row-label" data-lang="en">High-Quality Images</td><td class="comp-row-label" data-lang="ja">高品質画像</td><td style="color:#EF4444">✗</td><td style="color:#EF4444">✗</td><td style="color:#22C55E">✓</td><td style="color:#22C55E">✓</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">인물 일관성</td><td class="comp-row-label" data-lang="en">Character Consistency</td><td class="comp-row-label" data-lang="ja">人物一貫性</td><td style="color:#EF4444">✗</td><td style="color:#EF4444">✗</td><td style="color:#F59E0B">△</td><td style="color:#F59E0B">△</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">다중 캐릭터 음성</td><td class="comp-row-label" data-lang="en">Multi-Character Voice</td><td class="comp-row-label" data-lang="ja">多重キャラクター音声</td><td style="color:#F59E0B">△</td><td style="color:#F59E0B">△</td><td style="color:#22C55E">✓</td><td style="color:#22C55E">✓</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">API 연동</td><td class="comp-row-label" data-lang="en">API Integration</td><td class="comp-row-label" data-lang="ja">API連携</td><td style="color:#EF4444">✗</td><td style="color:#EF4444">✗</td><td style="color:#F59E0B">△</td><td>N/A</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">MCP / Vibe코딩</td><td class="comp-row-label" data-lang="en">MCP / Vibe Coding</td><td class="comp-row-label" data-lang="ja">MCP / Vibeコーディング</td><td style="color:#EF4444">✗</td><td style="color:#EF4444">✗</td><td style="color:#EF4444">✗</td><td>N/A</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">한국어 특화</td><td class="comp-row-label" data-lang="en">Korean Optimized</td><td class="comp-row-label" data-lang="ja">韓国語特化</td><td style="color:#22C55E">✓</td><td style="color:#22C55E">✓</td><td style="color:#EF4444">✗</td><td>N/A</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 04: SOLUTION — ReelBam Intro -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide solution" data-title-ko="솔루션: 릴밤" data-title-en="Solution: ReelBam" data-title-ja="ソリューション: ReelBam">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">솔루션</div><div class="section-label" data-lang="en">Our Solution</div><div class="section-label" data-lang="ja">ソリューション</div>
+    <div class="section-title" data-lang="ko">대본 입력 → AI 오케스트레이션 → <span class="gradient-text">영상 완성</span></div>
+    <div class="section-title" data-lang="en">Script Input → AI Orchestration → <span class="gradient-text">Video Complete</span></div>
+    <div class="section-title" data-lang="ja">台本入力 → AIオーケストレーション → <span class="gradient-text">動画完成</span></div>
+    <div class="section-desc" data-lang="ko">릴밤은 MCP 서버 아키텍처를 통해 Gemini, Imagen, ElevenLabs, FFmpeg를 하나의 파이프라인으로 연결합니다</div>
+    <div class="section-desc" data-lang="en">ReelBam connects Gemini, Imagen, ElevenLabs, and FFmpeg into a single pipeline through MCP server architecture</div>
+    <div class="section-desc" data-lang="ja">ReelBamはMCPサーバーアーキテクチャを通じてGemini、Imagen、ElevenLabs、FFmpegを一つのパイプラインに接続します</div>
+    <div class="solution-flow solution-content">
+      <div class="solution-step">
+        <div class="step-number">STEP 01</div>
+        <div class="step-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg></div>
+        <h3 data-lang="ko">대본 입력</h3><h3 data-lang="en">Input Script</h3><h3 data-lang="ja">台本入力</h3>
+        <p data-lang="ko">텍스트 대본을 입력하면 AI가 자동으로 씬을 분할하고 캐릭터를 추출합니다</p>
+        <p data-lang="en">Input a text script and AI automatically splits scenes and extracts characters</p>
+        <p data-lang="ja">テキスト台本を入力するとAIが自動でシーンを分割しキャラクターを抽出</p>
+      </div>
+      <div class="solution-step">
+        <div class="step-number">STEP 02</div>
+        <div class="step-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg></div>
+        <h3 data-lang="ko">AI 자동 생성</h3><h3 data-lang="en">AI Auto-Generate</h3><h3 data-lang="ja">AI自動生成</h3>
+        <p data-lang="ko">이미지, 음성, 자막이 동시 병렬 생성 — 인물 일관성과 감정 표현까지 자동</p>
+        <p data-lang="en">Images, voices, subtitles generated in parallel — character consistency and emotion included</p>
+        <p data-lang="ja">画像、音声、字幕が同時並列生成 — 人物一貫性と感情表現まで自動</p>
+      </div>
+      <div class="solution-step">
+        <div class="step-number">STEP 03</div>
+        <div class="step-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect width="15" height="14" x="1" y="5" rx="2" ry="2"/></svg></div>
+        <h3 data-lang="ko">영상 완성</h3><h3 data-lang="en">Video Complete</h3><h3 data-lang="ja">動画完成</h3>
+        <p data-lang="ko">FFmpeg 기반 자동 합성으로 5분 내 HD/4K 영상 출력. 필요 시 UI에서 미세 편집</p>
+        <p data-lang="en">FFmpeg-based auto composition outputs HD/4K video in 5 minutes. Fine-tune in UI if needed</p>
+        <p data-lang="ja">FFmpeg基盤自動合成で5分以内にHD/4K動画出力。必要時UIで微調整</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 05: PRODUCT — Pipeline Phases -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide product" data-title-ko="핵심 기능" data-title-en="Core Features" data-title-ja="コア機能">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">프로덕트</div><div class="section-label" data-lang="en">Product</div><div class="section-label" data-lang="ja">プロダクト</div>
+    <div class="section-title" data-lang="ko">5단계 AI 오케스트레이션 <span class="gradient-text">파이프라인</span></div>
+    <div class="section-title" data-lang="en">5-Stage AI Orchestration <span class="gradient-text">Pipeline</span></div>
+    <div class="section-title" data-lang="ja">5段階AIオーケストレーション <span class="gradient-text">パイプライン</span></div>
+    <div class="svc-phases">
+      <div class="svc-phase">
+        <div class="svc-phase-num">Phase 01</div>
+        <h3 data-lang="ko">대본 분석 & 씬 분할</h3><h3 data-lang="en">Script Analysis & Scene Split</h3><h3 data-lang="ja">台本分析 & シーン分割</h3>
+        <div class="svc-phase-sub" data-lang="ko">Gemini 2.0 Flash 기반</div><div class="svc-phase-sub" data-lang="en">Powered by Gemini 2.0 Flash</div><div class="svc-phase-sub" data-lang="ja">Gemini 2.0 Flash基盤</div>
+        <ul class="svc-feature-list">
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></div><span data-lang="ko">자동 씬 분할 & 소요 시간 추정</span><span data-lang="en">Auto scene split & duration estimation</span><span data-lang="ja">自動シーン分割 & 所要時間推定</span></li>
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span data-lang="ko">캐릭터 추출 & 외형 설명 생성</span><span data-lang="en">Character extraction & appearance description</span><span data-lang="ja">キャラクター抽出 & 外見説明生成</span></li>
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div><span data-lang="ko">장르별 최적화 (역사/동화/공포 등)</span><span data-lang="en">Genre optimization (history/fairy tale/horror)</span><span data-lang="ja">ジャンル別最適化（歴史/童話/ホラー等）</span></li>
+        </ul>
+        <div class="svc-phase-badge"><span data-lang="ko">특허 #1</span><span data-lang="en">Patent #1</span><span data-lang="ja">特許 #1</span></div>
+      </div>
+      <div class="svc-phase">
+        <div class="svc-phase-num">Phase 02</div>
+        <h3 data-lang="ko">이미지 & 음성 생성</h3><h3 data-lang="en">Image & Voice Generation</h3><h3 data-lang="ja">画像 & 音声生成</h3>
+        <div class="svc-phase-sub" data-lang="ko">Imagen 4 + ElevenLabs</div><div class="svc-phase-sub" data-lang="en">Imagen 4 + ElevenLabs</div><div class="svc-phase-sub" data-lang="ja">Imagen 4 + ElevenLabs</div>
+        <ul class="svc-feature-list">
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div><span data-lang="ko">씬 간 인물 일관성 유지 (Seed 고정)</span><span data-lang="en">Cross-scene character consistency (Seed lock)</span><span data-lang="ja">シーン間人物一貫性維持（Seed固定）</span></li>
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></div><span data-lang="ko">50+ 음성 프리셋 (남/여/아이/노인)</span><span data-lang="en">50+ voice presets (male/female/child/elder)</span><span data-lang="ja">50+ 音声プリセット（男/女/子供/老人）</span></li>
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><span data-lang="ko">캐릭터별 음성 자동 매핑</span><span data-lang="en">Auto voice mapping per character</span><span data-lang="ja">キャラクター別音声自動マッピング</span></li>
+        </ul>
+        <div class="svc-phase-badge"><span data-lang="ko">특허 #2, #3</span><span data-lang="en">Patent #2, #3</span><span data-lang="ja">特許 #2, #3</span></div>
+      </div>
+      <div class="svc-phase">
+        <div class="svc-phase-num">Phase 03</div>
+        <h3 data-lang="ko">자막 & 영상 합성</h3><h3 data-lang="en">Subtitle & Video Render</h3><h3 data-lang="ja">字幕 & 動画合成</h3>
+        <div class="svc-phase-sub" data-lang="ko">ASS + FFmpeg</div><div class="svc-phase-sub" data-lang="en">ASS + FFmpeg</div><div class="svc-phase-sub" data-lang="ja">ASS + FFmpeg</div>
+        <ul class="svc-feature-list">
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span data-lang="ko">5가지 자막 스타일 프리셋</span><span data-lang="en">5 subtitle style presets</span><span data-lang="ja">5種類の字幕スタイルプリセット</span></li>
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect width="15" height="14" x="1" y="5" rx="2" ry="2"/></svg></div><span data-lang="ko">Ken Burns 효과 & 트랜지션</span><span data-lang="en">Ken Burns effect & transitions</span><span data-lang="ja">Ken Burnsエフェクト & トランジション</span></li>
+          <li><div class="svc-ficon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></div><span data-lang="ko">HD/4K MP4 출력 (30fps)</span><span data-lang="en">HD/4K MP4 output (30fps)</span><span data-lang="ja">HD/4K MP4出力（30fps）</span></li>
+        </ul>
+        <div class="svc-phase-badge"><span data-lang="ko">특허 #4, #5</span><span data-lang="en">Patent #4, #5</span><span data-lang="ja">特許 #4, #5</span></div>
+      </div>
+    </div>
+    <div class="svc-cloud-bar">
+      <span data-lang="ko"><b>MCP 서버</b>를 통해 Claude, ChatGPT, Gemini 등 Vibe Coding 도구에서 직접 호출 가능</span>
+      <span data-lang="en">Directly callable from Claude, ChatGPT, Gemini via <b>MCP Server</b></span>
+      <span data-lang="ja"><b>MCPサーバー</b>を通じてClaude、ChatGPT、GeminiなどVibeコーディングツールから直接呼出可能</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 06: TECHNOLOGY — Patents & MCP -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="기술 & 특허" data-title-en="Technology & Patents" data-title-ja="技術 & 特許" style="background:radial-gradient(ellipse at 30% 40%,rgba(255,107,53,0.1) 0%,transparent 60%),var(--dark);padding:56px 60px 48px">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">기술 경쟁력</div><div class="section-label" data-lang="en">Technology Moat</div><div class="section-label" data-lang="ja">技術競争力</div>
+    <div class="section-title" data-lang="ko"><span style="color:var(--primary)">7개 특허</span>로 구축한<br>AI 영상 파이프라인</div>
+    <div class="section-title" data-lang="en"><span style="color:var(--primary)">7 Patents</span> Building<br>the AI Video Pipeline</div>
+    <div class="section-title" data-lang="ja"><span style="color:var(--primary)">7件の特許</span>で構築した<br>AI動画パイプライン</div>
+    <div class="patent-grid">
+      <div class="patent-card"><div class="patent-card-num">#1</div><h4 data-lang="ko">대본 자동 분석 & 씬 분할</h4><h4 data-lang="en">Script Analysis & Scene Split</h4><h4 data-lang="ja">台本自動分析 & シーン分割</h4><p data-lang="ko">AI 기반 대본 구조화 및 씬 분할 시스템</p><p data-lang="en">AI-based script structuring & scene segmentation</p><p data-lang="ja">AI基盤台本構造化及びシーン分割</p></div>
+      <div class="patent-card"><div class="patent-card-num">#2</div><h4 data-lang="ko">인물 일관성 이미지 생성</h4><h4 data-lang="en">Character Consistent Image Gen</h4><h4 data-lang="ja">人物一貫性画像生成</h4><p data-lang="ko">씬 간 동일 인물 유지 이미지 생성 기법</p><p data-lang="en">Cross-scene character consistency technique</p><p data-lang="ja">シーン間同一人物維持画像生成技法</p></div>
+      <div class="patent-card"><div class="patent-card-num">#3</div><h4 data-lang="ko">다중 캐릭터 음성 매핑</h4><h4 data-lang="en">Multi-Character Voice Mapping</h4><h4 data-lang="ja">多重キャラクター音声マッピング</h4><p data-lang="ko">대본 기반 자동 음성 할당 & 합성</p><p data-lang="en">Script-based auto voice assignment & synthesis</p><p data-lang="ja">台本基盤自動音声割当 & 合成</p></div>
+      <div class="patent-card"><div class="patent-card-num">#4</div><h4 data-lang="ko">한국어 특화 자막 생성</h4><h4 data-lang="en">Korean-Optimized Subtitles</h4><h4 data-lang="ja">韓国語特化字幕生成</h4><p data-lang="ko">ASS 포맷 스타일 자막 자동 생성</p><p data-lang="en">ASS format styled subtitle auto-generation</p><p data-lang="ja">ASS形式スタイル字幕自動生成</p></div>
+      <div class="patent-card"><div class="patent-card-num">#5</div><h4 data-lang="ko">AI 오케스트레이션 파이프라인</h4><h4 data-lang="en">AI Orchestration Pipeline</h4><h4 data-lang="ja">AIオーケストレーションパイプライン</h4><p data-lang="ko">멀티 AI 서비스 병렬 합성 시스템</p><p data-lang="en">Multi-AI service parallel composition</p><p data-lang="ja">マルチAIサービス並列合成システム</p></div>
+      <div class="patent-card patent-mcp"><div class="patent-card-num">#6 — MCP</div><h4 data-lang="ko">MCP 서버 아키텍처</h4><h4 data-lang="en">MCP Server Architecture</h4><h4 data-lang="ja">MCPサーバーアーキテクチャ</h4><p data-lang="ko">Vibe 코딩 연동 API & MCP 서버 설계</p><p data-lang="en">Vibe Coding API & MCP server design</p><p data-lang="ja">Vibeコーディング連携API & MCPサーバー設計</p></div>
+      <div class="patent-card"><div class="patent-card-num">#7</div><h4 data-lang="ko">한국어 콘텐츠 최적화 엔진</h4><h4 data-lang="en">Korean Content Optimization</h4><h4 data-lang="ja">韓国語コンテンツ最適化エンジン</h4><p data-lang="ko">한국어 TTS, 자막, 이미지 프롬프트 최적화</p><p data-lang="en">Korean TTS, subtitles, image prompt optimization</p><p data-lang="ja">韓国語TTS、字幕、画像プロンプト最適化</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 07: HOW IT WORKS — Pipeline Flow -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="작동 원리" data-title-en="How It Works" data-title-ja="仕組み" style="background:radial-gradient(ellipse at 50% 50%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">작동 원리</div><div class="section-label" data-lang="en">How It Works</div><div class="section-label" data-lang="ja">仕組み</div>
+    <div class="section-title" data-lang="ko">대본에서 영상까지, <span class="gradient-text">완전 자동화</span></div>
+    <div class="section-title" data-lang="en">From Script to Video, <span class="gradient-text">Fully Automated</span></div>
+    <div class="section-title" data-lang="ja">台本から動画まで、<span class="gradient-text">完全自動化</span></div>
+    <div class="section-desc" data-lang="ko">총 비용 ~₩2,800 / 총 소요 시간 ~5분 (10분 영상 기준)</div>
+    <div class="section-desc" data-lang="en">Total cost ~₩2,800 / Total time ~5 min (for a 10-min video)</div>
+    <div class="section-desc" data-lang="ja">総コスト 〜₩2,800 / 総所要時間 〜5分（10分動画基準）</div>
+    <div class="pipeline-flow">
+      <div class="pipeline-step">
+        <div class="pipeline-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></div>
+        <h4 data-lang="ko">대본 입력</h4><h4 data-lang="en">Script</h4><h4 data-lang="ja">台本入力</h4>
+        <p data-lang="ko">텍스트 또는 MCP 호출</p><p data-lang="en">Text or MCP call</p><p data-lang="ja">テキストまたはMCP呼出</p>
+        <div class="pipeline-cost" data-lang="ko">무료</div><div class="pipeline-cost" data-lang="en">Free</div><div class="pipeline-cost" data-lang="ja">無料</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21"/><path d="M17 3v4"/><path d="M19 5h-4"/></svg></div>
+        <h4 data-lang="ko">AI 분석</h4><h4 data-lang="en">AI Analysis</h4><h4 data-lang="ja">AI分析</h4>
+        <p data-lang="ko">Gemini 씬 분할</p><p data-lang="en">Gemini scene split</p><p data-lang="ja">Geminiシーン分割</p>
+        <div class="pipeline-cost">~₩15</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>
+        <h4 data-lang="ko">이미지 생성</h4><h4 data-lang="en">Image Gen</h4><h4 data-lang="ja">画像生成</h4>
+        <p data-lang="ko">Imagen 4 (인물 일관성)</p><p data-lang="en">Imagen 4 (consistency)</p><p data-lang="ja">Imagen 4（人物一貫性）</p>
+        <div class="pipeline-cost">~₩1,100</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div>
+        <h4 data-lang="ko">음성 TTS</h4><h4 data-lang="en">Voice TTS</h4><h4 data-lang="ja">音声TTS</h4>
+        <p data-lang="ko">ElevenLabs 50+음성</p><p data-lang="en">ElevenLabs 50+ voices</p><p data-lang="ja">ElevenLabs 50+音声</p>
+        <div class="pipeline-cost">~₩700</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4 data-lang="ko">자막 생성</h4><h4 data-lang="en">Subtitles</h4><h4 data-lang="ja">字幕生成</h4>
+        <p data-lang="ko">ASS 스타일 자막</p><p data-lang="en">ASS styled subs</p><p data-lang="ja">ASSスタイル字幕</p>
+        <div class="pipeline-cost" data-lang="ko">무료</div><div class="pipeline-cost" data-lang="en">Free</div><div class="pipeline-cost" data-lang="ja">無料</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect width="15" height="14" x="1" y="5" rx="2" ry="2"/></svg></div>
+        <h4 data-lang="ko">영상 렌더링</h4><h4 data-lang="en">Render</h4><h4 data-lang="ja">動画レンダリング</h4>
+        <p data-lang="ko">FFmpeg HD/4K</p><p data-lang="en">FFmpeg HD/4K</p><p data-lang="ja">FFmpeg HD/4K</p>
+        <div class="pipeline-cost" data-lang="ko">무료 (오픈소스)</div><div class="pipeline-cost" data-lang="en">Free (Open Source)</div><div class="pipeline-cost" data-lang="ja">無料（オープンソース）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 08: COMPETITIVE COMPARISON -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="경쟁 비교" data-title-en="Competitive Comparison" data-title-ja="競合比較" style="background:radial-gradient(ellipse at 60% 40%,rgba(255,107,53,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">경쟁 분석</div><div class="section-label" data-lang="en">Competitive Analysis</div><div class="section-label" data-lang="ja">競合分析</div>
+    <div class="section-title" data-lang="ko">릴밤만의 <span style="color:var(--primary)">차별화 포인트</span></div>
+    <div class="section-title" data-lang="en">ReelBam's <span style="color:var(--primary)">Differentiators</span></div>
+    <div class="section-title" data-lang="ja">ReelBamだけの<span style="color:var(--primary)">差別化ポイント</span></div>
+    <table class="comp-table">
+      <thead><tr>
+        <th data-lang="ko">기능</th><th data-lang="en">Feature</th><th data-lang="ja">機能</th>
+        <th class="comp-zaemit">ReelBam</th>
+        <th>Vrew</th>
+        <th data-lang="ko">캐럿 AI</th><th data-lang="en">Carat AI</th><th data-lang="ja">Carat AI</th>
+        <th>LTX Studio</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="comp-row-label" data-lang="ko">이미지 품질</td><td class="comp-row-label" data-lang="en">Image Quality</td><td class="comp-row-label" data-lang="ja">画像品質</td><td class="comp-zaemit-cell"><b>Imagen 4</b></td><td data-lang="ko">기본</td><td data-lang="en">Basic</td><td data-lang="ja">基本</td><td data-lang="ko">기본</td><td data-lang="en">Basic</td><td data-lang="ja">基本</td><td data-lang="ko">우수</td><td data-lang="en">Good</td><td data-lang="ja">優秀</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">인물 일관성</td><td class="comp-row-label" data-lang="en">Character Consistency</td><td class="comp-row-label" data-lang="ja">人物一貫性</td><td class="comp-zaemit-cell"><b>Seed Lock</b></td><td>✗</td><td>✗</td><td>△</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">음성 다양성</td><td class="comp-row-label" data-lang="en">Voice Variety</td><td class="comp-row-label" data-lang="ja">音声多様性</td><td class="comp-zaemit-cell"><b>50+</b></td><td>200+</td><td data-lang="ko">제한적</td><td data-lang="en">Limited</td><td data-lang="ja">限定的</td><td>✓</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">MCP / Vibe코딩</td><td class="comp-row-label" data-lang="en">MCP / Vibe Coding</td><td class="comp-row-label" data-lang="ja">MCP / Vibeコーディング</td><td class="comp-zaemit-cell"><b>MCP + REST</b></td><td>✗</td><td>✗</td><td>✗</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">영상 1편 비용</td><td class="comp-row-label" data-lang="en">Cost per Video</td><td class="comp-row-label" data-lang="ja">動画1本コスト</td><td class="comp-zaemit-cell"><b>~₩2,800</b></td><td data-lang="ko">구독 내</td><td data-lang="en">In Sub</td><td data-lang="ja">購読内</td><td data-lang="ko">구독 내</td><td data-lang="en">In Sub</td><td data-lang="ja">購読内</td><td>₩7,000+</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">한국어 최적화</td><td class="comp-row-label" data-lang="en">Korean Optimization</td><td class="comp-row-label" data-lang="ja">韓国語最適化</td><td class="comp-zaemit-cell"><b>7개 특허</b></td><td>✓</td><td>✓</td><td>✗</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">특허 보유</td><td class="comp-row-label" data-lang="en">Patents</td><td class="comp-row-label" data-lang="ja">特許保有</td><td class="comp-zaemit-cell"><b>7건</b></td><td data-lang="ko">비공개</td><td data-lang="en">N/A</td><td data-lang="ja">非公開</td><td data-lang="ko">비공개</td><td data-lang="en">N/A</td><td data-lang="ja">非公開</td><td data-lang="ko">비공개</td><td data-lang="en">N/A</td><td data-lang="ja">非公開</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 09: MARKET SIZE — TAM/SAM/SOM -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="시장 규모" data-title-en="Market Size" data-title-ja="市場規模" style="background:radial-gradient(ellipse at 40% 40%,rgba(255,107,53,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">시장 기회</div><div class="section-label" data-lang="en">Market Opportunity</div><div class="section-label" data-lang="ja">市場機会</div>
+    <div class="section-title" data-lang="ko">AI 영상 생성 시장,<br>2030년 <span style="color:var(--primary)">12조원</span> 전망</div>
+    <div class="section-title" data-lang="en">AI Video Generation Market,<br><span style="color:var(--primary)">12T KRW</span> by 2030</div>
+    <div class="section-title" data-lang="ja">AI動画生成市場、<br>2030年 <span style="color:var(--primary)">12兆ウォン</span> 展望</div>
+    <div class="tam-visual">
+      <div class="tam-circles">
+        <div class="tam-circle tam"><div class="tam-circle-label" data-lang="ko"><span>12조</span>TAM</div><div class="tam-circle-label" data-lang="en"><span>12T</span>TAM</div><div class="tam-circle-label" data-lang="ja"><span>12兆</span>TAM</div></div>
+        <div class="tam-circle sam"><div class="tam-circle-label" data-lang="ko"><span>3조</span>SAM</div><div class="tam-circle-label" data-lang="en"><span>3T</span>SAM</div><div class="tam-circle-label" data-lang="ja"><span>3兆</span>SAM</div></div>
+        <div class="tam-circle som"><div class="tam-circle-label" data-lang="ko"><span>3,000억</span>SOM</div><div class="tam-circle-label" data-lang="en"><span>300B</span>SOM</div><div class="tam-circle-label" data-lang="ja"><span>3,000億</span>SOM</div></div>
+      </div>
+      <div class="tam-details">
+        <div class="tam-detail t">
+          <div class="tam-detail-title">TAM — Total Addressable Market</div>
+          <div class="tam-detail-value">12조원</div>
+          <div class="tam-detail-desc" data-lang="ko">글로벌 AI 영상 생성 시장 (2030, CAGR 38%)</div>
+          <div class="tam-detail-desc" data-lang="en">Global AI Video Generation Market (2030, CAGR 38%)</div>
+          <div class="tam-detail-desc" data-lang="ja">グローバルAI動画生成市場（2030年、CAGR 38%）</div>
+        </div>
+        <div class="tam-detail s">
+          <div class="tam-detail-title">SAM — Serviceable Addressable Market</div>
+          <div class="tam-detail-value">3조원</div>
+          <div class="tam-detail-desc" data-lang="ko">크리에이터 중심 AI 영상 도구 시장 (이미지+나레이션 포맷)</div>
+          <div class="tam-detail-desc" data-lang="en">Creator-focused AI video tools (image+narration format)</div>
+          <div class="tam-detail-desc" data-lang="ja">クリエイター中心AI動画ツール市場（画像+ナレーション形式）</div>
+        </div>
+        <div class="tam-detail so">
+          <div class="tam-detail-title">SOM — Serviceable Obtainable Market</div>
+          <div class="tam-detail-value">3,000억원</div>
+          <div class="tam-detail-desc" data-lang="ko">한국 + 일본 + 동남아 크리에이터 (첫 3년)</div>
+          <div class="tam-detail-desc" data-lang="en">Korea + Japan + SEA creators (first 3 years)</div>
+          <div class="tam-detail-desc" data-lang="ja">韓国 + 日本 + 東南アジアクリエイター（最初の3年）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 10: MARKET TREND -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="시장 트렌드" data-title-en="Market Trend" data-title-ja="市場トレンド" style="background:radial-gradient(ellipse at 50% 30%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">시장 트렌드</div><div class="section-label" data-lang="en">Market Trend</div><div class="section-label" data-lang="ja">市場トレンド</div>
+    <div class="section-title" data-lang="ko">MCP + Vibe Coding이 여는<br><span style="color:var(--primary)">새로운 패러다임</span></div>
+    <div class="section-title" data-lang="en">MCP + Vibe Coding Opens<br><span style="color:var(--primary)">A New Paradigm</span></div>
+    <div class="section-title" data-lang="ja">MCP + Vibeコーディングが開く<br><span style="color:var(--primary)">新しいパラダイム</span></div>
+    <div class="market-content">
+      <div class="trend-grid">
+        <!-- Card 1: Creator Economy -->
+        <div class="trend-card">
+          <div class="trend-card-icon" style="background:rgba(59,130,246,0.15)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="trend-card-body">
+            <h4 data-lang="ko">크리에이터 이코노미</h4><h4 data-lang="en">Creator Economy</h4><h4 data-lang="ja">クリエイターエコノミー</h4>
+            <p data-lang="ko">Goldman Sachs 추산 <b style="color:var(--primary)">350조원+</b> 시장 규모 (2027). AI 도구를 활용한 1인 콘텐츠 제작 폭발적 성장</p>
+            <p data-lang="en">Goldman Sachs estimates <b style="color:var(--primary)">350T+ KRW</b> market (2027). Explosive growth in solo content creation with AI tools</p>
+            <p data-lang="ja">Goldman Sachs推算 <b style="color:var(--primary)">350兆+ウォン</b> 市場規模（2027年）。AIツール活用の1人コンテンツ制作が爆発的成長</p>
+            <span class="trend-tag" style="background:rgba(59,130,246,0.15);color:#3B82F6" data-lang="ko">350조원+ 시장</span><span class="trend-tag" style="background:rgba(59,130,246,0.15);color:#3B82F6" data-lang="en">350T+ KRW</span><span class="trend-tag" style="background:rgba(59,130,246,0.15);color:#3B82F6" data-lang="ja">350兆+ウォン市場</span>
+          </div>
+        </div>
+        <!-- Card 2: MCP Server Ecosystem -->
+        <div class="trend-card">
+          <div class="trend-card-icon" style="background:rgba(0,212,170,0.15)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="trend-card-body">
+            <h4 data-lang="ko">MCP 서버 생태계</h4><h4 data-lang="en">MCP Server Ecosystem</h4><h4 data-lang="ja">MCPサーバーエコシステム</h4>
+            <p data-lang="ko">Claude, ChatGPT 등 초거대 LLM에서 외부 도구를 직접 호출하는 <b style="color:#00D4AA">표준 프로토콜</b>로 급부상</p>
+            <p data-lang="en"><b style="color:#00D4AA">Standard protocol</b> for frontier LLMs (Claude, ChatGPT) to directly invoke external tools — rapidly emerging</p>
+            <p data-lang="ja">Claude、ChatGPT等の超巨大LLMで外部ツールを直接呼出す<b style="color:#00D4AA">標準プロトコル</b>として急浮上</p>
+            <span class="trend-tag" style="background:rgba(0,212,170,0.15);color:#00D4AA" data-lang="ko">표준 프로토콜</span><span class="trend-tag" style="background:rgba(0,212,170,0.15);color:#00D4AA" data-lang="en">Standard Protocol</span><span class="trend-tag" style="background:rgba(0,212,170,0.15);color:#00D4AA" data-lang="ja">標準プロトコル</span>
+          </div>
+        </div>
+        <!-- Card 3: Vibe Coding Market -->
+        <div class="trend-card">
+          <div class="trend-card-icon" style="background:rgba(224,64,251,0.15)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21"/><path d="M17 3v4"/><path d="M19 5h-4"/></svg>
+          </div>
+          <div class="trend-card-body">
+            <h4 data-lang="ko">Vibe Coding 시대</h4><h4 data-lang="en">Vibe Coding Era</h4><h4 data-lang="ja">Vibeコーディング時代</h4>
+            <p data-lang="ko">자연어로 코드를 생성하는 시대 → 자연어로 <b style="color:#E040FB">영상을 생성</b>하는 시대로 확장</p>
+            <p data-lang="en">From generating code in natural language → expanding to <b style="color:#E040FB">generating videos</b> in natural language</p>
+            <p data-lang="ja">自然言語でコード生成 → 自然言語で<b style="color:#E040FB">動画を生成</b>する時代に拡張</p>
+            <span class="trend-tag" style="background:rgba(224,64,251,0.15);color:#E040FB" data-lang="ko">코드 → 영상</span><span class="trend-tag" style="background:rgba(224,64,251,0.15);color:#E040FB" data-lang="en">Code → Video</span><span class="trend-tag" style="background:rgba(224,64,251,0.15);color:#E040FB" data-lang="ja">コード → 動画</span>
+          </div>
+        </div>
+        <!-- Card 4: First Mover -->
+        <div class="trend-card" style="border-color:rgba(255,107,53,0.2);background:rgba(255,107,53,0.05)">
+          <div class="trend-card-icon" style="background:rgba(255,107,53,0.15)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 8 6 8 6s1-2 3.5-2a2.5 2.5 0 0 1 0 5H10"/><path d="M6 9h4"/><path d="M10 9v8"/><path d="M6 9v8"/><path d="M6 17h4"/><path d="M14 9h4"/><path d="M18 9v8"/><path d="M14 9v8"/><path d="M14 17h4"/></svg>
+          </div>
+          <div class="trend-card-body">
+            <h4 data-lang="ko">릴밤 = <span style="color:var(--primary)">First Mover</span></h4><h4 data-lang="en">ReelBam = <span style="color:var(--primary)">First Mover</span></h4><h4 data-lang="ja">ReelBam = <span style="color:var(--primary)">First Mover</span></h4>
+            <p data-lang="ko">MCP × Vibe Coding 교차점에 정확히 위치 — <b style="color:var(--primary)">초거대 LLM에서 직접 호출되는 최초의 영상 제작 서비스</b></p>
+            <p data-lang="en">Positioned exactly at MCP × Vibe Coding intersection — <b style="color:var(--primary)">the first video production service callable from frontier LLMs</b></p>
+            <p data-lang="ja">MCP × Vibeコーディングの交差点に正確に位置 — <b style="color:var(--primary)">超巨大LLMから直接呼出される初の動画制作サービス</b></p>
+            <span class="trend-tag" style="background:rgba(255,107,53,0.15);color:var(--primary)" data-lang="ko">글로벌 최초</span><span class="trend-tag" style="background:rgba(255,107,53,0.15);color:var(--primary)" data-lang="en">Global First</span><span class="trend-tag" style="background:rgba(255,107,53,0.15);color:var(--primary)" data-lang="ja">グローバル初</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 11: BUSINESS MODEL — Pricing -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="비즈니스 모델" data-title-en="Business Model" data-title-ja="ビジネスモデル" style="background:radial-gradient(ellipse at 80% 30%,rgba(255,107,53,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">비즈니스 모델</div><div class="section-label" data-lang="en">Business Model</div><div class="section-label" data-lang="ja">ビジネスモデル</div>
+    <div class="section-title" data-lang="ko">SaaS 구독 + API 종량제 <span class="gradient-text">하이브리드</span></div>
+    <div class="section-title" data-lang="en">SaaS Subscription + API Usage <span class="gradient-text">Hybrid</span></div>
+    <div class="section-title" data-lang="ja">SaaSサブスク + API従量制 <span class="gradient-text">ハイブリッド</span></div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-card-name" data-lang="ko">무료</div><div class="pricing-card-name" data-lang="en">Free</div><div class="pricing-card-name" data-lang="ja">無料</div>
+        <div class="pricing-card-price">₩0</div>
+        <div class="pricing-card-unit" data-lang="ko">워터마크 포함</div><div class="pricing-card-unit" data-lang="en">With Watermark</div><div class="pricing-card-unit" data-lang="ja">ウォーターマーク付き</div>
+        <ul class="pricing-features">
+          <li data-lang="ko">월 3편 제작</li><li data-lang="en">3 videos/month</li><li data-lang="ja">月3本制作</li>
+          <li data-lang="ko">SD 해상도</li><li data-lang="en">SD resolution</li><li data-lang="ja">SD解像度</li>
+          <li data-lang="ko">기본 음성 5종</li><li data-lang="en">5 basic voices</li><li data-lang="ja">基本音声5種</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name" data-lang="ko">스타터</div><div class="pricing-card-name" data-lang="en">Starter</div><div class="pricing-card-name" data-lang="ja">スターター</div>
+        <div class="pricing-card-price">₩19,900</div>
+        <div class="pricing-card-unit" data-lang="ko">/ 월</div><div class="pricing-card-unit" data-lang="en">/ month</div><div class="pricing-card-unit" data-lang="ja">/ 月</div>
+        <ul class="pricing-features">
+          <li data-lang="ko">월 20편 제작</li><li data-lang="en">20 videos/month</li><li data-lang="ja">月20本制作</li>
+          <li data-lang="ko">HD 해상도</li><li data-lang="en">HD resolution</li><li data-lang="ja">HD解像度</li>
+          <li data-lang="ko">전체 음성 프리셋</li><li data-lang="en">All voice presets</li><li data-lang="ja">全音声プリセット</li>
+          <li data-lang="ko">워터마크 제거</li><li data-lang="en">No watermark</li><li data-lang="ja">ウォーターマーク除去</li>
+        </ul>
+      </div>
+      <div class="pricing-card popular">
+        <div class="pricing-card-name" data-lang="ko">프로</div><div class="pricing-card-name" data-lang="en">Pro</div><div class="pricing-card-name" data-lang="ja">プロ</div>
+        <div class="pricing-card-price">₩39,900</div>
+        <div class="pricing-card-unit" data-lang="ko">/ 월</div><div class="pricing-card-unit" data-lang="en">/ month</div><div class="pricing-card-unit" data-lang="ja">/ 月</div>
+        <ul class="pricing-features">
+          <li data-lang="ko">무제한 영상 제작</li><li data-lang="en">Unlimited videos</li><li data-lang="ja">無制限動画制作</li>
+          <li data-lang="ko">4K 해상도</li><li data-lang="en">4K resolution</li><li data-lang="ja">4K解像度</li>
+          <li data-lang="ko">커스텀 음성 클론</li><li data-lang="en">Custom voice clone</li><li data-lang="ja">カスタム音声クローン</li>
+          <li data-lang="ko">우선 렌더링</li><li data-lang="en">Priority rendering</li><li data-lang="ja">優先レンダリング</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name" data-lang="ko">엔터프라이즈</div><div class="pricing-card-name" data-lang="en">Enterprise</div><div class="pricing-card-name" data-lang="ja">エンタープライズ</div>
+        <div class="pricing-card-price">₩99,000</div>
+        <div class="pricing-card-unit" data-lang="ko">/ 월</div><div class="pricing-card-unit" data-lang="en">/ month</div><div class="pricing-card-unit" data-lang="ja">/ 月</div>
+        <ul class="pricing-features">
+          <li data-lang="ko">다중 계정</li><li data-lang="en">Multi-seat</li><li data-lang="ja">マルチアカウント</li>
+          <li data-lang="ko">REST API + MCP 접근</li><li data-lang="en">REST API + MCP access</li><li data-lang="ja">REST API + MCPアクセス</li>
+          <li data-lang="ko">전용 지원</li><li data-lang="en">Dedicated support</li><li data-lang="ja">専用サポート</li>
+          <li data-lang="ko">SLA 보장</li><li data-lang="en">SLA guaranteed</li><li data-lang="ja">SLA保証</li>
+        </ul>
+      </div>
+    </div>
+    <div class="biz-rev-summary" style="margin-top:20px">
+      <p data-lang="ko"><b>500명</b> 유료 구독자 확보 시 월 매출 <b>1,400만원</b> — API 기반 원가 ₩2,800/건으로 <b>영업이익률 69%+</b> 달성 가능 (2030 목표 110K 구독자)</p>
+      <p data-lang="en">With <b>500</b> paid subscribers, monthly revenue of <b>₩14M</b> — with API cost of ₩2,800/video, <b>69%+ operating margin</b> achievable (2030 target: 110K subs)</p>
+      <p data-lang="ja"><b>500名</b>の有料購読者確保時、月売上 <b>1,400万ウォン</b> — API基盤原価₩2,800/件で<b>営業利益率69%+</b>達成可能（2030年目標110K購読者）</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 12: GROWTH SCENARIO -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide traction" data-title-ko="성장 시나리오" data-title-en="Growth Scenario" data-title-ja="成長シナリオ">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">성장 시나리오</div><div class="section-label" data-lang="en">Growth Scenario</div><div class="section-label" data-lang="ja">成長シナリオ</div>
+    <div class="section-title" data-lang="ko">5개년 성장 로드맵</div><div class="section-title" data-lang="en">5-Year Growth Roadmap</div><div class="section-title" data-lang="ja">5カ年成長ロードマップ</div>
+    <div class="section-desc" data-lang="ko">한국 시장 검증 후 일본/동남아/글로벌 순차 확장</div>
+    <div class="section-desc" data-lang="en">Validate in Korea, then expand sequentially to Japan/SEA/Global</div>
+    <div class="section-desc" data-lang="ja">韓国市場検証後、日本/東南アジア/グローバル順次拡張</div>
+    <div class="growth-layout">
+      <div class="growth-chart">
+        <svg class="fin-bar-svg" viewBox="0 0 500 220">
+          <line x1="60" y1="20" x2="480" y2="20" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <line x1="60" y1="58" x2="480" y2="58" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <line x1="60" y1="95" x2="480" y2="95" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <line x1="60" y1="133" x2="480" y2="133" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <line x1="60" y1="170" x2="480" y2="170" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <text x="55" y="24" fill="#94A3B8" font-size="9" text-anchor="end">500억</text>
+          <text x="55" y="62" fill="#94A3B8" font-size="9" text-anchor="end">375억</text>
+          <text x="55" y="99" fill="#94A3B8" font-size="9" text-anchor="end">250억</text>
+          <text x="55" y="137" fill="#94A3B8" font-size="9" text-anchor="end">125억</text>
+          <text x="55" y="174" fill="#94A3B8" font-size="9" text-anchor="end">0</text>
+          <!-- 2026 (Sep launch, 4 months) -->
+          <rect x="85" y="168" width="40" height="2" rx="1" fill="#FF6B35"/>
+          <text x="105" y="190" fill="#94A3B8" font-size="10" text-anchor="middle">2026</text>
+          <text x="105" y="165" fill="#FF6B35" font-size="8" text-anchor="middle" font-weight="600">0.5억</text>
+          <!-- 2027 -->
+          <rect x="165" y="167" width="40" height="3" rx="1" fill="#FF6B35"/>
+          <text x="185" y="190" fill="#94A3B8" font-size="10" text-anchor="middle">2027</text>
+          <text x="185" y="164" fill="#FF6B35" font-size="8" text-anchor="middle" font-weight="600">9억</text>
+          <!-- 2028 -->
+          <rect x="245" y="155" width="40" height="15" rx="2" fill="#00D4AA"/>
+          <text x="265" y="190" fill="#94A3B8" font-size="10" text-anchor="middle">2028</text>
+          <text x="265" y="152" fill="#00D4AA" font-size="8" text-anchor="middle" font-weight="600">50억</text>
+          <!-- 2029 -->
+          <rect x="325" y="119" width="40" height="51" rx="2" fill="#00D4AA"/>
+          <text x="345" y="190" fill="#94A3B8" font-size="10" text-anchor="middle">2029</text>
+          <text x="345" y="116" fill="#00D4AA" font-size="8" text-anchor="middle" font-weight="600">170억</text>
+          <!-- 2030 -->
+          <rect x="405" y="20" width="40" height="150" rx="2" fill="url(#gradBar)"/>
+          <text x="425" y="190" fill="#fff" font-size="10" text-anchor="middle" font-weight="700">2030</text>
+          <text x="425" y="17" fill="#FF6B35" font-size="9" text-anchor="middle" font-weight="700">500억</text>
+          <defs><linearGradient id="gradBar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF6B35"/><stop offset="100%" stop-color="#E040FB"/></linearGradient></defs>
+        </svg>
+      </div>
+      <div class="growth-chart">
+        <table class="growth-table">
+          <thead><tr>
+            <th></th><th>2026</th><th>2027</th><th>2028</th><th>2029</th><th>2030</th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="g-label">MAU</td><td>2K</td><td>15K</td><td>80K</td><td>250K</td><td class="g-val">700K</td></tr>
+            <tr><td class="g-label" data-lang="ko">유료 전환</td><td class="g-label" data-lang="en">Paid Users</td><td class="g-label" data-lang="ja">有料転換</td><td>500</td><td>2.5K</td><td>12K</td><td>40K</td><td class="g-val">110K</td></tr>
+            <tr><td class="g-label">ARPU</td><td>₩28,000</td><td>₩30,000</td><td>₩33,000</td><td>₩35,000</td><td class="g-val">₩38,000</td></tr>
+            <tr><td class="g-label" data-lang="ko">매출</td><td class="g-label" data-lang="en">Revenue</td><td class="g-label" data-lang="ja">売上</td><td>0.5억</td><td>9억</td><td class="g-highlight">50억</td><td class="g-highlight">170억</td><td class="g-val" style="color:var(--primary)">500억</td></tr>
+            <tr><td class="g-label" data-lang="ko">영업이익률</td><td class="g-label" data-lang="en">OP Margin</td><td class="g-label" data-lang="ja">営業利益率</td><td style="color:#EF4444">-110%</td><td>38%</td><td class="g-highlight">51%</td><td class="g-highlight">61%</td><td class="g-val" style="color:var(--accent)">69%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 13: FINANCIAL PROJECTION -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="재무 프로젝션" data-title-en="Financial Projection" data-title-ja="財務プロジェクション" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark);padding:56px 60px 48px">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">재무 프로젝션</div><div class="section-label" data-lang="en">Financial Projection</div><div class="section-label" data-lang="ja">財務プロジェクション</div>
+    <div class="section-title" data-lang="ko">API 원가 ₩2,800, ARPU ₩33,000 —<br><span style="color:var(--accent)">고마진 SaaS</span> 구조</div>
+    <div class="section-title" data-lang="en">API Cost ₩2,800, ARPU ₩33,000 —<br><span style="color:var(--accent)">High-Margin SaaS</span> Structure</div>
+    <div class="section-title" data-lang="ja">API原価 ₩2,800、ARPU ₩33,000 —<br><span style="color:var(--accent)">高マージンSaaS</span> 構造</div>
+    <div class="fin-projection">
+      <table class="fin-table">
+        <thead><tr>
+          <th data-lang="ko">항목</th><th data-lang="en">Item</th><th data-lang="ja">項目</th>
+          <th>2026</th><th>2027</th><th>2028</th><th>2029</th><th>2030</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="f-label" data-lang="ko">매출</td><td class="f-label" data-lang="en">Revenue</td><td class="f-label" data-lang="ja">売上</td><td>0.5억</td><td>9억</td><td class="f-val">50억</td><td class="f-val">170억</td><td class="f-accent">500억</td></tr>
+          <tr><td class="f-label" data-lang="ko">API 비용</td><td class="f-label" data-lang="en">API Cost</td><td class="f-label" data-lang="ja">APIコスト</td><td>0.05억</td><td>1.3억</td><td>8억</td><td>24억</td><td>72억</td></tr>
+          <tr><td class="f-label" data-lang="ko">인건비</td><td class="f-label" data-lang="en">Payroll</td><td class="f-label" data-lang="ja">人件費</td><td>0.6억</td><td>2.4억</td><td>8억</td><td>18억</td><td>36억</td></tr>
+          <tr><td class="f-label" data-lang="ko">마케팅</td><td class="f-label" data-lang="en">Marketing</td><td class="f-label" data-lang="ja">マーケティング</td><td>0.3억</td><td>1.5억</td><td>6억</td><td>18억</td><td>36억</td></tr>
+          <tr><td class="f-label" data-lang="ko">인프라/기타</td><td class="f-label" data-lang="en">Infra/Other</td><td class="f-label" data-lang="ja">インフラ/その他</td><td>0.1억</td><td>0.4억</td><td>2.5억</td><td>6억</td><td>12억</td></tr>
+          <tr style="border-top:2px solid rgba(255,255,255,0.1)"><td class="f-label" style="color:var(--accent)" data-lang="ko">영업이익</td><td class="f-label" style="color:var(--accent)" data-lang="en">Operating Income</td><td class="f-label" style="color:var(--accent)" data-lang="ja">営業利益</td><td style="color:#EF4444">-0.55억</td><td class="f-val">3.4억</td><td class="f-accent">25.5억</td><td class="f-accent">104억</td><td class="f-accent">344억</td></tr>
+          <tr><td class="f-label" data-lang="ko">영업이익률</td><td class="f-label" data-lang="en">OP Margin</td><td class="f-label" data-lang="ja">営業利益率</td><td style="color:#EF4444">-110%</td><td>38%</td><td class="f-accent">51%</td><td class="f-accent">61%</td><td class="f-accent" style="font-size:16px;font-weight:800">69%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 14: USE OF FUNDS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="자금 사용 계획" data-title-en="Use of Funds" data-title-ja="資金使途計画" style="background:radial-gradient(ellipse at 30% 50%,rgba(255,107,53,0.12) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">자금 사용 계획</div><div class="section-label" data-lang="en">Use of Funds</div><div class="section-label" data-lang="ja">資金使途計画</div>
+    <div class="section-title" data-lang="ko">Seed <span style="color:var(--primary)">3억원</span></div>
+    <div class="section-title" data-lang="en">Seed Round <span style="color:var(--primary)">₩300M</span></div>
+    <div class="section-title" data-lang="ja">Seedラウンド <span style="color:var(--primary)">3億ウォン</span>（約3,000万円）</div>
+    <div class="uof-layout">
+      <svg class="uof-chart" viewBox="0 0 280 280">
+        <!-- Donut chart -->
+        <circle cx="140" cy="140" r="110" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="28"/>
+        <circle cx="140" cy="140" r="110" fill="none" stroke="#FF6B35" stroke-width="28" stroke-dasharray="277 414" stroke-dashoffset="0" transform="rotate(-90 140 140)"/>
+        <circle cx="140" cy="140" r="110" fill="none" stroke="#00D4AA" stroke-width="28" stroke-dasharray="173 518" stroke-dashoffset="-277" transform="rotate(-90 140 140)"/>
+        <circle cx="140" cy="140" r="110" fill="none" stroke="#E040FB" stroke-width="28" stroke-dasharray="138 553" stroke-dashoffset="-450" transform="rotate(-90 140 140)"/>
+        <circle cx="140" cy="140" r="110" fill="none" stroke="#F59E0B" stroke-width="28" stroke-dasharray="103 588" stroke-dashoffset="-588" transform="rotate(-90 140 140)"/>
+        <text x="140" y="132" text-anchor="middle" fill="#fff" font-size="24" font-weight="800" font-family="Plus Jakarta Sans">3억원</text>
+        <text x="140" y="155" text-anchor="middle" fill="#94A3B8" font-size="13" data-lang="ko">Seed Round</text>
+        <text x="140" y="155" text-anchor="middle" fill="#94A3B8" font-size="13" data-lang="en">Seed Round</text>
+        <text x="140" y="155" text-anchor="middle" fill="#94A3B8" font-size="13" data-lang="ja">Seedラウンド</text>
+      </svg>
+      <div class="uof-items">
+        <div class="uof-item"><div class="uof-item-dot" style="background:#FF6B35"></div><div class="uof-item-info"><div class="uof-item-title" data-lang="ko">기술 개발</div><div class="uof-item-title" data-lang="en">Technology Development</div><div class="uof-item-title" data-lang="ja">技術開発</div><div class="uof-item-desc" data-lang="ko">MCP 서버, AI 파이프라인 고도화, 편집 UI</div><div class="uof-item-desc" data-lang="en">MCP server, AI pipeline, editing UI</div><div class="uof-item-desc" data-lang="ja">MCPサーバー、AIパイプライン高度化、編集UI</div></div><div class="uof-item-pct">40%</div></div>
+        <div class="uof-item"><div class="uof-item-dot" style="background:#00D4AA"></div><div class="uof-item-info"><div class="uof-item-title" data-lang="ko">마케팅 & GTM</div><div class="uof-item-title" data-lang="en">Marketing & GTM</div><div class="uof-item-title" data-lang="ja">マーケティング & GTM</div><div class="uof-item-desc" data-lang="ko">크리에이터 커뮤니티, 유튜브 마케팅, 제휴</div><div class="uof-item-desc" data-lang="en">Creator communities, YouTube marketing, partnerships</div><div class="uof-item-desc" data-lang="ja">クリエイターコミュニティ、YouTubeマーケティング、提携</div></div><div class="uof-item-pct">25%</div></div>
+        <div class="uof-item"><div class="uof-item-dot" style="background:#E040FB"></div><div class="uof-item-info"><div class="uof-item-title" data-lang="ko">인력 채용</div><div class="uof-item-title" data-lang="en">Hiring</div><div class="uof-item-title" data-lang="ja">人材採用</div><div class="uof-item-desc" data-lang="ko">AI 엔지니어, 프론트엔드, 디자이너</div><div class="uof-item-desc" data-lang="en">AI engineers, frontend, designers</div><div class="uof-item-desc" data-lang="ja">AIエンジニア、フロントエンド、デザイナー</div></div><div class="uof-item-pct">20%</div></div>
+        <div class="uof-item"><div class="uof-item-dot" style="background:#F59E0B"></div><div class="uof-item-info"><div class="uof-item-title" data-lang="ko">운영 & 인프라</div><div class="uof-item-title" data-lang="en">Operations & Infra</div><div class="uof-item-title" data-lang="ja">運営 & インフラ</div><div class="uof-item-desc" data-lang="ko">클라우드 서버, 법무, 회계</div><div class="uof-item-desc" data-lang="en">Cloud servers, legal, accounting</div><div class="uof-item-desc" data-lang="ja">クラウドサーバー、法務、会計</div></div><div class="uof-item-pct">15%</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 15: ROADMAP -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide roadmap" data-title-ko="로드맵" data-title-en="Roadmap" data-title-ja="ロードマップ">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">로드맵</div><div class="section-label" data-lang="en">Roadmap</div><div class="section-label" data-lang="ja">ロードマップ</div>
+    <div class="section-title" data-lang="ko">3주 베타 → 6개월 정식 → <span class="gradient-text">글로벌 확장</span></div>
+    <div class="section-title" data-lang="en">3-Week Beta → 6-Month Launch → <span class="gradient-text">Global Scale</span></div>
+    <div class="section-title" data-lang="ja">3週間ベータ → 6ヶ月正式 → <span class="gradient-text">グローバル拡張</span></div>
+    <div class="roadmap-container">
+      <div class="roadmap-year">
+        <div class="roadmap-year-title">2026 H1</div>
+        <div class="roadmap-year-sub" data-lang="ko">MVP & 베타</div><div class="roadmap-year-sub" data-lang="en">MVP & Beta</div><div class="roadmap-year-sub" data-lang="ja">MVP & ベータ</div>
+        <ul class="roadmap-items">
+          <li data-lang="ko">파이프라인 프로토타입 완성</li><li data-lang="en">Pipeline prototype complete</li><li data-lang="ja">パイプラインプロトタイプ完成</li>
+          <li data-lang="ko">기본 편집 UI 구현</li><li data-lang="en">Basic editing UI</li><li data-lang="ja">基本編集UI実装</li>
+          <li data-lang="ko">Seed 투자 유치</li><li data-lang="en">Seed fundraising</li><li data-lang="ja">Seed資金調達</li>
+          <li data-lang="ko">클로즈드 베타 (100명)</li><li data-lang="en">Closed beta (100 users)</li><li data-lang="ja">クローズドベータ（100名）</li>
+        </ul>
+      </div>
+      <div class="roadmap-year">
+        <div class="roadmap-year-title">2026 H2</div>
+        <div class="roadmap-year-sub" data-lang="ko">한국 정식 출시</div><div class="roadmap-year-sub" data-lang="en">Korea Launch</div><div class="roadmap-year-sub" data-lang="ja">韓国正式リリース</div>
+        <ul class="roadmap-items">
+          <li data-lang="ko">MCP 서버 공개</li><li data-lang="en">MCP server release</li><li data-lang="ja">MCPサーバー公開</li>
+          <li data-lang="ko">결제 연동 (구독)</li><li data-lang="en">Payment integration</li><li data-lang="ja">決済連動（サブスク）</li>
+          <li data-lang="ko">크리에이터 파트너십</li><li data-lang="en">Creator partnerships</li><li data-lang="ja">クリエイターパートナーシップ</li>
+          <li data-lang="ko">유료 전환률 최적화</li><li data-lang="en">Conversion optimization</li><li data-lang="ja">有料転換率最適化</li>
+        </ul>
+      </div>
+      <div class="roadmap-year">
+        <div class="roadmap-year-title">2027</div>
+        <div class="roadmap-year-sub" data-lang="ko">글로벌 확장</div><div class="roadmap-year-sub" data-lang="en">Global Expansion</div><div class="roadmap-year-sub" data-lang="ja">グローバル拡張</div>
+        <ul class="roadmap-items">
+          <li data-lang="ko">일본/동남아 현지화</li><li data-lang="en">Japan/SEA localization</li><li data-lang="ja">日本/東南アジアローカライズ</li>
+          <li data-lang="ko">Enterprise API 출시</li><li data-lang="en">Enterprise API launch</li><li data-lang="ja">Enterprise APIリリース</li>
+          <li data-lang="ko">Series A 투자 유치</li><li data-lang="en">Series A fundraising</li><li data-lang="ja">Series A資金調達</li>
+          <li data-lang="ko">MAU 20,000 달성</li><li data-lang="en">20K MAU achieved</li><li data-lang="ja">MAU 20,000達成</li>
+        </ul>
+      </div>
+      <div class="roadmap-year">
+        <div class="roadmap-year-title">2028-2030</div>
+        <div class="roadmap-year-sub" data-lang="ko">스케일업 & Exit</div><div class="roadmap-year-sub" data-lang="en">Scale-up & Exit</div><div class="roadmap-year-sub" data-lang="ja">スケールアップ & Exit</div>
+        <ul class="roadmap-items">
+          <li data-lang="ko">글로벌 100K+ MAU</li><li data-lang="en">Global 100K+ MAU</li><li data-lang="ja">グローバル100K+ MAU</li>
+          <li data-lang="ko">AI 영상 에코시스템 구축</li><li data-lang="en">AI video ecosystem</li><li data-lang="ja">AI動画エコシステム構築</li>
+          <li data-lang="ko">IPO 또는 전략적 M&A</li><li data-lang="en">IPO or strategic M&A</li><li data-lang="ja">IPOまたは戦略的M&A</li>
+          <li data-lang="ko">연 매출 500억원+ 달성</li><li data-lang="en">Annual revenue ₩500B+</li><li data-lang="ja">年間売上500億ウォン+達成</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 16: EXIT STRATEGY -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" data-title-ko="Exit 전략" data-title-en="Exit Strategy" data-title-ja="Exit戦略" style="background:radial-gradient(ellipse at 50% 30%,rgba(224,64,251,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Exit 전략</div><div class="section-label" data-lang="en">Exit Strategy</div><div class="section-label" data-lang="ja">Exit戦略</div>
+    <div class="section-title" data-lang="ko">IPO & M&A <span class="gradient-text">듀얼 트랙</span></div>
+    <div class="section-title" data-lang="en">IPO & M&A <span class="gradient-text">Dual Track</span></div>
+    <div class="section-title" data-lang="ja">IPO & M&A <span class="gradient-text">デュアルトラック</span></div>
+    <div class="section-desc" data-lang="ko">AI SaaS 기업 Revenue Multiple 15~25x 기준, 2030년 매출 500억원 달성 시 기업가치 7,500억~1.25조원</div>
+    <div class="section-desc" data-lang="en">Based on AI SaaS Revenue Multiple 15-25x, targeting ₩750B-1.25T valuation at ₩500B revenue in 2030</div>
+    <div class="section-desc" data-lang="ja">AI SaaS企業Revenue Multiple 15〜25x基準、2030年売上500億ウォン達成時、企業価値7,500億〜1.25兆ウォン</div>
+    <div class="exit-chart-area">
+      <div class="exit-card">
+        <div class="exit-card-title"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg> <span data-lang="ko">IPO 시나리오</span><span data-lang="en">IPO Scenario</span><span data-lang="ja">IPOシナリオ</span></div>
+        <div class="exit-card-sub" data-lang="ko">2030~2031년 기술특례 상장 또는 미국 나스닥</div>
+        <div class="exit-card-sub" data-lang="en">2030-2031 Tech-IPO or US NASDAQ listing</div>
+        <div class="exit-card-sub" data-lang="ja">2030〜2031年技術特例上場または米国NASDAQ</div>
+        <div class="exit-item"><div class="exit-item-icon" style="background:rgba(255,107,53,0.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div><div class="exit-item-text"><h4 data-lang="ko">목표 기업가치</h4><h4 data-lang="en">Target Valuation</h4><h4 data-lang="ja">目標企業価値</h4><p>7,500억 ~ 1.25조원 (Revenue 15~25x)</p></div></div>
+        <div class="exit-item"><div class="exit-item-icon" style="background:rgba(0,212,170,0.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><div class="exit-item-text"><h4 data-lang="ko">글로벌 유저 기반</h4><h4 data-lang="en">Global User Base</h4><h4 data-lang="ja">グローバルユーザー基盤</h4><p data-lang="ko">800K+ MAU, 120K+ 유료 구독자</p><p data-lang="en">800K+ MAU, 120K+ paid subscribers</p><p data-lang="ja">800K+ MAU、120K+ 有料購読者</p></div></div>
+      </div>
+      <div class="exit-card">
+        <div class="exit-card-title"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <span data-lang="ko">M&A 시나리오</span><span data-lang="en">M&A Scenario</span><span data-lang="ja">M&Aシナリオ</span></div>
+        <div class="exit-card-sub" data-lang="ko">전략적 인수 — AI 영상 기술 + 사용자 기반 + 특허 포트폴리오</div>
+        <div class="exit-card-sub" data-lang="en">Strategic acquisition — AI video tech + user base + patent portfolio</div>
+        <div class="exit-card-sub" data-lang="ja">戦略的買収 — AI動画技術 + ユーザー基盤 + 特許ポートフォリオ</div>
+        <div class="exit-item"><div class="exit-item-icon" style="background:rgba(224,64,251,0.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E040FB" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></div><div class="exit-item-text"><h4 data-lang="ko">잠재 인수자</h4><h4 data-lang="en">Potential Acquirers</h4><h4 data-lang="ja">潜在的買収者</h4><p>Adobe (Premiere) · Google (YouTube) · ByteDance (CapCut) · Canva</p></div></div>
+        <div class="exit-item"><div class="exit-item-icon" style="background:rgba(245,158,11,0.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21"/></svg></div><div class="exit-item-text"><h4 data-lang="ko">인수 매력 포인트</h4><h4 data-lang="en">Acquisition Appeal</h4><h4 data-lang="ja">買収魅力ポイント</h4><p data-lang="ko">7건 특허 포트폴리오 + MCP 생태계 선점 + 한국어 최적화 기술</p><p data-lang="en">7-patent portfolio + MCP ecosystem first-mover + Korean optimization tech</p><p data-lang="ja">7件特許ポートフォリオ + MCPエコシステム先占 + 韓国語最適化技術</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 17: TEAM -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide team" data-title-ko="팀" data-title-en="Team" data-title-ja="チーム">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">팀</div><div class="section-label" data-lang="en">Team</div><div class="section-label" data-lang="ja">チーム</div>
+    <div class="section-title" data-lang="ko">AI & Web 기술의 <span class="gradient-text">융합 팀</span></div>
+    <div class="section-title" data-lang="en">AI & Web Technology <span class="gradient-text">Convergence Team</span></div>
+    <div class="section-title" data-lang="ja">AI & Web技術の<span class="gradient-text">融合チーム</span></div>
+    <div class="team-layout">
+      <div class="team-ceo">
+        <div class="team-photo"><div class="team-photo-text">H</div></div>
+        <h4 data-lang="ko">김화정</h4><h4 data-lang="en">Hwajung Kim</h4><h4 data-lang="ja">キム・ファジョン</h4>
+        <div class="team-title" data-lang="ko">CEO / CTO</div><div class="team-title" data-lang="en">CEO / CTO</div><div class="team-title" data-lang="ja">CEO / CTO</div>
+        <ul class="team-bio">
+          <li data-lang="ko">웹 에디터 개발 10년+</li><li data-lang="en">10+ years web editor development</li><li data-lang="ja">Webエディター開発10年+</li>
+          <li data-lang="ko">WEVEN Inc. 대표 (Zaemit 서비스)</li><li data-lang="en">CEO of WEVEN Inc. (Zaemit)</li><li data-lang="ja">WEVEN Inc. 代表（Zaemitサービス）</li>
+          <li data-lang="ko">AI/ML 파이프라인 아키텍처 설계</li><li data-lang="en">AI/ML pipeline architecture design</li><li data-lang="ja">AI/MLパイプラインアーキテクチャ設計</li>
+          <li data-lang="ko">특허 28건 출원 경험</li><li data-lang="en">28 patents filed</li><li data-lang="ja">特許28件出願経験</li>
+          <li data-lang="ko">중기부 장관상 수상</li><li data-lang="en">Minister of SMEs Award</li><li data-lang="ja">中小企業部長官賞受賞</li>
+        </ul>
+      </div>
+      <div class="team-members">
+        <div class="team-member">
+          <div class="team-photo" style="background:rgba(59,130,246,0.1)"><div class="team-photo-text" style="color:#3B82F6">S</div></div>
+          <div class="team-info">
+            <h4 data-lang="ko">이서혁</h4><h4 data-lang="en">Seohyuk Lee</h4><h4 data-lang="ja">イ・ソヒョク</h4>
+            <div class="team-role-tag" data-lang="ko">AI 엔지니어</div><div class="team-role-tag" data-lang="en">AI Engineer</div><div class="team-role-tag" data-lang="ja">AIエンジニア</div>
+            <ul class="team-bio">
+              <li data-lang="ko">연세대 학사 / 성균관대 AI 석사</li><li data-lang="en">Yonsei Univ. BS / SKKU AI MS</li><li data-lang="ja">延世大学士 / 成均館大AI修士</li>
+              <li data-lang="ko">Gemini / Imagen API 연동</li><li data-lang="en">Gemini / Imagen API integration</li><li data-lang="ja">Gemini / Imagen API連動</li>
+              <li data-lang="ko">MCP 서버 개발</li><li data-lang="en">MCP server development</li><li data-lang="ja">MCPサーバー開発</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo" style="background:rgba(224,64,251,0.1)"><div class="team-photo-text" style="color:var(--accent2)">J</div></div>
+          <div class="team-info">
+            <h4 data-lang="ko">황자경</h4><h4 data-lang="en">Jakyung Hwang</h4><h4 data-lang="ja">ファン・ジャギョン</h4>
+            <div class="team-role-tag" data-lang="ko">디자이너 / 영상 크리에이터</div><div class="team-role-tag" data-lang="en">Designer / Video Creator</div><div class="team-role-tag" data-lang="ja">デザイナー / 映像クリエイター</div>
+            <ul class="team-bio">
+              <li data-lang="ko">UX/UI 디자인 & 브랜딩</li><li data-lang="en">UX/UI design & branding</li><li data-lang="ja">UX/UIデザイン & ブランディング</li>
+              <li data-lang="ko">영상 콘텐츠 기획·제작</li><li data-lang="en">Video content planning & production</li><li data-lang="ja">映像コンテンツ企画・制作</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo"><div class="team-photo-text">F</div></div>
+          <div class="team-info">
+            <h4 data-lang="ko">풀스택 개발자</h4><h4 data-lang="en">Full-Stack Developer</h4><h4 data-lang="ja">フルスタック開発者</h4>
+            <div class="team-role-tag" data-lang="ko">채용 예정</div><div class="team-role-tag" data-lang="en">Hiring</div><div class="team-role-tag" data-lang="ja">採用予定</div>
+            <ul class="team-bio">
+              <li data-lang="ko">Next.js / React 프론트엔드</li><li data-lang="en">Next.js / React frontend</li><li data-lang="ja">Next.js / React フロントエンド</li>
+              <li data-lang="ko">영상 편집 UI 구현</li><li data-lang="en">Video editor UI</li><li data-lang="ja">動画編集UI実装</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo" style="background:rgba(0,212,170,0.1)"><div class="team-photo-text" style="color:var(--accent);font-size:16px">WEVEN</div></div>
+          <div class="team-info">
+            <h4 data-lang="ko">WEVEN 인프라</h4><h4 data-lang="en">WEVEN Infrastructure</h4><h4 data-lang="ja">WEVENインフラ</h4>
+            <div class="team-role-tag" data-lang="ko">기존 자산 활용</div><div class="team-role-tag" data-lang="en">Existing Assets</div><div class="team-role-tag" data-lang="ja">既存資産活用</div>
+            <ul class="team-bio">
+              <li data-lang="ko">클라우드 인프라 공유</li><li data-lang="en">Shared cloud infrastructure</li><li data-lang="ja">クラウドインフラ共有</li>
+              <li data-lang="ko">AI Lab 연구 역량</li><li data-lang="en">AI Lab research capabilities</li><li data-lang="ja">AI Lab研究力量</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 18: THE ASK -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide ask" data-title-ko="투자 제안" data-title-en="The Ask" data-title-ja="投資提案">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">투자 제안</div><div class="section-label" data-lang="en">The Ask</div><div class="section-label" data-lang="ja">投資提案</div>
+    <div class="section-title" data-lang="ko">AI 영상 제작의 미래,<br><span class="gradient-text">릴밤과 함께</span></div>
+    <div class="section-title" data-lang="en">The Future of AI Video,<br><span class="gradient-text">With ReelBam</span></div>
+    <div class="section-title" data-lang="ja">AI動画制作の未来、<br><span class="gradient-text">ReelBamと共に</span></div>
+    <div class="section-desc" data-lang="ko">대본 하나로 영상을 완성하는 시대를 만들겠습니다</div>
+    <div class="section-desc" data-lang="en">We will create an era where a single script completes a video</div>
+    <div class="section-desc" data-lang="ja">台本ひとつで動画を完成する時代を作ります</div>
+    <div class="ask-stats">
+      <div><div class="ask-stat-value" data-lang="ko">3억원</div><div class="ask-stat-value" data-lang="en">₩300M</div><div class="ask-stat-value" data-lang="ja">3億ウォン</div><div class="ask-stat-label" data-lang="ko">Seed 투자 유치</div><div class="ask-stat-label" data-lang="en">Seed Round</div><div class="ask-stat-label" data-lang="ja">Seedラウンド</div></div>
+      <div><div class="ask-stat-value">7</div><div class="ask-stat-label" data-lang="ko">특허 포트폴리오</div><div class="ask-stat-label" data-lang="en">Patent Portfolio</div><div class="ask-stat-label" data-lang="ja">特許ポートフォリオ</div></div>
+      <div><div class="ask-stat-value">500억+</div><div class="ask-stat-label" data-lang="ko">2030 목표 매출</div><div class="ask-stat-label" data-lang="en">2030 Revenue Target</div><div class="ask-stat-label" data-lang="ja">2030年目標売上</div></div>
+    </div>
+    <div class="cta-buttons">
+      <button class="cta-btn primary" data-lang="ko">투자 미팅 요청</button><button class="cta-btn primary" data-lang="en">Request Meeting</button><button class="cta-btn primary" data-lang="ja">投資ミーティング依頼</button>
+      <button class="cta-btn outline" data-lang="ko">IR 자료 다운로드</button><button class="cta-btn outline" data-lang="en">Download IR Deck</button><button class="cta-btn outline" data-lang="ja">IR資料ダウンロード</button>
+    </div>
+    <div class="ask-footer">
+      <b>CEO 김화정</b><br>
+      kjh@weven.kr &nbsp;|&nbsp; +82-10-8447-4567
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 19: THANK YOU -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide thanks" data-title-ko="감사합니다" data-title-en="Thank You" data-title-ja="ありがとうございます">
+  <div class="slide-inner">
+    <div class="thanks-title" data-lang="ko">감사합니다</div>
+    <div class="thanks-title" data-lang="en">Thank You</div>
+    <div class="thanks-title" data-lang="ja">ありがとうございます</div>
+    <div class="thanks-sub" data-lang="ko">대본 하나로 영상을 완성하는 시대,<br>릴밤이 열어가겠습니다</div>
+    <div class="thanks-sub" data-lang="en">An era where a single script completes a video —<br>ReelBam will lead the way</div>
+    <div class="thanks-sub" data-lang="ja">台本ひとつで動画を完成する時代、<br>ReelBamが切り拓きます</div>
+    <div class="thanks-divider"></div>
+    <div class="thanks-contact">
+      <div class="thanks-contact-name" data-lang="ko">김화정 · CEO</div>
+      <div class="thanks-contact-name" data-lang="en">Hwajung Kim · CEO</div>
+      <div class="thanks-contact-name" data-lang="ja">キム・ファジョン · CEO</div>
+      <div class="thanks-contact-info">
+        <span>kjh@weven.kr</span>
+        <span>+82-10-8447-4567</span>
+      </div>
+    </div>
+    <div class="thanks-logo">ReelBam</div>
+  </div>
+</div>
+
+<script>
+// ── IR 설정 ──
+window.irConfig = {
+  version: '2600',
+  theme: 'dark',
+  languages: ['ko', 'en', 'ja'],
+  defaultLang: 'ko'
+};
+
+// ── SLIDE NAVIGATION ──
+const urlParams = new URLSearchParams(window.location.search);
+const urlLang = urlParams.get('lang');
+
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+let lang = urlLang || 'ko';
+
+// Support initial page from URL
+const urlPage = parseInt(urlParams.get('page'), 10);
+if (urlPage > 1 && urlPage <= total) {
+  slides[0].classList.remove('active');
+  current = urlPage - 1;
+  slides[current].classList.add('active');
+}
+
+// Apply language
+if (lang !== 'ko') {
+  document.body.classList.add(lang);
+}
+document.querySelectorAll('[data-lang]').forEach(el => {
+  el.style.display = el.dataset.lang === lang ? '' : 'none';
+});
+
+// Global setLang (called by viewer.html)
+window.setLang = function(newLang) {
+  lang = newLang;
+  document.body.classList.remove('en', 'ja', 'ko');
+  if (newLang !== 'ko') {
+    document.body.classList.add(newLang);
+  }
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = '';
+  });
+};
+
+// goToSlide (called by viewer.html or internal navigation)
+window.goToSlide = function(idx) {
+  if (idx < 0 || idx >= total || idx === current) return;
+  slides[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+};
+
+// ── KEYBOARD NAVIGATION ──
+document.addEventListener('keydown', function(e) {
+  switch (e.key) {
+    case 'ArrowDown': case 'ArrowRight': case 'PageDown': case ' ':
+      e.preventDefault();
+      window.goToSlide(current + 1);
+      break;
+    case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+      e.preventDefault();
+      window.goToSlide(current - 1);
+      break;
+  }
+});
+
+// ── MOUSE WHEEL NAVIGATION ──
+var wheelAcc = 0;
+var wheelTimer = null;
+var WHEEL_THRESHOLD = 80;
+var WHEEL_COOLDOWN = 400;
+var wheelLocked = false;
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  if (wheelLocked) return;
+  wheelAcc += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(function() { wheelAcc = 0; }, 150);
+  if (Math.abs(wheelAcc) >= WHEEL_THRESHOLD) {
+    if (wheelAcc > 0) {
+      window.goToSlide(current + 1);
+    } else {
+      window.goToSlide(current - 1);
+    }
+    wheelAcc = 0;
+    wheelLocked = true;
+    setTimeout(function() { wheelLocked = false; }, WHEEL_COOLDOWN);
+  }
+}, { passive: false });
+</script>
+</body>
+</html>

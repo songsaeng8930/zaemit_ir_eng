@@ -260,7 +260,7 @@ npx http-server -p 8080 -c-1 --cors
 - 자동 리다이렉트: http://127.0.0.1:8080/app/
 - Viewer: http://127.0.0.1:8080/app/viewer.html?ir=260203
 - 일본어: http://127.0.0.1:8080/app/viewer.html?ir=260203&lang=ja
-- Print Preview: http://127.0.0.1:8080/app/print-preview?ir=260203
+- Print Preview: http://127.0.0.1:8080/app/print-preview.html?ir=260203
 - 직접 접근: http://127.0.0.1:8080/ir/260203/
 
 ---

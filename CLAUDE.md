@@ -12,31 +12,70 @@
 
 ## 핵심 원칙
 
-### 1. CSS 오버라이드 금지
+### ⚠️ 0. 폰트 최소 크기 18px — 절대 규칙 (가장 중요!)
+
+> **모든 텍스트의 CSS font-size는 반드시 18px 이상이어야 한다.**
+
+- 뷰포트가 `width=1280`으로 고정이므로, `1vw = 12.8px`이다.
+- 따라서 **1.40625vw 미만의 모든 font-size에는 반드시 `max(18px, Xvw)` 적용** 필수.
+- `font-size:1.09375vw` ❌ → `font-size:max(18px,1.09375vw)` ✅
+- `font-size:0.9375vw` ❌ → `font-size:max(18px,0.9375vw)` ✅
+- 1.40625vw(=18px) 이상은 이미 18px 이상이므로 `max()` 불필요.
+- **CSS 클래스뿐만 아니라 인라인 `style="font-size:..."` 도 반드시 확인!** 인라인 스타일 누락이 가장 흔한 실수.
+- **유일한 예외**: 데이터 테이블 보조 텍스트(MUV 차트 아래 표 등)로, 공간 부족 시 의도적으로 작게 유지 가능. 단, 명시적 허락 필요.
+- **콘텐츠 오버플로 주의**: 18px 최소값 적용 시 콘텐츠가 슬라이드 높이(85%)를 넘을 수 있음.
+  → 패딩/마진 축소, 줄바꿈 방지(`white-space:nowrap`), 간격 압축으로 대응.
+  → `max()` 값을 24px 이상으로 올리면 거의 확실히 오버플로 발생하므로 **18px이 상한선**.
+
+**새 슬라이드 생성 시 체크리스트:**
+1. CSS `<style>` 블록의 모든 font-size 선언 확인
+2. HTML 인라인 `style="font-size:..."` 전수 검사
+3. SVG 내부 `font-size` 속성은 SVG 좌표계이므로 제외
+4. 완성 후 `grep "font-size:[0-1]\.[0-3]"` 로 18px 미만 누락 검증
+
+### 1. IR 페이지에 viewer 중복 UI 금지
+
+> **IR 페이지(ir/XXXXXX/index.html)에는 viewer가 제공하는 UI를 넣지 않는다.**
+
+viewer(`app/viewer.html`)가 이미 제공하는 요소들:
+- 사이드바 / TOC (목차)
+- 페이지 인디케이터 (번호, 프로그레스바)
+- 언어 전환 토글 (KO/EN/JA)
+- 메뉴 헤더 (타이틀바)
+- Powered by 배지
+
+IR 페이지는 **슬라이드 콘텐츠 + 네비게이션 JS + viewer 연동 훅**만 포함:
+- `window.setLang` — viewer가 호출
+- `window.goToSlide` — viewer가 호출
+- `window.irSlideInfo` — viewer가 읽음
+- 키보드/휠/터치 핸들러 — iframe 포커스 시 동작
+- `body.no-motion` 토글 지원 — CSS만 (UI 버튼 불필요)
+
+### 2. CSS 오버라이드 금지
 print-preview.css에서 원본 레이아웃을 변경하는 CSS를 추가하지 않는다.
 wrapper만 씌우고, 원본 스타일은 그대로 유지한다.
 
-### 2. 버전별 차이 인지
+### 3. 버전별 차이 인지
 - **2601**: 다크 테마, `.hero` 클래스, 인라인 스크립트, `lang-visible` 언어 시스템
 - **2602**: 라이트 테마, `.cover` 클래스, ir-common.js 사용, `body.ko/en` 언어 시스템
 - **260202**: 라이트 테마, `.cover` 클래스, 인라인 스크립트, `body.ko/en` 언어 시스템
 - **260203**: 다크 테마, `.hero` 클래스, 인라인 스크립트, `body.ko/en/ja` 언어 시스템, **3개 국어(KO/EN/JA)** 지원, 뷰포트 `width=1280` 고정
 
-### 3. 언어 시스템 (버전별 다름!)
+### 4. 언어 시스템 (버전별 다름!)
 - **2601**: `lang-visible` 클래스 시스템 (JS가 클래스 추가)
 - **260202/2602/260203**: `body.ko`/`body.en`/`body.ja` 클래스 시스템 (CSS 규칙 적용)
 - inline style로 display를 설정하지 않는다.
 
-### 4. 전역 함수 노출
+### 5. 전역 함수 노출
 IR 페이지에서 `window.setLang`, `window.goToSlide` 함수를 전역으로 노출해야 한다.
 
-### 5. 아이콘은 Lucide SVG만 사용
+### 6. 아이콘은 Lucide SVG만 사용
 - 이모지(📊🔽🚀 등)를 아이콘으로 사용하지 않는다.
 - 모든 아이콘은 **Lucide** 인라인 SVG를 사용한다.
 - 형식: `<svg width="N" height="N" viewBox="0 0 24 24" fill="none" stroke="COLOR" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">...</svg>`
 - 참고: https://lucide.dev/icons
 
-### 6. 다국어 콘텐츠 필수 (260203)
+### 7. 다국어 콘텐츠 필수 (260203)
 - **모든 텍스트 요소**에 `data-lang="ko"`, `data-lang="en"`, `data-lang="ja"` 3벌 작성
 - SVG 내 `<text>` 요소도 반드시 3개 국어 제공
 - 일본어 텍스트가 긴 경우 SVG pill/rect 너비 확장 또는 폰트 크기 축소
@@ -58,6 +97,9 @@ IR 페이지에서 `window.setLang`, `window.goToSlide` 함수를 전역으로 �
 | border-top / border-left 강조 보더 사용 | 카드/박스에 상단·좌측 컬러 보더(accent border) 사용 금지 - 전체 border만 사용 |
 | **일본어 번역 누락** | SVG `<text>`, 차트 라벨, 연도 축 등에서 `data-lang="ja"` 빠짐 — 반드시 3개 국어 확인 |
 | **일본어 텍스트 overflow** | SVG pill/rect 너비 부족으로 텍스트 넘침 — 너비 확장 또는 폰트 축소, `white-space:nowrap` 활용 |
+| **⚠️ font-size 18px 미만** | **가장 흔한 실수!** CSS 클래스와 인라인 style 모두에서 `max(18px, Xvw)` 적용 필수. 특히 **인라인 style이 자주 누락됨** |
+| **⚠️ IR 페이지에 viewer UI 중복** | sidebar, 페이지번호, 언어토글, 메뉴헤더, powered badge 등 viewer가 제공하는 UI를 IR 페이지에 넣지 않는다 |
+| **max(24px,...) 사용으로 오버플로** | 18px이 상한선! 24px 이상 min 사용 시 콘텐츠가 슬라이드 밖으로 넘침 — 패딩/마진 축소로 대응 |
 
 ---
 
@@ -146,5 +188,5 @@ npx http-server -p 8080 -c-1 --cors
 
 - Viewer: http://127.0.0.1:8080/app/viewer.html?ir=260203
 - 일본어: http://127.0.0.1:8080/app/viewer.html?ir=260203&lang=ja
-- Print Preview: http://127.0.0.1:8080/app/print-preview?ir=260203
+- Print Preview: http://127.0.0.1:8080/app/print-preview.html?ir=260203
 - 자동 리다이렉트: http://127.0.0.1:8080/app/

@@ -4,6 +4,56 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260302",
+      "name": "DMOA Azure 공동사업 제안",
+      "nameEn": "DMOA Azure Joint Business Proposal",
+      "description": "DMOA Azure 클라우드 미팅용 발표 장표",
+      "descriptionEn": "Meeting deck for DMOA Azure Cloud partnership",
+      "date": "2026-03-06",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260301",
+      "name": "바이브 코딩 강의 (특허전략개발원)",
+      "nameEn": "VIBE Coding Lecture (Patent Strategy Institute)",
+      "description": "AI 시대의 혁신적 패러다임 — VIBE 코딩의 이해와 활용",
+      "descriptionEn": "Innovative Paradigm of the AI Era — Understanding and Utilizing VIBE Coding",
+      "date": "2026-03-01",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "1000",
+      "name": "브랜디노 초기창업패키지 IR",
+      "nameEn": "Brandino Early Startup Package IR",
+      "description": "브랜디노 그린 리워드 커머스 사업계획서 IR",
+      "descriptionEn": "Brandino Green Reward Commerce Business Plan IR",
+      "date": "2026-02-25",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "2600",
+      "name": "ReelBam IR",
+      "nameEn": "ReelBam IR",
+      "description": "릴밤 AI 영상 자동 제작 플랫폼 IR",
+      "descriptionEn": "ReelBam AI Video Production Platform IR",
+      "date": "2026-02-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260204",
+      "name": "NHN Cloud 공동사업 제안",
+      "nameEn": "NHN Cloud Joint Business Proposal",
+      "description": "NHN 클라우드 미팅용 발표 장표",
+      "descriptionEn": "Meeting deck for NHN Cloud partnership",
+      "date": "2026-02-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
       "id": "260203",
       "name": "IR Deck (Full)",
       "nameEn": "IR Deck (Full)",

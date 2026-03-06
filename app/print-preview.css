@@ -484,7 +484,7 @@ body.light-theme .preview-slide-frame {
 /* Language visibility - hide non-selected language elements */
 /* lang-visible 클래스 또는 body.ko/body.en 클래스로 언어 표시 */
 /* 260202 제외 - body class 시스템 사용 */
-.slide-clone:not(.ir-260202):not(.ir-2602) [data-lang]:not(.lang-visible) {
+.slide-clone:not(.ir-260202):not(.ir-2602):not(.ir-260203):not(.ir-260204):not(.ir-2600):not(.ir-260301) [data-lang]:not(.lang-visible) {
   display: none !important;
 }
 
@@ -525,6 +525,29 @@ body.en .slide-clone span[data-lang="en"] {
   display: inline !important;
 }
 body.en .slide-clone [data-lang="ko"] {
+  display: none !important;
+}
+
+/* body.ja이 있으면 일본어 요소 표시 */
+body.ja .slide-clone [data-lang="ja"] {
+  display: revert !important;
+}
+body.ja .slide-clone div[data-lang="ja"],
+body.ja .slide-clone p[data-lang="ja"],
+body.ja .slide-clone h1[data-lang="ja"],
+body.ja .slide-clone h2[data-lang="ja"],
+body.ja .slide-clone h3[data-lang="ja"],
+body.ja .slide-clone h4[data-lang="ja"],
+body.ja .slide-clone li[data-lang="ja"] {
+  display: block !important;
+}
+body.ja .slide-clone span[data-lang="ja"] {
+  display: inline !important;
+}
+body.ja .slide-clone [data-lang="ko"] {
+  display: none !important;
+}
+body.ja .slide-clone [data-lang="en"] {
   display: none !important;
 }
 
@@ -593,9 +616,14 @@ body.en .slide-clone.ir-2602 span[data-lang="en"] {
   overflow: visible;
 }
 
-/* content-wrapper 내부 요소도 너비 100% 유지 (Cover/Hero 제외) */
-.slide-clone:not(.cover):not(.hero) .slide-inner > .content-wrapper > * {
+/* content-wrapper 내부 요소도 너비 100% 유지 (Cover/Hero/upcoming-svc/ask 제외) */
+.slide-clone:not(.cover):not(.hero):not(.upcoming-svc):not(.ask) .slide-inner > .content-wrapper > * {
   width: 100%;
+}
+
+/* Ask 페이지 content-wrapper - 가운데 정렬 유지 */
+.slide-clone.ask .slide-inner > .content-wrapper {
+  align-items: center !important;
 }
 
 /* Cover/Hero 페이지 content-wrapper - 가로 레이아웃 유지 */
@@ -606,6 +634,58 @@ body.en .slide-clone.ir-2602 span[data-lang="en"] {
   gap: 48px;
   align-items: stretch;
   justify-content: flex-start;
+}
+
+/* upcoming-svc 페이지 content-wrapper - 2컬럼 가로 레이아웃 유지 */
+.slide-clone.upcoming-svc .slide-inner > .content-wrapper {
+  flex-direction: row !important;
+  gap: 40px;
+  align-items: stretch !important;
+}
+
+.slide-clone.upcoming-svc .slide-inner > .content-wrapper > * {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── VIDEO PLACEHOLDER ── */
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  min-height: 200px;
+  object-fit: contain;
+}
+
+.video-placeholder span {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  letter-spacing: 4px !important;
+  color: rgba(255,255,255,0.4) !important;
+}
+
+/* Light theme video placeholder */
+body.light-theme .video-placeholder,
+.slide-clone.ir-2602 .video-placeholder,
+.slide-clone.ir-260202 .video-placeholder {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.1);
+}
+
+body.light-theme .video-placeholder span,
+.slide-clone.ir-2602 .video-placeholder span,
+.slide-clone.ir-260202 .video-placeholder span {
+  color: rgba(0,0,0,0.3) !important;
+}
+
+body.light-theme .video-placeholder svg,
+.slide-clone.ir-2602 .video-placeholder svg,
+.slide-clone.ir-260202 .video-placeholder svg {
+  stroke: rgba(0,0,0,0.2);
 }
 
 /* ── LOADING ── */
@@ -707,11 +787,11 @@ body.en .slide-clone.ir-2602 span[data-lang="en"] {
     height: 100vh;
   }
 
-  .slide-clone {
-    position: relative;
+  .slide-clone.slide {
+    position: relative !important;
     transform: none !important;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 
@@ -721,6 +801,9 @@ body.en .slide-clone.ir-2602 span[data-lang="en"] {
 .slide-clone.slide {
   position: absolute !important;
   display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
   opacity: 1 !important;
   visibility: visible !important;
   top: 0 !important;
@@ -729,7 +812,7 @@ body.en .slide-clone.ir-2602 span[data-lang="en"] {
   bottom: auto !important;
   width: 1280px !important;
   height: 720px !important;
-  padding: 30px 40px !important;
+  /* padding은 원본 IR의 CSS/인라인 값을 사용 (JS에서 vw→px 변환) */
   /* background 제거 - JS에서 설정 */
 }
 

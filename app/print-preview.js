@@ -102,12 +102,17 @@ async function fetchSlides() {
     if (styleEl) {
       const newStyle = document.createElement('style');
       newStyle.id = 'indexStyles';
-      newStyle.textContent = styleEl.textContent;
+      // Convert vw to px for correct rendering in print-preview.
+      // IR pages use <meta viewport width=1280>, so 1vw = 12.8px.
+      // In print-preview, vw is relative to the browser viewport (often 1920px+),
+      // making text and layout disproportionately large.
+      // Also strip max(18px,...) wrappers so text scales proportionally.
+      newStyle.textContent = convertVwCss(styleEl.textContent);
       document.head.appendChild(newStyle);
     }
 
     // Apply language class to body (required for 260202 CSS rules)
-    document.body.classList.remove('ko', 'en');
+    document.body.classList.remove('ko', 'en', 'ja');
     document.body.classList.add(lang);
 
     // Apply theme class based on IR version
@@ -264,6 +269,12 @@ function createSlideWrapper(slide, idx) {
 
   // Clone slide
   const clone = slide.cloneNode(true);
+
+  // Preserve important inline style properties before removing style
+  const origInlineStyle = slide.getAttribute('style') || '';
+  const paddingMatch = origInlineStyle.match(/padding\s*:\s*([^;]+)/);
+  const overflowMatch = origInlineStyle.match(/overflow\s*:\s*([^;]+)/);
+
   clone.removeAttribute('style');
   clone.classList.remove('active');
 
@@ -294,6 +305,23 @@ function createSlideWrapper(slide, idx) {
 
   console.log('Slide', idx, 'irVersion:', irVersion, 'isLightTheme:', isLightTheme, 'isCover:', isCover);
 
+  // Re-apply preserved inline padding (converted from vw to px)
+  if (paddingMatch) {
+    const convertedPadding = paddingMatch[1].trim()
+      .replace(/max\(\s*18px\s*,\s*([\d.]+)vw\s*\)/g, (_, n) => (parseFloat(n) * VW_TO_PX) + 'px')
+      .replace(/([\d.]+)vw/g, (_, n) => (parseFloat(n) * VW_TO_PX) + 'px');
+    clone.style.padding = convertedPadding;
+  }
+  if (overflowMatch) {
+    clone.style.overflow = overflowMatch[1].trim();
+  }
+
+  // Convert vw to px in inline styles and SVG attributes
+  convertVwInDom(clone);
+
+  // Replace <video> elements with MOVIE placeholder
+  replaceVideosWithPlaceholder(clone);
+
   // Apply language visibility
   applyLanguageVisibility(clone);
 
@@ -301,6 +329,51 @@ function createSlideWrapper(slide, idx) {
   wrapper.appendChild(frame);
 
   return wrapper;
+}
+
+// Replace <video> elements with MOVIE placeholder
+function replaceVideosWithPlaceholder(element) {
+  element.querySelectorAll('video').forEach(video => {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'video-placeholder';
+
+    // Copy dimensions from video's inline style if available
+    const videoStyle = video.getAttribute('style') || '';
+    if (videoStyle.includes('width')) {
+      placeholder.style.width = video.style.width || '100%';
+    } else {
+      placeholder.style.width = '100%';
+    }
+    if (videoStyle.includes('max-width')) {
+      placeholder.style.maxWidth = video.style.maxWidth;
+    }
+    if (videoStyle.includes('max-height')) {
+      placeholder.style.maxHeight = video.style.maxHeight;
+    }
+    if (videoStyle.includes('border-radius')) {
+      placeholder.style.borderRadius = video.style.borderRadius;
+    }
+
+    // Preserve aspect ratio hint
+    placeholder.style.aspectRatio = '16 / 9';
+
+    // Lucide Film icon SVG + MOVIE text
+    placeholder.innerHTML = `
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+        <line x1="7" y1="2" x2="7" y2="22"/>
+        <line x1="17" y1="2" x2="17" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <line x1="2" y1="7" x2="7" y2="7"/>
+        <line x1="2" y1="17" x2="7" y2="17"/>
+        <line x1="17" y1="7" x2="22" y2="7"/>
+        <line x1="17" y1="17" x2="22" y2="17"/>
+      </svg>
+      <span>MOVIE</span>
+    `;
+
+    video.parentNode.replaceChild(placeholder, video);
+  });
 }
 
 // Apply language visibility to cloned slide
@@ -590,6 +663,7 @@ function applyContentAlignmentToSlide(clone, alignV, alignH) {
 
   // 2601은 hero, 2602는 cover 클래스 사용
   const isCover = clone.classList.contains('cover') || clone.classList.contains('hero');
+  const isRowLayout = isCover || clone.classList.contains('upcoming-svc');
 
   // 수직 정렬: content-wrapper의 justify-content 변경 (타이틀 영향 없음)
   let justifyContent = 'flex-start';
@@ -599,8 +673,8 @@ function applyContentAlignmentToSlide(clone, alignV, alignH) {
     case 'bottom': justifyContent = 'flex-end'; break;
   }
 
-  if (isCover) {
-    // Cover 페이지: 가로 레이아웃이므로 align-items로 수직 정렬
+  if (isRowLayout) {
+    // 가로 레이아웃(Cover/Hero/upcoming-svc): align-items로 수직 정렬
     let alignValue = 'stretch';
     if (justifyContent === 'center') alignValue = 'center';
     else if (justifyContent === 'flex-end') alignValue = 'flex-end';
@@ -608,8 +682,9 @@ function applyContentAlignmentToSlide(clone, alignV, alignH) {
   } else {
     // 일반 페이지: 세로 레이아웃이므로 justify-content로 수직 정렬
     contentWrapper.style.setProperty('justify-content', justifyContent, 'important');
-    // 수평은 항상 stretch 유지 (너비 100%)
-    contentWrapper.style.setProperty('align-items', 'stretch', 'important');
+    // Ask 페이지는 원본 가운데 정렬 유지, 나머지는 stretch (너비 100%)
+    const isCenteredLayout = clone.classList.contains('ask');
+    contentWrapper.style.setProperty('align-items', isCenteredLayout ? 'center' : 'stretch', 'important');
   }
 
   // transform-origin만 변경 (줌 시 기준점, 너비에 영향 없음)
@@ -961,6 +1036,50 @@ function autoFitPage(idx) {
   });
 }
 
+// ═══════════════════════════════════════════════════════════
+// VW → PX CONVERSION FOR PRINT PREVIEW
+// IR pages use <meta viewport width=1280>, so 1vw = 12.8px.
+// In print-preview the browser viewport is used instead,
+// making all vw-based values too large. Convert to px.
+// ═══════════════════════════════════════════════════════════
+const VW_TO_PX = 12.8; // 1vw = 12.8px at 1280px viewport
+
+// Convert vw values in a CSS text string to px
+function convertVwCss(css) {
+  // 1) Strip max(18px, Xvw) → just the px equivalent of Xvw
+  css = css.replace(/max\(\s*18px\s*,\s*([\d.]+)vw\s*\)/g,
+    (_, n) => (parseFloat(n) * VW_TO_PX) + 'px');
+  // 2) Convert remaining Xvw → px
+  css = css.replace(/([\d.]+)vw/g,
+    (_, n) => (parseFloat(n) * VW_TO_PX) + 'px');
+  return css;
+}
+
+// Convert vw in inline styles and SVG attributes of a DOM tree
+function convertVwInDom(root) {
+  const convert = (str) => {
+    return str
+      .replace(/max\(\s*18px\s*,\s*([\d.]+)vw\s*\)/g, (_, n) => (parseFloat(n) * VW_TO_PX) + 'px')
+      .replace(/([\d.]+)vw/g, (_, n) => (parseFloat(n) * VW_TO_PX) + 'px');
+  };
+
+  const elements = [root, ...root.querySelectorAll('*')];
+  elements.forEach(el => {
+    // Inline styles
+    const style = el.getAttribute('style');
+    if (style && style.includes('vw')) {
+      el.setAttribute('style', convert(style));
+    }
+    // SVG presentational attributes that may use vw
+    ['width', 'height', 'x', 'y', 'rx', 'ry', 'cx', 'cy', 'r'].forEach(attr => {
+      const val = el.getAttribute(attr);
+      if (val && val.includes('vw')) {
+        el.setAttribute(attr, convert(val));
+      }
+    });
+  });
+}
+
 // Close preview (go back or close tab)
 function closePreview() {
   if (window.history.length > 1) {
@@ -986,6 +1105,35 @@ function loadScript(src) {
   });
 }
 
+// html2canvas 1.4.1 can't parse CSS color() function (color(srgb ...) / color(display-p3 ...))
+// Modern Chrome serializes ALL computed colors in this format.
+// Fix: fetch html2canvas source, patch SUPPORTED_COLOR_FUNCTIONS to add "color" handler, then exec.
+async function loadHtml2canvasPatched() {
+  const res = await fetch('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+  let src = await res.text();
+  // Inject "color" function handler into SUPPORTED_COLOR_FUNCTIONS = { hsl:..., rgb:... }
+  // color(srgb r g b) or color(srgb r g b / a) — args are CSS tokens with .type and .number
+  // Token types: 17=NUMBER, 20=IDENT, 31=WHITESPACE, 4=COMMA, etc.
+  // We filter non-separator tokens, skip the colorspace ident, read float values, convert to 0-255.
+  src = src.replace(
+    /rgba:\s*(\w+)\s*}/,
+    'rgba:$1,color:function(c,a){' +
+      'var t=a.filter(function(v){return v.type!==31&&v.type!==4});' +  // remove whitespace/comma
+      'var n=t.filter(function(v){return v.type===17});' +              // number tokens only
+      'if(n.length>=3){' +
+        'var r=Math.round(Math.min(1,Math.max(0,n[0].number))*255);' +
+        'var g=Math.round(Math.min(1,Math.max(0,n[1].number))*255);' +
+        'var b=Math.round(Math.min(1,Math.max(0,n[2].number))*255);' +
+        'var al=n.length>=4?n[3].number:1;' +
+        'return((r<<24)|(g<<16)|(b<<8)|(Math.round(al*255)<<0))>>>0' +
+      '}return 0' +
+    '}}'
+  );
+  const script = document.createElement('script');
+  script.textContent = src;
+  document.head.appendChild(script);
+}
+
 // Export to PDF
 async function exportPDF() {
   showLoading(lang === 'ko' ? '라이브러리 로딩 중...' : 'Loading libraries...');
@@ -993,7 +1141,7 @@ async function exportPDF() {
   try {
     // Load libraries
     if (typeof html2canvas === 'undefined') {
-      await loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+      await loadHtml2canvasPatched();
     }
     if (!window.jspdf) {
       await loadScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js');

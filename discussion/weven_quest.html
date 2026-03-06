@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GMO Partnership Discussion | WEVEN</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-card: #ffffff;
+      --text-primary: #1a1a2e;
+      --text-secondary: #5a6072;
+      --accent: #0066cc;
+      --accent2: #0052a3;
+      --border: rgba(0, 0, 0, 0.08);
+      --gradient-accent: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg-primary);
+      font-family: 'Pretendard', 'Noto Sans JP', -apple-system, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.9;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      position: fixed;
+      top: 16px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      border-radius: 50px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .lang-btn {
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      transition: all .25s;
+    }
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .lang-btn:hover { color: var(--text-primary); }
+
+    /* PDF Export Button */
+    .pdf-btn {
+      position: fixed;
+      top: 16px;
+      right: 140px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 50px;
+      color: var(--text-secondary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all .25s;
+    }
+    .pdf-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .pdf-btn:hover svg { stroke: #fff; }
+    .pdf-btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    /* Language visibility - hide all by default */
+    [data-lang="ko"], [data-lang="ja"] { display: none !important; }
+
+    /* Show Korean when body.ko */
+    body.ko [data-lang="ko"] { display: block !important; }
+    body.ko span[data-lang="ko"] { display: inline !important; }
+    body.ko .highlight-list li[data-lang="ko"] { display: flex !important; }
+
+    /* Show Japanese when body.ja */
+    body.ja [data-lang="ja"] { display: block !important; }
+    body.ja span[data-lang="ja"] { display: inline !important; }
+    body.ja .highlight-list li[data-lang="ja"] { display: flex !important; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .header-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--gradient-accent);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .header-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== DATA CHARTS SECTION ========== */
+    .data-section {
+      margin-bottom: 48px;
+    }
+
+    .data-section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .data-section-title::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    /* Sales Layout */
+    .sales-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sales-chart-wrap {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .sales-chart-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .muv-svg { width: 100%; height: auto; }
+
+    .svg-area { opacity: 1; }
+    .svg-draw { stroke-dashoffset: 0; }
+
+    .sales-legend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .sales-legend i {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      background: #0066cc;
+      display: inline-block;
+    }
+
+    .muv-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 11px;
+    }
+
+    .muv-table th {
+      padding: 8px 8px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      font-size: 10px;
+    }
+
+    .muv-table td {
+      padding: 8px 8px;
+      text-align: center;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .muv-table .muv-label {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .muv-up { color: #059669; font-weight: 600; }
+    .muv-down { color: #dc2626; font-weight: 600; }
+
+    /* Sales Table */
+    .sales-right {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .sales-right-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .sales-tbl {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .sales-tbl th {
+      padding: 10px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-align: center;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .sales-tbl td {
+      padding: 12px 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      vertical-align: middle;
+    }
+
+    .sales-tbl .s-label {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .sales-tbl .s-num {
+      font-family: 'Plus Jakarta Sans';
+      font-weight: 800;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .sales-tbl .s-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-align: left;
+    }
+
+    .sales-total {
+      border-top: 2px solid rgba(0,0,0,0.1);
+    }
+
+    .sales-total .s-label { color: var(--accent); }
+    .sales-total .s-num { color: var(--accent); }
+
+    .sales-arr {
+      font-family: 'Plus Jakarta Sans';
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent);
+      text-align: left;
+    }
+
+    /* ========== DISCUSSION SECTION ========== */
+    .intro-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .intro-box p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--gradient-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .section-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .quest-item {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quest-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .quest-label {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(0, 102, 204, 0.1);
+      color: var(--accent);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .quest-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .quest-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+
+    .quest-desc strong {
+      color: var(--text-primary);
+    }
+
+    .quote-box {
+      background: var(--bg-secondary);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+
+    .sub-items {
+      margin-top: 20px;
+    }
+
+    .sub-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .sub-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .sub-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .sub-item-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+
+    .highlight-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0 0;
+    }
+
+    .highlight-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .highlight-list li::before {
+      content: "・";
+      color: var(--accent);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 800;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .footer p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .closing-note {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .closing-note p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      .section-content { border: 1px solid #ddd; background: #fff; }
+      .quest-desc, .sub-item-desc, .highlight-list li { color: #333; }
+      .lang-toggle, .pdf-btn { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .sales-layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 60px 16px 40px; }
+      .header h1 { font-size: 24px; }
+      .section-title { font-size: 16px; }
+      .section-content { padding: 20px; }
+      .lang-toggle { top: 12px; right: 12px; }
+      .lang-btn { padding: 6px 12px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body class="ja">
+
+<!-- Language Toggle & PDF Export -->
+<div class="lang-toggle">
+  <button class="lang-btn" data-lang-btn="ko" onclick="setLang('ko')">KO</button>
+  <button class="lang-btn active" data-lang-btn="ja" onclick="setLang('ja')">JA</button>
+</div>
+<button class="pdf-btn" onclick="exportPDF()" title="PDF 다운로드">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"/>
+    <line x1="12" y1="15" x2="12" y2="3"/>
+  </svg>
+  PDF
+</button>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge"><span data-lang="ko">파트너십 상담</span><span data-lang="ja">パートナーシップ相談</span></div>
+    <h1 data-lang="ko">GMO 파트너십 상담 내용</h1>
+    <h1 data-lang="ja">GMOパートナーシップに関する<br>ご相談事項</h1>
+    <p data-lang="ko">협업을 위한 확인 및 상담 포인트</p>
+    <p data-lang="ja">より良い協業のためのご確認・ご相談ポイント</p>
+    <div class="header-meta">
+      <span>WEVEN Inc.</span>
+      <span data-lang="ko">2026년 2월</span>
+      <span data-lang="ja">2026年2月</span>
+    </div>
+  </div>
+
+  <!-- ========== DATA SECTION: Sales & Charts from 2601 ========== -->
+  <div class="data-section">
+    <div class="data-section-title">
+      <span data-lang="ko">판매 현황 데이터</span>
+      <span data-lang="ja">販売状況データ</span>
+    </div>
+
+    <div class="sales-layout">
+      <!-- Left: MUV Chart -->
+      <div class="sales-chart-wrap">
+        <div class="sales-chart-title" data-lang="ko">월간 고유 방문자수 (MUV, 25.12)</div>
+        <div class="sales-chart-title" data-lang="ja">月間ユニーク訪問者数 (MUV, 2025.12)</div>
+        <svg class="muv-svg" viewBox="0 0 620 240">
+          <!-- Grid lines -->
+          <line x1="40" y1="20" x2="600" y2="20" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/>
+          <line x1="40" y1="60" x2="600" y2="60" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/>
+          <line x1="40" y1="100" x2="600" y2="100" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/>
+          <line x1="40" y1="140" x2="600" y2="140" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/>
+          <line x1="40" y1="180" x2="600" y2="180" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/>
+          <line x1="40" y1="200" x2="600" y2="200" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+          <!-- Y labels -->
+          <text x="35" y="24" fill="#5a6072" font-size="9" text-anchor="end">2.0万</text>
+          <text x="35" y="64" fill="#5a6072" font-size="9" text-anchor="end">1.6万</text>
+          <text x="35" y="104" fill="#5a6072" font-size="9" text-anchor="end">1.2万</text>
+          <text x="35" y="144" fill="#5a6072" font-size="9" text-anchor="end">8,000</text>
+          <text x="35" y="184" fill="#5a6072" font-size="9" text-anchor="end">4,000</text>
+          <text x="35" y="204" fill="#5a6072" font-size="9" text-anchor="end">0</text>
+          <defs>
+            <linearGradient id="muvGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0066cc" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#0066cc" stop-opacity="0.02"/>
+            </linearGradient>
+          </defs>
+          <!-- Area fill -->
+          <path class="svg-area" d="M50,198 C100,198 150,198 200,198 C250,198 300,198 340,197 C360,196 380,195 400,192 C420,185 435,170 450,155 C462,143 472,130 482,120 C492,108 498,95 508,80 C518,65 528,48 538,35 C548,28 555,24 565,22 C575,21 580,20 590,20 L590,200 L50,200 Z" fill="url(#muvGrad)"/>
+          <!-- Line -->
+          <path class="svg-draw" d="M50,198 C100,198 150,198 200,198 C250,198 300,198 340,197 C360,196 380,195 400,192 C420,185 435,170 450,155 C462,143 472,130 482,120 C492,108 498,95 508,80 C518,65 528,48 538,35 C548,28 555,24 565,22 C575,21 580,20 590,20" fill="none" stroke="#0066cc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Tooltip -->
+          <rect x="505" y="10" width="90" height="34" rx="6" fill="#fff" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+          <text x="550" y="24" fill="#1a1a2e" font-size="9" font-weight="700" text-anchor="middle">2025-12</text>
+          <text x="550" y="37" fill="#5a6072" font-size="8" text-anchor="middle">MUV: <tspan fill="#0066cc" font-weight="700">2.0万</tspan></text>
+          <!-- X axis labels -->
+          <text x="50" y="216" fill="#5a6072" font-size="8" text-anchor="middle">23-01</text>
+          <text x="120" y="216" fill="#5a6072" font-size="8" text-anchor="middle">23-07</text>
+          <text x="200" y="216" fill="#5a6072" font-size="8" text-anchor="middle">24-01</text>
+          <text x="280" y="216" fill="#5a6072" font-size="8" text-anchor="middle">24-07</text>
+          <text x="360" y="216" fill="#5a6072" font-size="8" text-anchor="middle">25-01</text>
+          <text x="440" y="216" fill="#5a6072" font-size="8" text-anchor="middle">25-05</text>
+          <text x="520" y="216" fill="#5a6072" font-size="8" text-anchor="middle">25-09</text>
+          <text x="590" y="216" fill="#5a6072" font-size="8" text-anchor="middle">25-12</text>
+        </svg>
+        <div class="sales-legend">
+          <i></i>
+          <span data-lang="ko">고유 방문자 수(MUV)</span>
+          <span data-lang="ja">月間ユニーク訪問者数(MUV)</span>
+        </div>
+
+        <!-- MUV Table -->
+        <table class="muv-table">
+          <thead>
+            <tr>
+              <th><span data-lang="ko">구분</span><span data-lang="ja">区分</span></th>
+              <th>2025-07</th><th>2025-08</th><th>2025-09</th><th>2025-10</th><th>2025-11</th><th>2025-12</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="muv-label">MUV</td>
+              <td>7,600</td><td>1.1万</td><td>1.2万</td><td>1.6万</td><td>1.4万</td><td>2.0万</td>
+            </tr>
+            <tr>
+              <td class="muv-label"><span data-lang="ko">전월대비</span><span data-lang="ja">前月比</span></td>
+              <td class="muv-down">&#9660; -20.8%</td>
+              <td class="muv-up">&#9650; 44.7%</td>
+              <td class="muv-up">&#9650; 9.1%</td>
+              <td class="muv-up">&#9650; 33.3%</td>
+              <td class="muv-down">&#9660; -12.5%</td>
+              <td class="muv-up">&#9650; 42.9%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right: Sales Table -->
+      <div class="sales-right">
+        <div class="sales-right-title">
+          <span data-lang="ko">국내 판매현황 (25.12), 전환율 10%</span>
+          <span data-lang="ja">国内販売状況 (2025.12)、コンバージョン率10%</span>
+        </div>
+        <table class="sales-tbl">
+          <thead>
+            <tr>
+              <th><span data-lang="ko">구분</span><span data-lang="ja">区分</span></th>
+              <th><span data-lang="ko">수치</span><span data-lang="ja">数値</span></th>
+              <th><span data-lang="ko">비고</span><span data-lang="ja">備考</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="s-label"><span data-lang="ko">총 사이트 수</span><span data-lang="ja">総サイト数</span></td>
+              <td class="s-num">7,154</td>
+              <td class="s-desc"><span data-lang="ko">전체 소비자 웹사이트 수</span><span data-lang="ja">全消費者Webサイト数</span></td>
+            </tr>
+            <tr>
+              <td class="s-label"><span data-lang="ko">크레딧 이용자 수</span><span data-lang="ja">クレジットユーザー数</span></td>
+              <td class="s-num">5,450</td>
+              <td class="s-desc"><span data-lang="ko">유료 이용자 급증중</span><span data-lang="ja">有料ユーザー急増中</span></td>
+            </tr>
+            <tr>
+              <td class="s-label"><span data-lang="ko">B2C 유입 소비자</span><span data-lang="ja">B2C流入消費者</span></td>
+              <td class="s-num">477</td>
+              <td class="s-desc"><span data-lang="ko">연 120,000 구독</span><span data-lang="ja">年120,000サブスク</span></td>
+            </tr>
+            <tr>
+              <td class="s-label"><span data-lang="ko">소상공인 스마트상점</span><span data-lang="ja">中小企業スマートストア</span></td>
+              <td class="s-num">79</td>
+              <td class="s-desc"><span data-lang="ko">바우처 사업</span><span data-lang="ja">バウチャー事業</span></td>
+            </tr>
+            <tr class="sales-total">
+              <td class="s-label"><span data-lang="ko">유료 이용자 합계</span><span data-lang="ja">有料ユーザー合計</span></td>
+              <td class="s-num">796</td>
+              <td class="sales-arr"><span data-lang="ko">ARR 1.19억원</span><span data-lang="ja">ARR 約1,280万円</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========== DISCUSSION CONTENT ========== -->
+
+  <!-- Intro -->
+  <div class="intro-box">
+    <p data-lang="ko">
+      안녕하세요, 소중한 시간을 내주셔서 감사합니다.<br>
+      향후 파트너십을 원활히 진행하기 위해<br>
+      아래 사항에 대해 상담드리고자 합니다.
+    </p>
+    <p data-lang="ja">
+      平素より大変お世話になっております。<br>
+      この度は、貴重なお時間をいただき誠にありがとうございます。<br>
+      今後のパートナーシップをより円滑に進めさせていただくため、<br>
+      以下の点についてご相談させていただければ幸いでございます。
+    </p>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <div class="section-title" data-lang="ko">3월 런칭을 위한 서비스 연동 확인</div>
+      <div class="section-title" data-lang="ja">3月ローンチに向けたサービス連携のご確認</div>
+    </div>
+    <div class="section-content">
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">서비스 확인</span><span data-lang="ja">サービス確認</span></div>
+        <div class="quest-title" data-lang="ko">저가격대 서비스 실물 확인 요청</div>
+        <div class="quest-title" data-lang="ja">低価格帯サービスの実物確認のお願い</div>
+        <div class="quest-desc" data-lang="ko">
+          현재 당사 서비스는 <strong>프리미엄대</strong>, 로리팝은 <strong>엔트리대</strong>라는
+          포지셔닝으로 검토를 진행하고 있습니다만,
+          로리팝의 엔트리용 서비스 실물을 아직 확인하지 못했습니다.<br><br>
+          번거로우시겠지만 <strong>데모 환경이나 상세 스펙</strong>을
+          공유해 주실 수 있을까요?
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          現在、弊社サービスは<strong>プレミアム帯</strong>、ロリポップ様は<strong>エントリー帯</strong>という
+          ポジショニングで検討を進めさせていただいておりますが、
+          ロリポップ様のエントリー向けサービスの実物をまだ拝見できておりません。<br><br>
+          お手数をおかけいたしますが、<strong>デモ環境や詳細スペック</strong>を
+          ご共有いただくことは可能でしょうか。
+        </div>
+      </div>
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">접근 및 협업</span><span data-lang="ja">アクセス・協業</span></div>
+        <div class="quest-title" data-lang="ko">개발 환경 및 접근 방법</div>
+        <div class="quest-title" data-lang="ja">開発環境およびアクセス方法について</div>
+        <div class="quest-desc" data-lang="ko">
+          "당사가 어떻게 귀사 인프라에 접근하고, 공동으로 개발을 진행할지"에 대해
+          상담드리고자 합니다.
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          「弊社がどのように貴社インフラにアクセスし、共同で開発を進めさせていただくか」について、
+          ご相談させていただければと存じます。
+        </div>
+
+        <div class="sub-items">
+          <div class="sub-item">
+            <div class="sub-item-title" data-lang="ko">샌드박스(테스트 환경) 제공 요청</div>
+            <div class="sub-item-title" data-lang="ja">サンドボックス（テスト環境）のご提供について</div>
+            <div class="sub-item-desc" data-lang="ko">
+              당사 엔진을 로리팝 환경에 최적화하기 위해
+              본번과 동일 조건의 테스트용 샌드박스 환경을 공유해 주실 수 있을까요?<br>
+              패키징 테스트를 실시하여 완성도를 높이고자 합니다.
+            </div>
+            <div class="sub-item-desc" data-lang="ja">
+              弊社エンジンをロリポップ環境に最適化させていただくにあたり、
+              本番と同等条件のテスト用サンドボックス環境をご共有いただくことは可能でしょうか。<br>
+              そちらでパッケージングテストを実施し、完成度を高めてまいりたいと考えております。
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-item-title" data-lang="ko">커뮤니케이션 채널 구축</div>
+            <div class="sub-item-title" data-lang="ja">コミュニケーションチャネルの構築について</div>
+            <div class="sub-item-desc" data-lang="ko">
+              기술적 과제 발생 시 양사 개발팀이 신속하게 커뮤니케이션할 수 있는
+              전용 채널(Slack 등)이나 공동 문서 관리(Wiki 등)
+              방식을 정하고 싶습니다.
+            </div>
+            <div class="sub-item-desc" data-lang="ja">
+              技術的な課題が発生した際に、両社の開発チームが迅速にコミュニケーションを
+              取れる専用チャネル（Slack等）や、共同ドキュメント管理（Wiki等）の
+              方式を決めさせていただければ幸いです。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">기술 공유</span><span data-lang="ja">技術共有</span></div>
+        <div class="quest-title" data-lang="ko">기술 공유 및 연동 사양</div>
+        <div class="quest-title" data-lang="ja">技術共有および連携仕様について</div>
+        <div class="quest-desc" data-lang="ko">
+          "서로의 기술의 어떤 부분을 연동할지"에 대해
+          상담드리고자 합니다.
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          「お互いの技術のどの部分を連携させていただくか」について、
+          ご相談させていただければと存じます。
+        </div>
+
+        <div class="sub-items">
+          <div class="sub-item">
+            <div class="sub-item-title" data-lang="ko">인증 및 데이터 연동</div>
+            <div class="sub-item-title" data-lang="ja">認証およびデータ連携について</div>
+            <div class="sub-item-desc" data-lang="ko">
+              로리팝 사용자가 당사 서비스를 원활히 이용하기 위해서는
+              계정 연동(SSO)이 필요할 것으로 생각됩니다.<br>
+              귀사가 보유한 표준 인증 규격을 알려주시면
+              당사에서 그 규격에 맞춰 개발을 진행하겠습니다.
+            </div>
+            <div class="sub-item-desc" data-lang="ja">
+              ロリポップユーザー様が弊社サービスをスムーズにご利用いただくためには、
+              アカウント連携（SSO）が必要になるかと存じます。<br>
+              貴社がお持ちの標準認証規格をお教えいただければ、
+              弊社にてその規格に合わせた開発を進めさせていただきます。
+            </div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-item-title" data-lang="ko">공통 모듈 활용</div>
+            <div class="sub-item-title" data-lang="ja">共通モジュールの活用について</div>
+            <div class="sub-item-desc" data-lang="ko">
+              로리팝의 기존 결제 시스템이나 관리 대시보드 기능을
+              당사 서비스와 어떻게 연동하면 사용자가 가장 편리할지 상담드리고 싶습니다.<br>
+              연동용 API 사양서를 공유해 주실 수 있을까요?
+            </div>
+            <div class="sub-item-desc" data-lang="ja">
+              ロリポップ様の既存決済システムや管理ダッシュボード機能を
+              弊社サービスとどのように連携すれば、ユーザー様にとって
+              最も使いやすくなるかをご相談させていただければ幸いです。<br>
+              連携用のAPI仕様書をご共有いただくことは可能でしょうか。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <div class="section-title" data-lang="ko">사업 영역 확대 및 협업 범위 확인</div>
+      <div class="section-title" data-lang="ja">事業領域の拡大と協業範囲のご確認</div>
+    </div>
+    <div class="section-content">
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">서비스 모델</span><span data-lang="ja">サービスモデル</span></div>
+        <div class="quest-title" data-lang="ko">당사 서비스 모델 소개</div>
+        <div class="quest-title" data-lang="ja">弊社サービスモデルのご紹介</div>
+        <div class="quest-desc" data-lang="ko">현재 당사 서비스는 다음과 같이 분류됩니다.</div>
+        <div class="quest-desc" data-lang="ja">現在、弊社サービスは以下のように分類されております。</div>
+        <ul class="highlight-list">
+          <li><strong>B2C</strong> - <span data-lang="ko">1명 1사이트 (Zaemit Hosting)</span><span data-lang="ja">1名1サイト（Zaemit Hosting）</span></li>
+          <li><strong>B2B</strong> - <span data-lang="ko">서버 렌탈 (GMO 협업 - Zaemit Rental)</span><span data-lang="ja">サーバーレンタル（GMO様との協業 - Zaemit Rental）</span></li>
+          <li><strong>STUDIO</strong> - <span data-lang="ko">전문가용 협업 플랫폼 (Z.STUDIO)</span><span data-lang="ja">プロフェッショナル向け協業プラットフォーム（Z.STUDIO）</span></li>
+        </ul>
+      </div>
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">협업 범위</span><span data-lang="ja">協業範囲</span></div>
+        <div class="quest-title" data-lang="ko">일본 시장 전개</div>
+        <div class="quest-title" data-lang="ja">日本市場における展開について</div>
+        <div class="quest-desc" data-lang="ko">
+          서버 렌탈 외에도 <strong>B2C 및 STUDIO 모델</strong>로
+          일본 시장 전개를 검토하고 있습니다.
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          サーバーレンタル以外にも、<strong>B2CおよびSTUDIOモデル</strong>での
+          日本市場展開を検討しております。
+        </div>
+        <div class="quote-box" data-lang="ko">
+          이 영역에서도 GMO가 파트너로 참여하실 가능성이 있을까요?<br>
+          아니면 당사가 독자적으로 전개해도 괜찮을까요?<br>
+          의향을 알려주시면 감사하겠습니다.
+        </div>
+        <div class="quote-box" data-lang="ja">
+          これらの領域においても、GMO様にパートナーとしてご参加いただける可能性がございますでしょうか。<br>
+          あるいは、弊社が独自に展開させていただいても差し支えないでしょうか。<br>
+          ご意向をお聞かせいただければ幸いでございます。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <div class="section-title" data-lang="ko">4월 "Startup JAPAN" 출전 및 공동 마케팅</div>
+      <div class="section-title" data-lang="ja">4月「Startup JAPAN」出展および共同マーケティング</div>
+    </div>
+    <div class="section-content">
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">전시회</span><span data-lang="ja">展示会</span></div>
+        <div class="quest-title" data-lang="ko">전시회 출전 보고</div>
+        <div class="quest-title" data-lang="ja">展示会出展のご報告</div>
+        <div class="quest-desc" data-lang="ko">
+          일본 시장 본격 진출을 위해 4월에 <strong>마쿠하리 멧세</strong>에서 개최되는
+          <strong>"Startup JAPAN"</strong> 출전을 예정하고 있습니다.
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          日本市場への本格進出に向けて、4月に<strong>幕張メッセ</strong>で開催される
+          <strong>「Startup JAPAN」</strong>への出展を予定しております。
+        </div>
+      </div>
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">공동 마케팅</span><span data-lang="ja">共同マーケティング</span></div>
+        <div class="quest-title" data-lang="ko">공동 프로모션 상담</div>
+        <div class="quest-title" data-lang="ja">共同プロモーションのご相談</div>
+        <div class="quest-desc" data-lang="ko">
+          이 기회에 양사 협업 서비스를 메인으로 프로모션하고 싶습니다.
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          この機会に、両社の協業サービスをメインでプロモーションさせていただきたいと考えております。
+        </div>
+        <div class="quote-box" data-lang="ko">
+          이 건에 대해 GMO의 의향과<br>
+          브랜드 사용 등 협력 가능한 범위를 알려주시면 감사하겠습니다.
+        </div>
+        <div class="quote-box" data-lang="ja">
+          この件につきまして、GMO様のご意向と、<br>
+          ブランド使用等でご協力いただける範囲をお聞かせいただければ幸いでございます。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">4</div>
+      <div class="section-title" data-lang="ko">향후 로드맵 및 정식 계약 일정</div>
+      <div class="section-title" data-lang="ja">今後のロードマップおよび正式契約のスケジュール</div>
+    </div>
+    <div class="section-content">
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">일정</span><span data-lang="ja">スケジュール</span></div>
+        <div class="quest-title" data-lang="ko">런칭 일정 정리</div>
+        <div class="quest-title" data-lang="ja">ローンチスケジュールの整理</div>
+        <div class="quest-desc" data-lang="ko">
+          <strong>3월 오픈</strong>을 목표로 할 경우, 남은 기간 동안의
+          주요 마일스톤(준비 사항 및 마감일)을 정리하고 싶습니다.
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          <strong>3月オープン</strong>を目標とした場合、残りの期間における
+          主要マイルストーン（準備事項および締切）を整理させていただければと存じます。
+        </div>
+        <ul class="highlight-list">
+          <li data-lang="ko">기술 연동 완료 목표일</li>
+          <li data-lang="ja">技術連携完了の目標日</li>
+          <li data-lang="ko">QA 테스트 기간</li>
+          <li data-lang="ja">QAテスト期間</li>
+          <li data-lang="ko">마케팅 자료 준비</li>
+          <li data-lang="ja">マーケティング資料の準備</li>
+          <li data-lang="ko">소프트 런칭 일정</li>
+          <li data-lang="ja">ソフトローンチの日程</li>
+          <li data-lang="ko">정식 오픈일</li>
+          <li data-lang="ja">正式オープン日</li>
+        </ul>
+      </div>
+
+      <div class="quest-item">
+        <div class="quest-label"><span data-lang="ko">계약</span><span data-lang="ja">契約</span></div>
+        <div class="quest-title" data-lang="ko">정식 계약 전환</div>
+        <div class="quest-title" data-lang="ja">正式契約への移行について</div>
+        <div class="quest-desc" data-lang="ko">
+          현재 <strong>NDA 체결</strong> 단계입니다만,
+          실제 서비스 런칭을 위한 <strong>정식 계약(본계약)</strong>
+          체결 시기를 조율하고 싶습니다.
+        </div>
+        <div class="quest-desc" data-lang="ja">
+          現在<strong>NDA締結</strong>の段階でございますが、
+          実際のサービスローンチに向けた<strong>正式契約（本契約）</strong>の
+          締結時期について、ご調整させていただければ幸いでございます。
+        </div>
+        <div class="quote-box" data-lang="ko">
+          NDA → MOU → 본계약 단계별 진행의<br>
+          예상 일정을 확인하고 싶습니다.
+        </div>
+        <div class="quote-box" data-lang="ja">
+          NDA → MOU → 本契約という段階的な進行における<br>
+          想定スケジュールをご確認させていただければと存じます。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Closing -->
+  <div class="closing-note">
+    <p data-lang="ko">
+      바쁘신 중에 죄송합니다만,<br>
+      위 사항에 대해 검토해 주시면 감사하겠습니다.<br><br>
+      불명확한 점이나 질문이 있으시면<br>
+      언제든 말씀해 주세요.<br><br>
+      앞으로도 잘 부탁드립니다.
+    </p>
+    <p data-lang="ja">
+      お忙しいところ恐れ入りますが、<br>
+      上記の点についてご検討いただければ幸いでございます。<br><br>
+      ご不明な点やご質問がございましたら、<br>
+      いつでもお気軽にお申し付けください。<br><br>
+      今後とも何卒よろしくお願い申し上げます。
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-logo">WEVEN</div>
+    <p data-lang="ko">GMO Internet Group 파트너십 상담 자료</p>
+    <p data-lang="ja">GMO Internet Group パートナーシップ ご相談資料</p>
+  </div>
+
+</div>
+
+<script>
+function setLang(lang) {
+  document.body.classList.remove('ko', 'ja');
+  document.body.classList.add(lang);
+
+  // Update button states
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.langBtn === lang);
+  });
+
+  // Save preference
+  localStorage.setItem('discussionLang', lang);
+}
+
+// PDF Export function
+function exportPDF() {
+  const btn = document.querySelector('.pdf-btn');
+  const originalText = btn.innerHTML;
+  btn.classList.add('loading');
+  btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 생성중...';
+
+  // Hide controls during export
+  const langToggle = document.querySelector('.lang-toggle');
+  const pdfBtn = document.querySelector('.pdf-btn');
+  langToggle.style.display = 'none';
+  pdfBtn.style.display = 'none';
+
+  const element = document.querySelector('.container');
+  const currentLang = document.body.classList.contains('ko') ? 'ko' : 'ja';
+  const filename = `GMO_Partnership_Discussion_${currentLang.toUpperCase()}_${new Date().toISOString().slice(0,10)}.pdf`;
+
+  const opt = {
+    margin: [10, 10, 10, 10],
+    filename: filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      letterRendering: true
+    },
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
+    },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    // Restore controls
+    langToggle.style.display = '';
+    pdfBtn.style.display = '';
+    btn.classList.remove('loading');
+    btn.innerHTML = originalText;
+  }).catch(err => {
+    console.error('PDF 생성 오류:', err);
+    langToggle.style.display = '';
+    pdfBtn.style.display = '';
+    btn.classList.remove('loading');
+    btn.innerHTML = originalText;
+    alert('PDF 생성에 실패했습니다.');
+  });
+}
+
+// Load saved language preference
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('discussionLang') || 'ja';
+  setLang(savedLang);
+});
+</script>
+
+</body>
+</html>

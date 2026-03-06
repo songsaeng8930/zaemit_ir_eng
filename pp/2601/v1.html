@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zaemit Reseller Partnership Proposal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Source Serif 4', 'Noto Serif KR', Georgia, serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #1a1a1a;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 0;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .lang-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            background: #fff;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn:hover {
+            background: #f5f5f5;
+        }
+        
+        .lang-btn.active {
+            background: #1a1a1a;
+            color: #fff;
+        }
+        
+        h1 {
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e5e5e5;
+            color: #0a0a0a;
+        }
+        
+        h2 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-top: 45px;
+            margin-bottom: 18px;
+            color: #0a0a0a;
+        }
+        
+        h3 {
+            font-size: 21px;
+            font-weight: 600;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            color: #333;
+        }
+        
+        p {
+            margin-bottom: 16px;
+            font-size: 18px;
+            color: #374151;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 17px;
+        }
+        
+        th {
+            border-top: 2px solid #1a1a1a;
+            border-bottom: 2px solid #1a1a1a;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            background-color: transparent;
+            color: #0a0a0a;
+        }
+        
+        td {
+            border-bottom: 1px solid #d1d5db;
+            padding: 12px 16px;
+            text-align: left;
+            color: #374151;
+        }
+        
+        tr:last-child td {
+            border-bottom: 1px solid #d1d5db;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .greeting {
+            margin-top: 10px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .greeting p {
+            margin-bottom: 20px;
+        }
+        
+        .note {
+            font-size: 16px;
+            color: #6b7280;
+            margin-top: 12px;
+            padding-left: 4px;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0a0a0a;
+        }
+        
+        [data-lang-ko] { display: none; }
+        [data-lang-en] { display: block; }
+        
+        body.ko [data-lang-ko] { display: block; }
+        body.ko [data-lang-en] { display: none; }
+        
+        table [data-lang-ko] { display: none; }
+        table [data-lang-en] { display: table-row; }
+        
+        body.ko table [data-lang-ko] { display: table-row; }
+        body.ko table [data-lang-en] { display: none; }
+        
+        thead [data-lang-ko], thead [data-lang-en] { display: none; }
+        thead [data-lang-ko] { display: none; }
+        thead [data-lang-en] { display: table-row; }
+        body.ko thead [data-lang-ko] { display: table-row; }
+        body.ko thead [data-lang-en] { display: none; }
+        
+        @media print {
+            body {
+                padding: 30px;
+            }
+            .lang-toggle {
+                display: none;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 15px;
+                font-size: 16px;
+            }
+            h1 {
+                font-size: 24px;
+                margin-bottom: 30px;
+                padding-top: 50px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            h3 {
+                font-size: 17px;
+            }
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 10px 8px;
+            }
+            .lang-toggle {
+                top: 10px;
+                right: 10px;
+            }
+            .lang-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ko')">한국어</button>
+</div>
+
+<h1 data-lang-en>Zaemit Reseller Partnership Proposal</h1>
+<h1 data-lang-ko>Zaemit 리셀러 파트너십 제안서</h1>
+
+<div class="section greeting">
+    <p data-lang-en>Dear Mr. Abdur Rehman,</p>
+    <p data-lang-ko>Abdur Rehman 대표님께,</p>
+    
+    <p data-lang-en>Thank you sincerely for expressing your interest in partnering with us. We are truly honored by your initiative and excited about the opportunity to collaborate with your esteemed company.</p>
+    <p data-lang-ko>저희와 함께하고자 하는 의사를 전달해 주셔서 진심으로 감사드립니다. 대표님의 제안에 큰 영광으로 생각하며, 귀사와 협력할 수 있는 기회를 매우 기쁘게 생각합니다.</p>
+    
+    <p data-lang-en>We believe that through this global partnership, we can achieve significant mutual growth and success. Based on the information you have shared with us, we have carefully calculated our cost structure to propose a fair and transparent revenue-sharing model that benefits both parties.</p>
+    <p data-lang-ko>이번 글로벌 파트너십을 통해 양사 모두 큰 성장과 성공을 이룰 수 있다고 확신합니다. 말씀해 주신 내용을 바탕으로 저희 원가를 면밀히 산정하여, 양측 모두에게 이익이 되는 공정하고 투명한 수익 분배 모델을 제안드립니다.</p>
+    
+    <p data-lang-en>Furthermore, as our user base grows together, we are committed to sharing greater profits with you proportionally. We look forward to building a long-term, mutually beneficial relationship based on trust and shared success.</p>
+    <p data-lang-ko>또한, 함께 사용자 기반이 성장함에 따라 더 많은 수익을 비례하여 공유해 드릴 것을 약속드립니다. 신뢰와 공동의 성공을 기반으로 장기적이고 상호 이익이 되는 관계를 구축해 나가길 기대합니다.</p>
+    
+    <p data-lang-en>Please find below our detailed proposal for your review.</p>
+    <p data-lang-ko>아래에 상세한 제안 내용을 정리하였으니 검토 부탁드립니다.</p>
+    
+    <p data-lang-en style="margin-top: 30px;">Warm regards,<br><strong>Zaemit Team</strong></p>
+    <p data-lang-ko style="margin-top: 30px;">감사합니다.<br><strong>Zaemit 팀 드림</strong></p>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>1. Pricing Policy: Annual Prepayment Required</h2>
+    <h2 data-lang-ko>1. 가격 정책: 연간 선결제 필수</h2>
+    <p data-lang-en>Due to the cost structure of AI-based website builders, the first month's production cost accounts for more than 50% of the total. Monthly billing results in losses for customers who churn after one month, therefore only annual prepayment is accepted.</p>
+    <p data-lang-ko>AI 기반 웹사이트 빌더의 원가 구조상, 첫 달 제작 비용이 전체의 50% 이상을 차지합니다. 월 결제 시 1개월 이탈 고객은 적자가 발생하므로, 연간 선결제만 허용합니다.</p>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>2. Phase 1 Scope</h2>
+    <h2 data-lang-ko>2. 1차 사업 범위</h2>
+    
+    <h3 data-lang-en>Included (Phase 1)</h3>
+    <h3 data-lang-ko>포함 (1차)</h3>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Type</th>
+                <th>Components</th>
+                <th>Annual Price</th>
+                <th>Monthly Equiv.</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>유형</th>
+                <th>구성</th>
+                <th>연간 가격</th>
+                <th>월 환산</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Landing Page</td>
+                <td>Landing Page + Blog + Contact</td>
+                <td>$120/year</td>
+                <td>$10/month</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>랜딩 페이지</td>
+                <td>랜딩 페이지 + 블로그 + 문의</td>
+                <td>$120/년</td>
+                <td>$10/월</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Business Website</td>
+                <td>About + Products/Services + Blog + Contact</td>
+                <td>$168/year</td>
+                <td>$14/month</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>비즈니스 웹사이트</td>
+                <td>회사 소개 + 제품/서비스 + 블로그 + 문의</td>
+                <td>$168/년</td>
+                <td>$14/월</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3 data-lang-en>Excluded (Future Consideration)</h3>
+    <h3 data-lang-ko>제외 (추후 검토)</h3>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Type</th>
+                <th>Reason for Exclusion</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>유형</th>
+                <th>제외 사유</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>SaaS Website (Payment Integration)</td>
+                <td>Complex structure, low profitability</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>SaaS 웹사이트 (결제 연동)</td>
+                <td>구조 복잡, 수익률 낮음</td>
+            </tr>
+            <tr data-lang-en>
+                <td>E-commerce Website</td>
+                <td>Complex structure, low profitability</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>이커머스 웹사이트</td>
+                <td>구조 복잡, 수익률 낮음</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="note" data-lang-en>※ Will be considered for Phase 2 expansion after Phase 1 stabilization</p>
+    <p class="note" data-lang-ko>※ 1차 사업 안정화 후 2차로 확대 검토 예정</p>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>3. Included Services</h2>
+    <h2 data-lang-ko>3. 포함 서비스</h2>
+    
+    <h3 data-lang-en>All Plans Include</h3>
+    <h3 data-lang-ko>모든 플랜 공통</h3>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Item</th>
+                <th>Details</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>항목</th>
+                <th>내용</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>AI Website Generation</td>
+                <td>Premium AI model powered</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>AI 웹사이트 생성</td>
+                <td>최고급 AI 모델 기반</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Hosting</td>
+                <td>1 year included</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>호스팅</td>
+                <td>1년간 포함</td>
+            </tr>
+            <tr data-lang-en>
+                <td>SSL Certificate</td>
+                <td>Free</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>SSL 인증서</td>
+                <td>무료 제공</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Editor Access</td>
+                <td>Direct editing available</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>에디터 접근</td>
+                <td>직접 수정 가능</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Customer Support</td>
+                <td>Email/Chat</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>고객 지원</td>
+                <td>이메일/채팅</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3 data-lang-en>AI Credits (Annual)</h3>
+    <h3 data-lang-ko>AI 크레딧 (연간)</h3>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Type</th>
+                <th>Annual AI Credits</th>
+                <th>Usage</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>유형</th>
+                <th>연간 AI 크레딧</th>
+                <th>용도</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Landing Page</td>
+                <td>30 credits</td>
+                <td>Generation + Modifications</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>랜딩 페이지</td>
+                <td>30회</td>
+                <td>생성 + 수정</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Business Website</td>
+                <td>50 credits</td>
+                <td>Generation + Modifications</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>비즈니스 웹사이트</td>
+                <td>50회</td>
+                <td>생성 + 수정</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="note" data-lang-en>※ Additional credits after depletion: $1 / 5 credits</p>
+    <p class="note" data-lang-ko>※ 크레딧 소진 후 추가 구매: $1 / 5회</p>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>4. Reseller Wholesale Price</h2>
+    <h2 data-lang-ko>4. 리셀러 도매가</h2>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Type</th>
+                <th>Retail Price (Annual)</th>
+                <th>Reseller Price</th>
+                <th>Reseller Margin</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>유형</th>
+                <th>소비자가 (연간)</th>
+                <th>리셀러 도매가</th>
+                <th>리셀러 마진</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Landing Page</td>
+                <td>$120</td>
+                <td>$84</td>
+                <td>$36 (30%)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>랜딩 페이지</td>
+                <td>$120</td>
+                <td>$84</td>
+                <td>$36 (30%)</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Business Website</td>
+                <td>$168</td>
+                <td>$118</td>
+                <td>$50 (30%)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>비즈니스 웹사이트</td>
+                <td>$168</td>
+                <td>$118</td>
+                <td>$50 (30%)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>5. Cost Breakdown (Internal)</h2>
+    <h2 data-lang-ko>5. 원가 근거 (내부용)</h2>
+    
+    <h3 data-lang-en>Annual Cost Structure</h3>
+    <h3 data-lang-ko>연간 원가 구조</h3>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Type</th>
+                <th>AI Cost</th>
+                <th>Hosting</th>
+                <th>Support</th>
+                <th>Tech Fee</th>
+                <th>Total Cost</th>
+                <th>Wholesale</th>
+                <th>Zaemit Margin</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>유형</th>
+                <th>AI 비용</th>
+                <th>호스팅</th>
+                <th>지원</th>
+                <th>기술료</th>
+                <th>연간 원가</th>
+                <th>도매가</th>
+                <th>Zaemit 마진</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Landing Page</td>
+                <td>$17</td>
+                <td>$6</td>
+                <td>$12</td>
+                <td>$12.60</td>
+                <td>$47.60</td>
+                <td>$84</td>
+                <td>$36.40 (43%)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>랜딩 페이지</td>
+                <td>$17</td>
+                <td>$6</td>
+                <td>$12</td>
+                <td>$12.60</td>
+                <td>$47.60</td>
+                <td>$84</td>
+                <td>$36.40 (43%)</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Business Website</td>
+                <td>$24</td>
+                <td>$12</td>
+                <td>$16</td>
+                <td>$17.70</td>
+                <td>$69.70</td>
+                <td>$118</td>
+                <td>$48.30 (41%)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>비즈니스 웹사이트</td>
+                <td>$24</td>
+                <td>$12</td>
+                <td>$16</td>
+                <td>$17.70</td>
+                <td>$69.70</td>
+                <td>$118</td>
+                <td>$48.30 (41%)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>6. Revenue Distribution Summary</h2>
+    <h2 data-lang-ko>6. 수익 분배 요약</h2>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Type</th>
+                <th>Retail Price</th>
+                <th>Reseller (30%)</th>
+                <th>Zaemit</th>
+                <th>Cost</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>유형</th>
+                <th>소비자가</th>
+                <th>리셀러 (30%)</th>
+                <th>Zaemit</th>
+                <th>원가</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Landing Page</td>
+                <td>$120</td>
+                <td>$36</td>
+                <td>$36.40</td>
+                <td>$47.60</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>랜딩 페이지</td>
+                <td>$120</td>
+                <td>$36</td>
+                <td>$36.40</td>
+                <td>$47.60</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Business Website</td>
+                <td>$168</td>
+                <td>$50</td>
+                <td>$48.30</td>
+                <td>$69.70</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>비즈니스 웹사이트</td>
+                <td>$168</td>
+                <td>$50</td>
+                <td>$48.30</td>
+                <td>$69.70</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>7. Regional Price Adjustment (Optional)</h2>
+    <h2 data-lang-ko>7. 지역별 가격 조정 (선택)</h2>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Region</th>
+                <th>Price Adjustment</th>
+                <th>Notes</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>지역</th>
+                <th>가격 조정</th>
+                <th>비고</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>US/UK</td>
+                <td>Base price</td>
+                <td>-</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>미국/영국</td>
+                <td>기본 가격</td>
+                <td>-</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Turkey</td>
+                <td>-10~15%</td>
+                <td>Depending on market conditions</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>터키</td>
+                <td>-10~15%</td>
+                <td>시장 상황에 따라</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Pakistan</td>
+                <td>-15~20%</td>
+                <td>Considering purchasing power</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>파키스탄</td>
+                <td>-15~20%</td>
+                <td>구매력 고려</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>8. Contract Terms</h2>
+    <h2 data-lang-ko>8. 계약 조건</h2>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Item</th>
+                <th>Terms</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>항목</th>
+                <th>조건</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Payment</td>
+                <td>Annual prepayment (required)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>결제</td>
+                <td>연간 선결제 (필수)</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Refund</td>
+                <td>Full refund within 14 days, none after</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>환불</td>
+                <td>14일 이내 전액, 이후 불가</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Minimum Volume</td>
+                <td>Negotiable (100+ units/month recommended)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>최소 물량</td>
+                <td>협의 (월 100건 이상 권장)</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Branding</td>
+                <td>White-label available (separate negotiation)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>브랜딩</td>
+                <td>화이트라벨 가능 (별도 협의)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>9. Future Plans</h2>
+    <h2 data-lang-ko>9. 향후 계획</h2>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Phase</th>
+                <th>Content</th>
+                <th>Timeline</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>단계</th>
+                <th>내용</th>
+                <th>시기</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Phase 1</td>
+                <td>Landing Page + Business Website</td>
+                <td>Immediate</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>1차</td>
+                <td>랜딩 페이지 + 비즈니스 웹사이트</td>
+                <td>즉시</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Phase 2</td>
+                <td>Add SaaS Website (Payment Integration)</td>
+                <td>After Phase 1 stabilization</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>2차</td>
+                <td>SaaS 웹사이트 (결제 연동) 추가</td>
+                <td>1차 안정화 후</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Phase 3</td>
+                <td>Add E-commerce Website</td>
+                <td>After Phase 2 stabilization</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>3차</td>
+                <td>이커머스 웹사이트 추가</td>
+                <td>2차 안정화 후</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2 data-lang-en>10. Summary</h2>
+    <h2 data-lang-ko>10. 요약</h2>
+    <table>
+        <thead>
+            <tr data-lang-en>
+                <th>Item</th>
+                <th>Details</th>
+            </tr>
+            <tr data-lang-ko>
+                <th>항목</th>
+                <th>내용</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-lang-en>
+                <td>Pricing</td>
+                <td>$120~168/year (annual prepayment)</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>가격</td>
+                <td>$120~168/년 (연간 선결제)</td>
+            </tr>
+            <tr data-lang-en>
+                <td>AI</td>
+                <td>Premium model, credit-based</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>AI</td>
+                <td>최고급 모델, 크레딧 제한</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Reseller Margin</td>
+                <td>30% guaranteed</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>리셀러 마진</td>
+                <td>30% 보장</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Zaemit Margin</td>
+                <td>41~43%</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>Zaemit 마진</td>
+                <td>41~43%</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Phase 1 Scope</td>
+                <td>Landing Page + Business Website</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>1차 범위</td>
+                <td>랜딩 페이지 + 비즈니스 웹사이트</td>
+            </tr>
+            <tr data-lang-en>
+                <td>Risk Management</td>
+                <td>Exclude complex types, annual billing</td>
+            </tr>
+            <tr data-lang-ko>
+                <td>리스크 관리</td>
+                <td>복잡한 유형 제외, 연간 결제</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="footer">
+    <p>Zaemit</p>
+</div>
+
+<script>
+function setLang(lang) {
+    const body = document.body;
+    const buttons = document.querySelectorAll('.lang-btn');
+    
+    if (lang === 'ko') {
+        body.classList.add('ko');
+    } else {
+        body.classList.remove('ko');
+    }
+    
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if ((lang === 'en' && btn.textContent === 'EN') || 
+            (lang === 'ko' && btn.textContent === '한국어')) {
+            btn.classList.add('active');
+        }
+    });
+}
+</script>
+
+</body>
+</html>

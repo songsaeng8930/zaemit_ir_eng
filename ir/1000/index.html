@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>브랜디노 IR - Green Reward Commerce</title>
+<meta name="description" content="친환경 생활용품 동등가격 공급 + 탄소 리워드 AI 커머스">
+
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#00D4AA;--accent2:#7C3AED;
+  --dark:#0A0E27;--dark2:#111633;--text:#E2E8F0;--text-muted:#94A3B8;
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#7C3AED 50%,#00D4AA 100%);
+  --gradient2:linear-gradient(135deg,#00D4AA 0%,#0066FF 100%);
+  --gradient3:linear-gradient(135deg,#7C3AED 0%,#EC4899 100%);
+  --green:#22C55E;--red:#EF4444;--orange:#F97316;--yellow:#F59E0B;
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text)}
+body.en{font-family:'Plus Jakarta Sans','Pretendard Variable',-apple-system,BlinkMacSystemFont,sans-serif}
+body.ja{font-family:'Noto Sans JP','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif}
+
+/* viewer.html provides all nav UI — no duplicate header/sidebar/indicator here */
+
+/* ── SLIDES ── */
+.slide{position:fixed;top:0;left:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;padding:40px 100px;opacity:0;transition:left .35s cubic-bezier(.16,1,.3,1)}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{max-width:1280px;width:100%;opacity:0;transform:translateY(20px);transition:opacity .45s ease .1s,transform .45s ease .1s}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes aTypeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes fl{0%,100%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}50%{transform:translateY(-200px) translateX(50px)}}
+
+/* All animatable children start hidden */
+.slide .section-label,.slide .section-title,.slide .section-desc,
+.slide .hero-left,.slide .hero-right,.slide .hero-stats,
+.slide .overview-layout,.slide .problem-flow,.slide .problem-col,
+.slide .solution-content,.slide .solution-step,
+.slide .svc-phases,.slide .svc-phase,.slide .svc-cloud-bar,
+.slide .market-content,.slide .mkt-bullets,.slide .mkt-stages,.slide .mkt-stage,
+.slide .comp-table,.slide .comp-zaemit-cell,
+.slide .biz-diagram-wrap,.slide .biz-rev-summary,
+.slide .traction-grid,.slide .traction-card,
+.slide .team-layout,.slide .roadmap-container,.slide .roadmap-year,
+.slide .ask-stats,.slide .cta-buttons,
+.slide .brand-grid,.slide .brand-card,
+.slide .fin-chart-area,.slide .esg-grid,.slide .esg-card,
+.slide .global-content,.slide .global-card,
+.slide .achieve-grid,.slide .achieve-card,
+.slide .reward-flow,.slide .reward-step,
+.slide .ai-content,.slide .ai-card{opacity:0}
+
+/* Title entrance */
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+
+/* Hero */
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .7s both}
+
+/* Overview */
+.slide.active .overview-layout{animation:aFadeUp .5s ease .5s both}
+
+/* Problem */
+.slide.active .problem-flow{animation:aFadeUp .5s ease .55s both}
+.slide.active .problem-col:nth-child(1){animation:aFadeUp .5s ease .5s both}
+.slide.active .problem-col:nth-child(2){animation:aFadeUp .5s ease .9s both}
+.slide.active .problem-col:nth-child(3){animation:aFadeUp .5s ease 1.3s both}
+
+/* Solution */
+.slide.active .solution-content{animation:aFadeIn .3s ease .5s both}
+.slide.active .solution-step:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .solution-step:nth-child(2){animation:aFadeUp .5s ease .75s both}
+.slide.active .solution-step:nth-child(3){animation:aFadeUp .5s ease .95s both}
+
+/* Market */
+.slide.active .market-content{animation:aFadeUp .5s ease .5s both}
+.slide.active .mkt-bullets{animation:aFadeUp .5s ease .55s both}
+.slide.active .mkt-stages{animation:aFadeIn .3s ease .85s both}
+.slide.active .mkt-stage:nth-child(1){animation:aFadeUp .4s ease .9s both}
+.slide.active .mkt-stage:nth-child(2){animation:aFadeUp .4s ease 1.05s both}
+.slide.active .mkt-stage:nth-child(3){animation:aScaleIn .5s ease 1.2s both}
+.slide.active .mkt-stage:nth-child(4){animation:aFadeUp .4s ease 1.5s both}
+
+/* Brand cards */
+.slide.active .brand-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .brand-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .brand-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .brand-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+
+/* Competitive */
+.slide.active .comp-table{animation:aFadeUp .6s ease .5s both}
+.slide.active .comp-table thead .comp-zaemit-cell{animation:aFadeIn .4s ease .5s both}
+.slide.active .comp-table tbody tr:nth-child(1) .comp-zaemit-cell{animation:aTypeDown .35s ease .6s both}
+.slide.active .comp-table tbody tr:nth-child(2) .comp-zaemit-cell{animation:aTypeDown .35s ease .75s both}
+.slide.active .comp-table tbody tr:nth-child(3) .comp-zaemit-cell{animation:aTypeDown .35s ease .9s both}
+.slide.active .comp-table tbody tr:nth-child(4) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.05s both}
+.slide.active .comp-table tbody tr:nth-child(5) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.2s both}
+.slide.active .comp-table tbody tr:nth-child(6) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.35s both}
+
+/* Business */
+.slide.active .biz-diagram-wrap{animation:aScaleIn .6s ease .5s both}
+.slide.active .biz-rev-summary{animation:aFadeUp .4s ease 1.0s both}
+
+/* Traction */
+.slide.active .traction-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .traction-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .traction-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .traction-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .traction-card:nth-child(4){animation:aFadeUp .45s ease 1.0s both}
+
+/* Financial */
+.slide.active .fin-chart-area{animation:aFadeIn .7s ease .5s both}
+
+/* Roadmap */
+.slide.active .roadmap-container{animation:aFadeIn .6s ease .4s both}
+.slide.active .roadmap-year:nth-child(2){animation:aFadeUp .4s ease .6s both}
+.slide.active .roadmap-year:nth-child(3){animation:aFadeUp .4s ease .8s both}
+.slide.active .roadmap-year:nth-child(4){animation:aFadeUp .4s ease 1.0s both}
+.slide.active .roadmap-year:nth-child(5){animation:aFadeUp .4s ease 1.2s both}
+
+/* Team */
+.slide.active .team-layout{animation:aFadeUp .55s ease .5s both}
+
+/* ESG */
+.slide.active .esg-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .esg-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .esg-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .esg-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+
+/* Global */
+.slide.active .global-content{animation:aFadeIn .3s ease .5s both}
+.slide.active .global-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .global-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .global-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+
+/* Achieve */
+.slide.active .achieve-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .achieve-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .achieve-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .achieve-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .achieve-card:nth-child(4){animation:aFadeUp .45s ease 1.0s both}
+
+/* Reward flow */
+.slide.active .reward-flow{animation:aFadeIn .3s ease .5s both}
+.slide.active .reward-step:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .reward-step:nth-child(2){animation:aFadeUp .4s ease .7s both}
+.slide.active .reward-step:nth-child(3){animation:aFadeUp .4s ease .85s both}
+.slide.active .reward-step:nth-child(4){animation:aFadeUp .4s ease 1.0s both}
+.slide.active .reward-step:nth-child(5){animation:aFadeUp .4s ease 1.15s both}
+
+/* AI cards */
+.slide.active .ai-content{animation:aFadeIn .3s ease .5s both}
+.slide.active .ai-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .ai-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .ai-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+
+/* Ask */
+.slide.active .ask-stats{animation:aFadeUp .5s ease .55s both}
+.slide.active .cta-buttons{animation:aFadeUp .45s ease .8s both}
+
+/* ── LANG VISIBILITY ── */
+[data-lang="en"]{display:none !important}
+[data-lang="ko"]{display:revert}
+[data-lang="ja"]{display:none !important}
+body.en [data-lang="en"]{display:revert !important}
+body.en [data-lang="ko"]{display:none !important}
+body.en [data-lang="ja"]{display:none !important}
+body.ja [data-lang="ja"]{display:revert !important}
+body.ja [data-lang="ko"]{display:none !important}
+body.ja [data-lang="en"]{display:none !important}
+
+/* ── MOTION TOGGLE ── */
+.motion-toggle-btn{display:flex;align-items:center;gap:8px;width:100%;padding:10px 16px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.04);color:var(--text-muted);font-size:max(18px,1.02vw);font-weight:600;cursor:pointer;transition:all .25s}
+.motion-toggle-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.25);color:#fff}
+.motion-toggle-btn.off{border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);color:#EF4444}
+.motion-toggle-btn .motion-icon-off{display:none}
+.motion-toggle-btn.off .motion-icon-on{display:none}
+.motion-toggle-btn.off .motion-icon-off{display:block}
+
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,body.no-motion .slide.active .section-title,body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .hero-left,body.no-motion .slide.active .hero-right,body.no-motion .slide.active .hero-stats,
+body.no-motion .slide.active .problem-flow,body.no-motion .slide.active .problem-col,
+body.no-motion .slide.active .solution-step,body.no-motion .slide.active .solution-content,
+body.no-motion .slide.active .svc-phase,body.no-motion .slide.active .svc-phases,
+body.no-motion .slide.active .brand-card,body.no-motion .slide.active .brand-grid,
+body.no-motion .slide.active .comp-table,body.no-motion .slide.active .comp-zaemit-cell,
+body.no-motion .slide.active .biz-diagram-wrap,body.no-motion .slide.active .biz-rev-summary,
+body.no-motion .slide.active .traction-card,body.no-motion .slide.active .traction-grid,
+body.no-motion .slide.active .fin-chart-area,
+body.no-motion .slide.active .roadmap-container,body.no-motion .slide.active .roadmap-year,
+body.no-motion .slide.active .team-layout,
+body.no-motion .slide.active .esg-card,body.no-motion .slide.active .esg-grid,
+body.no-motion .slide.active .global-card,body.no-motion .slide.active .global-content,
+body.no-motion .slide.active .achieve-card,body.no-motion .slide.active .achieve-grid,
+body.no-motion .slide.active .reward-flow,body.no-motion .slide.active .reward-step,
+body.no-motion .slide.active .ai-content,body.no-motion .slide.active .ai-card,
+body.no-motion .slide.active .market-content,body.no-motion .slide.active .mkt-stage,
+body.no-motion .slide.active .ask-stats,body.no-motion .slide.active .cta-buttons{opacity:1 !important;transform:none !important}
+body.no-motion .orbit-ring,body.no-motion .particle,body.no-motion .hero-badge::before{animation:none !important}
+body.no-motion .particles{display:none !important}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(124,58,237,0.1) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px}
+.hero .slide-inner{display:flex;align-items:center;gap:80px}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:50px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--accent);font-size:max(18px,1.09vw);font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:36px}
+.hero-badge::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:clamp(48px,4.5vw,68px);font-weight:800;line-height:1.08;color:#fff;margin-bottom:28px;letter-spacing:-2px}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:max(18px,1.64vw);color:var(--text-muted);line-height:1.7;margin-bottom:48px;max-width:620px}
+.hero-stats{display:flex;gap:48px}
+.hero-stats>div{text-align:center;min-width:110px}
+.hero-stat-value{font-family:'Plus Jakarta Sans';font-size:clamp(36px,3.4vw,44px);font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-stat-label{font-size:max(18px,1.09vw);color:var(--text-muted);margin-top:6px;letter-spacing:.5px}
+.hero-right{flex:.7;position:relative}
+.hero-visual{width:100%;aspect-ratio:1;position:relative;background:radial-gradient(circle at center,rgba(34,197,94,0.2),transparent 70%);border-radius:50%}
+.orbit-ring{position:absolute;border:1px solid rgba(255,255,255,0.06);border-radius:50%;animation:rot 20s linear infinite}
+.orbit-ring:nth-child(1){inset:10%}.orbit-ring:nth-child(2){inset:25%;animation-duration:30s;animation-direction:reverse}.orbit-ring:nth-child(3){inset:40%;animation-duration:25s}
+.orbit-dot{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 20px var(--accent)}
+.orbit-ring:nth-child(1) .orbit-dot{top:0;left:50%;transform:translate(-50%,-50%)}
+.orbit-ring:nth-child(2) .orbit-dot{bottom:10%;right:0;background:var(--accent2);box-shadow:0 0 20px var(--accent2)}
+.orbit-ring:nth-child(3) .orbit-dot{top:50%;left:0;transform:translate(-50%,-50%);background:var(--primary);box-shadow:0 0 20px var(--primary)}
+.center-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:28px;background:linear-gradient(135deg,#22C55E,#00D4AA);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:34px;font-weight:800;color:#fff;box-shadow:0 20px 60px rgba(34,197,94,0.4)}
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(0,212,170,0.3);animation:fl 8s ease-in-out infinite}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:max(18px,1.17vw);font-weight:600;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);margin-bottom:18px}
+.section-label::before{content:'';width:28px;height:2px;background:var(--accent)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:clamp(36px,3.5vw,54px);font-weight:700;color:#fff;line-height:1.12;margin-bottom:20px;letter-spacing:-1.5px}
+.section-desc{font-size:max(18px,1.56vw);color:var(--text-muted);line-height:1.7;max-width:100%;margin-bottom:40px}
+
+/* ── OVERVIEW ── */
+.overview-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.ov-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px}
+.ov-card h3{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.ov-card p{font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.6}
+.ov-stat{display:flex;align-items:baseline;gap:8px;margin-top:10px}
+.ov-stat-val{font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:var(--accent)}
+.ov-stat-unit{font-size:max(18px,1.09vw);color:var(--text-muted)}
+
+/* ── PROBLEM FLOW ── */
+.problem-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.problem-col{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;text-align:center}
+.p-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.p-icon.red{background:rgba(239,68,68,0.15);color:#EF4444}
+.p-icon.orange{background:rgba(249,115,22,0.15);color:#F97316}
+.p-icon.purple{background:rgba(124,58,237,0.15);color:#A78BFA}
+.p-icon.green{background:rgba(34,197,94,0.15);color:#22C55E}
+.p-title{font-size:max(18px,1.41vw);font-weight:700;color:#fff}
+.p-desc{font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.6}
+.p-highlight{font-size:max(18px,1.17vw);font-weight:700;padding:12px;border-radius:10px;margin-top:auto}
+.p-highlight.red{background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.2)}
+.p-highlight.orange{background:rgba(249,115,22,0.1);color:#F97316;border:1px solid rgba(249,115,22,0.2)}
+.p-highlight.purple{background:rgba(124,58,237,0.1);color:#A78BFA;border:1px solid rgba(124,58,237,0.2)}
+
+/* ── SOLUTION ── */
+.solution-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.solution-step{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:28px;text-align:center}
+.step-number{font-family:'Plus Jakarta Sans';font-size:max(18px,1.02vw);font-weight:800;color:var(--accent);letter-spacing:2px;margin-bottom:14px}
+.step-icon{width:56px;height:56px;border-radius:16px;background:rgba(0,212,170,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--accent)}
+.solution-step h3{font-size:max(18px,1.41vw);font-weight:700;color:#fff;margin-bottom:10px}
+.solution-step p{font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.6}
+
+/* ── BRAND PORTFOLIO ── */
+.brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.brand-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.brand-name{font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#fff}
+.brand-cat{font-size:max(18px,1.09vw);color:var(--accent);font-weight:600}
+.brand-stat{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06)}
+.brand-stat-label{font-size:max(18px,1.09vw);color:var(--text-muted)}
+.brand-stat-value{font-family:'Plus Jakarta Sans';font-size:max(18px,1.25vw);font-weight:700;color:#fff}
+.brand-stat-value.accent{color:var(--accent)}
+
+/* ── COMPETITIVE TABLE ── */
+.comp-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+.comp-table th{background:rgba(255,255,255,0.04);padding:14px;font-weight:700;color:var(--text-muted);border-bottom:2px solid rgba(255,255,255,0.1);font-size:max(18px,1.09vw);text-align:center}
+.comp-table td{padding:14px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:max(18px,1.02vw);color:var(--text-muted);text-align:center}
+.comp-table tbody tr:hover{background:rgba(255,255,255,0.03)}
+.comp-zaemit-cell{background:rgba(0,212,170,0.06);color:var(--accent) !important;font-weight:700}
+.comp-table th.comp-zaemit-cell{background:rgba(0,212,170,0.15);border-bottom-color:rgba(0,212,170,0.3)}
+
+/* ── BUSINESS MODEL ── */
+.biz-diagram-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.biz-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;text-align:center}
+.biz-card h4{font-size:max(18px,1.09vw);font-weight:700;color:#fff;margin-bottom:6px}
+.biz-card .biz-tag{font-size:max(18px,0.94vw);color:var(--accent);font-weight:600;margin-bottom:10px}
+.biz-card p{font-size:max(18px,1.02vw);color:var(--text-muted);line-height:1.5}
+.biz-rev-summary{display:flex;gap:20px;margin-top:24px;justify-content:center}
+.biz-rev-item{background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:12px;padding:16px 28px;text-align:center}
+.biz-rev-val{font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:var(--accent)}
+.biz-rev-label{font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px}
+
+/* ── FINANCIAL CHART ── */
+.fin-chart-area{display:flex;flex-direction:column;gap:20px}
+.fin-chart-legend{display:flex;gap:20px;flex-wrap:wrap}
+.fin-leg{display:flex;align-items:center;gap:6px;font-size:max(18px,1.02vw);color:var(--text-muted)}
+.fin-leg::before{content:'';width:12px;height:12px;border-radius:3px;background:var(--lc)}
+
+/* ── REWARD FLOW ── */
+.reward-flow{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+.reward-step{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px;text-align:center;flex:1;min-width:140px;max-width:200px}
+.reward-step-num{font-family:'Plus Jakarta Sans';font-size:max(18px,1.02vw);font-weight:800;color:var(--accent);margin-bottom:8px}
+.reward-step-icon{margin-bottom:8px;color:var(--accent)}
+.reward-step h4{font-size:max(18px,1.09vw);font-weight:700;color:#fff;margin-bottom:6px}
+.reward-step p{font-size:max(18px,0.94vw);color:var(--text-muted);line-height:1.4}
+.reward-arrow{font-size:24px;color:rgba(255,255,255,0.2);flex-shrink:0}
+
+/* ── AI CARDS ── */
+.ai-content{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.ai-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:28px}
+.ai-card h3{font-size:max(18px,1.41vw);font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.ai-card p{font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.6;margin-bottom:10px}
+.ai-stat{display:flex;align-items:baseline;gap:8px;margin-top:12px}
+.ai-stat-val{font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800}
+.ai-stat-label{font-size:max(18px,1.02vw);color:var(--text-muted)}
+
+/* ── TRACTION ── */
+.traction-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.traction-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px}
+.traction-card h3{font-size:max(18px,1.17vw);font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.metric-label{font-size:max(18px,1.02vw);color:var(--text-muted)}
+.metric-value{font-family:'Plus Jakarta Sans';font-size:max(18px,1.09vw);font-weight:700;color:#fff}
+.metric-value.accent{color:var(--accent)}
+
+/* ── TEAM ── */
+.team-layout{display:flex;flex-direction:column;gap:24px}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.team-member{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;text-align:center}
+.team-avatar{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:var(--text-muted)}
+.team-name{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:4px}
+.team-role{font-size:max(18px,1.02vw);color:var(--accent);font-weight:600;margin-bottom:8px}
+.team-desc{font-size:max(18px,0.94vw);color:var(--text-muted);line-height:1.5}
+.team-partners{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px}
+.team-partners h3{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:14px}
+.partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.partner-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center}
+.partner-name{font-size:max(18px,1.09vw);font-weight:700;color:#fff;margin-bottom:4px}
+.partner-loc{font-size:max(18px,0.86vw);color:var(--accent);font-weight:600}
+.partner-desc{font-size:max(18px,0.86vw);color:var(--text-muted);margin-top:4px}
+
+/* ── ESG ── */
+.esg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.esg-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px}
+.esg-card h3{font-size:max(18px,1.41vw);font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.esg-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.esg-card li{font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.5;padding-left:16px;position:relative}
+.esg-card li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* ── ROADMAP ── */
+.roadmap-container{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}
+.roadmap-year{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;position:relative}
+.roadmap-year h3{font-family:'Plus Jakarta Sans';font-size:max(18px,1.41vw);font-weight:800;color:#fff;margin-bottom:4px}
+.roadmap-year .ry-phase{font-size:max(18px,1.02vw);color:var(--accent);font-weight:600;margin-bottom:12px}
+.roadmap-year ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.roadmap-year li{font-size:max(18px,1.02vw);color:var(--text-muted);line-height:1.4;padding-left:14px;position:relative}
+.roadmap-year li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.roadmap-year .ry-target{margin-top:12px;padding:10px;border-radius:8px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.15);font-family:'Plus Jakarta Sans';font-size:max(18px,1.17vw);font-weight:700;color:var(--accent);text-align:center}
+
+/* ── GLOBAL ── */
+.global-content{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.global-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px}
+.global-card h3{font-size:max(18px,1.41vw);font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.global-card p{font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.6;margin-bottom:8px}
+.global-card .g-channel{font-size:max(18px,1.09vw);font-weight:600;color:var(--accent)}
+
+/* ── ASK ── */
+.ask h2{font-family:'Plus Jakarta Sans';font-size:clamp(32px,3vw,48px);font-weight:700;color:#fff;text-align:center;line-height:1.2;margin-bottom:20px}
+.ask-desc{font-size:max(18px,1.25vw);color:var(--text-muted);text-align:center;line-height:1.7;max-width:800px;margin:0 auto 32px}
+.ask-stats{display:flex;gap:40px;justify-content:center;margin-bottom:32px}
+.ask-stat{text-align:center}
+.ask-stat-value{font-family:'Plus Jakarta Sans';font-size:clamp(32px,3vw,44px);font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ask-stat-label{font-size:max(18px,1.09vw);color:var(--text-muted);margin-top:6px}
+.ask-footer{text-align:center;margin-top:20px;font-size:max(18px,1.09vw);color:var(--text-muted)}
+.ask-footer p{margin:4px 0}
+</style>
+</head>
+<body>
+
+<!-- viewer.html provides nav UI -->
+
+<!-- ============================== SLIDES ============================== -->
+
+<!-- 01 HERO / COVER -->
+<div class="slide hero" data-title-ko="표지" data-title-en="Cover" data-title-ja="表紙">
+  <div class="hero-grid"></div>
+  <div class="particles"><div class="particle" style="left:10%;top:20%"></div><div class="particle" style="left:30%;top:60%;animation-delay:2s"></div><div class="particle" style="left:60%;top:30%;animation-delay:4s"></div><div class="particle" style="left:80%;top:70%;animation-delay:1s"></div><div class="particle" style="left:50%;top:80%;animation-delay:3s"></div></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge" data-lang="ko">초기창업패키지 2026</div>
+      <div class="hero-badge" data-lang="en">Early Startup Package 2026</div>
+      <div class="hero-badge" data-lang="ja">初期創業パッケージ 2026</div>
+      <h1 data-lang="ko">친환경 동등가격<br><span class="gradient-text">Green Reward Commerce</span></h1>
+      <h1 data-lang="en">Eco-Friendly at Equal Price<br><span class="gradient-text">Green Reward Commerce</span></h1>
+      <h1 data-lang="ja">エコ同等価格<br><span class="gradient-text">Green Reward Commerce</span></h1>
+      <p class="hero-sub" data-lang="ko">친환경 제품을 일반 가격으로, 탄소 절감분을 네이버페이로 즉시 환급하는 AI 커머스</p>
+      <p class="hero-sub" data-lang="en">Eco products at regular prices, with carbon savings instantly returned via Naver Pay AI Commerce</p>
+      <p class="hero-sub" data-lang="ja">エコ製品を一般価格で、炭素削減分をNaverPayで即時還元するAIコマース</p>
+      <div class="hero-stats">
+        <div><div class="hero-stat-value" data-lang="ko">30억</div><div class="hero-stat-value" data-lang="en">$2.1M</div><div class="hero-stat-value" data-lang="ja">約2.1億円</div><div class="hero-stat-label" data-lang="ko">2025 매출</div><div class="hero-stat-label" data-lang="en">2025 Revenue</div><div class="hero-stat-label" data-lang="ja">2025年売上</div></div>
+        <div><div class="hero-stat-value" data-lang="ko">100억</div><div class="hero-stat-value" data-lang="en">$7.1M</div><div class="hero-stat-value" data-lang="ja">約7.1億円</div><div class="hero-stat-label" data-lang="ko">2026 목표</div><div class="hero-stat-label" data-lang="en">2026 Target</div><div class="hero-stat-label" data-lang="ja">2026年目標</div></div>
+        <div><div class="hero-stat-value">3</div><div class="hero-stat-label" data-lang="ko">자체 브랜드</div><div class="hero-stat-label" data-lang="en">Own Brands</div><div class="hero-stat-label" data-lang="ja">自社ブランド</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual"><div class="orbit-ring"><div class="orbit-dot"></div></div><div class="orbit-ring"><div class="orbit-dot"></div></div><div class="orbit-ring"><div class="orbit-dot"></div></div><div class="center-logo">B</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 EXECUTIVE SUMMARY -->
+<div class="slide" data-title-ko="사업 개요" data-title-en="Executive Summary" data-title-ja="事業概要" style="background:radial-gradient(ellipse at 30% 40%,rgba(34,197,94,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">사업 개요</div><div class="section-label" data-lang="en">Executive Summary</div><div class="section-label" data-lang="ja">事業概要</div>
+    <div class="section-title" data-lang="ko">가격 장벽 없는 친환경,<br><span style="color:var(--accent)">탄소 리워드로 재구매 Lock-in</span></div>
+    <div class="section-title" data-lang="en">Eco Without Price Barriers,<br><span style="color:var(--accent)">Carbon Reward Lock-in</span></div>
+    <div class="section-title" data-lang="ja">価格障壁のないエコ、<br><span style="color:var(--accent)">炭素リワードでリピートLock-in</span></div>
+    <div class="section-desc" data-lang="ko">글로벌 OEM 원가 혁신 + 네이버페이 탄소 리워드 + AI 커머스. 3대 브랜드 합산 2026년 100억 목표.</div>
+    <div class="section-desc" data-lang="en">Global OEM cost innovation + NaverPay carbon rewards + AI commerce. 3 brands targeting ₩10B in 2026.</div>
+    <div class="section-desc" data-lang="ja">グローバルOEM原価革新 + NaverPay炭素リワード + AIコマース。3ブランド合算2026年100億目標。</div>
+    <div class="overview-layout">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="ov-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg> <span data-lang="ko">핵심 가치</span><span data-lang="en">Core Value</span><span data-lang="ja">コアバリュー</span></h3>
+          <p data-lang="ko">친환경 제품 = 일반 가격. 글로벌 OEM으로 원가 혁신 달성. 바이오매스/생분해 소재 전환.</p>
+          <p data-lang="en">Eco products = regular price. Cost innovation via global OEM. Biomass/biodegradable transition.</p>
+          <p data-lang="ja">エコ製品 = 一般価格。グローバルOEMで原価革新。バイオマス/生分解素材転換。</p>
+        </div>
+        <div class="ov-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg> <span data-lang="ko">차별화 전략</span><span data-lang="en">Differentiation</span><span data-lang="ja">差別化戦略</span></h3>
+          <p data-lang="ko">kgCO₂e 탄소 절감량을 네이버페이 포인트로 즉시 적립. 재구매율 40% 목표.</p>
+          <p data-lang="en">Carbon savings (kgCO₂e) instantly credited as NaverPay points. 40% repurchase target.</p>
+          <p data-lang="ja">kgCO₂e炭素削減量をNaverPayポイントで即時積立。リピート率40%目標。</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="ov-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> <span data-lang="ko">성장 지표</span><span data-lang="en">Growth Metrics</span><span data-lang="ja">成長指標</span></h3>
+          <div class="ov-stat"><span class="ov-stat-val" data-lang="ko">233%</span><span class="ov-stat-val" data-lang="en">233%</span><span class="ov-stat-val" data-lang="ja">233%</span><span class="ov-stat-unit" data-lang="ko">YoY 성장 목표</span><span class="ov-stat-unit" data-lang="en">YoY Growth Target</span><span class="ov-stat-unit" data-lang="ja">YoY成長目標</span></div>
+          <p style="margin-top:8px" data-lang="ko">네이버/쿠팡 주방용품 카테고리 동시 1등 달성 실적 보유</p>
+          <p style="margin-top:8px" data-lang="en">Achieved #1 in kitchen category on both Naver and Coupang</p>
+          <p style="margin-top:8px" data-lang="ja">Naver/Coupangキッチン用品カテゴリ同時1位達成実績</p>
+        </div>
+        <div class="ov-card">
+          <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> <span data-lang="ko">시장 기회</span><span data-lang="en">Market Opportunity</span><span data-lang="ja">市場機会</span></h3>
+          <div class="ov-stat"><span class="ov-stat-val">5.2</span><span class="ov-stat-unit" data-lang="ko">조원 (2028 시장 규모)</span><span class="ov-stat-unit" data-lang="en">T KRW (2028 Market)</span><span class="ov-stat-unit" data-lang="ja">兆ウォン (2028年市場)</span></div>
+          <p style="margin-top:8px" data-lang="ko">친환경 생활용품 시장 CAGR 18%. SAM 5,500억원.</p>
+          <p style="margin-top:8px" data-lang="en">Eco household goods CAGR 18%. SAM ₩550B.</p>
+          <p style="margin-top:8px" data-lang="ja">エコ生活用品市場CAGR 18%。SAM 5,500億ウォン。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 MARKET OPPORTUNITY -->
+<div class="slide market" data-title-ko="시장 기회" data-title-en="Market Opportunity" data-title-ja="市場機会">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">시장 기회</div><div class="section-label" data-lang="en">Market Opportunity</div><div class="section-label" data-lang="ja">市場機会</div>
+    <div class="section-title" data-lang="ko">2028년 국내 친환경 생활용품 시장<br><span style="color:#22C55E">5.2조원 돌파 전망</span></div>
+    <div class="section-title" data-lang="en">Korea Eco Household Market to Exceed<br><span style="color:#22C55E">₩5.2T by 2028</span></div>
+    <div class="section-title" data-lang="ja">2028年韓国エコ生活用品市場<br><span style="color:#22C55E">5.2兆ウォン突破見込み</span></div>
+    <div class="section-desc" data-lang="ko">연평균 18% 성장. 소비자 78%가 친환경 프리미엄 지불 의향 보유, 실제 전환율은 23%에 불과.</div>
+    <div class="section-desc" data-lang="en">18% CAGR growth. 78% of consumers willing to pay eco-premium, but only 23% actually convert.</div>
+    <div class="section-desc" data-lang="ja">年平均18%成長。消費者78%がエコプレミアム支払意向、実際の転換率は23%のみ。</div>
+    <div class="market-content">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:28px">
+        <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:var(--accent)" data-lang="ko">5.2조</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:var(--accent)" data-lang="en">₩5.2T</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:var(--accent)" data-lang="ja">5.2兆</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ko">2028 시장 전망</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="en">2028 Market</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ja">2028年市場</div>
+        </div>
+        <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#22C55E" data-lang="ko">5,500억</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#22C55E" data-lang="en">₩550B</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#22C55E" data-lang="ja">5,500億</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ko">SAM (지퍼백/롤백/장갑)</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="en">SAM (Bags/Gloves)</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ja">SAM (袋/手袋)</div>
+        </div>
+        <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#F59E0B">18%</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ko">연평균 성장률</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="en">CAGR</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ja">年平均成長率</div>
+        </div>
+        <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#EF4444">55%</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ko">의향-전환 갭</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="en">Intent-Action Gap</div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ja">意向-転換ギャップ</div>
+        </div>
+      </div>
+      <div class="mkt-bullets">
+        <div style="font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:8px">
+          <div data-lang="ko"><span style="color:var(--accent);font-weight:700">탄소중립 2050</span> &mdash; 국민주권 정부의 친환경 정책 가속으로 생활용품 시장 대전환 필요</div>
+          <div data-lang="en"><span style="color:var(--accent);font-weight:700">Carbon Neutral 2050</span> &mdash; Government eco-policy acceleration drives household market transformation</div>
+          <div data-lang="ja"><span style="color:var(--accent);font-weight:700">炭素中立2050</span> &mdash; 政府エコ政策加速で生活用品市場の大転換が必要</div>
+          <div data-lang="ko"><span style="color:#3B82F6;font-weight:700">EU Green Deal / 일본 GX</span> &mdash; 글로벌 탈플라스틱 규제 본격화, 선제 대응 기업에 기회</div>
+          <div data-lang="en"><span style="color:#3B82F6;font-weight:700">EU Green Deal / Japan GX</span> &mdash; Global anti-plastic regulation accelerates, opportunity for early movers</div>
+          <div data-lang="ja"><span style="color:#3B82F6;font-weight:700">EU Green Deal / 日本 GX</span> &mdash; グローバル脱プラスチック規制本格化、先行企業にチャンス</div>
+          <div data-lang="ko"><span style="color:#F59E0B;font-weight:700">MZ세대 가치소비</span> &mdash; 친환경 소재 전환은 선택이 아닌 생존 전략</div>
+          <div data-lang="en"><span style="color:#F59E0B;font-weight:700">MZ Value Consumption</span> &mdash; Eco-material transition is survival, not choice</div>
+          <div data-lang="ja"><span style="color:#F59E0B;font-weight:700">MZ世代の価値消費</span> &mdash; エコ素材転換は選択ではなく生存戦略</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 PROBLEM 1: 가격 장벽 -->
+<div class="slide problem" data-title-ko="문제: 가격 장벽" data-title-en="Problem: Price Barrier" data-title-ja="課題: 価格障壁">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">문제 인식</div><div class="section-label" data-lang="en">Problem</div><div class="section-label" data-lang="ja">課題認識</div>
+    <div class="section-title" data-lang="ko">친환경 제품의 3대 구조적 문제</div>
+    <div class="section-title" data-lang="en">3 Structural Problems of Eco Products</div>
+    <div class="section-title" data-lang="ja">エコ製品の3大構造的問題</div>
+    <div class="section-desc" data-lang="ko">가격, 신뢰, 보상의 부재가 친환경 대중화를 가로막는 핵심 장벽</div>
+    <div class="section-desc" data-lang="en">Price, trust, and reward gaps are the core barriers blocking eco-product mass adoption</div>
+    <div class="section-desc" data-lang="ja">価格、信頼、報酬の不在がエコ大衆化を阻む核心障壁</div>
+    <div class="problem-flow">
+      <div class="problem-col">
+        <div class="p-icon red"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="p-title" data-lang="ko">가격 장벽</div><div class="p-title" data-lang="en">Price Barrier</div><div class="p-title" data-lang="ja">価格障壁</div>
+        <div class="p-desc" data-lang="ko">친환경 원재료 유통 왜곡으로<br>일반 제품 대비 2~3배 고가</div>
+        <div class="p-desc" data-lang="en">Distorted raw material distribution<br>makes eco 2-3x more expensive</div>
+        <div class="p-desc" data-lang="ja">エコ原材料流通の歪みで<br>一般製品の2~3倍の高価格</div>
+        <div class="p-highlight red" data-lang="ko">대중화 실패의 근본 원인</div>
+        <div class="p-highlight red" data-lang="en">Root Cause of Mass Adoption Failure</div>
+        <div class="p-highlight red" data-lang="ja">大衆化失敗の根本原因</div>
+      </div>
+      <div class="problem-col">
+        <div class="p-icon orange"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+        <div class="p-title" data-lang="ko">그린워싱 불신</div><div class="p-title" data-lang="en">Greenwashing Distrust</div><div class="p-title" data-lang="ja">グリーンウォッシング不信</div>
+        <div class="p-desc" data-lang="ko">저가 친환경 = 인증 미취득<br>산화 생분해 등 2차 오염 유발</div>
+        <div class="p-desc" data-lang="en">Cheap eco = uncertified<br>Oxidative biodegradation causes pollution</div>
+        <div class="p-desc" data-lang="ja">低価格エコ = 認証未取得<br>酸化生分解等の2次汚染発生</div>
+        <div class="p-highlight orange" data-lang="ko">소비자 신뢰 붕괴</div>
+        <div class="p-highlight orange" data-lang="en">Consumer Trust Collapse</div>
+        <div class="p-highlight orange" data-lang="ja">消費者信頼崩壊</div>
+      </div>
+      <div class="problem-col">
+        <div class="p-icon purple"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><circle cx="12" cy="12" r="1"/></svg></div>
+        <div class="p-title" data-lang="ko">보상 부재</div><div class="p-title" data-lang="en">No Reward System</div><div class="p-title" data-lang="ja">報酬不在</div>
+        <div class="p-desc" data-lang="ko">정부 탄소포인트제는 절차 복잡<br>예산 조기소진으로 실효성 없음</div>
+        <div class="p-desc" data-lang="en">Gov carbon point: complex process<br>Budget exhausted early, ineffective</div>
+        <div class="p-desc" data-lang="ja">政府炭素ポイント制は手続き複雑<br>予算早期消尽で実効性なし</div>
+        <div class="p-highlight purple" data-lang="ko">재구매 동기 부재</div>
+        <div class="p-highlight purple" data-lang="en">No Repurchase Motivation</div>
+        <div class="p-highlight purple" data-lang="ja">リピート動機不在</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 PROBLEM 2: 규제 & 정책 -->
+<div class="slide" data-title-ko="문제: 규제 압박" data-title-en="Problem: Regulation" data-title-ja="課題: 規制圧力" style="background:radial-gradient(ellipse at 70% 30%,rgba(239,68,68,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">규제 환경</div><div class="section-label" data-lang="en">Regulatory Landscape</div><div class="section-label" data-lang="ja">規制環境</div>
+    <div class="section-title" data-lang="ko">탄소중립 정책 가속,<br><span style="color:#EF4444">미대응 기업은 퇴출</span></div>
+    <div class="section-title" data-lang="en">Carbon Neutral Policy Accelerating,<br><span style="color:#EF4444">Non-Compliant Exit</span></div>
+    <div class="section-title" data-lang="ja">炭素中立政策加速、<br><span style="color:#EF4444">未対応企業は退出</span></div>
+    <div class="section-desc" data-lang="ko">글로벌 규제가 빠르게 진행되며, 선제 대응 기업에게 유리한 시장 형성</div>
+    <div class="section-desc" data-lang="en">Global regulations rapidly advancing, creating favorable markets for early movers</div>
+    <div class="section-desc" data-lang="ja">グローバル規制が急速に進行、先行企業に有利な市場形成</div>
+    <div class="market-content">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px">
+          <h3 style="font-size:max(18px,1.41vw);font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg> <span data-lang="ko">국내 규제</span><span data-lang="en">Domestic</span><span data-lang="ja">国内規制</span></h3>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.6">
+            <div data-lang="ko"><span style="color:var(--accent);font-weight:700">탄소중립 2050 로드맵</span> &mdash; 정부 핵심 정책</div>
+            <div data-lang="en"><span style="color:var(--accent);font-weight:700">Carbon Neutral 2050</span> &mdash; Core government policy</div>
+            <div data-lang="ja"><span style="color:var(--accent);font-weight:700">炭素中立2050</span> &mdash; 政府核心政策</div>
+            <div data-lang="ko">탈플라스틱 규제 강화 &mdash; 생활용품 시장 전환 필수</div>
+            <div data-lang="en">Anti-plastic regulation &mdash; Household market must transition</div>
+            <div data-lang="ja">脱プラスチック規制強化 &mdash; 生活用品市場転換必須</div>
+            <div data-lang="ko">은평구 탄소중립 녹색성장 기본계획 (2025-2034)</div>
+            <div data-lang="en">Eunpyeong-gu Carbon Neutral Green Growth Plan (2025-2034)</div>
+            <div data-lang="ja">恩平区炭素中立緑色成長基本計画 (2025-2034)</div>
+          </div>
+        </div>
+        <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px">
+          <h3 style="font-size:max(18px,1.41vw);font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> <span data-lang="ko">글로벌 규제</span><span data-lang="en">Global</span><span data-lang="ja">グローバル規制</span></h3>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:max(18px,1.09vw);color:var(--text-muted);line-height:1.6">
+            <div data-lang="ko"><span style="color:#3B82F6;font-weight:700">EU Green Deal (2025~)</span> &mdash; 플라스틱 규제 본격화</div>
+            <div data-lang="en"><span style="color:#3B82F6;font-weight:700">EU Green Deal (2025~)</span> &mdash; Plastic regulation enforcement</div>
+            <div data-lang="ja"><span style="color:#3B82F6;font-weight:700">EU Green Deal (2025~)</span> &mdash; プラスチック規制本格化</div>
+            <div data-lang="ko"><span style="color:#F59E0B;font-weight:700">일본 GX 전환</span> &mdash; 탈플라스틱 법제화</div>
+            <div data-lang="en"><span style="color:#F59E0B;font-weight:700">Japan GX Transition</span> &mdash; Anti-plastic legislation</div>
+            <div data-lang="ja"><span style="color:#F59E0B;font-weight:700">日本 GX転換</span> &mdash; 脱プラスチック法制化</div>
+            <div data-lang="ko">아마존/Shopee/Lazada &mdash; 친환경 카테고리 별도 편성</div>
+            <div data-lang="en">Amazon/Shopee/Lazada &mdash; Dedicated eco category expansion</div>
+            <div data-lang="ja">Amazon/Shopee/Lazada &mdash; エコカテゴリ別途編成</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 SOLUTION OVERVIEW -->
+<div class="slide solution" data-title-ko="솔루션 개요" data-title-en="Solution Overview" data-title-ja="ソリューション概要">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">솔루션</div><div class="section-label" data-lang="en">Solution</div><div class="section-label" data-lang="ja">ソリューション</div>
+    <div class="section-title" data-lang="ko">동등가격 + 즉시보상 + AI 혁신<br><span style="color:var(--accent)">친환경 대중화의 공식</span></div>
+    <div class="section-title" data-lang="en">Equal Price + Instant Reward + AI<br><span style="color:var(--accent)">The Formula for Eco Mass Adoption</span></div>
+    <div class="section-title" data-lang="ja">同等価格 + 即時報酬 + AI革新<br><span style="color:var(--accent)">エコ大衆化の公式</span></div>
+    <div class="section-desc" data-lang="ko">3대 전략이 유기적으로 연결되어 친환경 시장의 구조적 문제를 해결합니다.</div>
+    <div class="section-desc" data-lang="en">Three strategies organically connect to solve the structural problems of the eco market.</div>
+    <div class="section-desc" data-lang="ja">3大戦略が有機的に連結し、エコ市場の構造的問題を解決します。</div>
+    <div class="solution-flow">
+      <div class="solution-step"><div class="step-number">STRATEGY 01</div><div class="step-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg></div><h3 data-lang="ko">동등가격 전략</h3><h3 data-lang="en">Equal Price Strategy</h3><h3 data-lang="ja">同等価格戦略</h3><p data-lang="ko">글로벌 OEM 원가 혁신으로 바이오매스/생분해 제품을 일반 가격에 공급. 프리미엄 대비 40~70% 낮은 단가.</p><p data-lang="en">Global OEM cost innovation for biomass/biodegradable at regular prices. 40-70% lower than premium eco.</p><p data-lang="ja">グローバルOEM原価革新でバイオマス/生分解製品を一般価格で供給。プレミアム比40~70%低単価。</p></div>
+      <div class="solution-step"><div class="step-number">STRATEGY 02</div><div class="step-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div><h3 data-lang="ko">그린 리워드</h3><h3 data-lang="en">Green Reward</h3><h3 data-lang="ja">グリーンリワード</h3><p data-lang="ko">kgCO₂e 탄소 절감량을 네이버페이 포인트로 즉시 적립. 2,000만 이용자 생태계 활용, 재구매율 40%.</p><p data-lang="en">Carbon savings as NaverPay points instantly. Leveraging 20M user ecosystem, 40% repurchase rate.</p><p data-lang="ja">kgCO₂e炭素削減量をNaverPayポイントで即時積立。2,000万ユーザー生態系活用、リピート率40%。</p></div>
+      <div class="solution-step"><div class="step-number">STRATEGY 03</div><div class="step-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div><h3 data-lang="ko">AI 커머스</h3><h3 data-lang="en">AI Commerce</h3><h3 data-lang="ja">AIコマース</h3><p data-lang="ko">AI 라이브커머스 + AI 바이럴로 운영비 90% 절감. 월 4회 라이브 + 20개 숏폼으로 매출 2배 성장.</p><p data-lang="en">AI live commerce + AI viral cuts ops cost 90%. 4 lives/month + 20 shorts doubles revenue.</p><p data-lang="ja">AIライブコマース+AIバイラルで運営費90%削減。月4回ライブ+20本ショート動画で売上2倍成長。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 SOLUTION: OEM 원가 혁신 -->
+<div class="slide" data-title-ko="원가 혁신" data-title-en="Cost Innovation" data-title-ja="原価革新" style="background:radial-gradient(ellipse at 25% 35%,rgba(34,197,94,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">원가 혁신</div><div class="section-label" data-lang="en">Cost Innovation</div><div class="section-label" data-lang="ja">原価革新</div>
+    <div class="section-title" data-lang="ko">글로벌 OEM 네트워크로<br><span style="color:var(--accent)">동등가격 친환경 실현</span></div>
+    <div class="section-title" data-lang="en">Global OEM Network Enables<br><span style="color:var(--accent)">Equal-Price Eco Products</span></div>
+    <div class="section-title" data-lang="ja">グローバルOEMネットワークで<br><span style="color:var(--accent)">同等価格エコ実現</span></div>
+    <div class="section-desc" data-lang="ko">브라질 브라스켐 바이오매스 원재료 + 글로벌 생분해 인증 원료의 유통 단순화</div>
+    <div class="section-desc" data-lang="en">Brazil Braskem biomass + simplified global biodegradable certified material distribution</div>
+    <div class="section-desc" data-lang="ja">ブラジルBraskem バイオマス原材料 + グローバル生分解認証原料の流通簡素化</div>
+    <div class="market-content">
+      <table class="comp-table" style="margin-top:0">
+        <thead><tr>
+          <th><span data-lang="ko">구분</span><span data-lang="en">Category</span><span data-lang="ja">区分</span></th>
+          <th><span data-lang="ko">프리미엄 친환경</span><span data-lang="en">Premium Eco</span><span data-lang="ja">プレミアムエコ</span></th>
+          <th><span data-lang="ko">저가 친환경</span><span data-lang="en">Cheap Eco</span><span data-lang="ja">低価格エコ</span></th>
+          <th class="comp-zaemit-cell"><span data-lang="ko">브랜디노</span><span data-lang="en">Brandino</span><span data-lang="ja">ブランディノ</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span data-lang="ko">가격 수준</span><span data-lang="en">Price Level</span><span data-lang="ja">価格水準</span></td><td><span data-lang="ko">일반의 2~3배</span><span data-lang="en">2-3x regular</span><span data-lang="ja">一般の2~3倍</span></td><td><span data-lang="ko">일반과 동등</span><span data-lang="en">Equal to regular</span><span data-lang="ja">一般と同等</span></td><td class="comp-zaemit-cell"><span data-lang="ko">일반과 동등</span><span data-lang="en">Equal to regular</span><span data-lang="ja">一般と同等</span></td></tr>
+          <tr><td><span data-lang="ko">품질 신뢰</span><span data-lang="en">Quality Trust</span><span data-lang="ja">品質信頼</span></td><td><span data-lang="ko">높음</span><span data-lang="en">High</span><span data-lang="ja">高い</span></td><td><span data-lang="ko">낮음 (그린워싱)</span><span data-lang="en">Low (greenwashing)</span><span data-lang="ja">低い (グリーンウォッシング)</span></td><td class="comp-zaemit-cell"><span data-lang="ko">글로벌 OEM + 국제인증</span><span data-lang="en">Global OEM + Int'l Cert</span><span data-lang="ja">グローバルOEM + 国際認証</span></td></tr>
+          <tr><td><span data-lang="ko">탄소 보상</span><span data-lang="en">Carbon Reward</span><span data-lang="ja">炭素報酬</span></td><td><span data-lang="ko">없음</span><span data-lang="en">None</span><span data-lang="ja">なし</span></td><td><span data-lang="ko">없음</span><span data-lang="en">None</span><span data-lang="ja">なし</span></td><td class="comp-zaemit-cell"><span data-lang="ko">네이버페이 즉시 적립</span><span data-lang="en">NaverPay Instant</span><span data-lang="ja">NaverPay即時積立</span></td></tr>
+          <tr><td><span data-lang="ko">AI 커머스</span><span data-lang="en">AI Commerce</span><span data-lang="ja">AIコマース</span></td><td><span data-lang="ko">미적용</span><span data-lang="en">N/A</span><span data-lang="ja">未適用</span></td><td><span data-lang="ko">미적용</span><span data-lang="en">N/A</span><span data-lang="ja">未適用</span></td><td class="comp-zaemit-cell"><span data-lang="ko">90% 비용절감</span><span data-lang="en">90% Cost Cut</span><span data-lang="ja">90%コスト削減</span></td></tr>
+          <tr><td><span data-lang="ko">재구매율</span><span data-lang="en">Repurchase</span><span data-lang="ja">リピート率</span></td><td><span data-lang="ko">브랜드 충성도</span><span data-lang="en">Brand loyalty</span><span data-lang="ja">ブランド忠誠度</span></td><td><span data-lang="ko">저조 (불신)</span><span data-lang="en">Low (distrust)</span><span data-lang="ja">低調 (不信)</span></td><td class="comp-zaemit-cell"><span data-lang="ko">리워드 루프 40%</span><span data-lang="en">Reward Loop 40%</span><span data-lang="ja">リワードループ40%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 08 SOLUTION: 그린 리워드 -->
+<div class="slide" data-title-ko="그린 리워드" data-title-en="Green Reward" data-title-ja="グリーンリワード" style="background:radial-gradient(ellipse at 60% 30%,rgba(0,212,170,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">그린 리워드</div><div class="section-label" data-lang="en">Green Reward</div><div class="section-label" data-lang="ja">グリーンリワード</div>
+    <div class="section-title" data-lang="ko">구매 → 탄소절감 → 네이버페이<br><span style="color:var(--accent)">재구매 Lock-in 선순환</span></div>
+    <div class="section-title" data-lang="en">Purchase → Carbon Cut → NaverPay<br><span style="color:var(--accent)">Repurchase Lock-in Loop</span></div>
+    <div class="section-title" data-lang="ja">購入 → 炭素削減 → NaverPay<br><span style="color:var(--accent)">リピートLock-in好循環</span></div>
+    <div class="section-desc" data-lang="ko">네이버페이 월 이용자 2,000만명 생태계를 활용한 강력한 고객 Lock-in 구조</div>
+    <div class="section-desc" data-lang="en">Powerful customer lock-in leveraging NaverPay's 20M monthly user ecosystem</div>
+    <div class="section-desc" data-lang="ja">NaverPay月間利用者2,000万人の生態系を活用した強力な顧客Lock-in構造</div>
+    <div class="reward-flow">
+      <div class="reward-step"><div class="reward-step-num">01</div><div class="reward-step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div><h4 data-lang="ko">구매</h4><h4 data-lang="en">Purchase</h4><h4 data-lang="ja">購入</h4><p data-lang="ko">친환경 제품 구매</p><p data-lang="en">Buy eco product</p><p data-lang="ja">エコ製品購入</p></div>
+      <div class="reward-step"><div class="reward-step-num">02</div><div class="reward-step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div><h4 data-lang="ko">탄소 산정</h4><h4 data-lang="en">CO₂ Calc</h4><h4 data-lang="ja">炭素算定</h4><p data-lang="ko">kgCO₂e 자동 산정</p><p data-lang="en">Auto kgCO₂e calc</p><p data-lang="ja">kgCO₂e自動算定</p></div>
+      <div class="reward-step"><div class="reward-step-num">03</div><div class="reward-step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div><h4 data-lang="ko">절감량 표시</h4><h4 data-lang="en">Show Savings</h4><h4 data-lang="ja">削減量表示</h4><p data-lang="ko">즉시 노출 + 누적 시각화</p><p data-lang="en">Instant display + cumulative</p><p data-lang="ja">即時表示 + 累積可視化</p></div>
+      <div class="reward-step"><div class="reward-step-num">04</div><div class="reward-step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></div><h4 data-lang="ko">포인트 적립</h4><h4 data-lang="en">Point Credit</h4><h4 data-lang="ja">ポイント積立</h4><p data-lang="ko">네이버페이 즉시 적립</p><p data-lang="en">NaverPay instant</p><p data-lang="ja">NaverPay即時積立</p></div>
+      <div class="reward-step"><div class="reward-step-num">05</div><div class="reward-step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></div><h4 data-lang="ko">재구매</h4><h4 data-lang="en">Repurchase</h4><h4 data-lang="ja">リピート</h4><p data-lang="ko">네이버 전 가맹점 사용</p><p data-lang="en">Use across Naver</p><p data-lang="ja">Naver全加盟店利用</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 09 SOLUTION: AI 커머스 -->
+<div class="slide" data-title-ko="AI 커머스" data-title-en="AI Commerce" data-title-ja="AIコマース" style="background:radial-gradient(ellipse at 70% 50%,rgba(124,58,237,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">AI 커머스</div><div class="section-label" data-lang="en">AI Commerce</div><div class="section-label" data-lang="ja">AIコマース</div>
+    <div class="section-title" data-lang="ko">AI 라이브 + AI 바이럴로<br><span style="color:var(--accent2)">운영비 90% 절감</span></div>
+    <div class="section-title" data-lang="en">AI Live + AI Viral Cuts<br><span style="color:var(--accent2)">Operations Cost by 90%</span></div>
+    <div class="section-title" data-lang="ja">AIライブ + AIバイラルで<br><span style="color:var(--accent2)">運営費90%削減</span></div>
+    <div class="section-desc" data-lang="ko">대본, FAQ, 클립 자동 생성과 소재 자동 타겟팅으로 초저비용 고효율 프로모션</div>
+    <div class="section-desc" data-lang="en">Auto-generated scripts, FAQs, clips, and auto-targeting for ultra-low-cost high-efficiency promos</div>
+    <div class="section-desc" data-lang="ja">台本、FAQ、クリップ自動生成と素材自動ターゲティングで超低コスト高効率プロモーション</div>
+    <div class="ai-content" style="grid-template-columns:1fr 1fr 1fr;gap:18px">
+      <div class="ai-card" style="padding:22px">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 10-4 4 6 6-8-4-6 6 4-8-6-6 8 4Z"/></svg> <span data-lang="ko">AI 라이브 커머스</span><span data-lang="en">AI Live Commerce</span><span data-lang="ja">AIライブコマース</span></h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>AI 호스트 대본/FAQ 자동 생성</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>AI host auto-generates scripts</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>AIホスト台本/FAQ自動生成</li>
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>네이버 쇼핑라이브 누적 70만 뷰</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>Naver Shopping Live 700K views</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>Naverショッピングライブ累積70万ビュー</li>
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>실시간 채팅 응답 + 주문 유도</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>Real-time chat + order nudges</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent2)"></span>リアルタイムチャット+注文誘導</li>
+        </ul>
+        <div class="ai-stat"><span class="ai-stat-val" style="color:var(--accent2)">90%</span><span class="ai-stat-label" data-lang="ko">비용 절감</span><span class="ai-stat-label" data-lang="en">Cost cut</span><span class="ai-stat-label" data-lang="ja">コスト削減</span></div>
+        <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ko">100만 → 10만원/회</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="en">₩1M → ₩100K/session</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ja">100万 → 10万ウォン/回</div>
+      </div>
+      <div class="ai-card" style="padding:22px">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg> <span data-lang="ko">AI 바이럴 마케팅</span><span data-lang="en">AI Viral Marketing</span><span data-lang="ja">AIバイラルマーケティング</span></h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>숏폼 소재 자동 생성 (월 20건+)</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>Auto short-form content (20+/mo)</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>ショート動画自動生成 (月20本+)</li>
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>ROAS A/B 테스트 자동 최적화</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>ROAS A/B auto-optimization</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>ROAS A/Bテスト自動最適化</li>
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>틱톡/릴스/쇼츠 멀티 플랫폼 배포</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>TikTok/Reels/Shorts multi-platform</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>TikTok/Reels/Shorts マルチ配信</li>
+        </ul>
+        <div class="ai-stat"><span class="ai-stat-val" style="color:var(--accent)">2x</span><span class="ai-stat-label" data-lang="ko">매출 개선</span><span class="ai-stat-label" data-lang="en">Revenue lift</span><span class="ai-stat-label" data-lang="ja">売上改善</span></div>
+        <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ko">1천만 → 2천만원/월</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="en">₩10M → ₩20M/month</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ja">1千万 → 2千万ウォン/月</div>
+      </div>
+      <div class="ai-card" style="padding:22px">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> <span data-lang="ko">AI 추천/SEO</span><span data-lang="en">AI Recommend/SEO</span><span data-lang="ja">AI推薦/SEO</span></h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>구매 패턴 기반 개인화 추천</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>Personalized recs by purchase pattern</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>購買パターン基盤パーソナライズ推薦</li>
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>상품 상세 AI 자동 작성 + SEO</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>AI product page + SEO auto-write</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>商品詳細AI自動作成 + SEO</li>
+          <li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ko"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>리뷰 분석 → 재구매율 40% 목표</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="en"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>Review analysis → 40% repurchase goal</li><li style="font-size:max(18px,1.02vw);color:var(--text-muted);padding-left:14px;position:relative" data-lang="ja"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:#3B82F6"></span>レビュー分析 → リピート率40%目標</li>
+        </ul>
+        <div class="ai-stat"><span class="ai-stat-val" style="color:#3B82F6">40%</span><span class="ai-stat-label" data-lang="ko">재구매율 목표</span><span class="ai-stat-label" data-lang="en">Repurchase target</span><span class="ai-stat-label" data-lang="ja">リピート率目標</span></div>
+        <div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ko">업계 평균 15% 대비 2.7배</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="en">2.7x vs industry avg 15%</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted);margin-top:4px" data-lang="ja">業界平均15%比2.7倍</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 BRAND PORTFOLIO -->
+<div class="slide" data-title-ko="브랜드 포트폴리오" data-title-en="Brand Portfolio" data-title-ja="ブランドポートフォリオ">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">브랜드 포트폴리오</div><div class="section-label" data-lang="en">Brand Portfolio</div><div class="section-label" data-lang="ja">ブランドポートフォリオ</div>
+    <div class="section-title" data-lang="ko">3대 브랜드 독립 성장 엔진<br><span style="color:var(--accent)">2026 합산 100억 목표</span></div>
+    <div class="section-title" data-lang="en">3 Independent Brand Growth Engines<br><span style="color:var(--accent)">₩10B Combined Target 2026</span></div>
+    <div class="section-title" data-lang="ja">3大ブランド独立成長エンジン<br><span style="color:var(--accent)">2026年合算100億目標</span></div>
+    <div class="section-desc" data-lang="ko">각 브랜드의 레버리지를 극대화하고 리스크를 분산. 단계적 친환경 소재 전환 추진.</div>
+    <div class="section-desc" data-lang="en">Maximize each brand's leverage and diversify risk. Phased eco-material transition.</div>
+    <div class="section-desc" data-lang="ja">各ブランドのレバレッジを最大化しリスクを分散。段階的エコ素材転換推進。</div>
+    <div class="brand-grid">
+      <div class="brand-card">
+        <div class="brand-name">InnerHome</div>
+        <div class="brand-cat" data-lang="ko">생활용품 / 주방용품</div><div class="brand-cat" data-lang="en">Household / Kitchen</div><div class="brand-cat" data-lang="ja">生活用品 / キッチン用品</div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">2025 매출</span><span class="brand-stat-label" data-lang="en">2025 Revenue</span><span class="brand-stat-label" data-lang="ja">2025年売上</span><span class="brand-stat-value" data-lang="ko">25억</span><span class="brand-stat-value" data-lang="en">$1.8M</span><span class="brand-stat-value" data-lang="ja">約1.8億円</span></div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">2026 목표</span><span class="brand-stat-label" data-lang="en">2026 Target</span><span class="brand-stat-label" data-lang="ja">2026年目標</span><span class="brand-stat-value accent" data-lang="ko">50억</span><span class="brand-stat-value accent" data-lang="en">$3.6M</span><span class="brand-stat-value accent" data-lang="ja">約3.6億円</span></div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">친환경 전환율</span><span class="brand-stat-label" data-lang="en">Eco Transition</span><span class="brand-stat-label" data-lang="ja">エコ転換率</span><span class="brand-stat-value accent">10% → 20%</span></div>
+      </div>
+      <div class="brand-card">
+        <div class="brand-name">MonkeyHands</div>
+        <div class="brand-cat" data-lang="ko">니트릴장갑 / 코팅장갑</div><div class="brand-cat" data-lang="en">Nitrile / Coated Gloves</div><div class="brand-cat" data-lang="ja">ニトリル手袋 / コーティング手袋</div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">2025 매출</span><span class="brand-stat-label" data-lang="en">2025 Revenue</span><span class="brand-stat-label" data-lang="ja">2025年売上</span><span class="brand-stat-value" data-lang="ko">3억</span><span class="brand-stat-value" data-lang="en">$0.2M</span><span class="brand-stat-value" data-lang="ja">約0.2億円</span></div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">2026 목표</span><span class="brand-stat-label" data-lang="en">2026 Target</span><span class="brand-stat-label" data-lang="ja">2026年目標</span><span class="brand-stat-value accent" data-lang="ko">28억</span><span class="brand-stat-value accent" data-lang="en">$2.0M</span><span class="brand-stat-value accent" data-lang="ja">約2.0億円</span></div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">친환경 전환율</span><span class="brand-stat-label" data-lang="en">Eco Transition</span><span class="brand-stat-label" data-lang="ja">エコ転換率</span><span class="brand-stat-value accent">5% → 10%</span></div>
+      </div>
+      <div class="brand-card">
+        <div class="brand-name">BuddyBunny</div>
+        <div class="brand-cat" data-lang="ko">골프용품 / 스포츠 액세서리</div><div class="brand-cat" data-lang="en">Golf / Sports Accessories</div><div class="brand-cat" data-lang="ja">ゴルフ用品 / スポーツアクセサリー</div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">2025 매출</span><span class="brand-stat-label" data-lang="en">2025 Revenue</span><span class="brand-stat-label" data-lang="ja">2025年売上</span><span class="brand-stat-value" data-lang="ko">2억</span><span class="brand-stat-value" data-lang="en">$0.1M</span><span class="brand-stat-value" data-lang="ja">約0.1億円</span></div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">2026 목표</span><span class="brand-stat-label" data-lang="en">2026 Target</span><span class="brand-stat-label" data-lang="ja">2026年目標</span><span class="brand-stat-value accent" data-lang="ko">22억</span><span class="brand-stat-value accent" data-lang="en">$1.6M</span><span class="brand-stat-value accent" data-lang="ja">約1.6億円</span></div>
+        <div class="brand-stat"><span class="brand-stat-label" data-lang="ko">친환경 전환율</span><span class="brand-stat-label" data-lang="en">Eco Transition</span><span class="brand-stat-label" data-lang="ja">エコ転換率</span><span class="brand-stat-value accent">5% → 10%</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 11 BUSINESS MODEL -->
+<div class="slide business" data-title-ko="비즈니스 모델" data-title-en="Business Model" data-title-ja="ビジネスモデル">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">비즈니스 모델</div><div class="section-label" data-lang="en">Business Model</div><div class="section-label" data-lang="ja">ビジネスモデル</div>
+    <div class="section-title" data-lang="ko">4단계 수익 모델</div>
+    <div class="section-title" data-lang="en">4-Phase Revenue Model</div>
+    <div class="section-title" data-lang="ja">4段階収益モデル</div>
+    <div class="biz-diagram-wrap">
+      <div class="biz-card" style="border-color:rgba(0,212,170,0.3)">
+        <div class="biz-tag">BM-1</div>
+        <h4 data-lang="ko">멀티 브랜드 판매</h4><h4 data-lang="en">Multi-Brand Sales</h4><h4 data-lang="ja">マルチブランド販売</h4>
+        <p data-lang="ko">이너홈/몽키핸즈/버디버니<br>캐시카우 (현재)</p>
+        <p data-lang="en">InnerHome/MonkeyHands/<br>BuddyBunny Cash Cow</p>
+        <p data-lang="ja">InnerHome/MonkeyHands/<br>BuddyBunny キャッシュカウ</p>
+      </div>
+      <div class="biz-card" style="border-color:rgba(34,197,94,0.3)">
+        <div class="biz-tag" style="color:#22C55E">BM-2</div>
+        <h4 data-lang="ko">친환경 전환 판매</h4><h4 data-lang="en">Eco Transition Sales</h4><h4 data-lang="ja">エコ転換販売</h4>
+        <p data-lang="ko">네이버페이 리워드<br>전환/재구매 (협약기간)</p>
+        <p data-lang="en">NaverPay Reward<br>Conversion (Contract)</p>
+        <p data-lang="ja">NaverPayリワード<br>転換/リピート (協約期間)</p>
+      </div>
+      <div class="biz-card" style="border-color:rgba(59,130,246,0.3)">
+        <div class="biz-tag" style="color:#3B82F6">BM-3</div>
+        <h4 data-lang="ko">글로벌 수출</h4><h4 data-lang="en">Global Export</h4><h4 data-lang="ja">グローバル輸出</h4>
+        <p data-lang="ko">일본/동남아/미국<br>진출 (2026.08~)</p>
+        <p data-lang="en">Japan/SEA/US<br>Expansion (2026.08~)</p>
+        <p data-lang="ja">日本/東南アジア/米国<br>進出 (2026.08~)</p>
+      </div>
+      <div class="biz-card" style="border-color:rgba(124,58,237,0.3)">
+        <div class="biz-tag" style="color:#A78BFA">BM-4</div>
+        <h4 data-lang="ko">지역사회 ESG</h4><h4 data-lang="en">Community ESG</h4><h4 data-lang="ja">地域社会ESG</h4>
+        <p data-lang="ko">은평구 PoC<br>탄소절감 챌린지 (2027~)</p>
+        <p data-lang="en">Eunpyeong PoC<br>Carbon Challenge (2027~)</p>
+        <p data-lang="ja">恩平区PoC<br>炭素削減チャレンジ (2027~)</p>
+      </div>
+    </div>
+    <div class="biz-rev-summary">
+      <div class="biz-rev-item"><div class="biz-rev-val" data-lang="ko">30억</div><div class="biz-rev-val" data-lang="en">$2.1M</div><div class="biz-rev-val" data-lang="ja">約2.1億円</div><div class="biz-rev-label" data-lang="ko">2025 매출</div><div class="biz-rev-label" data-lang="en">2025 Revenue</div><div class="biz-rev-label" data-lang="ja">2025年売上</div></div>
+      <div class="biz-rev-item"><div class="biz-rev-val" data-lang="ko">100억</div><div class="biz-rev-val" data-lang="en">$7.1M</div><div class="biz-rev-val" data-lang="ja">約7.1億円</div><div class="biz-rev-label" data-lang="ko">2026 목표</div><div class="biz-rev-label" data-lang="en">2026 Target</div><div class="biz-rev-label" data-lang="ja">2026年目標</div></div>
+      <div class="biz-rev-item"><div class="biz-rev-val" data-lang="ko">1,000억</div><div class="biz-rev-val" data-lang="en">$71M</div><div class="biz-rev-val" data-lang="ja">約71億円</div><div class="biz-rev-label" data-lang="ko">2030 IPO 목표</div><div class="biz-rev-label" data-lang="en">2030 IPO Target</div><div class="biz-rev-label" data-lang="ja">2030年IPO目標</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 12 COMPETITIVE ANALYSIS -->
+<div class="slide competitive" data-title-ko="경쟁 분석" data-title-en="Competitive Analysis" data-title-ja="競合分析" style="background:radial-gradient(ellipse at 70% 50%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">경쟁 분석</div><div class="section-label" data-lang="en">Competitive Analysis</div><div class="section-label" data-lang="ja">競合分析</div>
+    <div class="section-title" data-lang="ko">단순 제품 경쟁이 아닌,<br><span style="color:var(--accent)">구조적 경쟁 우위</span></div>
+    <div class="section-title" data-lang="en">Not Just Product Competition,<br><span style="color:var(--accent)">Structural Advantage</span></div>
+    <div class="section-title" data-lang="ja">単なる製品競争ではない、<br><span style="color:var(--accent)">構造的競争優位</span></div>
+    <table class="comp-table">
+      <thead><tr>
+        <th><span data-lang="ko">구분</span><span data-lang="en">Category</span><span data-lang="ja">区分</span></th>
+        <th><span data-lang="ko">크린랩</span><span data-lang="en">CleanWrap</span><span data-lang="ja">CleanWrap</span></th>
+        <th><span data-lang="ko">깨끗한나라</span><span data-lang="en">Kkul Nara</span><span data-lang="ja">キレイな国</span></th>
+        <th><span data-lang="ko">저가 PB</span><span data-lang="en">Low-Cost PB</span><span data-lang="ja">低価格PB</span></th>
+        <th class="comp-zaemit-cell"><span data-lang="ko">브랜디노</span><span data-lang="en">Brandino</span><span data-lang="ja">ブランディノ</span></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><span data-lang="ko">친환경 전환</span><span data-lang="en">Eco Transition</span><span data-lang="ja">エコ転換</span></td>
+          <td><span data-lang="ko">부분적 (일부 제품)</span><span data-lang="en">Partial</span><span data-lang="ja">部分的</span></td>
+          <td><span data-lang="ko">부분적 (마케팅용)</span><span data-lang="en">Partial (marketing)</span><span data-lang="ja">部分的 (広告用)</span></td>
+          <td><span data-lang="ko">없음</span><span data-lang="en">None</span><span data-lang="ja">なし</span></td>
+          <td class="comp-zaemit-cell"><span data-lang="ko">전 제품 전략적 전환</span><span data-lang="en">Full Strategic Shift</span><span data-lang="ja">全製品戦略的転換</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="ko">가격 전략</span><span data-lang="en">Pricing</span><span data-lang="ja">価格戦略</span></td>
+          <td><span data-lang="ko">프리미엄 (+30~50%)</span><span data-lang="en">Premium (+30-50%)</span><span data-lang="ja">プレミアム (+30~50%)</span></td>
+          <td><span data-lang="ko">중가</span><span data-lang="en">Mid-range</span><span data-lang="ja">中価格帯</span></td>
+          <td><span data-lang="ko">최저가 (품질↓)</span><span data-lang="en">Lowest (low quality)</span><span data-lang="ja">最安 (品質↓)</span></td>
+          <td class="comp-zaemit-cell"><span data-lang="ko">동등가격 + 리워드</span><span data-lang="en">Same Price + Reward</span><span data-lang="ja">同等価格 + リワード</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="ko">탄소 보상</span><span data-lang="en">Carbon Reward</span><span data-lang="ja">炭素報酬</span></td>
+          <td><span data-lang="ko">없음</span><span data-lang="en">None</span><span data-lang="ja">なし</span></td>
+          <td><span data-lang="ko">없음</span><span data-lang="en">None</span><span data-lang="ja">なし</span></td>
+          <td><span data-lang="ko">없음</span><span data-lang="en">None</span><span data-lang="ja">なし</span></td>
+          <td class="comp-zaemit-cell"><span data-lang="ko">네이버페이 적립</span><span data-lang="en">NaverPay Points</span><span data-lang="ja">NaverPayポイント</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="ko">AI 커머스</span><span data-lang="en">AI Commerce</span><span data-lang="ja">AIコマース</span></td>
+          <td><span data-lang="ko">미적용</span><span data-lang="en">N/A</span><span data-lang="ja">未適用</span></td>
+          <td><span data-lang="ko">미적용</span><span data-lang="en">N/A</span><span data-lang="ja">未適用</span></td>
+          <td><span data-lang="ko">미적용</span><span data-lang="en">N/A</span><span data-lang="ja">未適用</span></td>
+          <td class="comp-zaemit-cell"><span data-lang="ko">AI 라이브+바이럴+추천</span><span data-lang="en">AI Live+Viral+Rec</span><span data-lang="ja">AIライブ+バイラル+推薦</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="ko">ESG 정책</span><span data-lang="en">ESG Policy</span><span data-lang="ja">ESG政策</span></td>
+          <td><span data-lang="ko">약함</span><span data-lang="en">Weak</span><span data-lang="ja">弱い</span></td>
+          <td><span data-lang="ko">약함</span><span data-lang="en">Weak</span><span data-lang="ja">弱い</span></td>
+          <td><span data-lang="ko">없음</span><span data-lang="en">None</span><span data-lang="ja">なし</span></td>
+          <td class="comp-zaemit-cell"><span data-lang="ko">EPR + 탄소중립 정합</span><span data-lang="en">EPR + Carbon Neutral</span><span data-lang="ja">EPR + 炭素中立整合</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="ko">글로벌 진출</span><span data-lang="en">Global Reach</span><span data-lang="ja">グローバル展開</span></td>
+          <td><span data-lang="ko">동남아 일부</span><span data-lang="en">Partial SEA</span><span data-lang="ja">東南アジア一部</span></td>
+          <td><span data-lang="ko">제한적</span><span data-lang="en">Limited</span><span data-lang="ja">限定的</span></td>
+          <td><span data-lang="ko">내수 전용</span><span data-lang="en">Domestic only</span><span data-lang="ja">国内専用</span></td>
+          <td class="comp-zaemit-cell"><span data-lang="ko">일본/동남아/미국</span><span data-lang="en">JP/SEA/US</span><span data-lang="ja">日本/東南アジア/米国</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 13 FINANCIAL PROJECTION — ascending growth bars -->
+<div class="slide" data-title-ko="재무 전망" data-title-en="Financial Projection" data-title-ja="財務プロジェクション" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,102,255,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">재무 전망</div><div class="section-label" data-lang="en">Financial Projection</div><div class="section-label" data-lang="ja">財務プロジェクション</div>
+    <div class="section-title" data-lang="ko">30억에서 1,000억으로<br><span style="color:var(--accent)">5년 33배 성장</span></div>
+    <div class="section-title" data-lang="en">From ₩3B to ₩100B<br><span style="color:var(--accent)">33x Growth in 5 Years</span></div>
+    <div class="section-title" data-lang="ja">30億から1,000億へ<br><span style="color:var(--accent)">5年で33倍成長</span></div>
+    <div class="fin-chart-area">
+      <!-- ascending bar chart -->
+      <div style="display:flex;align-items:flex-end;gap:20px;height:340px;padding:0 20px">
+        <!-- 2025 -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:var(--accent)" data-lang="ko">30억</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:var(--accent)" data-lang="en">₩3B</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:var(--accent)" data-lang="ja">30億</div>
+          <div style="width:100%;height:30px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--accent),rgba(0,212,170,0.4))"></div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);text-align:center"><strong style="color:#fff">2025</strong><br><span data-lang="ko">실적 달성</span><span data-lang="en">Achieved</span><span data-lang="ja">実績達成</span></div>
+        </div>
+        <!-- 2026 -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:var(--accent)" data-lang="ko">100억</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:var(--accent)" data-lang="en">₩10B</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:var(--accent)" data-lang="ja">100億</div>
+          <div style="width:100%;height:100px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--accent),rgba(0,212,170,0.4));border:2px solid var(--accent);box-shadow:0 0 20px rgba(0,212,170,0.3)"></div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);text-align:center"><strong style="color:var(--accent)">2026</strong><br><span data-lang="ko">친환경 전환</span><span data-lang="en">Eco Shift</span><span data-lang="ja">エコ転換</span></div>
+        </div>
+        <!-- 2027 -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#3B82F6" data-lang="ko">200억</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#3B82F6" data-lang="en">₩20B</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#3B82F6" data-lang="ja">200億</div>
+          <div style="width:100%;height:160px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#3B82F6,rgba(59,130,246,0.3))"></div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);text-align:center"><strong style="color:#fff">2027</strong><br><span data-lang="ko">카테고리 1위</span><span data-lang="en">Category #1</span><span data-lang="ja">カテゴリ1位</span></div>
+        </div>
+        <!-- 2028-29 -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#F59E0B" data-lang="ko">400~700억</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#F59E0B" data-lang="en">₩40-70B</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#F59E0B" data-lang="ja">400~700億</div>
+          <div style="width:100%;height:240px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#F59E0B,rgba(245,158,11,0.3))"></div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);text-align:center"><strong style="color:#fff">2028-29</strong><br><span data-lang="ko">글로벌 30%</span><span data-lang="en">Global 30%</span><span data-lang="ja">グローバル30%</span></div>
+        </div>
+        <!-- 2030 -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#A78BFA" data-lang="ko">1,000억+</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#A78BFA" data-lang="en">₩100B+</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.56vw);font-weight:800;color:#A78BFA" data-lang="ja">1,000億+</div>
+          <div style="width:100%;height:320px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#A78BFA,rgba(167,139,250,0.3));position:relative">
+            <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.5);border:1px solid rgba(167,139,250,0.4);border-radius:20px;padding:4px 14px;white-space:nowrap">
+              <span style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.02vw);font-weight:700;color:#A78BFA">IPO</span>
+            </div>
+          </div>
+          <div style="font-size:max(18px,1.02vw);color:var(--text-muted);text-align:center"><strong style="color:#fff">2030</strong><br><span data-lang="ko">코스닥 IPO</span><span data-lang="en">KOSDAQ IPO</span><span data-lang="ja">KOSDAQ IPO</span></div>
+        </div>
+      </div>
+      <!-- bottom line -->
+      <div style="height:2px;background:linear-gradient(90deg,rgba(0,212,170,0.5),rgba(59,130,246,0.5),rgba(245,158,11,0.5),rgba(167,139,250,0.5));border-radius:1px;margin:0 20px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 14 GLOBAL EXPANSION — detailed -->
+<div class="slide" data-title-ko="글로벌 진출" data-title-en="Global Expansion" data-title-ja="グローバル展開" style="background:radial-gradient(ellipse at 60% 30%,rgba(0,102,255,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">글로벌 전략</div><div class="section-label" data-lang="en">Global Strategy</div><div class="section-label" data-lang="ja">グローバル戦略</div>
+    <div class="section-title" data-lang="ko">K-리빙 + 친환경 규제로<br><span style="color:var(--accent)">글로벌 진출 적기</span></div>
+    <div class="section-title" data-lang="en">K-Living + Eco Regulations:<br><span style="color:var(--accent)">Perfect Global Timing</span></div>
+    <div class="section-title" data-lang="ja">K-リビング + エコ規制で<br><span style="color:var(--accent)">グローバル進出の好機</span></div>
+    <div class="global-content">
+      <div class="global-card" style="border-color:rgba(239,68,68,0.3)">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> <span data-lang="ko">일본 (1차 진출)</span><span data-lang="en">Japan (Primary)</span><span data-lang="ja">日本 (第1次進出)</span></h3>
+        <p data-lang="ko">K-리빙 열풍 + GX(Green Transformation) 규제 강화로 친환경 생활용품 진입 최적기. K-컬쳐 IP 활용 브랜딩 전략.</p>
+        <p data-lang="en">K-Living boom + GX regulation tightening makes it the perfect entry window for eco household goods. K-Culture IP branding strategy.</p>
+        <p data-lang="ja">K-リビングブーム + GX規制強化でエコ生活用品進入の最適期。K-カルチャーIP活用ブランディング戦略。</p>
+        <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+          <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:8px 12px;flex:1;min-width:120px">
+            <div style="font-size:max(18px,1.02vw);font-weight:700;color:#EF4444" data-lang="ko">채널</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#EF4444" data-lang="en">Channel</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#EF4444" data-lang="ja">チャンネル</div>
+            <div style="font-size:max(18px,1.02vw);color:var(--text-muted)">Amazon JP, Rakuten, Qoo10</div>
+          </div>
+          <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:8px 12px;flex:1;min-width:120px">
+            <div style="font-size:max(18px,1.02vw);font-weight:700;color:#EF4444" data-lang="ko">목표 매출</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#EF4444" data-lang="en">Target</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#EF4444" data-lang="ja">目標売上</div>
+            <div style="font-size:max(18px,1.02vw);color:var(--text-muted)" data-lang="ko">2026 5억 → 2028 60억</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted)" data-lang="en">2026 ₩0.5B → 2028 ₩6B</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted)" data-lang="ja">2026年5億 → 2028年60億</div>
+          </div>
+        </div>
+      </div>
+      <div class="global-card" style="border-color:rgba(245,158,11,0.3)">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> <span data-lang="ko">동남아 (2차)</span><span data-lang="en">Southeast Asia (2nd)</span><span data-lang="ja">東南アジア (第2次)</span></h3>
+        <p data-lang="ko">Tantawan(태국)/Stavian(베트남) 파트너 기반 현지 생산. 한류 프리미엄 활용 + 친환경 수요 급증 지역.</p>
+        <p data-lang="en">Local production via Tantawan(TH)/Stavian(VN) partners. K-wave premium + surging eco demand region.</p>
+        <p data-lang="ja">Tantawan(タイ)/Stavian(ベトナム)パートナー基盤の現地生産。韓流プレミアム活用 + エコ需要急増地域。</p>
+        <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+          <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:8px 12px;flex:1;min-width:120px">
+            <div style="font-size:max(18px,1.02vw);font-weight:700;color:#F59E0B" data-lang="ko">채널</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#F59E0B" data-lang="en">Channel</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#F59E0B" data-lang="ja">チャンネル</div>
+            <div style="font-size:max(18px,1.02vw);color:var(--text-muted)">Shopee, Lazada, TikTok Shop</div>
+          </div>
+          <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:8px 12px;flex:1;min-width:120px">
+            <div style="font-size:max(18px,1.02vw);font-weight:700;color:#F59E0B" data-lang="ko">강점</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#F59E0B" data-lang="en">Edge</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#F59E0B" data-lang="ja">強み</div>
+            <div style="font-size:max(18px,1.02vw);color:var(--text-muted)" data-lang="ko">현지 OEM → 원가 30%↓</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted)" data-lang="en">Local OEM → 30% cost↓</div><div style="font-size:max(18px,1.02vw);color:var(--text-muted)" data-lang="ja">現地OEM → 原価30%↓</div>
+          </div>
+        </div>
+      </div>
+      <div class="global-card" style="border-color:rgba(59,130,246,0.3)">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> <span data-lang="ko">미국 (3차)</span><span data-lang="en">United States (3rd)</span><span data-lang="ja">米国 (第3次)</span></h3>
+        <p data-lang="ko">H-Mart 한인 교포 시장 → Amazon 메인스트림 확장. ESG 소비 트렌드 + 탄소 라벨링 의무화 대응.</p>
+        <p data-lang="en">H-Mart Korean-American market → Amazon mainstream expansion. ESG consumption trend + carbon labeling mandate.</p>
+        <p data-lang="ja">H-Mart在米韓国系市場 → Amazonメインストリーム拡大。ESG消費トレンド + 炭素ラベリング義務化対応。</p>
+        <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+          <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:8px 12px;flex:1;min-width:120px">
+            <div style="font-size:max(18px,1.02vw);font-weight:700;color:#3B82F6" data-lang="ko">채널</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#3B82F6" data-lang="en">Channel</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#3B82F6" data-lang="ja">チャンネル</div>
+            <div style="font-size:max(18px,1.02vw);color:var(--text-muted)">Amazon US, H-Mart, Walmart</div>
+          </div>
+          <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:8px 12px;flex:1;min-width:120px">
+            <div style="font-size:max(18px,1.02vw);font-weight:700;color:#3B82F6" data-lang="ko">진입 시기</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#3B82F6" data-lang="en">Timeline</div><div style="font-size:max(18px,1.02vw);font-weight:700;color:#3B82F6" data-lang="ja">進入時期</div>
+            <div style="font-size:max(18px,1.02vw);color:var(--text-muted)">2028 H1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 15 2025 ACHIEVEMENTS — detailed -->
+<div class="slide" data-title-ko="2025 성과" data-title-en="2025 Achievements" data-title-ja="2025年成果" style="background:radial-gradient(ellipse at 50% 50%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">2025년 성과</div><div class="section-label" data-lang="en">2025 Achievements</div><div class="section-label" data-lang="ja">2025年成果</div>
+    <div class="section-title" data-lang="ko">검증된 실적,<br><span style="color:var(--accent)">폭발적 성장 기반</span></div>
+    <div class="section-title" data-lang="en">Proven Track Record,<br><span style="color:var(--accent)">Foundation for Explosive Growth</span></div>
+    <div class="section-title" data-lang="ja">検証された実績、<br><span style="color:var(--accent)">爆発的成長基盤</span></div>
+    <div class="traction-grid">
+      <div class="traction-card">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <span data-lang="ko">매출 성과</span><span data-lang="en">Revenue</span><span data-lang="ja">売上成果</span></h3>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">연간 매출</div><div class="metric-label" data-lang="en">Annual Revenue</div><div class="metric-label" data-lang="ja">年間売上</div><div class="metric-value accent" data-lang="ko">30억원</div><div class="metric-value accent" data-lang="en">₩3B ($2.1M)</div><div class="metric-value accent" data-lang="ja">約30億ウォン</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">InnerHome</div><div class="metric-label" data-lang="en">InnerHome</div><div class="metric-label" data-lang="ja">InnerHome</div><div class="metric-value" data-lang="ko">25억</div><div class="metric-value" data-lang="en">₩2.5B</div><div class="metric-value" data-lang="ja">25億</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">MonkeyHands</div><div class="metric-label" data-lang="en">MonkeyHands</div><div class="metric-label" data-lang="ja">MonkeyHands</div><div class="metric-value" data-lang="ko">3억</div><div class="metric-value" data-lang="en">₩300M</div><div class="metric-value" data-lang="ja">3億</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">BuddyBunny</div><div class="metric-label" data-lang="en">BuddyBunny</div><div class="metric-label" data-lang="ja">BuddyBunny</div><div class="metric-value" data-lang="ko">2억</div><div class="metric-value" data-lang="en">₩200M</div><div class="metric-value" data-lang="ja">2億</div></div>
+      </div>
+      <div class="traction-card">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg> <span data-lang="ko">시장 검증</span><span data-lang="en">Market Validation</span><span data-lang="ja">市場検証</span></h3>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">네이버 카테고리 순위</div><div class="metric-label" data-lang="en">Naver Category Rank</div><div class="metric-label" data-lang="ja">Naverカテゴリ順位</div><div class="metric-value" style="color:#22C55E">#1</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">쿠팡 카테고리 순위</div><div class="metric-label" data-lang="en">Coupang Category Rank</div><div class="metric-label" data-lang="ja">Coupangカテゴリ順位</div><div class="metric-value" style="color:#22C55E">#1</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">양대 플랫폼 동시 1위</div><div class="metric-label" data-lang="en">Dual Platform #1</div><div class="metric-label" data-lang="ja">2大プラットフォーム同時1位</div><div class="metric-value accent" data-lang="ko">달성</div><div class="metric-value accent" data-lang="en">Achieved</div><div class="metric-value accent" data-lang="ja">達成</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">리뷰 평점</div><div class="metric-label" data-lang="en">Review Rating</div><div class="metric-label" data-lang="ja">レビュー評点</div><div class="metric-value" style="color:#F59E0B">4.8/5.0</div></div>
+      </div>
+      <div class="traction-card">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> <span data-lang="ko">투자/인증</span><span data-lang="en">Funding/Certs</span><span data-lang="ja">投資/認証</span></h3>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">투자유치</div><div class="metric-label" data-lang="en">Funding</div><div class="metric-label" data-lang="ja">投資誘致</div><div class="metric-value" style="color:#F59E0B" data-lang="ko">3,525만</div><div class="metric-value" style="color:#F59E0B" data-lang="en">₩35.3M</div><div class="metric-value" style="color:#F59E0B" data-lang="ja">3,525万</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">투자사</div><div class="metric-label" data-lang="en">Investor</div><div class="metric-label" data-lang="ja">投資社</div><div class="metric-value">Star Ventures</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">상표 등록</div><div class="metric-label" data-lang="en">Trademarks</div><div class="metric-label" data-lang="ja">商標登録</div><div class="metric-value" style="color:#A78BFA" data-lang="ko">2건 완료</div><div class="metric-value" style="color:#A78BFA" data-lang="en">2 Completed</div><div class="metric-value" style="color:#A78BFA" data-lang="ja">2件完了</div></div>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">사업자 등록</div><div class="metric-label" data-lang="en">Registration</div><div class="metric-label" data-lang="ja">事業者登録</div><div class="metric-value">204-88-03437</div></div>
+      </div>
+      <div class="traction-card">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <span data-lang="ko">공급망</span><span data-lang="en">Supply Chain</span><span data-lang="ja">サプライチェーン</span></h3>
+        <div class="metric-row"><div class="metric-label" data-lang="ko">글로벌 파트너</div><div class="metric-label" data-lang="en">Global Partners</div><div class="metric-label" data-lang="ja">グローバルパートナー</div><div class="metric-value" style="color:#3B82F6" data-lang="ko">4개사</div><div class="metric-value" style="color:#3B82F6" data-lang="en">4 Companies</div><div class="metric-value" style="color:#3B82F6" data-lang="ja">4社</div></div>
+        <div class="metric-row"><div class="metric-label">Tantawan</div><div class="metric-value" data-lang="ko">태국 (IKEA 공급)</div><div class="metric-value" data-lang="en">Thailand (IKEA)</div><div class="metric-value" data-lang="ja">タイ (IKEA供給)</div></div>
+        <div class="metric-row"><div class="metric-label">Stavian</div><div class="metric-value" data-lang="ko">베트남 (AEON)</div><div class="metric-value" data-lang="en">Vietnam (AEON)</div><div class="metric-value" data-lang="ja">ベトナム (AEON)</div></div>
+        <div class="metric-row"><div class="metric-label">Kingfa</div><div class="metric-value" data-lang="ko">중국 (TOP5 생분해)</div><div class="metric-value" data-lang="en">China (TOP5 Bio)</div><div class="metric-value" data-lang="ja">中国 (TOP5生分解)</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 16 ROADMAP — ascending timeline -->
+<div class="slide roadmap" data-title-ko="로드맵" data-title-en="Roadmap" data-title-ja="ロードマップ" style="background:radial-gradient(ellipse at 40% 60%,rgba(124,58,237,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">로드맵</div><div class="section-label" data-lang="en">Roadmap</div><div class="section-label" data-lang="ja">ロードマップ</div>
+    <div class="section-title" data-lang="ko">4단계 성장 전략,<br><span style="color:var(--accent)">IPO까지의 여정</span></div>
+    <div class="section-title" data-lang="en">4-Phase Growth Strategy,<br><span style="color:var(--accent)">Journey to IPO</span></div>
+    <div class="section-title" data-lang="ja">4段階成長戦略、<br><span style="color:var(--accent)">IPOまでの道のり</span></div>
+    <!-- ascending stepped timeline -->
+    <div style="display:flex;gap:12px;align-items:flex-end;position:relative;padding-top:10px">
+      <!-- connecting line (diagonal) -->
+      <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),#3B82F6,#F59E0B,#A78BFA);border-radius:2px;transform:rotate(-4deg);transform-origin:left bottom"></div>
+      <!-- Phase 1 -->
+      <div class="roadmap-year" style="flex:1;border-color:rgba(0,212,170,0.3);margin-bottom:3px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(0,212,170,0.15);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;color:var(--accent);font-size:max(18px,1.02vw)">1</div>
+          <h3 style="margin:0">2026</h3>
+        </div>
+        <div class="ry-phase" data-lang="ko">실증 단계</div><div class="ry-phase" data-lang="en">Proof Stage</div><div class="ry-phase" data-lang="ja">実証段階</div>
+        <ul>
+          <li data-lang="ko">친환경 소재 전환 출시</li><li data-lang="en">Eco material launch</li><li data-lang="ja">エコ素材転換発売</li>
+          <li data-lang="ko">네이버페이 리워드 구축</li><li data-lang="en">NaverPay reward build</li><li data-lang="ja">NaverPayリワード構築</li>
+          <li data-lang="ko">AI 커머스 정례 운영</li><li data-lang="en">AI commerce ops</li><li data-lang="ja">AIコマース定例運営</li>
+        </ul>
+        <div class="ry-target" data-lang="ko">100억</div><div class="ry-target" data-lang="en">₩10B</div><div class="ry-target" data-lang="ja">100億</div>
+      </div>
+      <!-- Phase 2 -->
+      <div class="roadmap-year" style="flex:1;border-color:rgba(59,130,246,0.3);margin-bottom:40px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(59,130,246,0.15);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;color:#3B82F6;font-size:max(18px,1.02vw)">2</div>
+          <h3 style="margin:0">2027</h3>
+        </div>
+        <div class="ry-phase" style="color:#3B82F6" data-lang="ko">확산 단계</div><div class="ry-phase" style="color:#3B82F6" data-lang="en">Scale Stage</div><div class="ry-phase" style="color:#3B82F6" data-lang="ja">拡散段階</div>
+        <ul>
+          <li data-lang="ko">카테고리 1위 확보</li><li data-lang="en">Category #1</li><li data-lang="ja">カテゴリ1位確保</li>
+          <li data-lang="ko">일본/동남아 본격 진출</li><li data-lang="en">JP/SEA full entry</li><li data-lang="ja">日本/東南アジア本格進出</li>
+          <li data-lang="ko">Series A 투자 유치</li><li data-lang="en">Series A raise</li><li data-lang="ja">Series A投資誘致</li>
+          <li data-lang="ko">친환경 전환율 30%</li><li data-lang="en">30% eco conversion</li><li data-lang="ja">エコ転換率30%</li>
+        </ul>
+        <div class="ry-target" style="background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.15);color:#3B82F6" data-lang="ko">200억</div><div class="ry-target" style="background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.15);color:#3B82F6" data-lang="en">₩20B</div><div class="ry-target" style="background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.15);color:#3B82F6" data-lang="ja">200億</div>
+      </div>
+      <!-- Phase 3 -->
+      <div class="roadmap-year" style="flex:1;border-color:rgba(245,158,11,0.3);margin-bottom:80px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;color:#F59E0B;font-size:max(18px,1.02vw)">3</div>
+          <h3 style="margin:0">2028-29</h3>
+        </div>
+        <div class="ry-phase" style="color:#F59E0B" data-lang="ko">고도화 단계</div><div class="ry-phase" style="color:#F59E0B" data-lang="en">Maturity Stage</div><div class="ry-phase" style="color:#F59E0B" data-lang="ja">高度化段階</div>
+        <ul>
+          <li data-lang="ko">글로벌 매출 30% 달성</li><li data-lang="en">Global revenue 30%</li><li data-lang="ja">グローバル売上30%</li>
+          <li data-lang="ko">B2B/B2G 사업 확대</li><li data-lang="en">B2B/B2G expansion</li><li data-lang="ja">B2B/B2G事業拡大</li>
+          <li data-lang="ko">코스닥 상장 요건 충족</li><li data-lang="en">KOSDAQ qualification</li><li data-lang="ja">KOSDAQ要件充足</li>
+          <li data-lang="ko">고용 50명+ 확대</li><li data-lang="en">50+ employees</li><li data-lang="ja">雇用50名+拡大</li>
+        </ul>
+        <div class="ry-target" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.15);color:#F59E0B" data-lang="ko">400~700억</div><div class="ry-target" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.15);color:#F59E0B" data-lang="en">₩40-70B</div><div class="ry-target" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.15);color:#F59E0B" data-lang="ja">400~700億</div>
+      </div>
+      <!-- Phase 4 -->
+      <div class="roadmap-year" style="flex:1;border-color:rgba(167,139,250,0.3);margin-bottom:120px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(167,139,250,0.15);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-weight:800;color:#A78BFA;font-size:max(18px,1.02vw)">4</div>
+          <h3 style="margin:0">2030</h3>
+        </div>
+        <div class="ry-phase" style="color:#A78BFA" data-lang="ko">글로벌 단계</div><div class="ry-phase" style="color:#A78BFA" data-lang="en">Global Stage</div><div class="ry-phase" style="color:#A78BFA" data-lang="ja">グローバル段階</div>
+        <ul>
+          <li data-lang="ko">코스닥 IPO 달성</li><li data-lang="en">KOSDAQ IPO</li><li data-lang="ja">KOSDAQ IPO達成</li>
+          <li data-lang="ko">영업이익률 30%+</li><li data-lang="en">30%+ OPM</li><li data-lang="ja">営業利益率30%+</li>
+          <li data-lang="ko">글로벌 친환경 리딩 브랜드</li><li data-lang="en">Global eco leader</li><li data-lang="ja">グローバルエコリーダー</li>
+          <li data-lang="ko">연매출 1,000억+</li><li data-lang="en">₩100B+ revenue</li><li data-lang="ja">年売上1,000億+</li>
+        </ul>
+        <div class="ry-target" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.15);color:#A78BFA" data-lang="ko">1,000억+ IPO</div><div class="ry-target" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.15);color:#A78BFA" data-lang="en">₩100B+ IPO</div><div class="ry-target" style="background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.15);color:#A78BFA" data-lang="ja">1,000億+ IPO</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 17 TEAM — detailed -->
+<div class="slide team" data-title-ko="팀" data-title-en="Team" data-title-ja="チーム" style="background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.06) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">팀 구성</div><div class="section-label" data-lang="en">Team</div><div class="section-label" data-lang="ja">チーム構成</div>
+    <div class="section-title" data-lang="ko">FMCG 업계 20년+ 경험,<br><span style="color:var(--accent)">실전형 팀</span></div>
+    <div class="section-title" data-lang="en">20+ Years FMCG Experience,<br><span style="color:var(--accent)">Battle-Tested Team</span></div>
+    <div class="section-title" data-lang="ja">FMCG業界20年+経験、<br><span style="color:var(--accent)">実戦型チーム</span></div>
+    <div class="team-layout">
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-avatar" style="background:rgba(0,212,170,0.15);color:var(--accent)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="team-name" data-lang="ko">대표이사 (CEO)</div><div class="team-name" data-lang="en">CEO</div><div class="team-name" data-lang="ja">代表取締役 (CEO)</div>
+          <div class="team-role" data-lang="ko">경영 총괄</div><div class="team-role" data-lang="en">Management</div><div class="team-role" data-lang="ja">経営総括</div>
+          <div class="team-desc" data-lang="ko">소비자 니즈 파악 + 제품 기획. InnerHome/MonkeyHands/BuddyBunny 3대 브랜드 전략 설계 및 실행. 글로벌 OEM 파트너십 구축.</div>
+          <div class="team-desc" data-lang="en">Consumer insights + product planning. 3-brand strategy design. Global OEM partnership building.</div>
+          <div class="team-desc" data-lang="ja">消費者ニーズ把握 + 製品企画。3大ブランド戦略設計・実行。グローバルOEMパートナーシップ構築。</div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar" style="background:rgba(59,130,246,0.15);color:#3B82F6"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="team-name" data-lang="ko">마케팅 이사 (CMO)</div><div class="team-name" data-lang="en">CMO</div><div class="team-name" data-lang="ja">マーケティング理事 (CMO)</div>
+          <div class="team-role" data-lang="ko">홍보/마케팅 총괄</div><div class="team-role" data-lang="en">Marketing & PR</div><div class="team-role" data-lang="ja">広報/マーケティング総括</div>
+          <div class="team-desc" data-lang="ko">오리온, 백셀, 크린랩 등 FMCG 대기업 10년 마케팅 경력. 이커머스 성과 마케팅 + AI 라이브커머스 전문.</div>
+          <div class="team-desc" data-lang="en">10yr marketing at FMCG giants (Orion, Bexel, CleanWrap). E-commerce performance marketing + AI live commerce expert.</div>
+          <div class="team-desc" data-lang="ja">オリオン、ベクセル、クリーンラップ等FMCG大手10年マーケティング経歴。Eコマース成果マーケティング + AIライブコマース専門。</div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar" style="background:rgba(245,158,11,0.15);color:#F59E0B"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+          <div class="team-name" data-lang="ko">구매 이사 (CPO)</div><div class="team-name" data-lang="en">CPO</div><div class="team-name" data-lang="ja">購買理事 (CPO)</div>
+          <div class="team-role" data-lang="ko">구매/물류 총괄</div><div class="team-role" data-lang="en">Procurement & Logistics</div><div class="team-role" data-lang="ja">購買/物流総括</div>
+          <div class="team-desc" data-lang="ko">구매 15년 + 물류 5년 경력. 태국/베트남/중국 OEM 직접 관리. 원가 40% 절감 구조 설계.</div>
+          <div class="team-desc" data-lang="en">15yr procurement + 5yr logistics. Direct TH/VN/CN OEM management. 40% cost reduction structure.</div>
+          <div class="team-desc" data-lang="ja">購買15年 + 物流5年経歴。タイ/ベトナム/中国OEM直接管理。原価40%削減構造設計。</div>
+        </div>
+      </div>
+      <div class="team-partners">
+        <h3 data-lang="ko">글로벌 제조 파트너</h3><h3 data-lang="en">Global Manufacturing Partners</h3><h3 data-lang="ja">グローバル製造パートナー</h3>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="partner-item"><div class="partner-name">Tantawan</div><div class="partner-loc" style="color:#EF4444" data-lang="ko">태국</div><div class="partner-loc" style="color:#EF4444" data-lang="en">Thailand</div><div class="partner-loc" style="color:#EF4444" data-lang="ja">タイ</div><div class="partner-desc" data-lang="ko">IKEA/Hefty 글로벌 공급사. 지퍼백/롤백 전문.</div><div class="partner-desc" data-lang="en">IKEA/Hefty global supplier. Zipper/roll bags.</div><div class="partner-desc" data-lang="ja">IKEA/Heftyグローバルサプライヤー。ジッパー/ロール袋専門。</div></div>
+          <div class="partner-item"><div class="partner-name">Stavian</div><div class="partner-loc" style="color:#F59E0B" data-lang="ko">베트남</div><div class="partner-loc" style="color:#F59E0B" data-lang="en">Vietnam</div><div class="partner-loc" style="color:#F59E0B" data-lang="ja">ベトナム</div><div class="partner-desc" data-lang="ko">롯데VN/AEON 파트너. 바이오매스 PE 전문.</div><div class="partner-desc" data-lang="en">Lotte VN/AEON partner. Biomass PE specialist.</div><div class="partner-desc" data-lang="ja">ロッテVN/AEONパートナー。バイオマスPE専門。</div></div>
+          <div class="partner-item"><div class="partner-name">Kingfa</div><div class="partner-loc" style="color:#3B82F6" data-lang="ko">중국</div><div class="partner-loc" style="color:#3B82F6" data-lang="en">China</div><div class="partner-loc" style="color:#3B82F6" data-lang="ja">中国</div><div class="partner-desc" data-lang="ko">글로벌 TOP5 생분해 원료. PLA/PBAT 공급.</div><div class="partner-desc" data-lang="en">Global TOP5 biodegradable. PLA/PBAT supply.</div><div class="partner-desc" data-lang="ja">グローバルTOP5生分解原料。PLA/PBAT供給。</div></div>
+          <div class="partner-item"><div class="partner-name">ANPHAT</div><div class="partner-loc" style="color:#22C55E" data-lang="ko">베트남</div><div class="partner-loc" style="color:#22C55E" data-lang="en">Vietnam</div><div class="partner-loc" style="color:#22C55E" data-lang="ja">ベトナム</div><div class="partner-desc" data-lang="ko">생분해 봉투/장갑 OEM. 대량 생산 라인 보유.</div><div class="partner-desc" data-lang="en">Biodegradable bags/gloves OEM. Mass production.</div><div class="partner-desc" data-lang="ja">生分解袋/手袋OEM。大量生産ライン保有。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 18 ESG — detailed -->
+<div class="slide" data-title-ko="ESG 전략" data-title-en="ESG Strategy" data-title-ja="ESG戦略" style="background:radial-gradient(ellipse at 50% 50%,rgba(34,197,94,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">ESG 전략</div><div class="section-label" data-lang="en">ESG Strategy</div><div class="section-label" data-lang="ja">ESG戦略</div>
+    <div class="section-title" data-lang="ko">사회적 가치와<br><span style="color:var(--accent)">비즈니스 성장의 선순환</span></div>
+    <div class="section-title" data-lang="en">Social Value and<br><span style="color:var(--accent)">Business Growth Virtuous Cycle</span></div>
+    <div class="section-title" data-lang="ja">社会的価値と<br><span style="color:var(--accent)">ビジネス成長の好循環</span></div>
+    <div class="esg-grid">
+      <div class="esg-card" style="border-color:rgba(34,197,94,0.3)">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53"/><path d="M7.47 8.53 9 7l1.53 1.53"/><path d="M11.47 4.53 13 3l1.53 1.53"/><path d="M20 2h2v2"/><path d="M18 14h2v2"/></svg> <span style="color:#22C55E">E</span> <span data-lang="ko">환경</span><span data-lang="en">Environment</span><span data-lang="ja">環境</span></h3>
+        <ul>
+          <li data-lang="ko">바이오매스 PE 소재로 탄소 40% 절감 (LCA 검증)</li><li data-lang="en">Biomass PE: 40% carbon reduction (LCA verified)</li><li data-lang="ja">バイオマスPE素材で炭素40%削減 (LCA検証)</li>
+          <li data-lang="ko">네이버페이 리워드로 kgCO₂e 누적 가시화</li><li data-lang="en">NaverPay rewards: cumulative kgCO₂e visualization</li><li data-lang="ja">NaverPayリワードでkgCO₂e累積可視化</li>
+          <li data-lang="ko">EL724 인증 추진 (니트릴 장갑 생분해 전환)</li><li data-lang="en">EL724 certification (biodegradable nitrile gloves)</li><li data-lang="ja">EL724認証推進 (ニトリル手袋生分解転換)</li>
+          <li data-lang="ko">2026 목표: 제품 CO₂ 절감량 연 50톤 이상</li><li data-lang="en">2026 target: 50+ tons CO₂ reduction/year</li><li data-lang="ja">2026年目標: 製品CO₂削減量年50トン以上</li>
+        </ul>
+      </div>
+      <div class="esg-card" style="border-color:rgba(59,130,246,0.3)">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <span style="color:#3B82F6">S</span> <span data-lang="ko">사회</span><span data-lang="en">Social</span><span data-lang="ja">社会</span></h3>
+        <ul>
+          <li data-lang="ko">은평구 주민참여형 실증사업 (탄소절감 챌린지)</li><li data-lang="en">Eunpyeong resident PoC (carbon reduction challenge)</li><li data-lang="ja">恩平区住民参加型実証事業 (炭素削減チャレンジ)</li>
+          <li data-lang="ko">지역 소상공인 연계: 동네 슈퍼/마트 유통 채널 확대</li><li data-lang="en">Local SME linkage: neighborhood store distribution expansion</li><li data-lang="ja">地域小商工人連携: 地元スーパー/マート流通拡大</li>
+          <li data-lang="ko">2024→2026 고용 120% 증가, 전원 정규직 채용</li><li data-lang="en">2024→2026 employment 120% growth, all full-time</li><li data-lang="ja">2024→2026年雇用120%増加、全員正規職採用</li>
+          <li data-lang="ko">장애인 고용 확대 및 다양성 채용 계획</li><li data-lang="en">Disability hiring expansion + diversity plan</li><li data-lang="ja">障害者雇用拡大・多様性採用計画</li>
+        </ul>
+      </div>
+      <div class="esg-card" style="border-color:rgba(124,58,237,0.3)">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg> <span style="color:#A78BFA">G</span> <span data-lang="ko">지배구조</span><span data-lang="en">Governance</span><span data-lang="ja">ガバナンス</span></h3>
+        <ul>
+          <li data-lang="ko">그린워싱 필터: 인증/원료 3단계 검증 체계</li><li data-lang="en">Greenwashing filter: 3-step cert/material verification</li><li data-lang="ja">グリーンウォッシングフィルター: 認証/原料3段階検証</li>
+          <li data-lang="ko">탄소 절감량 산정 표준화 (탄소인증원 연계)</li><li data-lang="en">Standardized carbon savings (certified body link)</li><li data-lang="ja">炭素削減量算定標準化 (炭素認証院連携)</li>
+          <li data-lang="ko">투명한 성과 리포팅: 월간/분기 공개</li><li data-lang="en">Transparent reporting: monthly/quarterly public</li><li data-lang="ja">透明な成果レポーティング: 月次/四半期公開</li>
+          <li data-lang="ko">이사회 내 ESG 위원회 설치 (2027~)</li><li data-lang="en">Board ESG committee (2027~)</li><li data-lang="ja">取締役会内ESG委員会設置 (2027~)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 19 USE OF FUNDS — detailed -->
+<div class="slide" data-title-ko="자금 사용 계획" data-title-en="Use of Funds" data-title-ja="資金使途計画" style="background:radial-gradient(ellipse at 30% 50%,rgba(0,102,255,0.12) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">자금 사용 계획</div><div class="section-label" data-lang="en">Use of Funds</div><div class="section-label" data-lang="ja">資金使途計画</div>
+    <div class="section-title" data-lang="ko">총 사업비 <span style="color:var(--accent)">1.33억원</span></div>
+    <div class="section-title" data-lang="en">Total Budget <span style="color:var(--accent)">₩133M</span></div>
+    <div class="section-title" data-lang="ja">総事業費 <span style="color:var(--accent)">1.33億ウォン</span></div>
+    <div class="section-desc" data-lang="ko">정부지원 1억 + 자기부담 3,334만 (현금 1,334만 + 현물 2,000만)</div>
+    <div class="section-desc" data-lang="en">Government ₩100M + Self ₩33.3M (Cash ₩13.3M + In-kind ₩20M)</div>
+    <div class="section-desc" data-lang="ja">政府支援1億 + 自己負担3,334万 (現金1,334万 + 現物2,000万)</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(0,212,170,0.2);border-radius:14px;padding:24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">검색광고/홍보</div><div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="en">Ads & PR</div><div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ja">広告/広報</div>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:var(--accent);margin-bottom:10px" data-lang="ko">6,000만</div><div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:var(--accent);margin-bottom:10px" data-lang="en">₩60M</div><div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:var(--accent);margin-bottom:10px" data-lang="ja">6,000万</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:max(18px,1.02vw);color:var(--text-muted)">
+          <div data-lang="ko">- 네이버/이베이 검색광고 3,000만</div><div data-lang="en">- Naver/eBay search ads ₩30M</div><div data-lang="ja">- Naver/eBay検索広告 3,000万</div>
+          <div data-lang="ko">- 브랜드 홍보/PR 2,000만</div><div data-lang="en">- Brand PR ₩20M</div><div data-lang="ja">- ブランド広報/PR 2,000万</div>
+          <div data-lang="ko">- SNS 광고 1,000만</div><div data-lang="en">- SNS ads ₩10M</div><div data-lang="ja">- SNS広告 1,000万</div>
+        </div>
+      </div>
+      <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(59,130,246,0.2);border-radius:14px;padding:24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg>
+          <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">마케팅/프로모션</div><div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="en">Marketing/Promo</div><div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ja">マーケティング</div>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#3B82F6;margin-bottom:10px" data-lang="ko">2,334만</div><div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#3B82F6;margin-bottom:10px" data-lang="en">₩23.3M</div><div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#3B82F6;margin-bottom:10px" data-lang="ja">2,334万</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:max(18px,1.02vw);color:var(--text-muted)">
+          <div data-lang="ko">- AI 라이브커머스 제작 1,000만</div><div data-lang="en">- AI live commerce ₩10M</div><div data-lang="ja">- AIライブコマース制作 1,000万</div>
+          <div data-lang="ko">- 바이럴 마케팅 834만</div><div data-lang="en">- Viral marketing ₩8.3M</div><div data-lang="ja">- バイラルマーケティング 834万</div>
+          <div data-lang="ko">- 셰프/인플루언서 PPL 500만</div><div data-lang="en">- Chef/Influencer PPL ₩5M</div><div data-lang="ja">- シェフ/インフルエンサーPPL 500万</div>
+        </div>
+      </div>
+      <div style="background:rgba(17,22,51,0.6);border:1px solid rgba(124,58,237,0.2);border-radius:14px;padding:24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">인건비 + 개발</div><div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="en">Personnel + Dev</div><div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ja">人件費 + 開発</div>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#A78BFA;margin-bottom:10px" data-lang="ko">5,000만</div><div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#A78BFA;margin-bottom:10px" data-lang="en">₩50M</div><div style="font-family:'Plus Jakarta Sans';font-size:max(18px,2.03vw);font-weight:800;color:#A78BFA;margin-bottom:10px" data-lang="ja">5,000万</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:max(18px,1.02vw);color:var(--text-muted)">
+          <div data-lang="ko">- 리워드 플랫폼 개발 2,000만</div><div data-lang="en">- Reward platform dev ₩20M</div><div data-lang="ja">- リワードプラットフォーム開発 2,000万</div>
+          <div data-lang="ko">- 인건비 (개발/디자인) 2,000만</div><div data-lang="en">- Personnel (dev/design) ₩20M</div><div data-lang="ja">- 人件費 (開発/デザイン) 2,000万</div>
+          <div data-lang="ko">- 브랜드 패키지 디자인 1,000만</div><div data-lang="en">- Brand package design ₩10M</div><div data-lang="ja">- ブランドパッケージデザイン 1,000万</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 20 THE ASK -->
+<div class="slide ask" data-title-ko="투자 제안" data-title-en="The Ask" data-title-ja="投資提案" style="background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.12) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner" style="text-align:center">
+    <div class="section-label" style="justify-content:center" data-lang="ko">투자 제안</div><div class="section-label" style="justify-content:center" data-lang="en">The Ask</div><div class="section-label" style="justify-content:center" data-lang="ja">投資提案</div>
+    <h2 data-lang="ko">친환경 제품의 <span class="gradient-text">가격 장벽을 제거</span>하고<br>탄소 리워드로 새로운 커머스 표준을 만듭니다</h2>
+    <h2 data-lang="en">Removing the <span class="gradient-text">Price Barrier</span> of Eco Products<br>Creating a New Commerce Standard with Carbon Rewards</h2>
+    <h2 data-lang="ja">エコ製品の<span class="gradient-text">価格障壁を除去</span>し<br>炭素リワードで新しいコマース標準を作ります</h2>
+    <p class="ask-desc" data-lang="ko">2026 초기창업패키지를 통해 친환경 전환 + 네이버페이 리워드 시스템을 실증하고, 100억 매출과 글로벌 진출의 교두보를 확보합니다.</p>
+    <p class="ask-desc" data-lang="en">Through the 2026 Early Startup Package, we validate eco transition + NaverPay rewards, securing ₩10B revenue and a global beachhead.</p>
+    <p class="ask-desc" data-lang="ja">2026年初期創業パッケージでエコ転換+NaverPayリワードシステムを実証し、100億売上とグローバル展開の橋頭堡を確保します。</p>
+    <div class="ask-stats">
+      <div class="ask-stat"><div class="ask-stat-value" data-lang="ko">1.33억</div><div class="ask-stat-value" data-lang="en">₩133M</div><div class="ask-stat-value" data-lang="ja">1.33億</div><div class="ask-stat-label" data-lang="ko">총 사업비</div><div class="ask-stat-label" data-lang="en">Total Budget</div><div class="ask-stat-label" data-lang="ja">総事業費</div></div>
+      <div class="ask-stat"><div class="ask-stat-value" data-lang="ko">100억</div><div class="ask-stat-value" data-lang="en">₩10B</div><div class="ask-stat-value" data-lang="ja">100億</div><div class="ask-stat-label" data-lang="ko">2026 매출 목표</div><div class="ask-stat-label" data-lang="en">2026 Revenue</div><div class="ask-stat-label" data-lang="ja">2026年売上目標</div></div>
+      <div class="ask-stat"><div class="ask-stat-value" data-lang="ko">233%</div><div class="ask-stat-value" data-lang="en">233%</div><div class="ask-stat-value" data-lang="ja">233%</div><div class="ask-stat-label" data-lang="ko">YoY 성장률</div><div class="ask-stat-label" data-lang="en">YoY Growth</div><div class="ask-stat-label" data-lang="ja">YoY成長率</div></div>
+      <div class="ask-stat"><div class="ask-stat-value" data-lang="ko">IPO</div><div class="ask-stat-value" data-lang="en">IPO</div><div class="ask-stat-value" data-lang="ja">IPO</div><div class="ask-stat-label" data-lang="ko">2030 코스닥</div><div class="ask-stat-label" data-lang="en">2030 KOSDAQ</div><div class="ask-stat-label" data-lang="ja">2030 KOSDAQ</div></div>
+    </div>
+    <div class="ask-footer">
+      <p data-lang="ko">브랜디노 &mdash; Green Reward Commerce</p>
+      <p data-lang="en">Brandino &mdash; Green Reward Commerce</p>
+      <p data-lang="ja">ブランディノ &mdash; Green Reward Commerce</p>
+      <p style="margin-top:4px" data-lang="ko">서울특별시 은평구 연서로 34길 11-1, 303호 | 사업자등록 204-88-03437</p>
+      <p style="margin-top:4px" data-lang="en">303, 11-1, Yeonseo-ro 34-gil, Eunpyeong-gu, Seoul | Reg. 204-88-03437</p>
+      <p style="margin-top:4px" data-lang="ja">ソウル特別市恩平区延西路34キル11-1, 303号 | 登録 204-88-03437</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== END SLIDES ============================== -->
+
+<script>
+var lang = 'ko';
+var slides = document.querySelectorAll('.slide');
+var total = slides.length;
+var current = 0;
+
+// URL params
+var urlParams = new URLSearchParams(window.location.search);
+var urlLang = urlParams.get('lang');
+if (urlLang && ['ko','en','ja'].indexOf(urlLang) !== -1) {
+  lang = urlLang;
+  if (lang !== 'ko') document.body.classList.add(lang);
+}
+var urlPage = parseInt(urlParams.get('page'), 10);
+if (urlPage >= 1 && urlPage <= total) current = urlPage - 1;
+
+// Show first slide
+slides[current].classList.add('active');
+
+function goTo(idx, source) {
+  if (idx === current || idx < 0 || idx >= total) return;
+  slides[current].classList.remove('active');
+  current = idx;
+  var next = slides[current];
+  next.classList.remove('active');
+  void next.offsetHeight;
+  next.classList.add('active');
+  // irSlideInfo.current is a getter — no assignment needed
+  if (window.parent !== window) {
+    try { window.parent.postMessage({ type: 'slideChange', current: current, total: total }, '*'); } catch (e) {}
+  }
+}
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  switch(e.key) {
+    case 'ArrowDown': case 'ArrowRight': case 'PageDown': case ' ':
+      e.preventDefault(); goTo(current + 1, 'keyboard'); break;
+    case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+      e.preventDefault(); goTo(current - 1, 'keyboard'); break;
+    case 'Home': e.preventDefault(); goTo(0, 'keyboard'); break;
+    case 'End': e.preventDefault(); goTo(total - 1, 'keyboard'); break;
+  }
+});
+
+// Mouse wheel
+var wheelAcc = 0, wheelTimer = null, wheelLocked = false;
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  if (wheelLocked) return;
+  wheelAcc += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(function() { wheelAcc = 0; }, 150);
+  if (Math.abs(wheelAcc) >= 80) {
+    goTo(wheelAcc > 0 ? current + 1 : current - 1, 'wheel');
+    wheelAcc = 0;
+    wheelLocked = true;
+    setTimeout(function() { wheelLocked = false; }, 400);
+  }
+}, { passive: false });
+
+// Touch
+var touchStartX = 0, touchStartY = 0, touchStartTime = 0, touchStartEl = null, hasMoved = false;
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now(); touchStartEl = e.target; hasMoved = false;
+}, { passive: true });
+document.addEventListener('touchmove', function(e) {
+  if (Math.abs(e.touches[0].clientX - touchStartX) > 10 || Math.abs(e.touches[0].clientY - touchStartY) > 10) hasMoved = true;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  if (hasMoved) return;
+  if (touchStartEl && touchStartEl.closest('button, a, input')) return;
+  if (Date.now() - touchStartTime > 300) return;
+  var w = window.innerWidth;
+  if (touchStartX < 60) goTo(current - 1, 'touch');
+  else if (touchStartX > w - 60) goTo(current + 1, 'touch');
+});
+
+// Expose for parent viewer
+window.irSlideInfo = {
+  slides: Array.from(slides).map(function(s, i) {
+    return { index: i, titleKo: s.dataset.titleKo || '슬라이드 ' + (i+1), titleEn: s.dataset.titleEn || 'Slide ' + (i+1), titleJa: s.dataset.titleJa || 'スライド ' + (i+1) };
+  }),
+  total: total,
+  get current() { return current; }
+};
+
+window.goToSlide = function(idx) { goTo(idx, 'parent-viewer'); };
+
+// Language switch (called by viewer.html)
+window.setLang = function(l) {
+  lang = l;
+  document.body.classList.remove('en', 'ja');
+  if (l === 'en') document.body.classList.add('en');
+  if (l === 'ja') document.body.classList.add('ja');
+  document.querySelectorAll('[data-lang]').forEach(function(el) { el.style.display = ''; });
+};
+
+// Motion toggle (called by viewer.html)
+window.toggleMotion = function() {
+  document.body.classList.toggle('no-motion');
+};
+</script>
+</body>
+</html>
