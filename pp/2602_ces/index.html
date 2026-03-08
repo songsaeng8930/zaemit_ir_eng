@@ -3,491 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CES 2026 통합 패키지 제안서 (1차안)</title>
+    <title>CES 2026 Digital Package — WEVEN</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 16px;
-            line-height: 1.8;
-            color: #1a1a1a;
-            background: #fafafa;
+            font-size: 16px; line-height: 1.8; color: #1a1a1a; background: #fafafa;
         }
 
-        .page {
-            max-width: 860px;
-            margin: 0 auto;
-            background: #fff;
-            min-height: 100vh;
-        }
+        .page { max-width: 860px; margin: 0 auto; background: #fff; min-height: 100vh; }
 
         /* Cover */
         .cover {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-            color: #fff;
-            padding: 80px 60px 60px;
-            position: relative;
-            overflow: hidden;
+            color: #fff; padding: 80px 60px 60px; position: relative; overflow: hidden;
         }
-
         .cover::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
-            border-radius: 50%;
+            content: ''; position: absolute; top: -50%; right: -20%; width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%); border-radius: 50%;
         }
-
         .cover-label {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 24px;
+            display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 24px;
         }
-
-        .cover h1 {
-            font-size: 36px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 12px;
-        }
-
-        .cover h1 span {
-            color: #60a5fa;
-        }
-
-        .cover-sub {
-            font-size: 18px;
-            color: rgba(255,255,255,0.6);
-            font-weight: 300;
-            margin-bottom: 40px;
-        }
-
-        .cover-meta {
-            display: flex;
-            gap: 32px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .cover-meta strong {
-            color: rgba(255,255,255,0.8);
-            font-weight: 500;
-        }
+        .cover h1 { font-size: 36px; font-weight: 700; line-height: 1.3; margin-bottom: 12px; }
+        .cover h1 span { color: #60a5fa; }
+        .cover-sub { font-size: 18px; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 40px; }
+        .cover-meta { display: flex; gap: 32px; font-size: 14px; color: rgba(255,255,255,0.5); }
+        .cover-meta strong { color: rgba(255,255,255,0.8); font-weight: 500; }
 
         /* Content */
-        .content {
-            padding: 50px 60px 80px;
-        }
+        .content { padding: 50px 60px 80px; }
+        h2 { font-size: 22px; font-weight: 700; color: #0f172a; margin-top: 50px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #0f172a; }
+        h2:first-child { margin-top: 0; }
+        h3 { font-size: 17px; font-weight: 600; color: #334155; margin-top: 28px; margin-bottom: 12px; }
+        p { margin-bottom: 14px; color: #374151; font-size: 15px; }
+        .lead { font-size: 16px; color: #475569; line-height: 1.9; margin-bottom: 24px; }
 
-        h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-top: 50px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #0f172a;
+        /* Stat Bar */
+        .stat-bar { display: flex; gap: 16px; margin: 20px 0 24px; }
+        .stat-item {
+            flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;
+            padding: 16px 20px; text-align: center;
         }
+        .stat-item .num { font-size: 28px; font-weight: 700; color: #1d4ed8; }
+        .stat-item .label { font-size: 13px; color: #64748b; margin-top: 4px; }
 
-        h2:first-child {
-            margin-top: 0;
+        /* Differentiator Box */
+        .diff-box {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border-radius: 12px; padding: 32px; margin: 24px 0 32px; color: #fff;
         }
+        .diff-box .diff-title { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+        .diff-box .diff-title span { color: #60a5fa; }
 
-        h3 {
-            font-size: 17px;
-            font-weight: 600;
-            color: #334155;
-            margin-top: 28px;
-            margin-bottom: 12px;
+        /* Compare Grid */
+        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+        .compare-card { border-radius: 8px; padding: 20px; }
+        .compare-card.old { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+        .compare-card.new { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); }
+        .compare-card .compare-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px;
         }
+        .compare-card.old .compare-label { color: #94a3b8; }
+        .compare-card.new .compare-label { color: #60a5fa; }
+        .compare-card .compare-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .compare-card.old .compare-title { color: rgba(255,255,255,0.5); }
+        .compare-card.new .compare-title { color: #fff; }
+        .compare-card p { font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+        .compare-card.old p { color: rgba(255,255,255,0.35); }
+        .compare-card.new p { color: rgba(255,255,255,0.7); }
 
-        p {
-            margin-bottom: 14px;
-            color: #374151;
-            font-size: 15px;
+        /* Feature Cards */
+        .feat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0 16px; }
+        .feat-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 30px; }
+        .feat-card {
+            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 24px 20px;
         }
-
-        .lead {
-            font-size: 16px;
-            color: #475569;
-            line-height: 1.9;
-            margin-bottom: 24px;
+        .feat-card .feat-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; border-radius: 50%;
+            font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 12px;
         }
+        .feat-grid .feat-card:nth-child(1) .feat-num { background: #2563eb; }
+        .feat-grid .feat-card:nth-child(2) .feat-num { background: #7c3aed; }
+        .feat-grid .feat-card:nth-child(3) .feat-num { background: #059669; }
+        .feat-grid-2 .feat-card:nth-child(1) .feat-num { background: #d97706; }
+        .feat-grid-2 .feat-card:nth-child(2) .feat-num { background: #dc2626; }
+        .feat-card .feat-title { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+        .feat-card .feat-sub { font-size: 13px; color: #64748b; margin-bottom: 14px; }
+        .feat-card ul { text-align: left; font-size: 13px; color: #475569; line-height: 1.7; list-style: none; padding: 0; }
+        .feat-card ul li { margin-bottom: 4px; padding-left: 16px; position: relative; }
+        .feat-card ul li::before { content: '\2192'; position: absolute; left: 0; color: #94a3b8; }
 
-        /* Partner Cards */
-        .partner-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-            margin: 20px 0 30px;
+        /* Phase Cards */
+        .phase-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0; }
+        .phase-card {
+            border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; position: relative;
         }
-
-        .partner-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 24px 20px;
-            text-align: center;
+        .phase-card .phase-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
         }
+        .phase-card:nth-child(1) { background: #fefce8; }
+        .phase-card:nth-child(1) .phase-label { color: #a16207; }
+        .phase-card:nth-child(2) { background: #ecfdf5; }
+        .phase-card:nth-child(2) .phase-label { color: #047857; }
+        .phase-card:nth-child(3) { background: #eff6ff; }
+        .phase-card:nth-child(3) .phase-label { color: #1d4ed8; }
+        .phase-card .phase-title { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 10px; }
+        .phase-card ul { font-size: 13px; color: #475569; line-height: 1.8; list-style: none; padding: 0; }
+        .phase-card ul li { padding-left: 16px; position: relative; margin-bottom: 2px; }
+        .phase-card ul li::before { content: '\2192'; position: absolute; left: 0; color: #94a3b8; }
 
-        .partner-card .role-badge {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-        }
-
-        .partner-card:nth-child(1) .role-badge {
-            background: #fce7f3;
-            color: #be185d;
-        }
-
-        .partner-card:nth-child(2) .role-badge {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .partner-card:nth-child(3) .role-badge {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
-
-        .partner-card .name {
-            font-size: 18px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 4px;
-        }
-
-        .partner-card .company {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 14px;
-        }
-
-        .partner-card .tasks {
-            text-align: left;
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.7;
-        }
-
-        .partner-card .tasks li {
-            margin-bottom: 4px;
-        }
-
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0 24px;
-            font-size: 14px;
-        }
-
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
         thead th {
-            background: #0f172a;
-            color: #fff;
-            padding: 12px 16px;
-            text-align: left;
-            font-weight: 500;
-            font-size: 13px;
+            background: #0f172a; color: #fff; padding: 12px 16px; text-align: left;
+            font-weight: 500; font-size: 13px;
         }
-
-        thead th:first-child {
-            border-radius: 6px 0 0 0;
-        }
-
-        thead th:last-child {
-            border-radius: 0 6px 0 0;
-        }
-
-        tbody td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #e5e7eb;
-            color: #374151;
-        }
-
-        tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        tbody tr:last-child td:first-child {
-            border-radius: 0 0 0 6px;
-        }
-
-        tbody tr:last-child td:last-child {
-            border-radius: 0 0 6px 0;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* Summary row */
-        .row-total td {
-            font-weight: 700;
-            color: #0f172a;
-            border-top: 2px solid #0f172a;
-            border-bottom: 2px solid #0f172a;
-            background: #f1f5f9;
-        }
-
-        .row-option td {
-            color: #6b7280;
-            font-style: italic;
-        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 12px 16px; border-bottom: 1px solid #e5e7eb; color: #374151; }
+        tbody tr:hover { background: #f8fafc; }
+        .text-center { text-align: center; }
 
         /* Highlight box */
         .highlight-box {
             background: linear-gradient(135deg, #eff6ff, #f0f9ff);
-            border: 1px solid #bfdbfe;
-            border-radius: 10px;
-            padding: 24px 28px;
-            margin: 24px 0;
+            border: 1px solid #bfdbfe; border-radius: 10px; padding: 24px 28px; margin: 24px 0;
         }
-
-        .highlight-box .label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #1d4ed8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .highlight-box .amount {
-            font-size: 32px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .highlight-box .amount small {
-            font-size: 16px;
-            font-weight: 400;
-            color: #64748b;
-        }
-
-        .highlight-box .desc {
-            font-size: 14px;
-            color: #475569;
-            margin-top: 8px;
-        }
-
-        /* Service list */
-        .service-list {
-            list-style: none;
-            padding: 0;
-            margin: 16px 0;
-        }
-
-        .service-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 15px;
-            color: #374151;
-        }
-
-        .service-list li:last-child {
-            border-bottom: none;
-        }
-
-        .service-num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 28px;
-            height: 28px;
-            background: #0f172a;
-            color: #fff;
-            border-radius: 50%;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .service-detail {
-            flex: 1;
-        }
-
-        .service-detail strong {
-            display: block;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 2px;
-        }
-
-        .service-detail .sub {
-            font-size: 13px;
-            color: #64748b;
-        }
-
-        /* Badge */
-        .badge {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-left: 8px;
-            vertical-align: middle;
-        }
-
-        .badge-blue {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
-
-        .badge-green {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .badge-amber {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .badge-gray {
-            background: #f1f5f9;
-            color: #475569;
-        }
+        .highlight-box .label { font-size: 13px; font-weight: 600; color: #1d4ed8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .highlight-box .amount { font-size: 24px; font-weight: 700; color: #0f172a; }
+        .highlight-box .desc { font-size: 14px; color: #475569; margin-top: 8px; }
 
         /* Note */
-        .note {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 8px;
-            padding-left: 4px;
-        }
+        .note { font-size: 13px; color: #94a3b8; margin-top: 8px; padding-left: 4px; }
 
         /* Disclaimer */
         .disclaimer {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-radius: 8px;
-            padding: 20px 24px;
-            margin: 30px 0;
-            font-size: 14px;
-            color: #92400e;
-            line-height: 1.7;
+            background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+            padding: 20px 24px; margin: 30px 0; font-size: 14px; color: #1e40af; line-height: 1.7;
         }
-
-        .disclaimer strong {
-            display: block;
-            margin-bottom: 4px;
-        }
+        .disclaimer strong { display: block; margin-bottom: 4px; }
 
         /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px 60px;
-            border-top: 1px solid #e5e7eb;
-            color: #94a3b8;
-            font-size: 13px;
-        }
-
-        .footer .brand {
-            font-size: 18px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 6px;
-        }
+        .footer { text-align: center; padding: 40px 60px; border-top: 1px solid #e5e7eb; color: #94a3b8; font-size: 13px; }
+        .footer .brand { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
 
         /* Responsive */
         @media screen and (max-width: 768px) {
-            .cover {
-                padding: 50px 28px 40px;
-            }
-
-            .cover h1 {
-                font-size: 26px;
-            }
-
-            .cover-sub {
-                font-size: 15px;
-            }
-
-            .cover-meta {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .content {
-                padding: 30px 24px 60px;
-            }
-
-            h2 {
-                font-size: 19px;
-                margin-top: 36px;
-            }
-
-            .partner-grid {
-                grid-template-columns: 1fr;
-            }
-
-            table {
-                font-size: 13px;
-            }
-
-            thead th, tbody td {
-                padding: 10px 12px;
-            }
-
-            .highlight-box .amount {
-                font-size: 26px;
-            }
+            .cover { padding: 50px 28px 40px; }
+            .cover h1 { font-size: 26px; }
+            .cover-sub { font-size: 15px; }
+            .cover-meta { flex-direction: column; gap: 8px; }
+            .content { padding: 30px 24px 60px; }
+            h2 { font-size: 19px; margin-top: 36px; }
+            .stat-bar { flex-direction: column; }
+            .feat-grid, .feat-grid-2, .phase-grid, .compare-grid { grid-template-columns: 1fr; }
+            table { font-size: 13px; }
+            thead th, tbody td { padding: 10px 12px; }
+            .highlight-box .amount { font-size: 20px; }
+            .diff-box .diff-title { font-size: 20px; }
         }
 
         @media print {
-            body {
-                background: #fff;
-            }
-
-            .page {
-                max-width: 100%;
-            }
-
-            .cover {
-                padding: 40px;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .content {
-                padding: 30px 40px;
-            }
-
-            h2 {
-                break-after: avoid;
-            }
-
-            table {
-                break-inside: avoid;
-            }
+            body { background: #fff; }
+            .page { max-width: 100%; }
+            .cover { padding: 40px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .content { padding: 30px 40px; }
+            h2 { break-after: avoid; }
+            table, .phase-grid, .feat-grid { break-inside: avoid; }
         }
     </style>
 </head>
@@ -497,267 +185,183 @@
 
     <!-- Cover -->
     <div class="cover">
-        <div class="cover-label">Proposal &mdash; 1st Draft</div>
-        <h1>CES 2026<br><span>통합 지원 패키지</span> 제안서</h1>
-        <p class="cover-sub">CES 참가 기업을 위한 웹사이트 · 마케팅 · 현지 네트워킹 원스톱 패키지</p>
+        <div class="cover-label">WEVEN CES Digital Package</div>
+        <h1>CES에서<br><span>만남을 거래로</span></h1>
+        <p class="cover-sub">AI 세일즈 에이전트 · 자동 제안서 · 스마트 팔로업 — 24시간 다국어 세일즈 플랫폼</p>
         <div class="cover-meta">
-            <div>작성 <strong>2026.02</strong></div>
-            <div>버전 <strong>1차안 (초안)</strong></div>
-            <div>예상 총비용 <strong>~1,670 ~ 2,170만 원</strong></div>
+            <div>제공 <strong>WEVEN (재밋)</strong></div>
+            <div>작성 <strong>2026.03</strong></div>
+            <div>견적 <strong>프로젝트별 맞춤 협의</strong></div>
         </div>
     </div>
 
     <!-- Content -->
     <div class="content">
 
-        <!-- 개요 -->
-        <h2>1. 제안 개요</h2>
+        <!-- 1. Problem -->
+        <h2>1. CES, 왜 성과가 안 나오는가</h2>
         <p class="lead">
-            CES 참가를 준비하는 기업이 가장 필요로 하는 <strong>웹사이트 리뉴얼, 해외 마케팅, 현지 네트워킹</strong>을
-            하나의 패키지로 묶어 제공합니다. 각 분야의 전문가가 역할을 분담하여,
-            고객사가 CES 현장에서 최대한의 성과를 낼 수 있도록 지원합니다.
-        </p>
-        <p class="lead">
-            본 제안서는 1차안으로, 구체적인 역할 분담과 가격은
-            파트너 간 협의를 통해 조정될 수 있습니다.
+            CES Innovation Award를 받은 한국 기업 116곳 중 실제 해외 투자 유치에 성공한 건 <strong>단 1곳</strong>.
+            문제는 기술력이 아닙니다. <strong>CES 이후의 소통 구조</strong>가 없기 때문입니다.
         </p>
 
-        <!-- 파트너 구성 -->
-        <h2>2. 파트너 구성</h2>
-        <div class="partner-grid">
-            <div class="partner-card">
-                <div class="role-badge">Consulting</div>
-                <div class="name">손 대표님</div>
-                <div class="company">더밀크</div>
-                <ul class="tasks">
-                    <li>고객 유입 / 영업</li>
-                    <li>해외 신문기사 송출</li>
-                    <li>CES 참가 컨설팅</li>
+        <div class="stat-bar">
+            <div class="stat-item">
+                <div class="num">116</div>
+                <div class="label">Innovation Award 한국 수상</div>
+            </div>
+            <div class="stat-item">
+                <div class="num">1</div>
+                <div class="label">해외 투자 유치 성공</div>
+            </div>
+            <div class="stat-item">
+                <div class="num">0.86%</div>
+                <div class="label">전환율</div>
+            </div>
+        </div>
+
+        <p>
+            부스에서 명함을 교환하고 끝나는 CES. 바이어가 돌아가서 웹사이트를 봤는데
+            모든 방문자에게 똑같은 페이지. 팔로업 이메일도 일괄 발송.
+            <strong>만남이 거래로 이어지려면, 디지털 구조가 달라야 합니다.</strong>
+        </p>
+
+        <!-- 2. Differentiation -->
+        <h2>2. 핵심 차별화 — AI 세일즈 에이전트</h2>
+        <div class="diff-box">
+            <div class="diff-title">웹사이트가 아니라, <span>24시간 AI 세일즈 팀</span></div>
+            <div class="compare-grid">
+                <div class="compare-card old">
+                    <div class="compare-label">기존 CES 웹사이트</div>
+                    <div class="compare-title">모든 바이어에게 동일 정보</div>
+                    <p>정적 페이지 — 누가 와도 같은 내용</p>
+                    <p>문의 폼 작성 &rarr; 며칠 후 답변</p>
+                    <p>바이어가 떠나면 접점 소멸</p>
+                </div>
+                <div class="compare-card new">
+                    <div class="compare-label">WEVEN AI 세일즈 에이전트</div>
+                    <div class="compare-title">AI가 바이어와 1:1 대화</div>
+                    <p>바이어 질문 &rarr; AI가 즉시 답변 (다국어)</p>
+                    <p>대화 맥락에 맞춰 페이지 콘텐츠 실시간 재구성</p>
+                    <p>미팅 후 맞춤 제안서 PDF 자동 생성</p>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            부스에서 QR을 찍든, CES 후 웹사이트에 직접 방문하든 — AI 세일즈 에이전트가 바이어를 맞이합니다.
+            <strong>제품을 깊이 이해한 AI가 바이어와 대화하고, 맞춤 콘텐츠를 생성하고, 제안서까지 만드는 구조</strong>입니다.
+            사람 세일즈 담당자와 같지만, 24시간 · 다국어 · 동시 수백 명 대응이 가능합니다.
+        </p>
+
+        <!-- 3. Core Features -->
+        <h2>3. 핵심 기능</h2>
+        <h3>핵심 서비스</h3>
+        <div class="feat-grid">
+            <div class="feat-card">
+                <div class="feat-num">1</div>
+                <div class="feat-title">AI 세일즈 에이전트</div>
+                <div class="feat-sub">대화형 AI + 동적 콘텐츠</div>
+                <ul>
+                    <li>바이어와 1:1 실시간 대화 (다국어)</li>
+                    <li>대화 맥락 기반 페이지 동적 재구성</li>
+                    <li>맞춤 제안서 · 비교표 자동 생성 (PDF)</li>
+                    <li>QR + 웹 직접 방문 → 동일 시스템</li>
                 </ul>
             </div>
-            <div class="partner-card">
-                <div class="role-badge">US Local</div>
-                <div class="name">마이클 대표님</div>
-                <div class="company">온돌</div>
-                <ul class="tasks">
-                    <li>미국향 웹사이트 기획</li>
-                    <li>링크드인 셋업</li>
-                    <li>프라이빗 파티 주최</li>
-                    <li>영상 제작 / 기획</li>
-                    <li>현지 미팅 정보 제공</li>
+            <div class="feat-card">
+                <div class="feat-num">2</div>
+                <div class="feat-title">비즈니스 미팅 예약</div>
+                <div class="feat-sub">Before · At · After CES</div>
+                <ul>
+                    <li>바이어가 직접 비즈니스 미팅 예약</li>
+                    <li>CES 현장 부스/미팅룸 예약</li>
+                    <li>CES 후 화상 비즈니스 미팅 예약</li>
+                    <li>통합 캘린더 관리</li>
                 </ul>
             </div>
-            <div class="partner-card">
-                <div class="role-badge">Web &amp; Tech</div>
-                <div class="name">WEVEN (재밋)</div>
-                <div class="company">웹사이트 제작</div>
-                <ul class="tasks">
-                    <li>국/영문 웹사이트 리뉴얼</li>
+            <div class="feat-card">
+                <div class="feat-num">3</div>
+                <div class="feat-title">팔로업 허브</div>
+                <div class="feat-sub">AI 대화 분석 기반 팔로업</div>
+                <ul>
+                    <li>AI 대화 내용 분석 → 관심사 자동 파악</li>
+                    <li>대화 기반 맞춤 팔로업 (D+1, D+3, D+7)</li>
+                    <li>Hot/Warm/Cold AI 리드 스코어링</li>
+                    <li>내부 대시보드 · 바이어 인텔리전스</li>
                 </ul>
             </div>
         </div>
-        <p class="note">※ 역할 분담은 파트너 협의에 따라 유동적으로 조정 가능합니다.</p>
 
-        <!-- 서비스 구성 -->
-        <h2>3. 패키지 서비스 구성</h2>
-        <ul class="service-list">
-            <li>
-                <span class="service-num">1</span>
-                <div class="service-detail">
-                    <strong>웹사이트 리뉴얼 (국문 / 영문) <span class="badge badge-blue">WEVEN</span></strong>
-                    CES에 맞춘 글로벌 수준의 기업 웹사이트로 리뉴얼. 국문과 영문 2개 버전 제작.
-                    <div class="sub">반응형 디자인 · SEO 최적화 · CMS 연동</div>
-                </div>
-            </li>
-            <li>
-                <span class="service-num">2</span>
-                <div class="service-detail">
-                    <strong>미국향 웹사이트 기획 <span class="badge badge-green">마이클</span></strong>
-                    미국 시장에 최적화된 웹사이트 UX/콘텐츠 기획. 현지 트렌드와 타깃 고객 분석 반영.
-                    <div class="sub">미국 현지 트렌드 반영 · 타깃 고객 분석 · 콘텐츠 현지화</div>
-                </div>
-            </li>
-            <li>
-                <span class="service-num">3</span>
-                <div class="service-detail">
-                    <strong>링크드인 개설 및 활성화 방안 <span class="badge badge-green">마이클</span></strong>
-                    기업 링크드인 페이지 셋업, 프로필 최적화, 초기 콘텐츠 전략 수립.
-                    <div class="sub">회사 페이지 · 주요 임원 프로필 · 콘텐츠 가이드</div>
-                </div>
-            </li>
-            <li>
-                <span class="service-num">4</span>
-                <div class="service-detail">
-                    <strong>CES 현지 프라이빗 파티 (최대 2회) <span class="badge badge-green">마이클</span></strong>
-                    CES 기간 중 비즈니스 네트워킹 목적의 프라이빗 파티 기획 및 운영.
-                    <div class="sub">장소 섭외 · 초대 리스트 관리 · 케이터링 · 현장 운영</div>
-                </div>
-            </li>
-            <li>
-                <span class="service-num">5</span>
-                <div class="service-detail">
-                    <strong>외국 신문기사 2회 송출 <span class="badge badge-amber">손 대표</span></strong>
-                    해외 유력 매체에 기업 소개 / CES 참가 관련 기사 2회 게재.
-                    <div class="sub">PR Newswire 등 글로벌 통신사 활용 · 영문 기사 작성 포함</div>
-                </div>
-            </li>
-            <li>
-                <span class="service-num">6</span>
-                <div class="service-detail">
-                    <strong>홍보 영상 제작 <span class="badge badge-green">마이클</span> <span class="badge badge-gray">별도 상품</span></strong>
-                    CES 부스 및 제품 홍보용 영상 제작. 별도 상품으로 운영 예정.
-                    <div class="sub">기업 소개 영상 · 제품 데모 영상 · SNS 숏폼 편집</div>
-                </div>
-            </li>
-            <li>
-                <span class="service-num">7</span>
-                <div class="service-detail">
-                    <strong>비행기 · 숙소 · 현지 정보 안내 <span class="badge badge-green">마이클</span> <span class="badge badge-amber">손 대표</span></strong>
-                    CES 참가에 필요한 항공편, 숙소, 교통, 현지 사정 등 실무 정보 안내.
-                    <div class="sub">추천 항공편 · 호텔 리스트 · 교통편 · 현지 유의사항</div>
-                </div>
-            </li>
-        </ul>
-
-        <!-- 예상 제작비 -->
-        <h2>4. 예상 비용 (1차안)</h2>
-
-        <h3>기본 패키지</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>서비스 항목</th>
-                    <th>담당</th>
-                    <th class="text-right">예상 비용</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>웹사이트 리뉴얼 (국/영문)</td>
-                    <td>WEVEN</td>
-                    <td class="text-right">800만 원</td>
-                </tr>
-                <tr>
-                    <td>미국향 웹사이트 기획</td>
-                    <td>마이클</td>
-                    <td class="text-right">200만 원</td>
-                </tr>
-                <tr>
-                    <td>링크드인 개설 및 활성화</td>
-                    <td>마이클</td>
-                    <td class="text-right">100만 원</td>
-                </tr>
-                <tr>
-                    <td>프라이빗 파티 2회 (1회 50만 원)</td>
-                    <td>마이클</td>
-                    <td class="text-right">100만 원</td>
-                </tr>
-                <tr>
-                    <td>해외 신문기사 2회 송출</td>
-                    <td>손 대표</td>
-                    <td class="text-right">250만 원</td>
-                </tr>
-                <tr>
-                    <td>영업 (전체 수익의 15%)</td>
-                    <td>공동 (3사)</td>
-                    <td class="text-right">~220만 원</td>
-                </tr>
-                <tr class="row-total">
-                    <td colspan="2">기본 패키지 합계</td>
-                    <td class="text-right">~1,670만 원</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h3>선택 옵션</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>서비스 항목</th>
-                    <th>담당</th>
-                    <th class="text-right">예상 비용</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="row-option">
-                    <td>CES 혁신상 (Innovation Award) 신청 대행</td>
-                    <td>손 대표 / WEVEN</td>
-                    <td class="text-right">150만 원</td>
-                </tr>
-                <tr class="row-option">
-                    <td>영문 피치덱 / 회사소개서 제작</td>
-                    <td>WEVEN</td>
-                    <td class="text-right">200만 원</td>
-                </tr>
-                <tr class="row-option">
-                    <td>프레스킷 (Media Kit) 제작</td>
-                    <td>손 대표 / WEVEN</td>
-                    <td class="text-right">120만 원</td>
-                </tr>
-                <tr class="row-option">
-                    <td>CES 후 팔로업 전략 (이메일 시퀀스 / CRM)</td>
-                    <td>마이클</td>
-                    <td class="text-right">150만 원</td>
-                </tr>
-                <tr class="row-option">
-                    <td>통역 / 현장 수행원 (CES 기간)</td>
-                    <td>마이클</td>
-                    <td class="text-right">100만 원 / 일</td>
-                </tr>
-                <tr class="row-option">
-                    <td>홍보 영상 제작 (기업 소개 / 제품 데모)</td>
-                    <td>마이클</td>
-                    <td class="text-right">300 ~ 500만 원</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="highlight-box">
-            <div class="label">예상 총비용</div>
-            <div class="amount">~1,670 ~ 2,170만 원 <small>/ 패키지 당</small></div>
-            <div class="desc">기본 패키지 ~1,670만 원 + 홍보 영상(선택) 300~500만 원</div>
+        <h3>마케팅 서비스</h3>
+        <div class="feat-grid-2">
+            <div class="feat-card">
+                <div class="feat-num">4</div>
+                <div class="feat-title">SEO 최적화</div>
+                <div class="feat-sub">Google 검색 상위 노출</div>
+                <ul>
+                    <li>CES 후 바이어의 Google 검색 대비</li>
+                    <li>영문 키워드 · 메타데이터 최적화</li>
+                    <li>구조화 데이터 (Schema.org)</li>
+                    <li>기술 블로그 · 사례 페이지 연동</li>
+                </ul>
+            </div>
+            <div class="feat-card">
+                <div class="feat-num">5</div>
+                <div class="feat-title">GEO 최적화</div>
+                <div class="feat-sub">AI 검색 엔진 노출 (블루오션)</div>
+                <ul>
+                    <li>ChatGPT · Perplexity · Gemini 최적화</li>
+                    <li>AI가 추천하는 기업으로 포지셔닝</li>
+                    <li>경쟁사 대비 선점 효과 극대화</li>
+                    <li>구조화된 콘텐츠 · FAQ 생성</li>
+                </ul>
+            </div>
         </div>
 
-        <p class="note">※ 위 금액은 1차안 기준이며, 파트너 간 협의에 따라 조정됩니다.</p>
-        <p class="note">※ 고객사 요구 사항에 따라 항목별 범위가 변경될 수 있습니다.</p>
+        <!-- 4. Service Flow -->
+        <h2>4. 서비스 플로우 — Pre · At · Post</h2>
+        <p class="lead">
+            단순 웹사이트 납품이 아닙니다. CES <strong>전 · 중 · 후</strong> 전 단계를 하나의 파이프라인으로 연결합니다.
+        </p>
+        <div class="phase-grid">
+            <div class="phase-card">
+                <div class="phase-label">Pre-CES (8주 전~)</div>
+                <div class="phase-title">구축 · 셋업</div>
+                <ul>
+                    <li>AI 세일즈 에이전트 웹사이트 구축</li>
+                    <li>비즈니스 미팅 예약 시스템 연동</li>
+                    <li>SEO · GEO 최적화 적용</li>
+                    <li>바이어 사전 미팅 세팅</li>
+                    <li>팔로업 시퀀스 설계</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-label">At CES (현장)</div>
+                <div class="phase-title">매칭 · 미팅</div>
+                <ul>
+                    <li>부스 QR &rarr; AI 에이전트 활성화</li>
+                    <li>현장 비즈니스 미팅 예약 실시간 관리</li>
+                    <li>바이어 행동 데이터 실시간 수집</li>
+                    <li>웹사이트 실시간 수정 반영</li>
+                    <li>AI 리드 스코어링 시작</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-label">Post-CES (2주 내)</div>
+                <div class="phase-title">팔로업 · 전환</div>
+                <ul>
+                    <li>자동 팔로업 시퀀스 발동</li>
+                    <li>바이어 대시보드 활성화</li>
+                    <li>Hot 리드 우선 미팅 어레인지</li>
+                    <li>웹 방문 &rarr; 매칭 계속 운영</li>
+                    <li>성과 리포트 · KPI 분석</li>
+                </ul>
+            </div>
+        </div>
 
-        <!-- 파트너별 예상 수익 -->
-        <h2>5. 파트너별 예상 배분 (참고)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>파트너</th>
-                    <th>담당 항목</th>
-                    <th class="text-right">예상 배분액</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>손 대표 (더밀크)</td>
-                    <td>해외기사 송출 + 영업</td>
-                    <td class="text-right">~323만 원</td>
-                </tr>
-                <tr>
-                    <td>마이클 대표 (온돌)</td>
-                    <td>미국향 기획 + 링크드인 + 파티 + 영업</td>
-                    <td class="text-right">~473만 원</td>
-                </tr>
-                <tr>
-                    <td>WEVEN (재밋)</td>
-                    <td>웹사이트 리뉴얼 + 영업</td>
-                    <td class="text-right">~873만 원</td>
-                </tr>
-                <tr class="row-total">
-                    <td colspan="2">합계</td>
-                    <td class="text-right">~1,670만 원</td>
-                </tr>
-            </tbody>
-        </table>
-        <p class="note">※ 영상 제작 별도 시 마이클 대표 배분에 추가 (300~500만 원)</p>
-        <p class="note">※ 배분 비율은 협의 사항이며, 실제 역할 범위에 따라 재조정합니다.</p>
-
-        <!-- 진행 일정 -->
-        <h2>6. 예상 진행 일정</h2>
+        <!-- 5. Timeline -->
+        <h2>5. 예상 진행 일정</h2>
         <table>
             <thead>
                 <tr>
@@ -768,40 +372,45 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>계약 체결</td>
-                    <td>고객사 확정 및 착수금 수령</td>
+                    <td>킥오프</td>
+                    <td>목표 설정, 타깃 바이어 정의, 매칭 시나리오 설계</td>
                     <td class="text-center">D-Day</td>
                 </tr>
                 <tr>
-                    <td>기획 · 리서치</td>
-                    <td>웹사이트 기획, 현지 미팅 리서치, 링크드인 셋업</td>
-                    <td class="text-center">2주</td>
+                    <td>웹사이트 구축</td>
+                    <td>AI 세일즈 에이전트 웹사이트 제작 + 비즈니스 미팅 예약 시스템 연동</td>
+                    <td class="text-center">1~2주</td>
                 </tr>
                 <tr>
-                    <td>웹사이트 제작</td>
-                    <td>디자인 · 개발 · 국/영문 콘텐츠 작성</td>
-                    <td class="text-center">4~6주</td>
+                    <td>SEO · GEO 적용</td>
+                    <td>키워드 최적화, 구조화 데이터, AI 검색 최적화</td>
+                    <td class="text-center">2~3주</td>
                 </tr>
                 <tr>
-                    <td>마케팅 실행</td>
-                    <td>해외 기사 송출, 링크드인 활성화</td>
-                    <td class="text-center">CES 4주 전~</td>
+                    <td>팔로업 설계</td>
+                    <td>자동 시퀀스 설계, 바이어 대시보드 구축, 리드 태깅 규칙</td>
+                    <td class="text-center">CES 4주 전</td>
                 </tr>
                 <tr>
-                    <td>현지 준비</td>
-                    <td>파티 기획, 항공/숙소 안내, 미팅 어레인지</td>
-                    <td class="text-center">CES 2주 전~</td>
+                    <td>바이어 미팅 세팅</td>
+                    <td>타깃 바이어 리스트 &rarr; 사전 미팅 확보</td>
+                    <td class="text-center">CES 6주 전~</td>
                 </tr>
                 <tr>
                     <td>CES 현장</td>
-                    <td>프라이빗 파티 운영, 현지 지원</td>
+                    <td>AI 에이전트 · 미팅 관리 · 실시간 데이터 수집</td>
                     <td class="text-center">CES 기간</td>
+                </tr>
+                <tr>
+                    <td>Post-CES 팔로업</td>
+                    <td>자동 시퀀스 발동, Hot 리드 미팅, 성과 리포트</td>
+                    <td class="text-center">CES 후 2주</td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- 고객 제공 가치 -->
-        <h2>7. 고객사 제공 가치</h2>
+        <!-- 6. Value -->
+        <h2>6. 고객사 제공 가치</h2>
         <table>
             <thead>
                 <tr>
@@ -811,37 +420,48 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>글로벌 수준 웹사이트</td>
-                    <td>CES 부스 방문객 → 웹사이트 유입 → 비즈니스 전환 극대화</td>
+                    <td>AI 세일즈 에이전트</td>
+                    <td>24시간 다국어 AI가 바이어와 대화 — 사람 영업담당자처럼 맞춤 대응</td>
                 </tr>
                 <tr>
-                    <td>해외 미디어 노출</td>
-                    <td>CES 참가 기업으로서의 신뢰도 및 인지도 상승</td>
+                    <td>자동 제안서</td>
+                    <td>AI 미팅 후 맞춤 제안서 PDF 자동 생성 — 바이어가 사내 공유 가능</td>
                 </tr>
                 <tr>
-                    <td>현지 네트워킹</td>
-                    <td>프라이빗 파티를 통한 바이어/투자자 직접 접점 확보</td>
+                    <td>비즈니스 미팅 예약</td>
+                    <td>바이어가 직접 예약하는 구조 — 부스에서 기다리지 않는 CES</td>
                 </tr>
                 <tr>
-                    <td>링크드인 활성화</td>
-                    <td>CES 이후에도 지속되는 B2B 마케팅 채널 확보</td>
+                    <td>스마트 팔로업</td>
+                    <td>AI 대화 내용 분석 기반 맞춤 팔로업 — "뭘 물었는지" 기반 개인화</td>
                 </tr>
                 <tr>
-                    <td>Keep in Touch 페이지</td>
-                    <td>CES 이후 관심 고객이 언제든 연락처를 남길 수 있는 상시 운영 페이지 — 지속적인 리드 파이프라인 구축</td>
+                    <td>SEO + GEO</td>
+                    <td>CES 후에도 Google · AI 검색에서 지속 노출 — 장기 리드 확보</td>
                 </tr>
                 <tr>
-                    <td>원스톱 지원</td>
-                    <td>여러 업체에 분산 발주 대비 커뮤니케이션 비용 절감</td>
+                    <td>AI 리드 태깅</td>
+                    <td>Hot/Warm/Cold 자동 분류 — 영업 리소스를 가장 유망한 리드에 집중</td>
                 </tr>
             </tbody>
         </table>
 
+        <div class="highlight-box">
+            <div class="label">WEVEN's Difference</div>
+            <div class="amount">웹사이트가 아니라, 24시간 AI 세일즈 팀</div>
+            <div class="desc">
+                AI 세일즈 에이전트 + 자동 제안서 + 대화 기반 팔로업 — 사람 영업팀처럼 일하지만, 24시간 · 다국어 · 동시 수백 명 대응이 가능합니다.
+            </div>
+        </div>
+
+        <p class="note">※ WEVEN은 CES 2026 Innovation Award 수상사이며, 9,000개+ 사이트 생성 실적을 보유하고 있습니다.</p>
+        <p class="note">※ 48시간 영문 랜딩페이지 제작, 4시간 수정 반영, AI 다국어 자동 전환을 기본 제공합니다.</p>
+
         <!-- 유의사항 -->
         <div class="disclaimer">
-            <strong>참고 사항</strong>
-            본 제안서는 1차 초안으로, 파트너 간 협의를 통해 역할 분담 · 가격 · 서비스 범위가
-            변경될 수 있습니다. 최종안은 파트너 미팅 후 확정됩니다.
+            <strong>문의 안내</strong>
+            서비스 구성과 견적은 미팅을 통해 안내드립니다.
+            고객사의 CES 참가 목표, 규모, 일정에 맞춘 최적의 패키지를 설계합니다.
         </div>
 
     </div>
@@ -849,7 +469,7 @@
     <!-- Footer -->
     <div class="footer">
         <div class="brand">WEVEN (재밋)</div>
-        <p>CES 2026 통합 패키지 제안서 &middot; 1차안 &middot; 2026.02</p>
+        <p>CES 2026 Digital Package &middot; 2026.03</p>
     </div>
 
 </div>
