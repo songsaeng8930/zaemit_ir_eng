@@ -14,24 +14,54 @@
 
 ### ⚠️ 0. 폰트 최소 크기 18px — 절대 규칙 (가장 중요!)
 
-> **모든 텍스트의 CSS font-size는 반드시 18px 이상이어야 한다.**
+> **슬라이드 콘텐츠 영역의 모든 텍스트 CSS font-size는 반드시 18px 이상이어야 한다.**
 
 - 뷰포트가 `width=1280`으로 고정이므로, `1vw = 12.8px`이다.
 - 따라서 **1.40625vw 미만의 모든 font-size에는 반드시 `max(18px, Xvw)` 적용** 필수.
 - `font-size:1.09375vw` ❌ → `font-size:max(18px,1.09375vw)` ✅
 - `font-size:0.9375vw` ❌ → `font-size:max(18px,0.9375vw)` ✅
+- `font-size:13px` ❌ → `font-size:18px` ✅
+- `font-size:14px` ❌ → `font-size:18px` ✅
+- `font-size:15px` ❌ → `font-size:18px` ✅
+- `font-size:16px` ❌ → `font-size:18px` ✅
 - 1.40625vw(=18px) 이상은 이미 18px 이상이므로 `max()` 불필요.
-- **CSS 클래스뿐만 아니라 인라인 `style="font-size:..."` 도 반드시 확인!** 인라인 스타일 누락이 가장 흔한 실수.
-- **유일한 예외**: 데이터 테이블 보조 텍스트(MUV 차트 아래 표 등)로, 공간 부족 시 의도적으로 작게 유지 가능. 단, 명시적 허락 필요.
-- **콘텐츠 오버플로 주의**: 18px 최소값 적용 시 콘텐츠가 슬라이드 높이(85%)를 넘을 수 있음.
-  → 패딩/마진 축소, 줄바꿈 방지(`white-space:nowrap`), 간격 압축으로 대응.
-  → `max()` 값을 24px 이상으로 올리면 거의 확실히 오버플로 발생하므로 **18px이 상한선**.
 
-**새 슬라이드 생성 시 체크리스트:**
+**적용 대상 (반드시 18px 이상):**
+- CSS `<style>` 블록의 모든 font-size 선언 (뷰어 UI 제외)
+- HTML 인라인 `style="font-size:..."` — **가장 빈번한 위반 지점!**
+- section-label, section-title, section-desc 등 슬라이드 헤더
+- 카드 내부 텍스트, 표 셀 텍스트, 배지 라벨, 리스트 항목
+- 차트 축 라벨, 범례 텍스트 (SVG 좌표계 제외)
+
+**예외 (18px 미만 허용):**
+- SVG 내부 `font-size` 속성: SVG 좌표계이므로 제외
+- viewer UI 요소: sidebar, menu-header, page-indicator, powered-badge 등 (viewer가 관리)
+- 재무 테이블의 보조 소숫점/단위 텍스트: 공간 부족 시 의도적으로 작게 유지 가능 (최소 11px, 명시적 허락 필요)
+
+**콘텐츠 오버플로 주의**: 18px 최소값 적용 시 콘텐츠가 슬라이드 높이를 넘을 수 있음.
+  → 패딩/마진 축소, 줄바꿈 방지(`white-space:nowrap`), 간격 압축으로 대응.
+  → 항목 수 줄이기, 레이아웃 변경 등으로 해결. **절대 font-size를 18px 미만으로 줄이지 않는다.**
+
+**새 슬라이드 생성/수정 시 체크리스트:**
 1. CSS `<style>` 블록의 모든 font-size 선언 확인
-2. HTML 인라인 `style="font-size:..."` 전수 검사
+2. HTML 인라인 `style="font-size:..."` 전수 검사 — `grep -n "font-size:[0-1][0-7]px"` 로 위반 찾기
 3. SVG 내부 `font-size` 속성은 SVG 좌표계이므로 제외
-4. 완성 후 `grep "font-size:[0-1]\.[0-3]"` 로 18px 미만 누락 검증
+4. 완성 후 검증: `grep -n "font-size:[0-1][0-7]px" index.html | grep -v "<svg\|<text\|viewBox"` 로 SVG 외 위반 확인
+
+### 0-1. 슬라이드 콘텐츠 자동 zoom (overflow 방지)
+
+> **슬라이드 콘텐츠가 뷰포트를 넘으면 `slide-inner`에 CSS `zoom`을 적용하여 자동 축소한다.**
+
+- 폰트 사이즈를 개별적으로 줄이지 않는다. 전체 `zoom`으로 비율을 유지하며 축소.
+- JS `fitSlideContent(slide)` 함수가 각 슬라이드의 `slide-inner`에 대해:
+  1. `zoom`을 리셋하고 자연 높이(`scrollHeight`)를 측정
+  2. 사용 가능 높이 = `slide.clientHeight - paddingTop - max(paddingBottom, 7vw)`
+  3. **하단 7vw 예약**: 페이지 인디케이터·Powered 배지 영역 + 여백 확보
+  4. 자연 높이 > 사용 가능 높이이면 `zoom = 사용 가능 / 자연 높이` 적용
+- 적용 시점: 페이지 로드(`document.fonts.ready`), 슬라이드 전환(`goTo`), 윈도우 리사이즈, 언어 변경(`setLang`)
+- 콘텐츠가 넘치지 않는 슬라이드에는 zoom이 적용되지 않음 (zoom = 1 유지)
+- **새 슬라이드 추가 시**: 콘텐츠 양이 많아도 자동 zoom이 처리하므로, 레이아웃을 억지로 압축하지 않아도 된다.
+- **하단 여유 부족 시**: `bottomUI` 값(현재 `0.07` = 7vw)을 늘려 조정
 
 ### 1. IR 페이지에 viewer 중복 UI 금지
 
@@ -100,6 +130,7 @@ IR 페이지에서 `window.setLang`, `window.goToSlide` 함수를 전역으로 �
 | **⚠️ font-size 18px 미만** | **가장 흔한 실수!** CSS 클래스와 인라인 style 모두에서 `max(18px, Xvw)` 적용 필수. 특히 **인라인 style이 자주 누락됨** |
 | **⚠️ IR 페이지에 viewer UI 중복** | sidebar, 페이지번호, 언어토글, 메뉴헤더, powered badge 등 viewer가 제공하는 UI를 IR 페이지에 넣지 않는다 |
 | **max(24px,...) 사용으로 오버플로** | 18px이 상한선! 24px 이상 min 사용 시 콘텐츠가 슬라이드 밖으로 넘침 — 패딩/마진 축소로 대응 |
+| **콘텐츠 넘침 시 폰트 개별 축소** | 폰트를 개별적으로 줄이지 않는다 — `fitSlideContent()` 자동 zoom이 전체를 균일 축소하므로 콘텐츠만 작성하면 됨 |
 
 ---
 

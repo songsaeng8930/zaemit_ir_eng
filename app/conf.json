@@ -4,6 +4,16 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260303",
+      "name": "2026 주주간담회",
+      "nameEn": "2026 Shareholder Meeting",
+      "description": "주식회사 위븐 2026년 제1회 주주간담회 — 회사의 현재와 미래",
+      "descriptionEn": "WEVEN Inc. 2026 1st Shareholder Meeting — Our Present & Future",
+      "date": "2026-03-07",
+      "theme": "dark",
+      "default": false
+    },
+    {
       "id": "260302",
       "name": "DMOA Azure 공동사업 제안",
       "nameEn": "DMOA Azure Joint Business Proposal",
