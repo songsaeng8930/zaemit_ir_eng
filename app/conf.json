@@ -4,6 +4,26 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260304",
+      "name": "IR Deck",
+      "nameEn": "IR Deck",
+      "description": "마이크로소프트 마중 프로그램 사업계획서 IR",
+      "descriptionEn": "Microsoft Majung Program — WEVEN Business Plan IR",
+      "date": "2026-03-15",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "2603_startup_japan",
+      "name": "Startup Japan 성과 보고",
+      "nameEn": "Startup Japan Report & Insights",
+      "description": "WEVEN의 Startup Japan 참가 성과 및 일본 시장 진출 인사이트",
+      "descriptionEn": "WEVEN at Startup Japan — Achievements & Market Insights",
+      "date": "2026-03-09",
+      "theme": "dark",
+      "default": false
+    },
+    {
       "id": "260303",
       "name": "2026 주주간담회",
       "nameEn": "2026 Shareholder Meeting",

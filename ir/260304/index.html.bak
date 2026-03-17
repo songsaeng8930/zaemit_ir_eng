@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>WEVEN IR — AI Vibe-Coding Platform for Global Web Market</title>
+<meta name="description" content="WEVEN IR Deck — AI 바이브코딩 플랫폼 Zaemit, 글로벌 웹 시장 공략 전략">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WEVEN Zaemit">
+<meta property="og:title" content="WEVEN IR — AI Vibe-Coding Platform">
+<meta property="og:description" content="AI 기반 웹사이트 자동생성 서비스 Zaemit IR Deck">
+<meta property="og:url" content="http://ir.zaemit.com/app/viewer.html?ir=260304">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WEVEN IR — AI Vibe-Coding Platform">
+<meta name="twitter:description" content="AI 기반 웹사이트 자동생성 서비스 Zaemit IR Deck">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#00D4AA;--accent2:#7C3AED;
+  --dark:#0A0E27;--dark2:#111633;--text:#E2E8F0;--text-muted:#94A3B8;
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#7C3AED 50%,#00D4AA 100%);
+  --gradient2:linear-gradient(135deg,#00D4AA 0%,#0066FF 100%);
+  --gradient3:linear-gradient(135deg,#7C3AED 0%,#EC4899 100%);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw)}
+body.en{font-family:'Plus Jakarta Sans','Pretendard Variable',-apple-system,BlinkMacSystemFont,sans-serif}
+body.ja{font-family:'Noto Sans JP','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:4.6875vw 7.8125vw 7vw;opacity:0;
+  transition:left .35s cubic-bezier(.16,1,.3,1);
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aTypeDown{from{opacity:0;transform:translateY(-0.9375vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aLineDraw{from{stroke-dashoffset:var(--dash)}to{stroke-dashoffset:0}}
+@keyframes aAreaReveal{from{opacity:0}to{opacity:1}}
+
+/* All animatable children start hidden */
+.slide .section-label,
+.slide .section-title,
+.slide .section-desc,
+.slide .hero-left,
+.slide .hero-right,
+.slide .hero-stats,
+.slide .problem-flow,
+.slide .solution-content,
+.slide .solution-step,
+.slide .mkt-table-wrap,
+.slide .mkt-chart-area,
+.slide .biz-diagram-wrap,
+.slide .biz-rev-summary,
+.slide .sales-layout,
+.slide .team-layout,
+.slide .gp-nda-row,
+.slide .gp-countries,
+.slide .roadmap-container,
+.slide .roadmap-year,
+.slide .exit-chart-area,
+.slide .ask-stats,
+.slide .cta-buttons,
+.slide .fin-bar-svg,
+.slide .svc-phases,
+.slide .svc-phase,
+.slide .svc-cloud-bar,
+.slide .comp-table,
+.slide .comp-zaemit-cell,
+.slide .market-content,
+.slide .mkt-stages,
+.slide .mkt-stage,
+.slide .mkt-maturity-label,
+.slide .mkt-bullets,
+.slide .problem-col,
+.slide .upcoming-grid,
+.slide .upcoming-card,
+.slide .kpi-layout,
+.slide .kpi-card,
+.slide .mkt-fc-stats,
+.slide .mkt-fc-body,
+.slide .mkt-src-wrap,
+.slide .overview-layout,
+.slide .ov-main,
+.slide .ov-badges,
+.slide .ip-grid,
+.slide .ip-card,
+.slide .ms-strategy,
+.slide .ms-phase,
+.slide .fin-layout,
+.slide .fin-card,
+.slide .inv-timeline,
+.slide .b2b-grid,
+.slide .b2b-card,
+.slide .pricing-grid,
+.slide .pricing-card{
+  opacity:0;
+}
+
+/* When slide becomes active, animate children with stagger */
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+
+/* Hero specifics */
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .7s both}
+
+/* Grids & layouts stagger */
+.slide.active .overview-layout{animation:aFadeUp .5s ease .5s both}
+.slide.active .problem-flow{animation:aFadeUp .5s ease .55s both}
+.slide.active .solution-content{animation:aFadeIn .3s ease .5s both}
+.slide.active .solution-step:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .solution-step:nth-child(2){animation:aFadeUp .5s ease .75s both}
+.slide.active .solution-step:nth-child(3){animation:aFadeUp .5s ease .95s both}
+.slide.active .mkt-table-wrap{animation:aFadeUp .5s ease .6s both}
+.slide.active .mkt-chart-area{animation:aFadeIn .6s ease .7s both}
+
+/* Service phases stagger */
+.slide.active .svc-phases{animation:aFadeIn .3s ease .5s both}
+.slide.active .svc-phase:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .svc-phase:nth-child(2){animation:aFadeUp .5s ease .7s both}
+.slide.active .svc-phase:nth-child(3){animation:aFadeUp .5s ease .85s both}
+.slide.active .svc-cloud-bar{animation:aFadeUp .4s ease 1.1s both}
+
+/* Business model */
+.slide.active .biz-diagram-wrap{animation:aScaleIn .6s ease .5s both}
+.slide.active .biz-rev-summary{animation:aFadeUp .4s ease 1.0s both}
+
+/* Pricing cards stagger */
+.slide.active .pricing-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .pricing-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .pricing-card:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .pricing-card:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .pricing-card:nth-child(4){animation:aFadeUp .45s ease 1.0s both}
+
+/* Sales */
+.slide.active .sales-layout{animation:aFadeUp .55s ease .5s both}
+
+/* Team */
+.slide.active .team-layout{animation:aFadeUp .55s ease .5s both}
+
+/* Global partners */
+.slide.active .gp-nda-row{animation:aFadeUp .5s ease .4s both}
+.slide.active .gp-countries{animation:aFadeIn .3s ease .9s both}
+
+/* Roadmap */
+.slide.active .roadmap-container{animation:aFadeIn .6s ease .4s both}
+.slide.active .roadmap-year:nth-child(1){animation:aFadeUp .4s ease .6s both}
+.slide.active .roadmap-year:nth-child(2){animation:aFadeUp .4s ease .8s both}
+.slide.active .roadmap-year:nth-child(3){animation:aFadeUp .4s ease 1.0s both}
+.slide.active .roadmap-year:nth-child(4){animation:aFadeUp .4s ease 1.2s both}
+
+/* Exit strategy */
+.slide.active .exit-chart-area{animation:aFadeIn .7s ease .5s both}
+
+/* Competitive */
+.slide.active .comp-table{animation:aFadeUp .6s ease .5s both}
+
+/* Market / Vibe Coding */
+.slide.active .market-content{animation:aFadeUp .5s ease .5s both}
+.slide.active .mkt-bullets{animation:aFadeUp .5s ease .55s both}
+.slide.active .mkt-maturity-label{animation:aFadeUp .4s ease .7s both}
+.slide.active .mkt-stages{animation:aFadeIn .3s ease .85s both}
+.slide.active .mkt-stage:nth-child(1){animation:aFadeUp .4s ease .9s both}
+.slide.active .mkt-stage:nth-child(2){animation:aFadeUp .4s ease 1.05s both}
+.slide.active .mkt-stage:nth-child(3){animation:aScaleIn .5s ease 1.2s both}
+.slide.active .mkt-stage:nth-child(4){animation:aFadeUp .4s ease 1.5s both}
+.slide.active .mkt-stage:nth-child(5){animation:aFadeUp .4s ease 1.65s both}
+.slide.active .mkt-fc-stats{animation:aFadeUp .5s ease .5s both}
+.slide.active .mkt-fc-body{animation:aFadeUp .5s ease .65s both}
+.slide.active .mkt-src-wrap{animation:aFadeUp .5s ease .5s both}
+
+/* Problem columns stagger */
+.slide.active .problem-col:nth-child(1){animation:aFadeUp .5s ease .5s both}
+.slide.active .problem-col:nth-child(2){animation:aFadeUp .5s ease .9s both}
+.slide.active .problem-col:nth-child(3){animation:aFadeUp .5s ease 1.3s both}
+
+/* Competitive table Zaemit column */
+.slide.active .comp-table tbody tr:nth-child(1) .comp-zaemit-cell{animation:aTypeDown .35s ease .6s both}
+.slide.active .comp-table tbody tr:nth-child(2) .comp-zaemit-cell{animation:aTypeDown .35s ease .72s both}
+.slide.active .comp-table tbody tr:nth-child(3) .comp-zaemit-cell{animation:aTypeDown .35s ease .84s both}
+.slide.active .comp-table tbody tr:nth-child(4) .comp-zaemit-cell{animation:aTypeDown .35s ease .96s both}
+.slide.active .comp-table tbody tr:nth-child(5) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.08s both}
+.slide.active .comp-table tbody tr:nth-child(6) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.2s both}
+.slide.active .comp-table tbody tr:nth-child(7) .comp-zaemit-cell{animation:aTypeDown .35s ease 1.32s both}
+
+/* SVG animations */
+.svg-draw{stroke-dasharray:var(--dash);stroke-dashoffset:var(--dash)}
+.slide.active .svg-draw{animation:aLineDraw 2s cubic-bezier(.25,.1,.25,1) .6s both}
+.svg-area{opacity:0}
+.slide.active .svg-area{animation:aAreaReveal .8s ease 1.8s both}
+.svg-draw-rev{stroke-dasharray:var(--dash);stroke-dashoffset:var(--dash)}
+.svg-draw-sub{stroke-dasharray:var(--dash);stroke-dashoffset:var(--dash)}
+.slide.active .svg-draw-rev{animation:aLineDraw 2.2s cubic-bezier(.25,.1,.25,1) .6s both}
+.slide.active .svg-draw-sub{animation:aLineDraw 2.2s cubic-bezier(.25,.1,.25,1) .8s both}
+
+/* Upcoming Services */
+.slide.active .upcoming-grid{animation:aFadeIn .3s ease .4s both}
+.slide.active .upcoming-card:nth-child(1){animation:aFadeUp .5s ease .5s both}
+.slide.active .upcoming-card:nth-child(2){animation:aFadeUp .5s ease .7s both}
+.slide.active .upcoming-card:nth-child(3){animation:aFadeUp .5s ease .9s both}
+
+/* KPI Targets */
+.slide.active .kpi-layout{animation:aFadeIn .3s ease .4s both}
+.slide.active .kpi-card:nth-child(1){animation:aFadeUp .4s ease .5s both}
+.slide.active .kpi-card:nth-child(2){animation:aFadeUp .4s ease .65s both}
+.slide.active .kpi-card:nth-child(3){animation:aFadeUp .4s ease .8s both}
+.slide.active .kpi-card:nth-child(4){animation:aFadeUp .4s ease .95s both}
+
+/* IP grid */
+.slide.active .ip-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .ip-card:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .ip-card:nth-child(2){animation:aFadeUp .4s ease .7s both}
+.slide.active .ip-card:nth-child(3){animation:aFadeUp .4s ease .85s both}
+.slide.active .ip-card:nth-child(4){animation:aFadeUp .4s ease 1.0s both}
+
+/* MS Strategy */
+.slide.active .ms-strategy{animation:aFadeIn .3s ease .5s both}
+.slide.active .ms-phase:nth-child(1){animation:aFadeUp .5s ease .55s both}
+.slide.active .ms-phase:nth-child(2){animation:aFadeUp .5s ease .75s both}
+.slide.active .ms-phase:nth-child(3){animation:aFadeUp .5s ease .95s both}
+
+/* Financial */
+.slide.active .fin-layout{animation:aFadeUp .5s ease .5s both}
+.slide.active .fin-card:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .fin-card:nth-child(2){animation:aFadeUp .4s ease .7s both}
+.slide.active .fin-card:nth-child(3){animation:aFadeUp .4s ease .85s both}
+.slide.active .inv-timeline{animation:aFadeUp .5s ease 1.0s both}
+
+/* B2B Grid */
+.slide.active .b2b-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .b2b-card:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .b2b-card:nth-child(2){animation:aFadeUp .4s ease .7s both}
+.slide.active .b2b-card:nth-child(3){animation:aFadeUp .4s ease .85s both}
+.slide.active .b2b-card:nth-child(4){animation:aFadeUp .4s ease 1.0s both}
+
+/* The Ask */
+.slide.active .ask-stats{animation:aFadeUp .5s ease .55s both}
+.slide.active .cta-buttons{animation:aFadeUp .45s ease .8s both}
+
+/* Chart animation */
+.mkt-line{stroke-dasharray:2000;stroke-dashoffset:2000}
+.mkt-chart-area.animate .mkt-line{stroke-dashoffset:0;transition:stroke-dashoffset 3.9s cubic-bezier(.25,.1,.25,1)}
+.mkt-chart-area.animate .mkt-line-vibe{transition-delay:0.6s;transition-duration:3.3s}
+.mkt-chart-area.animate .mkt-clabel{opacity:1;transform:translateX(0)}
+.mkt-chart-area.animate .mkt-clabel.green{transition-delay:1.5s}
+.mkt-chart-area.animate .mkt-clabel.blue{transition-delay:1.6s}
+.mkt-chart-area.animate .mkt-clabel.orange{transition-delay:1.7s}
+
+/* ── LANG VISIBILITY ── */
+[data-lang="en"]{display:none !important}
+[data-lang="ko"]{display:revert}
+[data-lang="ja"]{display:none !important}
+body.en [data-lang="en"]{display:revert !important}
+body.en [data-lang="ko"]{display:none !important}
+body.en [data-lang="ja"]{display:none !important}
+body.ja [data-lang="ja"]{display:revert !important}
+body.ja [data-lang="ko"]{display:none !important}
+body.ja [data-lang="en"]{display:none !important}
+.ov-circle[data-lang="ko"]{display:flex !important}
+.ov-circle[data-lang="en"]{display:none !important}
+.ov-circle[data-lang="ja"]{display:none !important}
+body.en .ov-circle[data-lang="en"]{display:flex !important}
+body.en .ov-circle[data-lang="ko"]{display:none !important}
+body.ja .ov-circle[data-lang="ja"]{display:flex !important}
+body.ja .ov-circle[data-lang="ko"]{display:none !important}
+
+/* Disable all animations when body.no-motion */
+body.no-motion *,
+body.no-motion *::before,
+body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,
+body.no-motion .slide.active .section-title,
+body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .hero-left,
+body.no-motion .slide.active .hero-right,
+body.no-motion .slide.active .hero-stats,
+body.no-motion .slide.active .problem-flow,
+body.no-motion .slide.active .problem-col,
+body.no-motion .slide.active .solution-step,
+body.no-motion .slide.active .solution-content,
+body.no-motion .slide.active .svc-phase,
+body.no-motion .slide.active .svc-phases,
+body.no-motion .slide.active .svc-cloud-bar,
+body.no-motion .slide.active .team-layout,
+body.no-motion .slide.active .gp-nda-row,
+body.no-motion .slide.active .gp-countries,
+body.no-motion .slide.active .roadmap-container,
+body.no-motion .slide.active .roadmap-year,
+body.no-motion .slide.active .exit-chart-area,
+body.no-motion .slide.active .biz-diagram-wrap,
+body.no-motion .slide.active .biz-rev-summary,
+body.no-motion .slide.active .mkt-stage,
+body.no-motion .slide.active .mkt-table-wrap,
+body.no-motion .slide.active .mkt-chart-area,
+body.no-motion .slide.active .comp-zaemit-cell,
+body.no-motion .slide.active .svg-draw,
+body.no-motion .slide.active .svg-area,
+body.no-motion .slide.active .sales-layout,
+body.no-motion .slide.active .upcoming-grid,
+body.no-motion .slide.active .upcoming-card,
+body.no-motion .slide.active .kpi-layout,
+body.no-motion .slide.active .kpi-card,
+body.no-motion .slide.active .ask-stats,
+body.no-motion .slide.active .mkt-fc-stats,
+body.no-motion .slide.active .mkt-fc-body,
+body.no-motion .slide.active .mkt-src-wrap,
+body.no-motion .slide.active .overview-layout,
+body.no-motion .slide.active .ip-grid,
+body.no-motion .slide.active .ip-card,
+body.no-motion .slide.active .ms-strategy,
+body.no-motion .slide.active .ms-phase,
+body.no-motion .slide.active .fin-layout,
+body.no-motion .slide.active .fin-card,
+body.no-motion .slide.active .inv-timeline,
+body.no-motion .slide.active .b2b-grid,
+body.no-motion .slide.active .b2b-card,
+body.no-motion .slide.active .pricing-grid,
+body.no-motion .slide.active .pricing-card,
+body.no-motion .slide.active .comp-table,
+body.no-motion .slide.active .market-content,
+body.no-motion .slide.active .mkt-stages,
+body.no-motion .slide.active .mkt-maturity-label,
+body.no-motion .slide.active .mkt-bullets{opacity:1 !important;transform:none !important}
+
+body.no-motion .svg-draw,
+body.no-motion .svg-draw-rev,
+body.no-motion .svg-draw-sub,
+body.no-motion .mkt-line{stroke-dashoffset:0 !important}
+body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !important}
+body.no-motion .orbit-ring,
+body.no-motion .particle,
+body.no-motion .hero-badge::before{animation:none !important}
+body.no-motion .particles{display:none !important}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(124,58,237,0.1) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:4.6875vw 4.6875vw}
+.hero .slide-inner{display:flex;align-items:center;gap:5vw}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.875vw;border-radius:3.125vw;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--accent);font-size:max(18px,1.09375vw);font-weight:600;text-transform:uppercase;letter-spacing:0.117vw;margin-bottom:2.1875vw}
+.hero-badge::before{content:'';width:0.625vw;height:0.625vw;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:4.6875vw;font-weight:800;line-height:1.05;color:#fff;margin-bottom:1.5625vw;letter-spacing:-0.195vw;white-space:nowrap}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.5625vw;color:var(--text-muted);line-height:1.7;margin-bottom:3.125vw;max-width:48.4375vw}
+.hero-stats{display:flex;gap:3vw}
+.hero-stats>div{text-align:center;min-width:7.8125vw}
+.hero-stat-value{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-stat-label{font-size:max(18px,1.015625vw);color:var(--text-muted);margin-top:0.46875vw;text-transform:uppercase;letter-spacing:0.078vw}
+.hero-right{flex:.7;position:relative}
+.hero-visual{width:100%;aspect-ratio:1;position:relative;background:radial-gradient(circle at center,rgba(0,102,255,0.2),transparent 70%);border-radius:50%}
+.orbit-ring{position:absolute;border:1px solid rgba(255,255,255,0.06);border-radius:50%;animation:rot 20s linear infinite}
+.orbit-ring:nth-child(1){inset:10%}.orbit-ring:nth-child(2){inset:25%;animation-duration:30s;animation-direction:reverse}.orbit-ring:nth-child(3){inset:40%;animation-duration:25s}
+@keyframes rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.orbit-dot{position:absolute;width:0.9375vw;height:0.9375vw;border-radius:50%;background:var(--accent);box-shadow:0 0 1.5625vw var(--accent)}
+.orbit-ring:nth-child(1) .orbit-dot{top:0;left:50%;transform:translate(-50%,-50%)}
+.orbit-ring:nth-child(2) .orbit-dot{bottom:10%;right:0;background:var(--accent2);box-shadow:0 0 1.5625vw var(--accent2)}
+.orbit-ring:nth-child(3) .orbit-dot{top:50%;left:0;transform:translate(-50%,-50%);background:var(--primary);box-shadow:0 0 1.5625vw var(--primary)}
+.center-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8.59375vw;height:8.59375vw;border-radius:2.1875vw;background:var(--gradient1);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:2.65625vw;font-weight:800;color:#fff;box-shadow:0 1.5625vw 4.6875vw rgba(0,102,255,0.4)}
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.particle{position:absolute;width:0.3125vw;height:0.3125vw;border-radius:50%;background:rgba(0,212,170,0.3);animation:fl 8s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}50%{transform:translateY(-15.625vw) translateX(3.90625vw)}}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.12) 0%,transparent 65%),var(--dark)}
+.section-divider .slide-inner{max-width:62.5vw}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:600;text-transform:uppercase;letter-spacing:0.195vw;color:var(--accent);margin-bottom:0.78125vw}
+.section-label::before{content:'';width:2.1875vw;height:0.15625vw;background:var(--accent)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;color:#fff;line-height:1.12;margin-bottom:1.875vw;letter-spacing:-0.117vw}
+.section-desc{font-size:1.40625vw;color:var(--text-muted);line-height:1.75;max-width:100%;margin-bottom:2.8125vw}
+
+/* ── TOC ── */
+.toc-slide{background:radial-gradient(ellipse at 50% 30%,rgba(0,102,255,0.08) 0%,transparent 60%),var(--dark)}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25vw 2.5vw;margin-top:2vw}
+.toc-item{display:flex;align-items:center;gap:1vw;padding:1.25vw 1.5vw;border-radius:0.75vw;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);transition:background .3s,border-color .3s}
+.toc-item:hover{background:rgba(255,255,255,0.07);border-color:rgba(0,212,170,0.2)}
+.toc-num{font-family:'Plus Jakarta Sans';font-size:max(18px,1.09vw);font-weight:800;color:var(--accent);min-width:2vw}
+.toc-label{font-size:max(18px,1.25vw);font-weight:600;color:#fff}
+
+/* TOC animations */
+.slide .toc-grid,.slide .toc-item{opacity:0}
+.slide.active .toc-grid{animation:aFadeIn .3s ease .45s both}
+.slide.active .toc-item:nth-child(1){animation:aSlideR .4s ease .5s both}
+.slide.active .toc-item:nth-child(2){animation:aSlideL .4s ease .55s both}
+.slide.active .toc-item:nth-child(3){animation:aSlideR .4s ease .6s both}
+.slide.active .toc-item:nth-child(4){animation:aSlideL .4s ease .65s both}
+.slide.active .toc-item:nth-child(5){animation:aSlideR .4s ease .7s both}
+.slide.active .toc-item:nth-child(6){animation:aSlideL .4s ease .75s both}
+.slide.active .toc-item:nth-child(7){animation:aSlideR .4s ease .8s both}
+.slide.active .toc-item:nth-child(8){animation:aSlideL .4s ease .85s both}
+body.no-motion .slide.active .toc-grid,body.no-motion .slide.active .toc-item{opacity:1 !important;transform:none !important}
+
+/* ── MARKET ── */
+.market-content{margin-top:1.09375vw;display:flex;flex-direction:column;gap:0}
+.mkt-bullets{display:flex;flex-direction:column;gap:0.46875vw;margin-bottom:1.25vw}
+.mkt-bullet{font-size:max(18px,1.328125vw);color:var(--text);line-height:1.6;padding-left:1.71875vw;position:relative}
+.mkt-bullet::before{content:'•';position:absolute;left:0;color:var(--accent);font-weight:700}
+.mkt-bullet b{color:#fff}
+.mkt-bullet .highlight{color:#EF4444;font-weight:700}
+.mkt-bullet .blue{color:var(--primary);font-weight:700}
+.mkt-timeline{position:relative;padding:1.875vw 0 0;overflow:hidden}
+.mkt-chart-area{position:relative;height:15.625vw;border-bottom:0.15625vw solid rgba(255,255,255,0.15);margin-bottom:0}
+.mkt-chart-area svg{position:absolute;inset:0;width:100%;height:100%}
+.mkt-chart-labels{position:absolute;right:0.625vw;top:0;bottom:0;pointer-events:none;z-index:5}
+.mkt-clabel{position:absolute;right:0;font-size:max(18px,1.171875vw);font-weight:700;padding:0.46875vw 1.25vw;border-radius:0.46875vw;white-space:nowrap;opacity:0;transform:translateX(0.78125vw);transition:opacity .4s ease,transform .4s ease;backdrop-filter:blur(8px);text-shadow:0 0.15625vw 0.46875vw rgba(0,0,0,0.8);border:1px solid rgba(255,255,255,0.12)}
+.mkt-clabel.green{color:#22C55E;background:rgba(10,14,39,0.85);border-color:rgba(34,197,94,0.3)}
+.mkt-clabel.blue{color:#3B82F6;background:rgba(10,14,39,0.85);border-color:rgba(59,130,246,0.3)}
+.mkt-clabel.orange{color:#F97316;background:rgba(10,14,39,0.85);border-color:rgba(249,115,22,0.3)}
+.mkt-years{display:grid;grid-template-columns:repeat(4,1fr);border-top:0.15625vw solid rgba(255,255,255,0.15)}
+.mkt-year{text-align:center;padding-top:0.9375vw;position:relative}
+.mkt-year::before{content:'';position:absolute;top:-0.46875vw;left:50%;width:0.78125vw;height:0.78125vw;border-radius:50%;background:var(--dark);border:0.15625vw solid rgba(255,255,255,0.3);transform:translateX(-50%)}
+.mkt-year:last-child::before{background:var(--accent);border-color:var(--accent)}
+.mkt-year-num{font-family:'Plus Jakarta Sans';font-size:1.5625vw;font-weight:700;color:#fff}
+.mkt-year:last-child .mkt-year-num{color:var(--accent)}
+.mkt-year-label{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.3125vw}
+.mkt-year:last-child .mkt-year-label{color:var(--accent);font-weight:600}
+
+/* Market stages */
+.mkt-maturity-label{font-size:1.5625vw;font-weight:800;color:var(--primary);margin-bottom:0.46875vw}
+.mkt-stages{display:flex;align-items:stretch;gap:0.46875vw;margin-bottom:0.625vw}
+.mkt-stage{flex:1;padding:0.78125vw 0.78125vw;border-radius:0.9375vw;text-align:left;position:relative;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)}
+.mkt-stage:not(:last-child)::after{content:'▸';position:absolute;right:-0.9375vw;top:50%;transform:translateY(-50%);font-size:max(18px,1.25vw);color:rgba(255,255,255,0.2);z-index:1}
+.mkt-stage:last-child{background:rgba(249,115,22,0.15);border:0.117vw solid rgba(249,115,22,0.4)}
+.mkt-stage-num{font-family:'Plus Jakarta Sans';font-size:1.71875vw;font-weight:800;color:#fff;margin-bottom:0.15625vw}
+.mkt-stage:last-child .mkt-stage-num{color:#F97316}
+.mkt-stage-text{font-size:max(18px,1.015625vw);color:var(--text-muted);line-height:1.35;white-space:nowrap}
+.mkt-stage:last-child .mkt-stage-text{color:rgba(249,115,22,0.85);font-weight:600}
+.mkt-stage-current{background:linear-gradient(145deg,rgba(0,212,170,0.2),rgba(0,102,255,0.15));border:0.15625vw solid rgba(0,212,170,0.6);box-shadow:0 0 2.1875vw rgba(0,212,170,0.25)}
+.mkt-stage-current .mkt-stage-num{font-size:2.34375vw;font-weight:900;background:linear-gradient(135deg,#00D4AA,#7DD3FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.mkt-stage-current .mkt-stage-text{color:#fff;font-weight:800;font-size:max(18px,1.015625vw);white-space:nowrap}
+.mkt-stage-marker{margin-top:0.46875vw;font-size:max(18px,1.015625vw);font-weight:800;color:#FBBF24;letter-spacing:0.03125vw}
+
+/* Market forecast stats */
+.mkt-fc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.40625vw;margin-bottom:1.5625vw}
+.mkt-fc-stat{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.5625vw 1.25vw;text-align:center}
+.mkt-fc-stat-value{font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;line-height:1.1}
+.mkt-fc-stat-value.cyan{color:var(--accent)}
+.mkt-fc-stat-value.blue{color:var(--primary)}
+.mkt-fc-stat-value.purple{color:var(--accent2)}
+.mkt-fc-stat-label{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.46875vw}
+.mkt-fc-body{display:flex;gap:1.875vw;align-items:stretch}
+.mkt-fc-chart{flex:1.2;background:rgba(17,22,51,0.4);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.5625vw;display:flex;align-items:center;justify-content:center}
+.mkt-fc-details{flex:1;display:flex;flex-direction:column;gap:0.9375vw}
+.mkt-fc-detail{padding:1.09375vw 1.25vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:0.78125vw}
+.mkt-fc-detail h4{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:0.3125vw}
+.mkt-fc-detail p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.5}
+
+/* ── PROBLEM ── */
+.problem{background:radial-gradient(ellipse at 70% 50%,rgba(236,72,153,0.08) 0%,transparent 60%),var(--dark)}
+.problem-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:2.1875vw;margin-top:2.5vw}
+.problem-col{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.problem-col .p-title{font-size:2.1875vw;font-weight:800;color:#fff;margin-bottom:0.46875vw;min-height:2.34375vw;display:flex;align-items:center;justify-content:center}
+.problem-col .p-desc{font-size:max(18px,1.171875vw);color:var(--text-muted);line-height:1.65;margin-bottom:0.625vw;max-width:23.4375vw;min-height:4.6875vw;display:flex;align-items:center;justify-content:center}
+.problem-col .p-arrow{font-size:1.5625vw;color:var(--text-muted);margin-bottom:0.46875vw}
+.problem-col .p-box{width:100%;min-height:7.8125vw;padding:1.875vw 1.5625vw;border-radius:1.5625vw;background:linear-gradient(145deg,rgba(124,58,237,0.35),rgba(99,102,241,0.25));border:1px solid rgba(124,58,237,0.3);margin-bottom:0.625vw;box-shadow:0 0.625vw 2.5vw rgba(124,58,237,0.2);display:flex;align-items:center;justify-content:center}
+.problem-col .p-box-text{font-size:1.875vw;font-weight:800;color:#fff;line-height:1.4;text-align:center}
+.problem-col .p-need{font-size:1.40625vw;font-weight:700;line-height:1.45;min-height:3.125vw;display:flex;align-items:center;justify-content:center}
+.problem-col .p-need.red{color:#EF4444}
+.problem-col .p-need.orange{color:#F59E0B}
+.problem-col .p-need.purple{color:var(--accent2)}
+
+/* ── SOLUTION ── */
+.solution{background:radial-gradient(ellipse at 30% 50%,rgba(0,102,255,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark)}
+.solution-flow{display:flex;justify-content:center;gap:1.875vw;margin-top:2.5vw}
+.solution-step{flex:0 1 25vw;text-align:center;padding:2.1875vw 1.5625vw;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:1.40625vw;transition:transform .4s,background .4s}
+.solution-step:hover{transform:translateY(-6px);background:rgba(255,255,255,0.04)}
+.step-number{font-family:'Plus Jakarta Sans';font-size:max(18px,1.25vw);font-weight:800;color:var(--accent);margin-bottom:0.9375vw;letter-spacing:0.15625vw}
+.step-icon{margin-bottom:1.25vw}
+.solution-step h3{font-size:1.875vw;font-weight:800;color:#fff;margin-bottom:0.78125vw}
+.solution-step p{font-size:max(18px,1.25vw);color:var(--text-muted);line-height:1.65}
+
+/* ── PRODUCT (SERVICE OVERVIEW) ── */
+.product{background:radial-gradient(ellipse at 50% 30%,rgba(124,58,237,0.1) 0%,transparent 60%),var(--dark)}
+.svc-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1.875vw;margin-top:2.5vw}
+.svc-phase{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:1.40625vw;padding:2.1875vw 1.875vw;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.svc-phase::before{content:'';position:absolute;top:0;left:0;right:0;height:0.3125vw;border-radius:1.40625vw 1.40625vw 0 0}
+.svc-phase:nth-child(1)::before{background:var(--primary)}
+.svc-phase:nth-child(2)::before{background:var(--accent)}
+.svc-phase:nth-child(3)::before{background:var(--accent2)}
+.svc-phase-num{font-family:'Plus Jakarta Sans';font-size:max(18px,1.09375vw);font-weight:800;letter-spacing:0.117vw;text-transform:uppercase;margin-bottom:0.78125vw}
+.svc-phase:nth-child(1) .svc-phase-num{color:var(--primary)}
+.svc-phase:nth-child(2) .svc-phase-num{color:var(--accent)}
+.svc-phase:nth-child(3) .svc-phase-num{color:var(--accent2)}
+.svc-phase h3{font-size:1.875vw;font-weight:800;color:#fff;margin-bottom:0.625vw;line-height:1.3}
+.svc-phase-sub{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-bottom:1.40625vw;line-height:1.5}
+.svc-feature-list{list-style:none;display:flex;flex-direction:column;gap:0.78125vw;flex:1}
+.svc-feature-list li{display:flex;align-items:flex-start;gap:0.78125vw;font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.5}
+.svc-ficon{flex-shrink:0;width:2.1875vw;height:2.1875vw;border-radius:0.625vw;display:flex;align-items:center;justify-content:center}
+.svc-phase:nth-child(1) .svc-ficon{background:rgba(0,102,255,0.15)}
+.svc-phase:nth-child(2) .svc-ficon{background:rgba(0,212,170,0.15)}
+.svc-phase:nth-child(3) .svc-ficon{background:rgba(124,58,237,0.15)}
+.svc-phase-badge{display:inline-block;margin-top:auto;padding-top:1.09375vw}
+.svc-phase-badge span{font-size:max(18px,1.09375vw);font-weight:600;padding:0.390625vw 0.9375vw;border-radius:3.125vw;letter-spacing:0.039vw}
+.svc-phase:nth-child(1) .svc-phase-badge span{background:rgba(0,102,255,0.15);color:var(--primary)}
+.svc-phase:nth-child(2) .svc-phase-badge span{background:rgba(0,212,170,0.12);color:var(--accent)}
+.svc-phase:nth-child(3) .svc-phase-badge span{background:rgba(124,58,237,0.15);color:var(--accent2)}
+.svc-cloud-bar{margin-top:1.5625vw;padding:1.09375vw 1.875vw;border-radius:0.9375vw;background:linear-gradient(135deg,rgba(0,102,255,0.08),rgba(0,212,170,0.06));border:1px solid rgba(255,255,255,0.06);text-align:center;display:flex;align-items:center;justify-content:center;gap:1.5625vw;flex-wrap:wrap}
+.svc-cloud-bar span{font-size:max(18px,1.09375vw);font-weight:600;color:var(--text-muted)}
+.svc-cloud-bar b{color:var(--accent);font-weight:700}
+
+/* ── COMPETITIVE ── */
+.comp-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:2.1875vw;border-radius:1.40625vw;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+.comp-table th,.comp-table td{padding:1.09375vw 1.09375vw;text-align:center;vertical-align:middle;line-height:1.5}
+.comp-table thead th{background:rgba(255,255,255,0.04);font-size:max(18px,1.09375vw);font-weight:700;color:var(--text-muted);border-bottom:0.15625vw solid rgba(255,255,255,0.1)}
+.comp-table thead th.comp-zaemit{background:rgba(99,102,241,0.15);color:#fff;font-size:2.1875vw;font-weight:800;font-family:'Plus Jakarta Sans','Pretendard Variable',sans-serif}
+.comp-table tbody td{font-size:max(18px,1.09375vw);color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.05)}
+.comp-table .comp-row-label{color:#fff;font-weight:600;font-size:max(18px,1.09375vw);text-align:center;white-space:nowrap;background:rgba(255,255,255,0.02)}
+.comp-table .comp-zaemit-cell{color:#fff;font-weight:600;font-size:1.5625vw;line-height:1.5;background:rgba(99,102,241,0.06);border-left:1px solid rgba(99,102,241,0.15);border-right:1px solid rgba(99,102,241,0.15)}
+.comp-table .comp-zaemit-cell b{color:var(--accent);font-weight:700}
+.comp-table tbody tr:hover td{background:rgba(255,255,255,0.02)}
+.comp-table tbody tr:hover .comp-zaemit-cell{background:rgba(99,102,241,0.1)}
+
+/* ── UPCOMING SERVICES ── */
+.upcoming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw;margin-top:2.1875vw}
+.upcoming-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.25vw;padding:2.1875vw 1.875vw;display:flex;flex-direction:column;gap:0.78125vw}
+.upcoming-card-header{display:flex;align-items:center;gap:0.9375vw;margin-bottom:0.625vw}
+.upcoming-card-icon{width:3.125vw;height:3.125vw;border-radius:0.78125vw;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.upcoming-card h3{font-size:1.5625vw;font-weight:800;color:#fff}
+.upcoming-card-sub{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.5}
+.upcoming-progress{margin-top:auto;padding-top:0.78125vw}
+.upcoming-progress-bar{height:0.46875vw;border-radius:0.234375vw;background:rgba(255,255,255,0.08);overflow:hidden}
+.upcoming-progress-fill{height:100%;border-radius:0.234375vw}
+.upcoming-progress-label{display:flex;justify-content:space-between;margin-top:0.390625vw;font-size:max(18px,1.09375vw);color:var(--text-muted)}
+
+/* ── IP / TECHNOLOGY ── */
+.ip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25vw;margin-top:2.1875vw}
+.ip-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.875vw 1.5625vw;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0.625vw}
+.ip-card-value{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:800}
+.ip-card-value.cyan{color:var(--accent)}
+.ip-card-value.blue{color:var(--primary)}
+.ip-card-value.purple{color:var(--accent2)}
+.ip-card-value.pink{color:#EC4899}
+.ip-card-label{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.4}
+.ip-card-sub{font-size:max(18px,1.09375vw);color:rgba(255,255,255,0.3);line-height:1.3}
+
+/* ── MS STRATEGY ── */
+.ms-strategy{display:grid;grid-template-columns:repeat(3,1fr);gap:1.875vw;margin-top:2.5vw}
+.ms-phase{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:1.40625vw;padding:2.1875vw 1.875vw;position:relative;overflow:hidden}
+.ms-phase::before{content:'';position:absolute;top:0;left:0;right:0;height:0.3125vw;border-radius:1.40625vw 1.40625vw 0 0}
+.ms-phase:nth-child(1)::before{background:var(--primary)}
+.ms-phase:nth-child(2)::before{background:var(--accent)}
+.ms-phase:nth-child(3)::before{background:var(--accent2)}
+.ms-phase-num{font-family:'Plus Jakarta Sans';font-size:max(18px,1.09375vw);font-weight:800;letter-spacing:0.117vw;text-transform:uppercase;margin-bottom:0.78125vw}
+.ms-phase:nth-child(1) .ms-phase-num{color:var(--primary)}
+.ms-phase:nth-child(2) .ms-phase-num{color:var(--accent)}
+.ms-phase:nth-child(3) .ms-phase-num{color:var(--accent2)}
+.ms-phase h3{font-size:1.875vw;font-weight:800;color:#fff;margin-bottom:0.625vw}
+.ms-phase-list{list-style:none;display:flex;flex-direction:column;gap:0.625vw}
+.ms-phase-list li{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.5;padding-left:1.09375vw;position:relative}
+.ms-phase-list li::before{content:'';position:absolute;left:0;top:0.625vw;width:0.390625vw;height:0.390625vw;border-radius:50%;background:var(--text-muted)}
+
+/* ── B2B CLIENTS ── */
+/* B2B Summary Stats */
+.b2b-summary{display:flex;gap:1.5625vw;margin-bottom:2.1875vw}
+.b2b-stat{flex:1;text-align:center;padding:1.25vw 0;border-radius:0.9375vw;background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06)}
+.b2b-stat-value{font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;margin-bottom:0.3125vw}
+.b2b-stat-value.accent{color:var(--accent)}.b2b-stat-value.blue{color:var(--primary)}.b2b-stat-value.purple{color:var(--accent2)}
+.b2b-stat-label{font-size:max(18px,1.09375vw);color:var(--text-muted)}
+/* B2B Grid */
+.b2b-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25vw}
+.b2b-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;overflow:hidden;display:flex;flex-direction:column}
+.b2b-card .b2b-shot{position:relative;aspect-ratio:16/7;background:#0C1330;overflow:hidden}
+.b2b-card .b2b-shot::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,14,39,0.7) 100%);pointer-events:none}
+.b2b-card .b2b-shot img{width:100%;height:100%;display:block;object-fit:cover;object-position:center top}
+.b2b-card-body{padding:1.09375vw 1.25vw;display:flex;flex-direction:column;gap:0.3125vw;flex:1}
+.b2b-card h4{font-size:max(18px,1.25vw);font-weight:700;color:#fff}
+.b2b-card p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.45}
+.b2b-card .b2b-url{font-family:'Plus Jakarta Sans';font-size:max(18px,0.9375vw);color:rgba(226,232,240,0.5);letter-spacing:0.02em}
+.b2b-card .b2b-status{font-size:max(18px,0.9375vw);font-weight:600;padding:0.234375vw 0.78125vw;border-radius:0.390625vw;display:inline-block;width:fit-content;margin-top:auto}
+.b2b-status.done{background:rgba(0,212,170,0.12);color:var(--accent)}
+.b2b-status.ongoing{background:rgba(0,102,255,0.12);color:var(--primary)}
+/* Featured Card */
+.b2b-featured{grid-column:1/-1;display:flex;align-items:center;gap:2.5vw;background:rgba(17,22,51,0.7);border:1px solid rgba(0,102,255,0.2);border-radius:1.09375vw;padding:1.5625vw 2.1875vw}
+.b2b-featured-icon{flex-shrink:0;width:5vw;height:5vw;border-radius:1.09375vw;background:rgba(0,102,255,0.12);display:flex;align-items:center;justify-content:center}
+.b2b-featured-content{flex:1}
+.b2b-featured h4{font-size:1.875vw;font-weight:700;color:#fff;margin-bottom:0.3125vw}
+.b2b-featured p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.5}
+.b2b-featured-right{text-align:right;flex-shrink:0}
+.b2b-featured-amount{font-family:'Plus Jakarta Sans';font-size:2.5vw;font-weight:800;color:var(--primary)}
+
+/* ── SALES STATUS ── */
+.sales-status{background:radial-gradient(ellipse at 60% 40%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)}
+.sales-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.1875vw;margin-top:2.5vw;align-items:start}
+.sales-chart-wrap{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.25vw;padding:1.875vw}
+.sales-chart-title{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:1.25vw}
+.sales-chart-title span{color:var(--accent);font-weight:400;font-size:max(18px,1.09375vw);margin-left:0.46875vw}
+.sales-right{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.25vw;padding:1.25vw}
+.sales-right-title{font-size:max(18px,1.25vw);font-weight:700;color:var(--accent);margin-bottom:1.09375vw;text-align:center}
+.sales-tbl{width:100%;border-collapse:collapse}
+.sales-tbl th{padding:0.625vw 0.46875vw;font-size:max(18px,0.9375vw);font-weight:700;color:var(--text-muted);text-align:center;border-bottom:0.15625vw solid rgba(255,255,255,0.1)}
+.sales-tbl td{padding:0.78125vw 0.46875vw;font-size:max(18px,1.09375vw);color:var(--text-muted);text-align:center;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle}
+.sales-tbl .s-label{color:#fff;font-weight:600;text-align:left;font-size:max(18px,1.09375vw)}
+.sales-tbl .s-num{font-family:'Plus Jakarta Sans';font-weight:800;color:#fff;font-size:1.5625vw}
+.sales-tbl .s-desc{font-size:max(18px,0.9375vw);color:var(--text-muted);text-align:left}
+.sales-total{border-top:0.15625vw solid rgba(255,255,255,0.12)}
+.sales-total .s-label{color:var(--accent)}
+.sales-total .s-num{color:var(--accent)}
+.sales-arr{font-family:'Plus Jakarta Sans';font-size:1.40625vw;font-weight:800;color:var(--accent);text-align:left}
+.muv-svg{width:100%;height:auto}
+.sales-legend{display:flex;align-items:center;gap:0.625vw;margin-top:0.78125vw;font-size:0.859375vw;color:var(--text-muted)}
+.sales-legend i{width:0.9375vw;height:0.9375vw;border-radius:0.234375vw;background:var(--accent);display:inline-block}
+.muv-table{width:100%;border-collapse:collapse;margin-top:1.25vw;font-size:0.9375vw}
+.muv-table th{padding:0.625vw 0.78125vw;font-weight:700;color:var(--text-muted);text-align:center;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.859375vw}
+.muv-table td{padding:0.625vw 0.78125vw;text-align:center;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04)}
+.muv-table .muv-label{color:#fff;font-weight:600;text-align:left}
+.muv-up{color:#00D4AA;font-weight:600}.muv-down{color:#EF4444;font-weight:600}
+.plugin-store .section-title{margin-bottom:1.09375vw}
+.plugin-store .section-desc{margin-bottom:0.3125vw}
+
+/* ── FINANCIAL ── */
+.fin-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25vw;margin-top:2.1875vw}
+.fin-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.5625vw 1.25vw;text-align:center}
+.fin-card-year{font-family:'Plus Jakarta Sans';font-size:1.875vw;font-weight:800;color:var(--primary);margin-bottom:0.3125vw}
+.fin-card-revenue{font-family:'Plus Jakarta Sans';font-size:2.5vw;font-weight:800;color:#fff;margin-bottom:0.3125vw}
+.fin-card-growth{font-size:max(18px,1.09375vw);font-weight:700;color:var(--accent)}
+.fin-card-desc{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.46875vw;line-height:1.4}
+.inv-timeline{margin-top:1.5625vw;padding:1.25vw 1.5625vw;background:rgba(0,102,255,0.06);border:1px solid rgba(0,102,255,0.15);border-radius:1.09375vw;display:flex;align-items:center;gap:2.5vw;justify-content:center;flex-wrap:wrap}
+.inv-item{text-align:center}
+.inv-item-round{font-size:max(18px,1.09375vw);font-weight:700;color:var(--primary);margin-bottom:0.15625vw}
+.inv-item-val{font-family:'Plus Jakarta Sans';font-size:max(18px,1.25vw);font-weight:800;color:#fff}
+.inv-item-date{font-size:max(18px,1.09375vw);color:var(--text-muted)}
+.inv-arrow{font-size:1.5625vw;color:rgba(255,255,255,0.2)}
+
+/* ── KPI TARGETS ── */
+.kpi-layout{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25vw;margin-top:2.5vw}
+.kpi-card{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.25vw;padding:2.1875vw 1.5625vw;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0.78125vw}
+.kpi-card-icon{width:3.90625vw;height:3.90625vw;border-radius:0.9375vw;display:flex;align-items:center;justify-content:center}
+.kpi-card-value{font-family:'Plus Jakarta Sans';font-size:2.5vw;font-weight:800;color:#fff}
+.kpi-card-label{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.4}
+
+/* ── GLOBAL PARTNERS ── */
+.global-partners{background:radial-gradient(ellipse at 50% 30%,rgba(124,58,237,0.1) 0%,transparent 60%),var(--dark)}
+.global-partners .slide-inner{display:flex;flex-direction:column}
+.gp-nda-row{display:flex;gap:0.9375vw;margin-bottom:0.78125vw}
+.gp-nda{display:flex;flex-direction:column;align-items:flex-start;padding:0.9375vw 1.25vw;flex:1;gap:0.3125vw;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.25);border-radius:1.09375vw}
+.gp-nda-header{display:flex;align-items:center;gap:0.78125vw;width:100%}
+.gp-nda-icon{flex-shrink:0}
+.gp-nda-body{flex:1}
+.gp-nda-badge{display:inline-block;padding:0.15625vw 0.625vw;border-radius:0.390625vw;background:rgba(124,58,237,0.2);color:#A78BFA;font-size:max(18px,1.09375vw);font-weight:800;letter-spacing:0.078vw;margin-bottom:0.234375vw}
+.gp-nda h3{font-size:max(18px,1.09375vw);font-weight:800;color:#fff;margin-bottom:0}
+.gp-nda p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.35}
+.gp-countries{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25vw;margin-top:1.25vw}
+.gp-country{background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.25vw 1.5625vw}
+.gp-country-name{font-size:max(18px,1.25vw);font-weight:800;color:#fff;margin-bottom:0.625vw}
+.gp-country-list{list-style:none}
+.gp-country-list li{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:0.78125vw;position:relative}
+.gp-country-list li::before{content:'-';position:absolute;left:0;color:var(--text-muted)}
+
+/* ── ROADMAP ── */
+.roadmap{background:linear-gradient(135deg,#0A0F1C 0%,#0d1424 50%,#0A0F1C 100%)}
+.roadmap .slide-inner{padding-top:5.46875vw;padding-bottom:4.6875vw}
+.roadmap .section-label{margin-bottom:0.78125vw}
+.roadmap .section-title{margin-bottom:0;font-size:3.75vw}
+.roadmap-container{position:relative;margin-top:4.6875vw;width:100%;overflow:visible}
+.roadmap-graph{position:absolute;bottom:3.125vw;left:0;width:100%;height:0.234375vw;background:linear-gradient(90deg,rgba(0,212,170,0.15) 0%,rgba(0,212,170,0.5) 50%,rgba(124,58,237,0.7) 100%);border-radius:0.15625vw}
+.roadmap-graph::before{content:'';position:absolute;right:-1.25vw;top:50%;transform:translateY(-50%);border:0.46875vw solid transparent;border-left:0.78125vw solid #7C3AED}
+.roadmap-timeline{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:2.1875vw;width:100%;padding-bottom:4.6875vw}
+.roadmap-year{flex:1;display:flex;flex-direction:column;transition:all .4s}
+.roadmap-year:nth-child(1){padding-bottom:0}
+.roadmap-year:nth-child(2){padding-bottom:5.46875vw}
+.roadmap-year:nth-child(3){padding-bottom:10.9375vw}
+.roadmap-year:nth-child(4){padding-bottom:16.40625vw}
+.roadmap-year-label{font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#00D4AA;margin-bottom:1.09375vw;line-height:1;display:flex;align-items:center;gap:0.9375vw}
+.roadmap-year:nth-child(4) .roadmap-year-label{font-size:2.8125vw;color:#A78BFA}
+.roadmap-year-label::before{content:'';width:1.09375vw;height:1.09375vw;background:#00D4AA;border-radius:50%;box-shadow:0 0 1.171875vw rgba(0,212,170,0.6)}
+.roadmap-year:nth-child(4) .roadmap-year-label::before{width:1.40625vw;height:1.40625vw;background:#7C3AED;box-shadow:0 0 1.953125vw rgba(124,58,237,0.8)}
+.roadmap-items{display:flex;flex-direction:column;gap:0.625vw}
+.roadmap-item{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.55;padding:0.390625vw 0}
+.roadmap-item b{color:#fff;font-weight:600}
+.roadmap-item .rm-highlight{color:#00D4AA;font-weight:600}
+.roadmap-item.highlight{background:linear-gradient(90deg,rgba(124,58,237,0.25) 0%,rgba(124,58,237,0.1) 100%);padding:0.78125vw 1.09375vw;border-radius:0.625vw;color:#fff;font-weight:600;font-size:max(18px,1.09375vw);margin-top:0.46875vw;border:1px solid rgba(124,58,237,0.4)}
+.roadmap-item.highlight b{color:#A78BFA}
+body.no-motion .roadmap-line{stroke-dashoffset:0 !important}
+
+/* ── EXIT STRATEGY ── */
+.exit-strategy{background:radial-gradient(ellipse at 30% 70%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)}
+.exit-chart-area{position:relative;margin-top:1.5625vw;width:100%}
+.exit-svg{width:100%;height:auto;overflow:hidden}
+
+/* ── TEAM ── */
+.team{background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.06) 0%,transparent 60%),var(--dark)}
+.team-layout{display:grid;grid-template-columns:1fr 2fr;gap:2.8125vw;margin-top:2.1875vw;align-items:start}
+.team-ceo{text-align:center}
+.team-ceo .team-photo{width:10.9375vw;height:10.9375vw;margin:0 auto 1.09375vw}
+.team-ceo h4{font-size:1.71875vw;font-weight:700;color:#fff;margin-bottom:0.15625vw}
+.team-ceo .team-title{font-size:max(18px,1.09375vw);font-weight:700;color:var(--primary);margin-bottom:0.78125vw}
+.team-ceo .team-bio{text-align:left;max-width:34.375vw;margin:0 auto}
+.team-photo{width:7.03125vw;height:7.03125vw;border-radius:50%;overflow:hidden;flex-shrink:0;border:0.15625vw solid rgba(255,255,255,0.1)}
+.team-photo img{width:100%;height:100%;object-fit:cover}
+.team-role-tag{font-size:max(18px,1.09375vw);font-weight:600;color:var(--text-muted);margin-bottom:0.15625vw}
+.team-members{display:grid;grid-template-columns:1fr 1fr;gap:1.5625vw}
+.team-member{display:flex;gap:1.25vw;align-items:flex-start;padding:1.25vw;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw}
+.team-member .team-photo{width:6.40625vw;height:6.40625vw}
+.team-info{flex:1;min-width:0}
+.team-info h4{font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-bottom:0.3125vw}
+.team-bio{list-style:none;padding:0;margin:0}
+.team-bio li{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:0.9375vw;position:relative}
+.team-bio li::before{content:'-';position:absolute;left:0;color:var(--text-muted)}
+
+/* ── ASK ── */
+.ask{background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.15) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(124,58,237,0.1) 0%,transparent 50%),var(--dark);text-align:center}
+.ask h2{font-family:'Plus Jakarta Sans';font-size:4.53125vw;font-weight:800;color:#fff;line-height:1.12;margin-bottom:1.875vw;letter-spacing:-0.15625vw}
+.ask p.ask-desc{font-size:1.640625vw;color:var(--text-muted);margin-bottom:3.75vw;line-height:1.7}
+.ask-stats{display:flex;justify-content:center;gap:5vw;margin-bottom:3.75vw}
+.ask-stat{text-align:center}
+.ask-stat-value{font-family:'Plus Jakarta Sans';font-size:3.75vw;font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ask-stat-label{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.46875vw}
+.cta-buttons{display:flex;justify-content:center;gap:1.5625vw}
+.btn-primary{padding:1.25vw 3.28125vw;border-radius:3.125vw;border:none;cursor:pointer;background:var(--gradient2);color:#fff;font-size:max(18px,1.40625vw);font-weight:700;transition:transform .3s,box-shadow .3s}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0.9375vw 3.125vw rgba(0,102,255,0.4)}
+.btn-secondary{padding:1.25vw 3.28125vw;border-radius:3.125vw;cursor:pointer;background:transparent;color:#fff;font-size:max(18px,1.40625vw);font-weight:600;border:1px solid rgba(255,255,255,0.2);transition:all .3s}
+.btn-secondary:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.4)}
+.ask-footer{margin-top:2.8125vw;font-size:max(18px,1.09375vw);color:var(--text-muted)}
+
+/* ── DEMO VIDEO ── */
+.demo-video{background:var(--dark)}
+.demo-video .slide-inner{display:flex;flex-direction:column;align-items:center}
+.demo-video-wrap{width:100%;max-width:75vw;aspect-ratio:16/9;border-radius:1.25vw;overflow:hidden;margin-top:1.5625vw;border:1px solid rgba(255,255,255,0.08);background:#000}
+.demo-video-wrap video{width:100%;height:100%;object-fit:cover}
+
+/* ── PRICING PLAN ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25vw;margin-top:2.5vw}
+.pricing-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:1.25vw;padding:2.1875vw 1.5625vw;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;transition:border-color .3s,box-shadow .3s}
+.pricing-card.featured{border-color:rgba(0,212,170,0.4);box-shadow:0 0 1.875vw rgba(0,212,170,0.12)}
+.pricing-card-name{font-size:max(18px,1.40625vw);font-weight:800;color:#fff;margin-bottom:0.3125vw}
+.pricing-card-sub{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-bottom:1.40625vw;line-height:1.4}
+.pricing-price{font-family:'Plus Jakarta Sans';font-size:2.5vw;font-weight:800;margin-bottom:0.3125vw}
+.pricing-card:nth-child(1) .pricing-price{color:var(--text)}
+.pricing-card:nth-child(2) .pricing-price{color:#3B82F6}
+.pricing-card:nth-child(3) .pricing-price{color:var(--accent)}
+.pricing-card:nth-child(4) .pricing-price{background:var(--gradient3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pricing-period{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-bottom:1.5625vw}
+.pricing-features{list-style:none;width:100%;text-align:left;display:flex;flex-direction:column;gap:0.625vw}
+.pricing-features li{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.45;padding:0.46875vw 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:baseline;gap:0.625vw}
+.pricing-features li::before{content:'';width:0.46875vw;height:0.46875vw;border-radius:50%;flex-shrink:0}
+.pricing-card:nth-child(1) .pricing-features li::before{background:var(--text-muted)}
+.pricing-card:nth-child(2) .pricing-features li::before{background:#3B82F6}
+.pricing-card:nth-child(3) .pricing-features li::before{background:var(--accent)}
+.pricing-card:nth-child(4) .pricing-features li::before{background:#7C3AED}
+.pricing-features li b{color:#fff;font-weight:600}
+.pricing-badge{position:absolute;top:-0.859375vw;left:50%;transform:translateX(-50%);padding:0.3125vw 1.09375vw;border-radius:1.5625vw;font-size:max(18px,1.09375vw);font-weight:700;letter-spacing:0.039vw;white-space:nowrap}
+.pricing-badge.pop{background:var(--accent);color:var(--dark)}
+.pricing-badge.ent{background:var(--gradient3);color:#fff}
+</style>
+</head>
+<body>
+
+<!-- ===== SLIDES ===== -->
+
+<!-- 01 COVER / HERO -->
+<div class="slide hero active" data-title-ko="WEVEN IR" data-title-en="WEVEN IR" data-title-ja="WEVEN IR">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge" data-lang="ko">AI Vibe-Coding Platform</div>
+      <div class="hero-badge" data-lang="en">AI Vibe-Coding Platform</div>
+      <div class="hero-badge" data-lang="ja">AI バイブコーディング プラットフォーム</div>
+      <h1><span class="gradient-text">WEVEN</span></h1>
+      <div class="hero-sub" data-lang="ko">AI 기반 웹사이트 자동생성 플랫폼 <b style="color:#fff">Zaemit</b><br>바이브코딩 시대, 생성부터 운영까지 Full-Lifecycle 솔루션</div>
+      <div class="hero-sub" data-lang="en">AI-powered website auto-generation platform <b style="color:#fff">Zaemit</b><br>Full-lifecycle solution from generation to operations in the vibe-coding era</div>
+      <div class="hero-sub" data-lang="ja">AI基盤ウェブサイト自動生成プラットフォーム<b style="color:#fff">Zaemit</b><br>バイブコーディング時代、生成から運用までのフルライフサイクルソリューション</div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-value" data-lang="ko">32억+</div><div class="hero-stat-value" data-lang="en">$2.4M+</div><div class="hero-stat-value" data-lang="ja">3.2億+</div><div class="hero-stat-label" data-lang="ko">누적매출</div><div class="hero-stat-label" data-lang="en">Cumulative Revenue</div><div class="hero-stat-label" data-lang="ja">累積売上</div></div>
+        <div><div class="hero-stat-value">31+</div><div class="hero-stat-label" data-lang="ko">특허</div><div class="hero-stat-label" data-lang="en">Patents</div><div class="hero-stat-label" data-lang="ja">特許</div></div>
+        <div><div class="hero-stat-value">10,330+</div><div class="hero-stat-label" data-lang="ko">생성 사이트</div><div class="hero-stat-label" data-lang="en">Sites Created</div><div class="hero-stat-label" data-lang="ja">生成サイト</div></div>
+        <div><div class="hero-stat-value">21</div><div class="hero-stat-label" data-lang="ko">팀원</div><div class="hero-stat-label" data-lang="en">Team</div><div class="hero-stat-label" data-lang="ja">チーム</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="center-logo">Z</div>
+        <div class="particles">
+          <div class="particle" style="left:20%;top:60%;animation-delay:0s"></div>
+          <div class="particle" style="left:60%;top:30%;animation-delay:2s"></div>
+          <div class="particle" style="left:80%;top:70%;animation-delay:4s"></div>
+          <div class="particle" style="left:40%;top:80%;animation-delay:6s"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 TOC -->
+
+<!-- 04 MARKET GROWTH -->
+<div class="slide market" data-title-ko="시장 기회" data-title-en="Market Opportunity" data-title-ja="市場機会">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Market Opportunity</div><div class="section-label" data-lang="en">Market Opportunity</div><div class="section-label" data-lang="ja">市場機会</div>
+    <div class="section-title" data-lang="ko">웹사이트 수는 2010년 2억개에서 14억개로 <span style="color:#EF4444">7배 성장</span></div>
+    <div class="section-title" data-lang="en">Websites Grew from 200M to 1.4B Since 2010 — <span style="color:#EF4444">7x Growth</span></div>
+    <div class="section-title" data-lang="ja">ウェブサイト数は2010年の2億から14億に <span style="color:#EF4444">7倍成長</span></div>
+    <div class="market-content">
+      <div class="mkt-bullets">
+        <div class="mkt-bullet" data-lang="ko"><span class="blue">글로벌 AI 웹서비스 시장</span> : 5.5조원(2024) → <b>35조원(2031)</b> 성장 전망</div>
+        <div class="mkt-bullet" data-lang="en"><span class="blue">Global AI Web Services Market</span>: KRW 5.5T (2024) → <b>KRW 35T (2031)</b> projected</div>
+        <div class="mkt-bullet" data-lang="ja"><span class="blue">グローバルAIウェブサービス市場</span>：5.5兆ウォン(2024) → <b>35兆ウォン(2031)</b>成長見通し</div>
+        <div class="mkt-bullet" data-lang="ko"><b>No-Code 시장</b> $21.2B 규모, CAGR 25.4% 고속 성장</div>
+        <div class="mkt-bullet" data-lang="en"><b>No-Code Market</b> $21.2B, CAGR 25.4% rapid growth</div>
+        <div class="mkt-bullet" data-lang="ja"><b>ノーコード市場</b> $21.2B規模、CAGR 25.4%高速成長</div>
+        <div class="mkt-bullet" data-lang="ko">바이브코딩 산출물이 전체 웹 콘텐츠의 <b>46%</b> 초과 (Google, MS)</div>
+        <div class="mkt-bullet" data-lang="en">Vibe-coding output exceeds <b>46%</b> of all web content (Google, MS)</div>
+        <div class="mkt-bullet" data-lang="ja">バイブコーディング成果物が全ウェブコンテンツの<b>46%</b>を超過 (Google, MS)</div>
+        <div class="mkt-bullet" data-lang="ko">네이버 <b>'모두'</b> 서비스 종료 → 100만+ 소상공인 대안 필요 (<span class="highlight">국내 TAM 2.2조원</span>)</div>
+        <div class="mkt-bullet" data-lang="en">Naver <b>'Modoo'</b> shutdown → 1M+ small businesses need alternatives (<span class="highlight">Domestic TAM KRW 2.2T</span>)</div>
+        <div class="mkt-bullet" data-lang="ja">Naver <b>'Modoo'</b> サービス終了 → 100万+小規模事業者の代替必要 (<span class="highlight">国内TAM 2.2兆ウォン</span>)</div>
+      </div>
+      <div class="mkt-timeline">
+        <div class="mkt-chart-area">
+          <svg class="mkt-svg" viewBox="0 0 1000 200" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="mkt-line" d="M0,196 C120,194 280,185 450,165 C600,140 750,110 880,85 C940,75 1000,70 1000,70" stroke="#22C55E" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path class="mkt-line" d="M0,60 C100,58 220,55 350,62 C500,75 650,100 780,120 C880,132 950,138 1000,140" stroke="#3B82F6" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path class="mkt-line mkt-line-vibe" d="M870,200 C880,198 900,196 920,194 C940,190 960,185 980,178 C990,172 1000,165 1000,160" stroke="#F97316" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="mkt-chart-labels">
+            <div class="mkt-clabel green" style="top:32%" data-lang="ko">웹사이트 빌더 65%</div>
+            <div class="mkt-clabel green" style="top:32%" data-lang="en">Website Builder 65%</div>
+            <div class="mkt-clabel green" style="top:32%" data-lang="ja">ウェブサイトビルダー 65%</div>
+            <div class="mkt-clabel blue" style="top:66%" data-lang="ko">에이전시 30%</div>
+            <div class="mkt-clabel blue" style="top:66%" data-lang="en">Agency 30%</div>
+            <div class="mkt-clabel blue" style="top:66%" data-lang="ja">エージェンシー 30%</div>
+            <div class="mkt-clabel orange" style="top:82%" data-lang="ko">바이브코딩 5%</div>
+            <div class="mkt-clabel orange" style="top:82%" data-lang="en">Vibe Coding 5%</div>
+            <div class="mkt-clabel orange" style="top:82%" data-lang="ja">バイブコーディング 5%</div>
+          </div>
+        </div>
+        <div class="mkt-years">
+          <div class="mkt-year"><div class="mkt-year-num">2010</div><div class="mkt-year-label" data-lang="ko">스마트폰 보급</div><div class="mkt-year-label" data-lang="en">Smartphone Era</div><div class="mkt-year-label" data-lang="ja">スマートフォン普及</div></div>
+          <div class="mkt-year"><div class="mkt-year-num">2015</div><div class="mkt-year-label" data-lang="ko">모바일 웹 확산</div><div class="mkt-year-label" data-lang="en">Mobile Web Boom</div><div class="mkt-year-label" data-lang="ja">モバイルウェブ拡散</div></div>
+          <div class="mkt-year"><div class="mkt-year-num">2020</div><div class="mkt-year-label" data-lang="ko">코로나19 DX</div><div class="mkt-year-label" data-lang="en">COVID-19 DX</div><div class="mkt-year-label" data-lang="ja">COVID-19 DX</div></div>
+          <div class="mkt-year"><div class="mkt-year-num">2025</div><div class="mkt-year-label" data-lang="ko">바이브코딩 시대</div><div class="mkt-year-label" data-lang="en">Vibe Coding Era</div><div class="mkt-year-label" data-lang="ja">バイブコーディング時代</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 VIBE CODING MARKET -->
+<div class="slide" data-title-ko="바이브코딩 시장" data-title-en="Vibe Coding Market" data-title-ja="バイブコーディング市場" style="background:radial-gradient(ellipse at 40% 40%,rgba(249,115,22,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Vibe Coding</div><div class="section-label" data-lang="en">Vibe Coding</div><div class="section-label" data-lang="ja">バイブコーディング</div>
+    <div class="section-title" data-lang="ko">바이브코딩 성숙도 — <span class="gradient-text">Zaemit의 위치</span></div>
+    <div class="section-title" data-lang="en">Vibe Coding Maturity — <span class="gradient-text">Where Zaemit Stands</span></div>
+    <div class="section-title" data-lang="ja">バイブコーディング成熟度 — <span class="gradient-text">Zaemitの位置</span></div>
+    <div class="section-desc" data-lang="ko">92%의 미국 개발자가 AI 코딩 도구를 일상적으로 사용 (GitHub 2024). 2년 내 글로벌 바이브코딩 도입률 62% (Fast Company)</div>
+    <div class="section-desc" data-lang="en">92% of US developers use AI coding tools daily (GitHub 2024). Global vibe-coding adoption reaches 62% within 2 years (Fast Company)</div>
+    <div class="section-desc" data-lang="ja">米国開発者の92%がAIコーディングツールを日常的に使用 (GitHub 2024)。2年以内にグローバルバイブコーディング導入率62% (Fast Company)</div>
+    <div class="mkt-maturity-label" data-lang="ko">바이브코딩 5단계 성숙도</div>
+    <div class="mkt-maturity-label" data-lang="en">Vibe Coding 5-Stage Maturity</div>
+    <div class="mkt-maturity-label" data-lang="ja">バイブコーディング5段階成熟度</div>
+    <div class="mkt-stages">
+      <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">1단계</div><div class="mkt-stage-num" data-lang="en">Stage 1</div><div class="mkt-stage-num" data-lang="ja">第1段階</div><div class="mkt-stage-text" data-lang="ko">코드 스니펫</div><div class="mkt-stage-text" data-lang="en">Code Snippet</div><div class="mkt-stage-text" data-lang="ja">コードスニペット</div></div>
+      <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">2단계</div><div class="mkt-stage-num" data-lang="en">Stage 2</div><div class="mkt-stage-num" data-lang="ja">第2段階</div><div class="mkt-stage-text" data-lang="ko">프로젝트 템플릿</div><div class="mkt-stage-text" data-lang="en">Project Template</div><div class="mkt-stage-text" data-lang="ja">テンプレート</div></div>
+      <div class="mkt-stage mkt-stage-current"><div class="mkt-stage-num" data-lang="ko">3단계</div><div class="mkt-stage-num" data-lang="en">Stage 3</div><div class="mkt-stage-num" data-lang="ja">第3段階</div><div class="mkt-stage-text" data-lang="ko">풀스택 앱</div><div class="mkt-stage-text" data-lang="en">Full-Stack App</div><div class="mkt-stage-text" data-lang="ja">フルスタックアプリ</div><div class="mkt-stage-marker" data-lang="ko">Zaemit ★</div><div class="mkt-stage-marker" data-lang="en">Zaemit ★</div><div class="mkt-stage-marker" data-lang="ja">Zaemit ★</div></div>
+      <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">4단계</div><div class="mkt-stage-num" data-lang="en">Stage 4</div><div class="mkt-stage-num" data-lang="ja">第4段階</div><div class="mkt-stage-text" data-lang="ko">DB+MCP 연동</div><div class="mkt-stage-text" data-lang="en">DB+MCP Integration</div><div class="mkt-stage-text" data-lang="ja">DB+MCP連動</div></div>
+      <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">5단계</div><div class="mkt-stage-num" data-lang="en">Stage 5</div><div class="mkt-stage-num" data-lang="ja">第5段階</div><div class="mkt-stage-text" data-lang="ko">운영 자동화</div><div class="mkt-stage-text" data-lang="en">Ops Automation</div><div class="mkt-stage-text" data-lang="ja">運用自動化</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 02: Problem & Solution ===== -->
+
+<!-- 07 PROBLEM -->
+<div class="slide problem" data-title-ko="시장의 문제" data-title-en="Market Problem" data-title-ja="市場の課題">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Problem</div><div class="section-label" data-lang="en">Problem</div><div class="section-label" data-lang="ja">課題</div>
+    <div class="section-title" data-lang="ko">바이브코딩의 <span style="color:#EF4444">3가지 한계</span></div>
+    <div class="section-title" data-lang="en"><span style="color:#EF4444">3 Limitations</span> of Vibe Coding</div>
+    <div class="section-title" data-lang="ja">バイブコーディングの<span style="color:#EF4444">3つの限界</span></div>
+    <div class="problem-flow">
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">디자인 품질</div><div class="p-title" data-lang="en">Design Quality</div><div class="p-title" data-lang="ja">デザイン品質</div>
+        <div class="p-desc" data-lang="ko">AI가 생성한 웹사이트는 획일적이고 템플릿 느낌의 디자인</div><div class="p-desc" data-lang="en">AI-generated websites look generic and template-like</div><div class="p-desc" data-lang="ja">AI生成のウェブサイトは画一的でテンプレート的なデザイン</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box"><div class="p-box-text" data-lang="ko">전문 디자인 부재</div><div class="p-box-text" data-lang="en">Lack of Professional Design</div><div class="p-box-text" data-lang="ja">プロデザインの欠如</div></div>
+        <div class="p-need red" data-lang="ko">Anti-AI 디자인 모델 필요</div><div class="p-need red" data-lang="en">Anti-AI Design Model Needed</div><div class="p-need red" data-lang="ja">Anti-AIデザインモデル必要</div>
+      </div>
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">운영 단절</div><div class="p-title" data-lang="en">Operations Gap</div><div class="p-title" data-lang="ja">運用の断絶</div>
+        <div class="p-desc" data-lang="ko">생성 후 수정·관리·운영은 별도 도구 또는 개발자 필요</div><div class="p-desc" data-lang="en">Post-generation editing, management & operations require separate tools or developers</div><div class="p-desc" data-lang="ja">生成後の修正・管理・運用には別ツールや開発者が必要</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box"><div class="p-box-text" data-lang="ko">생성 ≠ 운영</div><div class="p-box-text" data-lang="en">Generation ≠ Operation</div><div class="p-box-text" data-lang="ja">生成 ≠ 運用</div></div>
+        <div class="p-need orange" data-lang="ko">Full-Lifecycle 통합 플랫폼 필요</div><div class="p-need orange" data-lang="en">Full-Lifecycle Platform Needed</div><div class="p-need orange" data-lang="ja">フルライフサイクル統合プラットフォーム必要</div>
+      </div>
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">플랫폼 종속</div><div class="p-title" data-lang="en">Platform Lock-in</div><div class="p-title" data-lang="ja">プラットフォーム依存</div>
+        <div class="p-desc" data-lang="ko">Wix·Squarespace 등은 코드 내보내기 불가, 폐쇄적 구조</div><div class="p-desc" data-lang="en">Wix, Squarespace etc. don't export code — closed ecosystem</div><div class="p-desc" data-lang="ja">Wix・Squarespace等はコード書き出し不可、閉鎖的構造</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box"><div class="p-box-text" data-lang="ko">코드 소유권 없음</div><div class="p-box-text" data-lang="en">No Code Ownership</div><div class="p-box-text" data-lang="ja">コード所有権なし</div></div>
+        <div class="p-need purple" data-lang="ko">오픈 웹 아키텍처 필요</div><div class="p-need purple" data-lang="en">Open Web Architecture Needed</div><div class="p-need purple" data-lang="ja">オープンウェブアーキテクチャ必要</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 SOLUTION -->
+<div class="slide solution" data-title-ko="솔루션" data-title-en="Solution" data-title-ja="ソリューション">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Solution</div><div class="section-label" data-lang="en">Solution</div><div class="section-label" data-lang="ja">ソリューション</div>
+    <div class="section-title" data-lang="ko"><span class="gradient-text">Zaemit</span> — 생성부터 운영까지</div>
+    <div class="section-title" data-lang="en"><span class="gradient-text">Zaemit</span> — Generation to Operations</div>
+    <div class="section-title" data-lang="ja"><span class="gradient-text">Zaemit</span> — 生成から運用まで</div>
+    <div class="section-desc" data-lang="ko">대화형 AI로 웹사이트를 생성하고, 전문 에디터로 편집하고, 클라우드에 배포·운영까지. 글로벌 유일의 Full-Lifecycle 플랫폼</div>
+    <div class="section-desc" data-lang="en">Generate websites with conversational AI, edit with professional editor, deploy & operate on cloud. The world's only Full-Lifecycle platform</div>
+    <div class="section-desc" data-lang="ja">対話型AIでウェブサイトを生成し、プロエディタで編集し、クラウドにデプロイ・運用まで。グローバル唯一のフルライフサイクルプラットフォーム</div>
+    <div class="solution-flow solution-content">
+      <div class="solution-step">
+        <div class="step-number">STEP 01</div>
+        <div class="step-icon"><svg width="3.125vw" height="3.125vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838.838-2.872a2 2 0 0 1 .506-.855z"/></svg></div>
+        <h3 data-lang="ko">AI 생성</h3><h3 data-lang="en">AI Generate</h3><h3 data-lang="ja">AI生成</h3>
+        <p data-lang="ko">URL, PDF, 이미지 업로드 또는 대화로 반응형 웹 자동 생성</p><p data-lang="en">Auto-generate responsive web from URL, PDF, image upload or chat</p><p data-lang="ja">URL, PDF, 画像アップロードまたは対話でレスポンシブウェブ自動生成</p>
+      </div>
+      <div class="solution-step">
+        <div class="step-number">STEP 02</div>
+        <div class="step-icon"><svg width="3.125vw" height="3.125vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+        <h3 data-lang="ko">전문 편집</h3><h3 data-lang="en">Pro Edit</h3><h3 data-lang="ja">プロ編集</h3>
+        <p data-lang="ko">드래그앤드롭 에디터 + AI 코파일럿으로 디자이너급 완성</p><p data-lang="en">Drag-and-drop editor + AI copilot for designer-grade finish</p><p data-lang="ja">ドラッグ&ドロップエディタ+AIコパイロットでデザイナー級仕上げ</p>
+      </div>
+      <div class="solution-step">
+        <div class="step-number">STEP 03</div>
+        <div class="step-icon"><svg width="3.125vw" height="3.125vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
+        <h3 data-lang="ko">배포 & 운영</h3><h3 data-lang="en">Deploy & Operate</h3><h3 data-lang="ja">デプロイ&運用</h3>
+        <p data-lang="ko">원클릭 클라우드 배포, CRM, 다국어 번역, AI 운영 어시스턴트</p><p data-lang="en">One-click cloud deploy, CRM, multilingual translation, AI ops assistant</p><p data-lang="ja">ワンクリッククラウドデプロイ、CRM、多言語翻訳、AI運用アシスタント</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 09 DEMO VIDEO -->
+<div class="slide demo-video" data-title-ko="서비스 데모" data-title-en="Service Demo" data-title-ja="サービスデモ">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Demo</div><div class="section-label" data-lang="en">Demo</div><div class="section-label" data-lang="ja">デモ</div>
+    <div class="section-title" data-lang="ko">Zaemit <span class="gradient-text">서비스 데모</span></div>
+    <div class="section-title" data-lang="en">Zaemit <span class="gradient-text">Service Demo</span></div>
+    <div class="section-title" data-lang="ja">Zaemit <span class="gradient-text">サービスデモ</span></div>
+    <div class="demo-video-wrap">
+      <video src="../260303/zaemit_ai_kr.mp4" muted playsinline preload="metadata" style="transform:translateZ(0);backface-visibility:hidden"></video>
+    </div>
+  </div>
+</div>
+
+<!-- EDITOR & AI (moved to after demo) -->
+<div class="slide editor-ai" data-title-ko="에디터 & AI" data-title-en="Editor & AI" data-title-ja="エディター & AI" style="background:radial-gradient(ellipse at 30% 40%,rgba(99,102,241,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(0,102,255,0.1) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">제품 및 서비스</div><div class="section-label" data-lang="en">Products & Services</div><div class="section-label" data-lang="ja">製品・サービス</div>
+    <div class="section-title" data-lang="ko">웹에디터 이지모드와 AI 콘텐츠 생성기를 활용한<br>수정/운영</div>
+    <div class="section-title" data-lang="en">Edit & Operate with Easy Mode Editor<br>& AI Content Generator</div>
+    <div class="section-title" data-lang="ja">Webエディターイージーモードと<br>AIコンテンツ生成器を活用した修正/運営</div>
+    <div class="section-desc" data-lang="ko">네이버 블로그처럼 누구나 쉽게 편집 가능한 웹에디터와 AI를 활용한 운영</div>
+    <div class="section-desc" data-lang="en">Easy editing like Naver Blog with a web editor and AI-powered operations</div>
+    <div class="section-desc" data-lang="ja">ネイバーブログのように誰でも簡単に編集可能なWebエディターとAIを活用した運営</div>
+    <div style="display:flex;gap:2.34375vw;width:100%;padding:0 3.125vw;align-items:flex-start;justify-content:center">
+      <!-- Left: Easy Mode Editor -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+        <div style="display:flex;align-items:center;gap:0.78125vw;margin-bottom:1.5625vw">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
+          <span data-lang="ko" style="font-size:max(18px,1.3vw);font-weight:700;color:#fff">네이버 블로그 수준의 웹에디터 이지모드</span>
+          <span data-lang="en" style="font-size:max(18px,1.3vw);font-weight:700;color:#fff">Blog-Level Easy Mode Web Editor</span>
+          <span data-lang="ja" style="font-size:max(18px,1.3vw);font-weight:700;color:#fff">ブログレベルのWebエディター イージーモード</span>
+        </div>
+        <video muted playsinline loop preload="metadata" style="width:100%;border-radius:0.9375vw;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.4);transform:translateZ(0);backface-visibility:hidden">
+          <source src="../260303/zaemit_ai_editor_easymode_sm.mp4" type="video/mp4">
+        </video>
+      </div>
+      <!-- Right: AI Content Generator -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+        <div style="display:flex;align-items:center;gap:0.78125vw;margin-bottom:1.5625vw">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+          <span data-lang="ko" style="font-size:max(18px,1.3vw);font-weight:700;color:#fff">이미지, 텍스트 등의 AI 콘텐츠 생성기</span>
+          <span data-lang="en" style="font-size:max(18px,1.3vw);font-weight:700;color:#fff">AI Content Generator for Images & Text</span>
+          <span data-lang="ja" style="font-size:max(18px,1.3vw);font-weight:700;color:#fff">画像・テキストなどのAIコンテンツ生成器</span>
+        </div>
+        <video muted playsinline loop preload="metadata" style="width:100%;border-radius:0.9375vw;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.4);transform:translateZ(0);backface-visibility:hidden">
+          <source src="../260303/zaemit_ai_contents_modify_sm.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 03: Product & Technology ===== -->
+
+<!-- 11 PRODUCT OVERVIEW -->
+<div class="slide product" data-title-ko="제품 라인업" data-title-en="Product Lineup" data-title-ja="製品ラインナップ">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Products</div><div class="section-label" data-lang="en">Products</div><div class="section-label" data-lang="ja">製品</div>
+    <div class="section-title" data-lang="ko">Zaemit <span class="gradient-text">서비스 라인업</span></div>
+    <div class="section-title" data-lang="en">Zaemit <span class="gradient-text">Service Lineup</span></div>
+    <div class="section-title" data-lang="ja">Zaemit <span class="gradient-text">サービスラインナップ</span></div>
+    <div class="svc-phases">
+      <div class="svc-phase">
+        <div class="svc-phase-num">Phase 01</div>
+        <h3 data-lang="ko">Zaemit (B2C)</h3><h3 data-lang="en">Zaemit (B2C)</h3><h3 data-lang="ja">Zaemit (B2C)</h3>
+        <div class="svc-phase-sub" data-lang="ko">AI 대화형 웹사이트 생성</div><div class="svc-phase-sub" data-lang="en">AI conversational website generation</div><div class="svc-phase-sub" data-lang="ja">AI対話型ウェブサイト生成</div>
+        <ul class="svc-feature-list">
+          <li data-lang="ko"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838.838-2.872a2 2 0 0 1 .506-.855z"/></svg></span>URL/PDF/이미지 → 반응형 웹</li>
+          <li data-lang="en"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838.838-2.872a2 2 0 0 1 .506-.855z"/></svg></span>URL/PDF/Image → Responsive Web</li>
+          <li data-lang="ja"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838.838-2.872a2 2 0 0 1 .506-.855z"/></svg></span>URL/PDF/画像 → レスポンシブウェブ</li>
+          <li data-lang="ko"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span>자체 sLLM 기반 레이아웃 생성</li>
+          <li data-lang="en"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span>Proprietary sLLM-based layout generation</li>
+          <li data-lang="ja"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span>自社sLLM基盤レイアウト生成</li>
+        </ul>
+        <div class="svc-phase-badge"><span data-lang="ko">B2C · 월 21,000원</span><span data-lang="en">B2C · $16/mo</span><span data-lang="ja">B2C · 月額2,100円</span></div>
+      </div>
+      <div class="svc-phase">
+        <div class="svc-phase-num">Phase 02</div>
+        <h3 data-lang="ko">WebGen.GPT</h3><h3 data-lang="en">WebGen.GPT</h3><h3 data-lang="ja">WebGen.GPT</h3>
+        <div class="svc-phase-sub" data-lang="ko">웹 특화 자체 AI 모델</div><div class="svc-phase-sub" data-lang="en">Web-specialized proprietary AI model</div><div class="svc-phase-sub" data-lang="ja">ウェブ特化自社AIモデル</div>
+        <ul class="svc-feature-list">
+          <li data-lang="ko"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>30만+ 디자인 학습 데이터</li>
+          <li data-lang="en"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>300K+ design training samples</li>
+          <li data-lang="ja"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>30万+デザイン学習データ</li>
+          <li data-lang="ko"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span>Vision AI + VectorDB 3단계 파이프라인</li>
+          <li data-lang="en"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span>Vision AI + VectorDB 3-stage pipeline</li>
+          <li data-lang="ja"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span>Vision AI + VectorDB 3段階パイプライン</li>
+        </ul>
+        <div class="svc-phase-badge"><span data-lang="ko">GS 1등급 인증</span><span data-lang="en">GS Grade 1 Certified</span><span data-lang="ja">GS1等級認証済</span></div>
+      </div>
+      <div class="svc-phase">
+        <div class="svc-phase-num">Phase 03</div>
+        <h3 data-lang="ko">Z.STUDIO (B2B)</h3><h3 data-lang="en">Z.STUDIO (B2B)</h3><h3 data-lang="ja">Z.STUDIO (B2B)</h3>
+        <div class="svc-phase-sub" data-lang="ko">전문가 협업 웹 제작 SaaS</div><div class="svc-phase-sub" data-lang="en">Professional collaborative web SaaS</div><div class="svc-phase-sub" data-lang="ja">プロ向けコラボ型ウェブ制作SaaS</div>
+        <ul class="svc-feature-list">
+          <li data-lang="ko"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>CursorShared 실시간 협업 편집</li>
+          <li data-lang="en"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>CursorShared real-time collaborative editing</li>
+          <li data-lang="ja"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>CursorShared リアルタイム共同編集</li>
+          <li data-lang="ko"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span>FTP 확장성 · CRM 에이전시 관리</li>
+          <li data-lang="en"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span>FTP extensibility · CRM agency management</li>
+          <li data-lang="ja"><span class="svc-ficon"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span>FTP拡張性・CRMエージェンシー管理</li>
+        </ul>
+        <div class="svc-phase-badge"><span data-lang="ko">B2B · 서버렌탈 월 50만원</span><span data-lang="en">B2B · Server Rental $385/mo</span><span data-lang="ja">B2B · サーバーレンタル 月額5万円</span></div>
+      </div>
+    </div>
+    <div class="svc-cloud-bar">
+      <span data-lang="ko"><b>Azure</b> Container Apps · AKS · Azure OpenAI 하이브리드</span>
+      <span data-lang="en"><b>Azure</b> Container Apps · AKS · Azure OpenAI Hybrid</span>
+      <span data-lang="ja"><b>Azure</b> Container Apps · AKS · Azure OpenAI ハイブリッド</span>
+    </div>
+  </div>
+</div>
+
+<!-- 신규 서비스: Upcoming Services (moved from slide 11) -->
+<div class="slide" data-title-ko="신규 서비스" data-title-en="Upcoming Services" data-title-ja="新サービス" style="background:radial-gradient(ellipse at 60% 50%,rgba(0,102,255,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Coming Soon</div><div class="section-label" data-lang="en">Coming Soon</div><div class="section-label" data-lang="ja">近日公開</div>
+    <div class="section-title" data-lang="ko">2026 <span class="gradient-text">신규 서비스</span></div>
+    <div class="section-title" data-lang="en">2026 <span class="gradient-text">Upcoming Services</span></div>
+    <div class="section-title" data-lang="ja">2026 <span class="gradient-text">新サービス</span></div>
+    <div class="upcoming-grid">
+      <!-- Card 1: VSCode Extension -->
+      <div class="upcoming-card">
+        <div class="upcoming-card-header">
+          <div class="upcoming-card-icon" style="background:linear-gradient(135deg,rgba(0,102,255,0.3),rgba(99,102,241,0.3))">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+          </div>
+          <h3 data-lang="ko">VSCode Extension</h3><h3 data-lang="en">VSCode Extension</h3><h3 data-lang="ja">VSCode Extension</h3>
+        </div>
+        <div class="upcoming-card-sub" data-lang="ko">VSCode 환경에서 재밋 프로젝트를 직접 편집·배포할 수 있는 확장 플러그인</div>
+        <div class="upcoming-card-sub" data-lang="en">Extension plugin for editing & deploying Zaemit projects directly in VSCode</div>
+        <div class="upcoming-card-sub" data-lang="ja">VSCode環境でZaemitプロジェクトを直接編集・デプロイできる拡張プラグイン</div>
+        <div class="upcoming-progress">
+          <div class="upcoming-progress-bar"><div class="upcoming-progress-fill" style="width:85%;background:linear-gradient(90deg,var(--primary),#60A5FA)"></div></div>
+          <div class="upcoming-progress-label"><span data-lang="ko">개발 진행률</span><span data-lang="en">Progress</span><span data-lang="ja">開発進捗</span><span>85%</span></div>
+        </div>
+      </div>
+      <!-- Card 2: MCP 연동 -->
+      <div class="upcoming-card">
+        <div class="upcoming-card-header">
+          <div class="upcoming-card-icon" style="background:linear-gradient(135deg,rgba(0,212,170,0.3),rgba(16,185,129,0.3))">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 data-lang="ko">MCP 연동</h3><h3 data-lang="en">MCP Integration</h3><h3 data-lang="ja">MCP連動</h3>
+        </div>
+        <div class="upcoming-card-sub" data-lang="ko">Model Context Protocol 기반 AI 에이전트와 재밋 플랫폼 간 자동화 연동</div>
+        <div class="upcoming-card-sub" data-lang="en">Automated integration between MCP-based AI agents and the Zaemit platform</div>
+        <div class="upcoming-card-sub" data-lang="ja">MCPベースのAIエージェントとZaemitプラットフォーム間の自動化連携</div>
+        <div class="upcoming-progress">
+          <div class="upcoming-progress-bar"><div class="upcoming-progress-fill" style="width:75%;background:linear-gradient(90deg,var(--accent),#34D399)"></div></div>
+          <div class="upcoming-progress-label"><span data-lang="ko">개발 진행률</span><span data-lang="en">Progress</span><span data-lang="ja">開発進捗</span><span>75%</span></div>
+        </div>
+      </div>
+      <!-- Card 3: AI 대화형 운영 -->
+      <div class="upcoming-card">
+        <div class="upcoming-card-header">
+          <div class="upcoming-card-icon" style="background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(168,85,247,0.3))">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 data-lang="ko">AI 대화형 운영</h3><h3 data-lang="en">AI Conversational Ops</h3><h3 data-lang="ja">AI対話型運用</h3>
+        </div>
+        <div class="upcoming-card-sub" data-lang="ko">자연어 대화로 웹사이트 콘텐츠 수정·관리하는 AI 운영 시스템</div>
+        <div class="upcoming-card-sub" data-lang="en">AI operations system for managing website content through natural language</div>
+        <div class="upcoming-card-sub" data-lang="ja">自然言語対話でウェブサイトコンテンツを修正・管理するAI運用システム</div>
+        <div class="upcoming-progress">
+          <div class="upcoming-progress-bar"><div class="upcoming-progress-fill" style="width:25%;background:linear-gradient(90deg,var(--accent2),#C084FC)"></div></div>
+          <div class="upcoming-progress-label"><span data-lang="ko">개발 진행률</span><span data-lang="en">Progress</span><span data-lang="ja">開発進捗</span><span>25%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05-2 PLUGIN STORE -->
+<div class="slide plugin-store" data-title-ko="플러그인 스토어" data-title-en="Plugin Store" data-title-ja="プラグインストア" style="background:var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">제품 및 서비스</div><div class="section-label" data-lang="en">Products & Services</div><div class="section-label" data-lang="ja">製品・サービス</div>
+    <div class="section-title" data-lang="ko">복잡한 기능도 클릭 한번에 설치 가능한<br>플러그인 스토어</div>
+    <div class="section-title" data-lang="en">Install Complex Features in One Click<br>Plugin Store</div>
+    <div class="section-title" data-lang="ja">複雑な機能もワンクリックでインストール可能な<br>プラグインストア</div>
+    <div class="section-desc" data-lang="ko">개발코드 다운로드/업로드(구현 중), 확장 개발, 완성된 플러그인을 등록해서 플랫폼에서 판매까지</div>
+    <div class="section-desc" data-lang="en">Download/upload dev code (in progress), extend development, register completed plugins and sell on the platform</div>
+    <div class="section-desc" data-lang="ja">開発コードのダウンロード/アップロード（実装中）、拡張開発、完成したプラグインを登録してプラットフォームで販売まで</div>
+    <!-- Content: Plugin Grid (left) + Coding Custom Image (right) -->
+    <div style="display:flex;gap:3.125vw;width:100%;max-width:93.75vw;align-items:start;margin-top:3.90625vw">
+      <!-- Left: VS Box + Plugin Grid -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:1.875vw">
+        <!-- VS Comparison -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:1.5625vw;padding:1.71875vw 1.875vw">
+          <div style="text-align:center">
+            <div style="font-size:max(18px,1.40625vw);color:var(--text-muted);margin-bottom:0.46875vw;letter-spacing:1px" data-lang="ko">타사 No-Code</div>
+            <div style="font-size:max(18px,1.40625vw);color:var(--text-muted);margin-bottom:0.46875vw;letter-spacing:1px" data-lang="en">Other No-Code</div>
+            <div style="font-size:max(18px,1.40625vw);color:var(--text-muted);margin-bottom:0.46875vw;letter-spacing:1px" data-lang="ja">他社No-Code</div>
+            <div style="font-size:max(18px,1.40625vw);font-weight:700;color:#ef4444;white-space:nowrap" data-lang="ko">코드폐쇄 · 확장불가 · 개발불가</div>
+            <div style="font-size:max(18px,1.40625vw);font-weight:700;color:#ef4444;white-space:nowrap" data-lang="en">Closed Code · No Extensions · No Dev</div>
+            <div style="font-size:max(18px,1.40625vw);font-weight:700;color:#ef4444;white-space:nowrap" data-lang="ja">コード非公開 · 拡張不可 · 開発不可</div>
+          </div>
+          <div style="font-size:1.875vw;font-weight:800;color:var(--text-muted);flex-shrink:0">VS</div>
+          <div style="text-align:center">
+            <div style="font-size:max(18px,1.40625vw);color:var(--accent);margin-bottom:0.46875vw;letter-spacing:1px;font-weight:600">Zaemit</div>
+            <div style="font-size:max(18px,1.40625vw);font-weight:700;color:var(--accent);white-space:nowrap" data-lang="ko">코드개방 · 확장가능 · 개발가능</div>
+            <div style="font-size:max(18px,1.40625vw);font-weight:700;color:var(--accent);white-space:nowrap" data-lang="en">Open Code · Extensible · Dev Ready</div>
+            <div style="font-size:max(18px,1.40625vw);font-weight:700;color:var(--accent);white-space:nowrap" data-lang="ja">コード公開 · 拡張可能 · 開発可能</div>
+          </div>
+        </div>
+        <!-- Plugin Grid -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.78125vw;padding:0.9375vw 0.625vw">
+          <img src="../260303/icon_0.png" alt="채용" style="width:8.59375vw;height:8.59375vw;border-radius:1.71875vw;object-fit:cover">
+          <span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ko">채용 플러그인</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="en">Recruitment</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ja">採用</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.78125vw;padding:0.9375vw 0.625vw">
+          <img src="../260303/icon_1.png" alt="예약" style="width:8.59375vw;height:8.59375vw;border-radius:1.71875vw;object-fit:cover">
+          <span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ko">공간 예약관리</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="en">Booking</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ja">予約管理</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.78125vw;padding:0.9375vw 0.625vw">
+          <img src="../260303/icon_2.png" alt="발송" style="width:8.59375vw;height:8.59375vw;border-radius:1.71875vw;object-fit:cover">
+          <span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ko">발송 서비스</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="en">Messaging</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ja">配信</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.78125vw;padding:0.9375vw 0.625vw">
+          <img src="../260303/icon_3.png" alt="그룹웨어" style="width:8.59375vw;height:8.59375vw;border-radius:1.71875vw;object-fit:cover">
+          <span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ko">그룹웨어</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="en">Groupware</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ja">グループウェア</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.78125vw;padding:0.9375vw 0.625vw">
+          <img src="../260303/icon_4.png" alt="다국어" style="width:8.59375vw;height:8.59375vw;border-radius:1.71875vw;object-fit:cover">
+          <span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ko">원클릭 다국어</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="en">Multi-lang</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ja">多言語</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.78125vw;padding:0.9375vw 0.625vw">
+          <img src="../260303/icon_5.png" alt="설문" style="width:8.59375vw;height:8.59375vw;border-radius:1.71875vw;object-fit:cover">
+          <span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ko">설문 조사</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="en">Survey</span><span style="font-size:max(18px,1.40625vw);font-weight:600;color:#fff;text-align:center" data-lang="ja">アンケート</span>
+        </div>
+      </div><!-- /plugin grid -->
+      </div><!-- /left column -->
+      <!-- Right: Coding Custom Image -->
+      <div style="flex:1;border-radius:0.9375vw;overflow:hidden">
+        <img src="../260303/coding_custom.png" alt="Coding Custom" style="display:block;border-radius:0.9375vw;max-width:37.5vw">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 12 UPCOMING SERVICES -->
+<!-- SALES STATUS (from 260303) -->
+<div class="slide sales-status" data-title-ko="주요 B2C 서비스 사업성과" data-title-en="Key B2C Service Performance" data-title-ja="主要B2Cサービス事業成果">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">사업 현황 보고</div><div class="section-label" data-lang="en">Business Status</div><div class="section-label" data-lang="ja">事業現況報告</div>
+    <div class="section-title" data-lang="ko">주요 B2C 서비스 <span class="gradient-text">사업성과</span></div>
+    <div class="section-title" data-lang="en">Key B2C Service <span class="gradient-text">Performance</span></div>
+    <div class="section-title" data-lang="ja">主要B2Cサービス <span class="gradient-text">事業成果</span></div>
+
+    <div class="sales-layout">
+      <!-- Left: MUV chart -->
+      <div class="sales-chart-wrap">
+        <div class="sales-chart-title" data-lang="ko">월간 고유 방문자수 (MUV, 25.12)</div>
+        <div class="sales-chart-title" data-lang="en">Monthly Unique Visitors (MUV, Dec 2025)</div>
+        <div class="sales-chart-title" data-lang="ja">月間ユニーク訪問者数 (MUV, 2025.12)</div>
+        <svg class="muv-svg" viewBox="0 0 620 240">
+          <!-- Grid lines -->
+          <line x1="40" y1="20" x2="600" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+          <line x1="40" y1="60" x2="600" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+          <line x1="40" y1="100" x2="600" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+          <line x1="40" y1="140" x2="600" y2="140" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+          <line x1="40" y1="180" x2="600" y2="180" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+          <line x1="40" y1="200" x2="600" y2="200" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <!-- Y labels -->
+          <text x="35" y="24" fill="#94A3B8" font-size="9" text-anchor="end">2.0만</text>
+          <text x="35" y="64" fill="#94A3B8" font-size="9" text-anchor="end">1.6만</text>
+          <text x="35" y="104" fill="#94A3B8" font-size="9" text-anchor="end">1.2만</text>
+          <text x="35" y="144" fill="#94A3B8" font-size="9" text-anchor="end">8,000</text>
+          <text x="35" y="184" fill="#94A3B8" font-size="9" text-anchor="end">4,000</text>
+          <text x="35" y="204" fill="#94A3B8" font-size="9" text-anchor="end">0</text>
+          <!-- Area chart -->
+          <defs>
+            <linearGradient id="muvGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00D4AA" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#00D4AA" stop-opacity="0.02"/>
+            </linearGradient>
+          </defs>
+          <path class="svg-area" d="M50,198 C100,198 150,198 200,198 C250,198 300,198 340,197 C360,196 380,195 400,192 C420,185 435,170 450,155 C462,143 472,130 482,120 C492,108 498,95 508,80 C518,65 528,48 538,35 C548,28 555,24 565,22 C575,21 580,20 590,20 L590,200 L50,200 Z" fill="url(#muvGrad)"/>
+          <path class="svg-draw" style="--dash:1600" d="M50,198 C100,198 150,198 200,198 C250,198 300,198 340,197 C360,196 380,195 400,192 C420,185 435,170 450,155 C462,143 472,130 482,120 C492,108 498,95 508,80 C518,65 528,48 538,35 C548,28 555,24 565,22 C575,21 580,20 590,20" fill="none" stroke="#00D4AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Tooltip -->
+          <rect x="505" y="10" width="90" height="34" rx="6" fill="rgba(30,35,60,0.95)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <text x="550" y="24" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">2025-12</text>
+          <text x="550" y="37" fill="#94A3B8" font-size="8" text-anchor="middle">MUV: <tspan fill="#00D4AA" font-weight="700">2.0만</tspan></text>
+          <!-- X axis labels -->
+          <text x="50" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">23-01</text>
+          <text x="120" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">23-07</text>
+          <text x="200" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">24-01</text>
+          <text x="280" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">24-07</text>
+          <text x="360" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">25-01</text>
+          <text x="440" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">25-05</text>
+          <text x="520" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">25-09</text>
+          <text x="590" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">25-12</text>
+        </svg>
+        <div class="sales-legend"><i></i> <span data-lang="ko">고유 방문자 수(MUV)</span><span data-lang="en">Monthly Unique Visitors (MUV)</span><span data-lang="ja">月間ユニーク訪問者数(MUV)</span></div>
+
+        <!-- MUV mini table -->
+        <table class="muv-table">
+          <thead><tr><th data-lang="ko">구분</th><th data-lang="en">Category</th><th data-lang="ja">区分</th><th>2025-07</th><th>2025-08</th><th>2025-09</th><th>2025-10</th><th>2025-11</th><th>2025-12</th></tr></thead>
+          <tbody>
+            <tr><td class="muv-label">MUV</td><td>7,600</td><td>1.1만</td><td>1.2만</td><td>1.6만</td><td>1.4만</td><td>2.0만</td></tr>
+            <tr>
+              <td class="muv-label" data-lang="ko">전월대비</td><td class="muv-label" data-lang="en">MoM</td><td class="muv-label" data-lang="ja">前月比</td>
+              <td class="muv-down">&#9660; -20.8%</td>
+              <td class="muv-up">&#9650; 44.7%</td>
+              <td class="muv-up">&#9650; 9.1%</td>
+              <td class="muv-up">&#9650; 33.3%</td>
+              <td class="muv-down">&#9660; -12.5%</td>
+              <td class="muv-up">&#9650; 42.9%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right: Sales breakdown -->
+      <div class="sales-right">
+        <div class="sales-right-title" data-lang="ko">국내 판매현황 (25.12), 전환율 10%</div>
+        <div class="sales-right-title" data-lang="en">Domestic Sales (Dec 2025), 10% Conv. Rate</div>
+        <div class="sales-right-title" data-lang="ja">国内販売状況 (2025.12)、コンバージョン率10%</div>
+        <table class="sales-tbl">
+          <thead><tr><th data-lang="ko">구분</th><th data-lang="en">Category</th><th data-lang="ja">区分</th><th data-lang="ko">수치</th><th data-lang="en">Count</th><th data-lang="ja">数値</th><th data-lang="ko">비고 · 설명</th><th data-lang="en">Note</th><th data-lang="ja">備考</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="s-label" data-lang="ko">총 사이트 수</td><td class="s-label" data-lang="en">Total Sites</td><td class="s-label" data-lang="ja">総サイト数</td>
+              <td class="s-num">8,015</td>
+              <td class="s-desc" data-lang="ko">만들어진 전체 소비자 웹사이트 수</td><td class="s-desc" data-lang="en">Total consumer websites created</td><td class="s-desc" data-lang="ja">作成された全消費者Webサイト数</td>
+            </tr>
+            <tr>
+              <td class="s-label" data-lang="ko">크레딧 이용자 수</td><td class="s-label" data-lang="en">Credit Users</td><td class="s-label" data-lang="ja">クレジットユーザー数</td>
+              <td class="s-num">5,450</td>
+              <td class="s-desc" data-lang="ko">유료 이용자 빠르게 증가중</td><td class="s-desc" data-lang="en">Paid users rapidly increasing</td><td class="s-desc" data-lang="ja">有料ユーザー急増中</td>
+            </tr>
+            <tr>
+              <td class="s-label" data-lang="ko">B2C 유입 소비자 (홍보)</td><td class="s-label" data-lang="en">B2C Consumers (Marketing)</td><td class="s-label" data-lang="ja">B2C流入消費者 (広報)</td>
+              <td class="s-num">477</td>
+              <td class="s-desc" data-lang="ko">연 120,000 구독 및 AI 크레딧 추가 결제</td><td class="s-desc" data-lang="en">₩120K/yr subscription + AI credit payments</td><td class="s-desc" data-lang="ja">年120,000サブスク+AIクレジット追加決済</td>
+            </tr>
+            <tr>
+              <td class="s-label" data-lang="ko">소상공인 스마트상점</td><td class="s-label" data-lang="en">SME Smart Stores</td><td class="s-label" data-lang="ja">中小企業スマートストア</td>
+              <td class="s-num">79</td>
+              <td class="s-desc" data-lang="ko">소상공인진흥공단 바우처 사업</td><td class="s-desc" data-lang="en">SME voucher program</td><td class="s-desc" data-lang="ja">中小企業振興公団バウチャー事業</td>
+            </tr>
+            <tr>
+              <td class="s-label" data-lang="ko">웹 보급 계약</td><td class="s-label" data-lang="en">Web Supply Contracts</td><td class="s-label" data-lang="ja">Web普及契約</td>
+              <td class="s-num">50</td>
+              <td class="s-desc" data-lang="ko">단체(20건 이상) 웹 구축 계약</td><td class="s-desc" data-lang="en">Group (20+) web build contracts</td><td class="s-desc" data-lang="ja">団体(20件以上)Web構築契約</td>
+            </tr>
+            <tr class="sales-total">
+              <td class="s-label" data-lang="ko">유료 이용자 합계</td><td class="s-label" data-lang="en">Total Paid Users</td><td class="s-label" data-lang="ja">有料ユーザー合計</td>
+              <td class="s-num">796</td>
+              <td class="sales-arr" data-lang="ko">ARR 119,400,000원</td><td class="sales-arr" data-lang="en">ARR $86K</td><td class="sales-arr" data-lang="ja">ARR 約1,280万円</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 13 COMPETITIVE TABLE -->
+<div class="slide" data-title-ko="경쟁 비교" data-title-en="Competitive Comparison" data-title-ja="競争比較" style="background:radial-gradient(ellipse at 50% 50%,rgba(99,102,241,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Competitive Edge</div><div class="section-label" data-lang="en">Competitive Edge</div><div class="section-label" data-lang="ja">競争優位</div>
+    <div class="section-title" data-lang="ko">글로벌 유일의 <span class="gradient-text">Full-Lifecycle</span> 플랫폼</div>
+    <div class="section-title" data-lang="en">The World's Only <span class="gradient-text">Full-Lifecycle</span> Platform</div>
+    <div class="section-title" data-lang="ja">グローバル唯一の<span class="gradient-text">フルライフサイクル</span>プラットフォーム</div>
+    <div class="section-desc" data-lang="ko" style="margin-bottom:1.25vw">2026년 3월 기준 · 주요 AI 웹 빌더 비교</div>
+    <div class="section-desc" data-lang="en" style="margin-bottom:1.25vw">As of Mar 2026 · Key AI Web Builder Comparison</div>
+    <div class="section-desc" data-lang="ja" style="margin-bottom:1.25vw">2026年3月時点 · 主要AI Webビルダー比較</div>
+    <table class="comp-table">
+      <thead><tr>
+        <th data-lang="ko">기능</th><th data-lang="en">Feature</th><th data-lang="ja">機能</th>
+        <th class="comp-zaemit">Zaemit</th>
+        <th>Cursor</th><th>Bolt</th><th>Lovable</th><th>V0</th><th>Replit</th><th>Wix</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="comp-row-label" data-lang="ko">기업가치</td><td class="comp-row-label" data-lang="en">Valuation</td><td class="comp-row-label" data-lang="ja">企業価値</td><td class="comp-zaemit-cell"><b>Pre-A</b></td><td>$50B</td><td>비공개</td><td>$6.6B</td><td>비공개</td><td>$9B</td><td>$11B</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">AI 웹 생성</td><td class="comp-row-label" data-lang="en">AI Web Gen</td><td class="comp-row-label" data-lang="ja">AI Web生成</td><td class="comp-zaemit-cell"><b>WebGen.GPT</b></td><td>코드 생성</td><td>프롬프트 생성</td><td>프롬프트 생성</td><td>프롬프트 생성</td><td>Agent 생성</td><td>Harmony AI</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">프로 에디터</td><td class="comp-row-label" data-lang="en">Pro Editor</td><td class="comp-row-label" data-lang="ja">プロエディタ</td><td class="comp-zaemit-cell"><b>Editor Pro</b></td><td>IDE 에디터</td><td>미제공</td><td>미제공</td><td>미제공</td><td>Cloud IDE</td><td>드래그&드롭</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">호스팅/배포</td><td class="comp-row-label" data-lang="en">Hosting</td><td class="comp-row-label" data-lang="ja">ホスティング</td><td class="comp-zaemit-cell"><b>Azure Cloud</b></td><td>미제공</td><td>bolt.host</td><td>Supabase</td><td>Vercel</td><td>자체 호스팅</td><td>자체 호스팅</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">코드 소유권</td><td class="comp-row-label" data-lang="en">Code Own</td><td class="comp-row-label" data-lang="ja">コード所有権</td><td class="comp-zaemit-cell"><b>OWA (Open)</b></td><td>로컬 소유</td><td>Export 가능</td><td>GitHub 싱크</td><td>Export 가능</td><td>제한적</td><td>미제공</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">B2B SaaS</td><td class="comp-row-label" data-lang="en">B2B SaaS</td><td class="comp-row-label" data-lang="ja">B2B SaaS</td><td class="comp-zaemit-cell"><b>Z.STUDIO</b></td><td>Enterprise</td><td>미제공</td><td>미제공</td><td>미제공</td><td>미제공</td><td>일부 제공</td></tr>
+        <tr><td class="comp-row-label" data-lang="ko">MCP/플러그인</td><td class="comp-row-label" data-lang="en">MCP/Plugin</td><td class="comp-row-label" data-lang="ja">MCP/プラグイン</td><td class="comp-zaemit-cell"><b>VSCode + MCP</b></td><td>IDE 플러그인</td><td>미제공</td><td>미제공</td><td>미제공</td><td>미제공</td><td>미제공</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SECTION 04: Competitiveness ===== -->
+
+<!-- 14 TECHNOLOGY & IP -->
+<div class="slide" data-title-ko="기술 & IP" data-title-en="Technology & IP" data-title-ja="技術とIP" style="background:radial-gradient(ellipse at 30% 60%,rgba(124,58,237,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Technology</div><div class="section-label" data-lang="en">Technology</div><div class="section-label" data-lang="ja">技術</div>
+    <div class="section-title" data-lang="ko">기술 역량 & <span class="gradient-text">IP 포트폴리오</span></div>
+    <div class="section-title" data-lang="en">Technical Capability & <span class="gradient-text">IP Portfolio</span></div>
+    <div class="section-title" data-lang="ja">技術力と<span class="gradient-text">IPポートフォリオ</span></div>
+    <div class="section-desc" data-lang="ko">4년간 축적한 30만+ 디자인 학습 데이터와 WebGen.GPT 자체 모델로 차별화된 기술 경쟁력 확보</div>
+    <div class="section-desc" data-lang="en">Differentiated technology with 300K+ design training data accumulated over 4 years and proprietary WebGen.GPT model</div>
+    <div class="section-desc" data-lang="ja">4年間蓄積した30万+デザイン学習データとWebGen.GPT自社モデルで差別化された技術競争力を確保</div>
+    <div class="ip-grid">
+      <div class="ip-card"><div class="ip-card-value cyan">31+</div><div class="ip-card-label" data-lang="ko">국내외 특허</div><div class="ip-card-label" data-lang="en">Patents (KR + PCT)</div><div class="ip-card-label" data-lang="ja">国内外特許</div><div class="ip-card-sub" data-lang="ko">24 등록 + 7 PCT</div><div class="ip-card-sub" data-lang="en">24 registered + 7 PCT</div><div class="ip-card-sub" data-lang="ja">24登録 + 7 PCT</div></div>
+      <div class="ip-card"><div class="ip-card-value blue">7</div><div class="ip-card-label" data-lang="ko">학술 논문</div><div class="ip-card-label" data-lang="en">Academic Papers</div><div class="ip-card-label" data-lang="ja">学術論文</div></div>
+      <div class="ip-card"><div class="ip-card-value purple">GS 1등급</div><div class="ip-card-label" data-lang="ko">품질 인증</div><div class="ip-card-label" data-lang="en">Quality Certification</div><div class="ip-card-label" data-lang="ja">品質認証</div><div class="ip-card-sub" data-lang="ko">+ ISO27001</div><div class="ip-card-sub" data-lang="en">+ ISO27001</div><div class="ip-card-sub" data-lang="ja">+ ISO27001</div></div>
+      <div class="ip-card"><div class="ip-card-value pink">60+</div><div class="ip-card-label" data-lang="ko">2028 특허 목표</div><div class="ip-card-label" data-lang="en">2028 Patent Target</div><div class="ip-card-label" data-lang="ja">2028特許目標</div><div class="ip-card-sub" data-lang="ko">기술특례상장 요건</div><div class="ip-card-sub" data-lang="en">Tech listing requirement</div><div class="ip-card-sub" data-lang="ja">技術特例上場要件</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 18 B2B TRACK RECORD -->
+<div class="slide" data-title-ko="B2B 실적" data-title-en="B2B Track Record" data-title-ja="B2B実績" style="background:radial-gradient(ellipse at 40% 40%,rgba(0,102,255,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">B2B Track Record</div><div class="section-label" data-lang="en">B2B Track Record</div><div class="section-label" data-lang="ja">B2B実績</div>
+    <div class="section-title" data-lang="ko">주요 B2B <span class="gradient-text">수주 실적</span></div>
+    <div class="section-title" data-lang="en">Major B2B <span class="gradient-text">Client Track Record</span></div>
+    <div class="section-title" data-lang="ja">主要B2B<span class="gradient-text">受注実績</span></div>
+    <!-- Featured: KOICA (Top) -->
+    <div class="b2b-featured" style="margin-bottom:1.5625vw">
+      <div class="b2b-featured-icon">
+        <svg width="2.5vw" height="2.5vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <div class="b2b-featured-content">
+        <h4 data-lang="ko">KOICA 에티오피아 스타트업 포털</h4><h4 data-lang="en">KOICA Ethiopia Startup Portal</h4><h4 data-lang="ja">KOICA エチオピア スタートアップポータル</h4>
+        <p data-lang="ko">한국국제협력단(KOICA) 에티오피아 스타트업 생태계 지원 포털 개발 · 2026년 연간 프로젝트</p>
+        <p data-lang="en">KOICA Ethiopia startup ecosystem portal — Year-long project through 2026</p>
+        <p data-lang="ja">KOICA エチオピアスタートアップ生態系ポータル開発 · 2026年年間プロジェクト</p>
+      </div>
+      <div class="b2b-featured-right">
+        <div class="b2b-featured-amount" data-lang="ko">24억원</div><div class="b2b-featured-amount" data-lang="en">$1.8M</div><div class="b2b-featured-amount" data-lang="ja">2.4億円</div>
+        <div class="b2b-status ongoing" data-lang="ko">2026 진행중</div><div class="b2b-status ongoing" data-lang="en">2026 In Progress</div><div class="b2b-status ongoing" data-lang="ja">2026 進行中</div>
+      </div>
+    </div>
+
+    <!-- Completed Projects (3 in a row) -->
+    <div class="b2b-grid">
+      <div class="b2b-card">
+        <div class="b2b-shot"><img src="b2b_greendaero.png" alt="농정원 그린대로" loading="lazy"></div>
+        <div class="b2b-card-body">
+          <h4 data-lang="ko">농정원 그린대로</h4><h4 data-lang="en">EPIS Greendaero</h4><h4 data-lang="ja">EPIS グリーン大路</h4>
+          <p data-lang="ko">귀농귀촌 대표 플랫폼 구축</p><p data-lang="en">Rural migration platform</p><p data-lang="ja">帰農帰村プラットフォーム</p>
+          <div class="b2b-url">greendaero.go.kr</div>
+          <div class="b2b-status done" data-lang="ko">완료</div><div class="b2b-status done" data-lang="en">Done</div><div class="b2b-status done" data-lang="ja">完了</div>
+        </div>
+      </div>
+      <div class="b2b-card">
+        <div class="b2b-shot"><img src="b2b_micekorea.png" alt="한국MICE협회" loading="lazy"></div>
+        <div class="b2b-card-body">
+          <h4 data-lang="ko">한국MICE협회</h4><h4 data-lang="en">Korea MICE Assoc.</h4><h4 data-lang="ja">韓国MICE協会</h4>
+          <p data-lang="ko">공식 홈페이지 · 회원 서비스</p><p data-lang="en">Official site & members</p><p data-lang="ja">公式サイト・会員サービス</p>
+          <div class="b2b-url">micekorea.or.kr</div>
+          <div class="b2b-status done" data-lang="ko">완료</div><div class="b2b-status done" data-lang="en">Done</div><div class="b2b-status done" data-lang="ja">完了</div>
+        </div>
+      </div>
+      <div class="b2b-card">
+        <div class="b2b-shot"><img src="b2b_smartstore.png" alt="WEVEN 스마트상점" loading="lazy"></div>
+        <div class="b2b-card-body">
+          <h4 data-lang="ko">WEVEN 스마트상점</h4><h4 data-lang="en">WEVEN Smart Store</h4><h4 data-lang="ja">WEVEN スマートストア</h4>
+          <p data-lang="ko">소상공인 SaaS 지원사업</p><p data-lang="en">SME SaaS support</p><p data-lang="ja">中小企業SaaS支援</p>
+          <div class="b2b-url">smartstore.zaemit.com</div>
+          <div class="b2b-status done" data-lang="ko">완료</div><div class="b2b-status done" data-lang="en">Done</div><div class="b2b-status done" data-lang="ja">完了</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 19 BUSINESS MODEL -->
+<div class="slide" data-title-ko="비즈니스 모델" data-title-en="Business Model" data-title-ja="ビジネスモデル" style="background:radial-gradient(ellipse at 80% 30%,rgba(0,102,255,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Business Model</div><div class="section-label" data-lang="en">Business Model</div><div class="section-label" data-lang="ja">ビジネスモデル</div>
+    <div class="section-title" data-lang="ko"><span class="gradient-text">6대 수익 모델</span></div>
+    <div class="section-title" data-lang="en"><span class="gradient-text">6 Revenue Streams</span></div>
+    <div class="section-title" data-lang="ja"><span class="gradient-text">6大収益モデル</span></div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-card-name" data-lang="ko">SaaS 구독</div><div class="pricing-card-name" data-lang="en">SaaS Subscription</div><div class="pricing-card-name" data-lang="ja">SaaSサブスク</div>
+        <div class="pricing-price" data-lang="ko">2.1만</div><div class="pricing-price" data-lang="en">$16</div><div class="pricing-price" data-lang="ja">2,100</div>
+        <div class="pricing-period" data-lang="ko">원 / 월 (B2C)</div><div class="pricing-period" data-lang="en">/month (B2C)</div><div class="pricing-period" data-lang="ja">円 / 月 (B2C)</div>
+        <ul class="pricing-features">
+          <li data-lang="ko">AI 웹사이트 생성</li><li data-lang="en">AI website generation</li><li data-lang="ja">AIウェブサイト生成</li>
+          <li data-lang="ko">호스팅 포함</li><li data-lang="en">Hosting included</li><li data-lang="ja">ホスティング込み</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name" data-lang="ko">AI 크레딧</div><div class="pricing-card-name" data-lang="en">AI Credits</div><div class="pricing-card-name" data-lang="ja">AIクレジット</div>
+        <div class="pricing-price" data-lang="ko">~2만</div><div class="pricing-price" data-lang="en">~$15</div><div class="pricing-price" data-lang="ja">~2,000</div>
+        <div class="pricing-period" data-lang="ko">원 / 월</div><div class="pricing-period" data-lang="en">/month</div><div class="pricing-period" data-lang="ja">円 / 月</div>
+        <ul class="pricing-features">
+          <li data-lang="ko">AI 생성 사용량 과금</li><li data-lang="en">AI generation usage billing</li><li data-lang="ja">AI生成使用量課金</li>
+          <li data-lang="ko">Azure 연동 과금</li><li data-lang="en">Azure-linked billing</li><li data-lang="ja">Azure連動課金</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge pop" data-lang="ko">핵심 모델</div><div class="pricing-badge pop" data-lang="en">Core</div><div class="pricing-badge pop" data-lang="ja">コア</div>
+        <div class="pricing-card-name" data-lang="ko">B2B 화이트라벨</div><div class="pricing-card-name" data-lang="en">B2B White-Label</div><div class="pricing-card-name" data-lang="ja">B2Bホワイトラベル</div>
+        <div class="pricing-price" data-lang="ko">3.5만</div><div class="pricing-price" data-lang="en">$27</div><div class="pricing-price" data-lang="ja">3,500</div>
+        <div class="pricing-period" data-lang="ko">원 / 유저 / 월</div><div class="pricing-period" data-lang="en">/user/month</div><div class="pricing-period" data-lang="ja">円 / ユーザー / 月</div>
+        <ul class="pricing-features">
+          <li data-lang="ko"><b>Z.STUDIO</b> 풀 기능</li><li data-lang="en"><b>Z.STUDIO</b> full features</li><li data-lang="ja"><b>Z.STUDIO</b> 全機能</li>
+          <li data-lang="ko">파트너 수익쉐어 20%</li><li data-lang="en">Partner revenue share 20%</li><li data-lang="ja">パートナー収益シェア20%</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-name" data-lang="ko">호스팅 임대</div><div class="pricing-card-name" data-lang="en">Hosting Rental</div><div class="pricing-card-name" data-lang="ja">ホスティングレンタル</div>
+        <div class="pricing-price" data-lang="ko">10~50만</div><div class="pricing-price" data-lang="en">$750-$3.8K</div><div class="pricing-price" data-lang="ja">10~50万</div>
+        <div class="pricing-period" data-lang="ko">원 / 월 (B2B)</div><div class="pricing-period" data-lang="en">/month (B2B)</div><div class="pricing-period" data-lang="ja">円 / 月 (B2B)</div>
+        <ul class="pricing-features">
+          <li data-lang="ko">서버 임대형 팩</li><li data-lang="en">Server rental packs</li><li data-lang="ja">サーバーレンタルパック</li>
+          <li data-lang="ko">일본 시장 50만원/서버</li><li data-lang="en">Japan market $3.8K/server</li><li data-lang="ja">日本市場50万円/サーバー</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 06: Global Strategy ===== -->
+
+<!-- 21 GLOBAL PARTNERSHIPS -->
+<div class="slide global-partners" data-title-ko="글로벌 파트너십" data-title-en="Global Partnerships" data-title-ja="グローバルパートナーシップ">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Global Expansion</div><div class="section-label" data-lang="en">Global Expansion</div><div class="section-label" data-lang="ja">グローバル展開</div>
+    <div class="section-title" data-lang="ko">글로벌 <span class="gradient-text">파트너십 & 확장</span></div>
+    <div class="section-title" data-lang="en">Global <span class="gradient-text">Partnerships & Expansion</span></div>
+    <div class="section-title" data-lang="ja">グローバル<span class="gradient-text">パートナーシップと拡張</span></div>
+    <div class="gp-nda-row">
+      <div class="gp-nda">
+        <div class="gp-nda-header"><div class="gp-nda-icon"><span style="font-size:2.5vw">🇯🇵</span></div><div class="gp-nda-body"><div class="gp-nda-badge">NDA</div><h3 data-lang="ko">GMO (일본 #1 호스팅)</h3><h3 data-lang="en">GMO (Japan #1 Hosting)</h3><h3 data-lang="ja">GMO (日本#1ホスティング)</h3></div></div>
+        <p data-lang="ko">매출 2.5조원 · 공동 브랜드 호스팅 서비스 · GMO 마케팅 100% 부담 · 연매출 40억 전망</p>
+        <p data-lang="en">Revenue KRW 2.5T · Co-branded hosting · GMO bears 100% marketing · KRW 4B annual projected</p>
+        <p data-lang="ja">売上2.5兆ウォン · 共同ブランドホスティング · GMOマーケティング100%負担 · 年売上40億見込み</p>
+      </div>
+      <div class="gp-nda">
+        <div class="gp-nda-header"><div class="gp-nda-icon"><span style="font-size:2.5vw">🇺🇸</span></div><div class="gp-nda-body"><div class="gp-nda-badge">LOI × 4</div><h3 data-lang="ko">미국 시장 (CES 2026)</h3><h3 data-lang="en">US Market (CES 2026)</h3><h3 data-lang="ja">米国市場 (CES 2026)</h3></div></div>
+        <p data-lang="ko">Startup Junkie 등 4개 LOI 계약 · 화이트라벨 서비스 공급 모델</p>
+        <p data-lang="en">Startup Junkie + 3 LOI contracts · White-label service provision model</p>
+        <p data-lang="ja">Startup Junkie他4件LOI契約 · ホワイトラベルサービス供給モデル</p>
+      </div>
+    </div>
+    <div class="gp-countries">
+      <div class="gp-country">
+        <div class="gp-country-name" data-lang="ko">🇯🇵 일본</div><div class="gp-country-name" data-lang="en">🇯🇵 Japan</div><div class="gp-country-name" data-lang="ja">🇯🇵 日本</div>
+        <ul class="gp-country-list">
+          <li data-lang="ko">GMO NDA 체결</li><li data-lang="en">GMO NDA signed</li><li data-lang="ja">GMO NDA締結</li>
+          <li data-lang="ko">Yappe MOU 체결</li><li data-lang="en">Yappe MOU signed</li><li data-lang="ja">Yappe MOU締結</li>
+          <li data-lang="ko">2026.05 출시</li><li data-lang="en">Launch May 2026</li><li data-lang="ja">2026.05 ローンチ</li>
+        </ul>
+      </div>
+      <div class="gp-country">
+        <div class="gp-country-name" data-lang="ko">🇺🇸 미국</div><div class="gp-country-name" data-lang="en">🇺🇸 USA</div><div class="gp-country-name" data-lang="ja">🇺🇸 米国</div>
+        <ul class="gp-country-list">
+          <li data-lang="ko">CES 2026 참가</li><li data-lang="en">CES 2026 participation</li><li data-lang="ja">CES 2026参加</li>
+          <li data-lang="ko">LOI 4건</li><li data-lang="en">4 LOI contracts</li><li data-lang="ja">LOI 4件</li>
+          <li data-lang="ko">H2 2026 진출</li><li data-lang="en">H2 2026 entry</li><li data-lang="ja">2026下半期進出</li>
+        </ul>
+      </div>
+      <div class="gp-country">
+        <div class="gp-country-name" data-lang="ko">🇲🇾 말레이시아</div><div class="gp-country-name" data-lang="en">🇲🇾 Malaysia</div><div class="gp-country-name" data-lang="ja">🇲🇾 マレーシア</div>
+        <ul class="gp-country-list">
+          <li data-lang="ko">Humming Software NDA</li><li data-lang="en">Humming Software NDA</li><li data-lang="ja">Humming Software NDA</li>
+          <li data-lang="ko">2026.08 목표</li><li data-lang="en">Target Aug 2026</li><li data-lang="ja">2026.08 目標</li>
+        </ul>
+      </div>
+      <div class="gp-country">
+        <div class="gp-country-name" data-lang="ko">🇻🇳 베트남</div><div class="gp-country-name" data-lang="en">🇻🇳 Vietnam</div><div class="gp-country-name" data-lang="ja">🇻🇳 ベトナム</div>
+        <ul class="gp-country-list">
+          <li data-lang="ko">RUNTIME 파트너십</li><li data-lang="en">RUNTIME partnership</li><li data-lang="ja">RUNTIME パートナーシップ</li>
+          <li data-lang="ko">ODC 생산 거점</li><li data-lang="en">ODC production base</li><li data-lang="ja">ODC生産拠点</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 22 MICROSOFT STRATEGY -->
+<div class="slide" data-title-ko="Microsoft 전략" data-title-en="Microsoft Strategy" data-title-ja="Microsoft戦略" style="background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.12) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Microsoft Partnership</div><div class="section-label" data-lang="en">Microsoft Partnership</div><div class="section-label" data-lang="ja">Microsoftパートナーシップ</div>
+    <div class="section-title" data-lang="ko">Microsoft <span class="gradient-text">Build → Publish → Sell-with</span></div>
+    <div class="section-title" data-lang="en">Microsoft <span class="gradient-text">Build → Publish → Sell-with</span></div>
+    <div class="section-title" data-lang="ja">Microsoft <span class="gradient-text">Build → Publish → Sell-with</span></div>
+    <div class="ms-strategy">
+      <div class="ms-phase">
+        <div class="ms-phase-num">Phase 01 — Build</div>
+        <h3 data-lang="ko">Azure 인프라 구축</h3><h3 data-lang="en">Azure Infrastructure</h3><h3 data-lang="ja">Azureインフラ構築</h3>
+        <ul class="ms-phase-list">
+          <li data-lang="ko">Azure Container Apps / AKS</li><li data-lang="en">Azure Container Apps / AKS</li><li data-lang="ja">Azure Container Apps / AKS</li>
+          <li data-lang="ko">Azure OpenAI + 자체 sLLM 하이브리드</li><li data-lang="en">Azure OpenAI + proprietary sLLM hybrid</li><li data-lang="ja">Azure OpenAI + 自社sLLMハイブリッド</li>
+          <li data-lang="ko">Azure DB · CDN · WAF 풀 마이그레이션</li><li data-lang="en">Azure DB · CDN · WAF full migration</li><li data-lang="ja">Azure DB · CDN · WAF フルマイグレーション</li>
+          <li data-lang="ko">2026.05 완료 목표</li><li data-lang="en">Target completion: May 2026</li><li data-lang="ja">2026.05 完了目標</li>
+        </ul>
+      </div>
+      <div class="ms-phase">
+        <div class="ms-phase-num">Phase 02 — Publish</div>
+        <h3 data-lang="ko">마켓플레이스 등록</h3><h3 data-lang="en">Marketplace Registration</h3><h3 data-lang="ja">マーケットプレイス登録</h3>
+        <ul class="ms-phase-list">
+          <li data-lang="ko">MS Marketplace 등록</li><li data-lang="en">MS Marketplace registration</li><li data-lang="ja">MSマーケットプレイス登録</li>
+          <li data-lang="ko">VSCode Extension 배포</li><li data-lang="en">VSCode Extension deployment</li><li data-lang="ja">VSCode Extension 配布</li>
+          <li data-lang="ko">Figma / Canva 플러그인</li><li data-lang="en">Figma / Canva plugins</li><li data-lang="ja">Figma / Canva プラグイン</li>
+          <li data-lang="ko">2026.08 목표</li><li data-lang="en">Target: Aug 2026</li><li data-lang="ja">2026.08 目標</li>
+        </ul>
+      </div>
+      <div class="ms-phase">
+        <div class="ms-phase-num">Phase 03 — Sell-with</div>
+        <h3 data-lang="ko">Co-Sell 공동 판매</h3><h3 data-lang="en">Co-Sell Joint Sales</h3><h3 data-lang="ja">Co-Sell共同販売</h3>
+        <ul class="ms-phase-list">
+          <li data-lang="ko">Co-Sell 자격 획득</li><li data-lang="en">Co-Sell qualification</li><li data-lang="ja">Co-Sell資格取得</li>
+          <li data-lang="ko">MS 파트너 채널 공동 영업</li><li data-lang="en">Joint sales via MS partner channels</li><li data-lang="ja">MSパートナーチャネル共同営業</li>
+          <li data-lang="ko">EBC/M12 글로벌 VC 네트워킹</li><li data-lang="en">EBC/M12 global VC networking</li><li data-lang="ja">EBC/M12グローバルVCネットワーキング</li>
+          <li data-lang="ko">2026 Q3-Q4</li><li data-lang="en">2026 Q3-Q4</li><li data-lang="ja">2026 Q3-Q4</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 07: Finance & Roadmap ===== -->
+
+<!-- 24 FINANCIAL PROJECTION -->
+<div class="slide" data-title-ko="재무 계획" data-title-en="Financial Plan" data-title-ja="財務計画" style="background:radial-gradient(ellipse at 60% 40%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Financial Plan</div><div class="section-label" data-lang="en">Financial Plan</div><div class="section-label" data-lang="ja">財務計画</div>
+    <div class="section-title" data-lang="ko">매출 성장 & <span class="gradient-text">투자 라운드</span></div>
+    <div class="section-title" data-lang="en">Revenue Growth & <span class="gradient-text">Investment Rounds</span></div>
+    <div class="section-title" data-lang="ja">売上成長と<span class="gradient-text">投資ラウンド</span></div>
+    <div class="fin-layout">
+      <div class="fin-card">
+        <div class="fin-card-year">2024</div>
+        <div class="fin-card-revenue" data-lang="ko">10억</div><div class="fin-card-revenue" data-lang="en">$750K</div><div class="fin-card-revenue" data-lang="ja">1億円</div>
+        <div class="fin-card-desc" data-lang="ko">SI/솔루션 중심</div><div class="fin-card-desc" data-lang="en">SI/Solution dominant</div><div class="fin-card-desc" data-lang="ja">SI/ソリューション中心</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-year">2025</div>
+        <div class="fin-card-revenue" data-lang="ko">15억</div><div class="fin-card-revenue" data-lang="en">$1.1M</div><div class="fin-card-revenue" data-lang="ja">1.5億円</div>
+        <div class="fin-card-growth">+50% YoY</div>
+        <div class="fin-card-desc" data-lang="ko">B2C 6,000+ 구독</div><div class="fin-card-desc" data-lang="en">B2C 6,000+ subscriptions</div><div class="fin-card-desc" data-lang="ja">B2C 6,000+サブスク</div>
+      </div>
+      <div class="fin-card" style="border-color:rgba(0,212,170,0.3)">
+        <div class="fin-card-year" style="color:var(--accent)">2026E</div>
+        <div class="fin-card-revenue" style="color:var(--accent)" data-lang="ko">30억+</div><div class="fin-card-revenue" style="color:var(--accent)" data-lang="en">$2.3M+</div><div class="fin-card-revenue" style="color:var(--accent)" data-lang="ja">3億円+</div>
+        <div class="fin-card-growth">+100% YoY</div>
+        <div class="fin-card-desc" data-lang="ko">글로벌 확장 + SaaS 성장</div><div class="fin-card-desc" data-lang="en">Global expansion + SaaS growth</div><div class="fin-card-desc" data-lang="ja">グローバル拡張 + SaaS成長</div>
+      </div>
+    </div>
+    <div class="inv-timeline">
+      <div class="inv-item"><div class="inv-item-round">Seed</div><div class="inv-item-val" data-lang="ko">2.5억</div><div class="inv-item-val" data-lang="en">$190K</div><div class="inv-item-val" data-lang="ja">2,500万</div><div class="inv-item-date">2023</div></div>
+      <div class="inv-arrow">→</div>
+      <div class="inv-item"><div class="inv-item-round">Bridge (SAFE)</div><div class="inv-item-val" data-lang="ko">3.13억</div><div class="inv-item-val" data-lang="en">$240K</div><div class="inv-item-val" data-lang="ja">3,130万</div><div class="inv-item-date">2025.02</div></div>
+      <div class="inv-arrow">→</div>
+      <div class="inv-item"><div class="inv-item-round">CB</div><div class="inv-item-val" data-lang="ko">2억</div><div class="inv-item-val" data-lang="en">$150K</div><div class="inv-item-val" data-lang="ja">2,000万</div><div class="inv-item-date">2025.09</div></div>
+      <div class="inv-arrow">→</div>
+      <div class="inv-item" style="background:rgba(0,212,170,0.08);padding:0.78125vw 1.25vw;border-radius:0.78125vw;border:1px solid rgba(0,212,170,0.2)"><div class="inv-item-round" style="color:var(--accent)">Pre-A</div><div class="inv-item-val" style="color:var(--accent)" data-lang="ko">20억 목표</div><div class="inv-item-val" style="color:var(--accent)" data-lang="en">$1.5M Target</div><div class="inv-item-val" style="color:var(--accent)" data-lang="ja">2億円目標</div><div class="inv-item-date" data-lang="ko">2026.10 ~ 2027.03</div><div class="inv-item-date" data-lang="en">Oct 2026 - Mar 2027</div><div class="inv-item-date" data-lang="ja">2026.10 ~ 2027.03</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 25 KPI TARGETS & USE OF FUNDS -->
+<div class="slide" data-title-ko="2026 KPI & 자금 계획" data-title-en="2026 KPI & Use of Funds" data-title-ja="2026 KPI・資金計画" style="background:radial-gradient(ellipse at 50% 50%,rgba(124,58,237,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">2026 Targets & Use of Funds</div><div class="section-label" data-lang="en">2026 Targets & Use of Funds</div><div class="section-label" data-lang="ja">2026目標・資金使途</div>
+    <div class="section-title" data-lang="ko">핵심 KPI & <span class="gradient-text">자금 사용 계획</span></div>
+    <div class="section-title" data-lang="en">Key KPIs & <span class="gradient-text">Use of Funds</span></div>
+    <div class="section-title" data-lang="ja">主要KPI & <span class="gradient-text">資金使途計画</span></div>
+
+    <!-- KPI Cards Row -->
+    <div class="kpi-layout" style="margin-bottom:2.1875vw">
+      <div class="kpi-card">
+        <div class="kpi-card-icon" style="background:rgba(0,212,170,0.15)"><svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="kpi-card-value" data-lang="ko">30억+</div><div class="kpi-card-value" data-lang="en">$2.3M+</div><div class="kpi-card-value" data-lang="ja">3億+</div>
+        <div class="kpi-card-label" data-lang="ko">매출</div><div class="kpi-card-label" data-lang="en">Revenue</div><div class="kpi-card-label" data-lang="ja">売上</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-icon" style="background:rgba(0,102,255,0.15)"><svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m2 12 10 10 10-10"/></svg></div>
+        <div class="kpi-card-value" data-lang="ko">10억+</div><div class="kpi-card-value" data-lang="en">$750K+</div><div class="kpi-card-value" data-lang="ja">1億+</div>
+        <div class="kpi-card-label" data-lang="ko">수출</div><div class="kpi-card-label" data-lang="en">Exports</div><div class="kpi-card-label" data-lang="ja">輸出</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-icon" style="background:rgba(124,58,237,0.15)"><svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></div>
+        <div class="kpi-card-value">+7</div>
+        <div class="kpi-card-label" data-lang="ko">신규 채용</div><div class="kpi-card-label" data-lang="en">New Hires</div><div class="kpi-card-label" data-lang="ja">新規採用</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-icon" style="background:rgba(236,72,153,0.15)"><svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+        <div class="kpi-card-value">2</div>
+        <div class="kpi-card-label" data-lang="ko">해외 법인</div><div class="kpi-card-label" data-lang="en">Overseas Offices</div><div class="kpi-card-label" data-lang="ja">海外法人</div>
+      </div>
+    </div>
+
+    <!-- Use of Funds: Donut + 4 Cards -->
+    <div class="uof-layout" style="display:flex;gap:2.5vw;align-items:center;width:100%">
+      <!-- Donut Chart -->
+      <div style="flex-shrink:0;position:relative;width:12.5vw;height:12.5vw">
+        <svg viewBox="0 0 200 200" style="width:100%;height:100%;transform:rotate(-90deg)">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="28"/>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#0066FF" stroke-width="28" stroke-dasharray="201.06 301.59" stroke-dashoffset="0" stroke-linecap="butt"/>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#00D4AA" stroke-width="28" stroke-dasharray="150.8 351.85" stroke-dashoffset="-201.06" stroke-linecap="butt"/>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#7C3AED" stroke-width="28" stroke-dasharray="100.53 402.12" stroke-dashoffset="-351.86" stroke-linecap="butt"/>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#F59E0B" stroke-width="28" stroke-dasharray="50.27 452.38" stroke-dashoffset="-452.39" stroke-linecap="butt"/>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:1.71875vw;font-weight:800;color:#fff" data-lang="ko">20억</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:1.71875vw;font-weight:800;color:#fff" data-lang="en">$1.5M</div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:1.71875vw;font-weight:800;color:#fff" data-lang="ja">約2億円</div>
+          <div style="font-size:max(18px,0.9375vw);color:var(--text-muted)" data-lang="ko">Pre-A 목표</div>
+          <div style="font-size:max(18px,0.9375vw);color:var(--text-muted)" data-lang="en">Pre-A Target</div>
+          <div style="font-size:max(18px,0.9375vw);color:var(--text-muted)" data-lang="ja">Pre-A目標</div>
+        </div>
+      </div>
+      <!-- 4 Allocation Cards -->
+      <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1.09375vw">
+        <div class="uof-item" style="background:rgba(17,22,51,0.7);border:1px solid rgba(0,102,255,0.25);border-radius:1.09375vw;padding:1.25vw 0.9375vw;text-align:center">
+          <div style="width:2.1875vw;height:2.1875vw;margin:0 auto 0.46875vw;border-radius:0.625vw;background:rgba(0,102,255,0.15);display:flex;align-items:center;justify-content:center"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 17 3.5s1 1.5-1 6.2A7 7 0 0 1 11 20z"/><path d="M11 20v2"/><path d="M7 13.5c-2-1.5-3.5-1-3.5-1s.5 2 2 3.5"/></svg></div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.1875vw;font-weight:800;color:#0066FF">40%</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">8억 원</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">₩800M</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">約8,000万</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">국내 마케팅</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">Domestic Mktg</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">国内マーケティング</div>
+        </div>
+        <div class="uof-item" style="background:rgba(17,22,51,0.7);border:1px solid rgba(0,212,170,0.25);border-radius:1.09375vw;padding:1.25vw 0.9375vw;text-align:center">
+          <div style="width:2.1875vw;height:2.1875vw;margin:0 auto 0.46875vw;border-radius:0.625vw;background:rgba(0,212,170,0.15);display:flex;align-items:center;justify-content:center"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.1875vw;font-weight:800;color:#00D4AA">30%</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">6억 원</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">₩600M</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">約6,000万</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">일본 법인 설립</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">Japan Subsidiary</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">日本法人設立</div>
+        </div>
+        <div class="uof-item" style="background:rgba(17,22,51,0.7);border:1px solid rgba(124,58,237,0.25);border-radius:1.09375vw;padding:1.25vw 0.9375vw;text-align:center">
+          <div style="width:2.1875vw;height:2.1875vw;margin:0 auto 0.46875vw;border-radius:0.625vw;background:rgba(124,58,237,0.15);display:flex;align-items:center;justify-content:center"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.1875vw;font-weight:800;color:#7C3AED">20%</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">4억 원</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">₩400M</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">約4,000万</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">글로벌 마케팅</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">Global Marketing</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">グローバルマーケティング</div>
+        </div>
+        <div class="uof-item" style="background:rgba(17,22,51,0.7);border:1px solid rgba(245,158,11,0.25);border-radius:1.09375vw;padding:1.25vw 0.9375vw;text-align:center">
+          <div style="width:2.1875vw;height:2.1875vw;margin:0 auto 0.46875vw;border-radius:0.625vw;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 2v2"/><path d="M12 22v-2"/><path d="m17 20.66-1-1.73"/><path d="M11 10.27 7 3.34"/><path d="m20.66 17-1.73-1"/><path d="m3.34 7 1.73 1"/><path d="M14 12h8"/><path d="M2 12h2"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m17 3.34-1 1.73"/><path d="m11 13.73-4 6.93"/></svg></div>
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.1875vw;font-weight:800;color:#F59E0B">10%</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">2억 원</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">₩200M</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);color:var(--text-muted)">約2,000万</div>
+          <div data-lang="ko" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">R&D & 운영</div>
+          <div data-lang="en" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">R&D & Ops</div>
+          <div data-lang="ja" style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-top:0.46875vw">R&D & 運営</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM: 바이브코딩의 한계 (from 260303) -->
+<div class="slide problem" data-title-ko="시장의 문제" data-title-en="Market Problem" data-title-ja="市場の課題">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">시장 환경 및 기회</div><div class="section-label" data-lang="en">Market Environment</div><div class="section-label" data-lang="ja">市場環境と機会</div>
+    <div class="section-title" data-lang="ko">바이브코딩의 한계</div>
+    <div class="section-title" data-lang="en">Limitations of Vibe Coding</div>
+    <div class="section-title" data-lang="ja">バイブコーディングの限界</div>
+    <div class="section-desc" data-lang="ko">신기하고, 빠르지만 아직은 불안한 전문가용 바이브코딩과 결과물이라서 산업에 적용이 어려움</div>
+    <div class="section-desc" data-lang="en">Fascinating and fast, but still unreliable for professional vibe coding &mdash; making it difficult to apply in industry.</div>
+    <div class="section-desc" data-lang="ja">興味深く高速だが、プロ向けバイブコーディングとしてはまだ不安定で、産業適用が困難</div>
+    <div class="problem-flow">
+      <!-- Column 1 -->
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">결과물의 불완전성</div>
+        <div class="p-title" data-lang="en">Incomplete Output</div>
+        <div class="p-title" data-lang="ja">結果物の不完全性</div>
+        <div class="p-desc" data-lang="ko">개발의 할루시네이션<br>디자인의 AI스러움</div>
+        <div class="p-desc" data-lang="en">Development Hallucination<br>AI-Looking Design</div>
+        <div class="p-desc" data-lang="ja">開発のハルシネーション<br>デザインのAIっぽさ</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box">
+          <div class="p-box-text" data-lang="ko">20% 오류,<br>33%의 신뢰도</div>
+          <div class="p-box-text" data-lang="en">20% Error Rate,<br>33% Reliability</div>
+          <div class="p-box-text" data-lang="ja">20%エラー率、<br>33%の信頼性</div>
+        </div>
+        <div class="p-arrow">↓</div>
+        <div class="p-need red" data-lang="ko">오류가 적고 정확하며,<br>탈AI 급 디자인 요구</div>
+        <div class="p-need red" data-lang="en">Fewer Errors, Accurate,<br>Non-AI-Level Design Demand</div>
+        <div class="p-need red" data-lang="ja">エラーが少なく正確で、<br>脱AI級デザイン需要</div>
+      </div>
+      <!-- Column 2 -->
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">비싼 토큰 소모</div>
+        <div class="p-title" data-lang="en">Expensive Token Usage</div>
+        <div class="p-title" data-lang="ja">高額なトークン消費</div>
+        <div class="p-desc" data-lang="ko">프롬프트 제작 요청을 위해 LLM 학습 필요<br>오류가 나도 토큰을 돌려주지 않음</div>
+        <div class="p-desc" data-lang="en">Requires LLM training for prompt crafting.<br>Tokens are consumed even on failed outputs.</div>
+        <div class="p-desc" data-lang="ja">プロンプト作成にLLM学習が必要<br>エラーでもトークンは返金されない</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box">
+          <div class="p-box-text" data-lang="ko">종량제 기반 서비스,<br>LLM API 토큰의 5배</div>
+          <div class="p-box-text" data-lang="en">Pay-Per-Use Model,<br>5x LLM API Token Cost</div>
+          <div class="p-box-text" data-lang="ja">従量制サービス、<br>LLM APIトークンの5倍</div>
+        </div>
+        <div class="p-arrow">↓</div>
+        <div class="p-need orange" data-lang="ko">사소한 부분은<br>직접 편집 가능한 기능 요구</div>
+        <div class="p-need orange" data-lang="en">Need for Direct Editing<br>of Minor Details</div>
+        <div class="p-need orange" data-lang="ja">細かい部分は<br>直接編集可能な機能需要</div>
+      </div>
+      <!-- Column 3 -->
+      <div class="problem-col">
+        <div class="p-title" data-lang="ko">복잡한 개발환경</div>
+        <div class="p-title" data-lang="en">Complex Dev Environment</div>
+        <div class="p-title" data-lang="ja">複雑な開発環境</div>
+        <div class="p-desc" data-lang="ko">네이티브 개발환경 이해 필요<br>작성된 코드를 직접 호스팅해야 함</div>
+        <div class="p-desc" data-lang="en">Requires native dev environment knowledge.<br>Must self-host the generated code.</div>
+        <div class="p-desc" data-lang="ja">ネイティブ開発環境の理解が必要<br>作成コードを自分でホスティング必要</div>
+        <div class="p-arrow">↓</div>
+        <div class="p-box">
+          <div class="p-box-text" data-lang="ko">웹빌더보다 어려움<br>개발자가 반드시 필요</div>
+          <div class="p-box-text" data-lang="en">Harder Than Web Builders,<br>Developer Required</div>
+          <div class="p-box-text" data-lang="ja">Webビルダーより難しい<br>開発者が必ず必要</div>
+        </div>
+        <div class="p-arrow">↓</div>
+        <div class="p-need purple" data-lang="ko">웹기반 원클릭 운영,<br>통합 서비스 요구</div>
+        <div class="p-need purple" data-lang="en">Web-Based One-Click Ops,<br>Integrated Service Demand</div>
+        <div class="p-need purple" data-lang="ja">Web基盤ワンクリック運営、<br>統合サービス需要</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 26 ROADMAP -->
+<div class="slide roadmap" data-title-ko="로드맵" data-title-en="Roadmap" data-title-ja="ロードマップ">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Roadmap</div><div class="section-label" data-lang="en">Roadmap</div><div class="section-label" data-lang="ja">ロードマップ</div>
+    <div class="section-title"><span class="gradient-text" data-lang="ko">성장 로드맵</span><span class="gradient-text" data-lang="en">Growth Roadmap</span><span class="gradient-text" data-lang="ja">成長ロードマップ</span></div>
+    <div class="roadmap-container">
+      <div class="roadmap-graph"></div>
+      <div class="roadmap-timeline">
+        <div class="roadmap-year">
+          <div class="roadmap-year-label">2025</div>
+          <div class="roadmap-items">
+            <div class="roadmap-item" data-lang="ko"><b>Zaemit</b> B2C 정식 출시</div><div class="roadmap-item" data-lang="en"><b>Zaemit</b> B2C official launch</div><div class="roadmap-item" data-lang="ja"><b>Zaemit</b> B2C正式リリース</div>
+            <div class="roadmap-item" data-lang="ko"><b>GS 1등급</b> 인증 획득</div><div class="roadmap-item" data-lang="en"><b>GS Grade 1</b> certification</div><div class="roadmap-item" data-lang="ja"><b>GS1等級</b>認証取得</div>
+            <div class="roadmap-item" data-lang="ko"><span class="rm-highlight">ISO27001</span> 인증</div><div class="roadmap-item" data-lang="en"><span class="rm-highlight">ISO27001</span> certification</div><div class="roadmap-item" data-lang="ja"><span class="rm-highlight">ISO27001</span>認証</div>
+            <div class="roadmap-item" data-lang="ko"><b>일본</b> 수출 개시</div><div class="roadmap-item" data-lang="en"><b>Japan</b> export started</div><div class="roadmap-item" data-lang="ja"><b>日本</b>輸出開始</div>
+          </div>
+        </div>
+        <div class="roadmap-year">
+          <div class="roadmap-year-label">2026</div>
+          <div class="roadmap-items">
+            <div class="roadmap-item" data-lang="ko"><b>일본 GMO</b> 파트너십 출시</div><div class="roadmap-item" data-lang="en"><b>Japan GMO</b> partnership launch</div><div class="roadmap-item" data-lang="ja"><b>日本GMO</b>パートナーシップリリース</div>
+            <div class="roadmap-item" data-lang="ko"><b>랜탈팩</b> 출시</div><div class="roadmap-item" data-lang="en"><b>RentalPack</b> launch</div><div class="roadmap-item" data-lang="ja"><b>レンタルパック</b>リリース</div>
+            <div class="roadmap-item" data-lang="ko"><b>일본·미국</b> 해외 법인 설립</div><div class="roadmap-item" data-lang="en"><b>Japan/US</b> overseas offices</div><div class="roadmap-item" data-lang="ja"><b>日本・米国</b>海外法人設立</div>
+            <div class="roadmap-item" data-lang="ko"><b>말레이시아</b> 랜탈팩 출시</div><div class="roadmap-item" data-lang="en"><b>Malaysia</b> RentalPack launch</div><div class="roadmap-item" data-lang="ja"><b>マレーシア</b>レンタルパックリリース</div>
+            <div class="roadmap-item" data-lang="ko"><b>VSCode Extension</b> + <b>MCP</b> 출시</div><div class="roadmap-item" data-lang="en"><b>VSCode Extension</b> + <b>MCP</b> launch</div><div class="roadmap-item" data-lang="ja"><b>VSCode Extension</b> + <b>MCP</b>リリース</div>
+          </div>
+        </div>
+        <div class="roadmap-year">
+          <div class="roadmap-year-label">2027</div>
+          <div class="roadmap-items">
+            <div class="roadmap-item" data-lang="ko"><b>LivingDatabase</b> 서비스</div><div class="roadmap-item" data-lang="en"><b>LivingDatabase</b> service</div><div class="roadmap-item" data-lang="ja"><b>LivingDatabase</b>サービス</div>
+            <div class="roadmap-item" data-lang="ko"><b>AI 디자인 API</b> · <b>AI 개발 API</b></div><div class="roadmap-item" data-lang="en"><b>AI Design API</b> · <b>AI Dev API</b></div><div class="roadmap-item" data-lang="ja"><b>AIデザインAPI</b>·<b>AI開発API</b></div>
+            <div class="roadmap-item" data-lang="ko">인터페이스 기반 <b>아키텍처</b> 전환</div><div class="roadmap-item" data-lang="en">Interface-based <b>architecture</b> transition</div><div class="roadmap-item" data-lang="ja">インターフェース基盤<b>アーキテクチャ</b>転換</div>
+            <div class="roadmap-item" data-lang="ko"><span class="rm-highlight">Full Agent for Website</span> 론칭</div><div class="roadmap-item" data-lang="en"><span class="rm-highlight">Full Agent for Website</span> launch</div><div class="roadmap-item" data-lang="ja"><span class="rm-highlight">Full Agent for Website</span>ローンチ</div>
+          </div>
+        </div>
+        <div class="roadmap-year">
+          <div class="roadmap-year-label">2028</div>
+          <div class="roadmap-items">
+            <div class="roadmap-item highlight" data-lang="ko"><b>기술특례상장</b></div>
+            <div class="roadmap-item highlight" data-lang="en"><b>Tech-based IPO</b></div>
+            <div class="roadmap-item highlight" data-lang="ja"><b>技術特例上場</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 08: Team & Q&A ===== -->
+
+<!-- 28 TEAM -->
+<div class="slide team" data-title-ko="경영진" data-title-en="Team" data-title-ja="チーム">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Team</div><div class="section-label" data-lang="en">Team</div><div class="section-label" data-lang="ja">チーム</div>
+    <div class="section-title" data-lang="ko">각 분야의 베테랑으로 구성된 <span class="gradient-text">전문가 팀</span></div>
+    <div class="section-title" data-lang="en"><span class="gradient-text">Expert Team</span> of Industry Veterans</div>
+    <div class="section-title" data-lang="ja">各分野のベテランで構成された<span class="gradient-text">専門家チーム</span></div>
+    <div class="section-desc" data-lang="ko">전체 25명의 팀원, 10년이상 함께한 주요멤버가 최정예 팀워크 발휘</div>
+    <div class="section-desc" data-lang="en">25 team members — core members with 10+ years together delivering elite teamwork</div>
+    <div class="section-desc" data-lang="ja">全25名のチームメンバー、10年以上共に歩んだ主要メンバーが最精鋭チームワークを発揮</div>
+    <div class="team-layout">
+      <div class="team-ceo">
+        <div class="team-photo"><img src="../260303/kjh.png" alt="CEO"></div>
+        <h4 data-lang="ko">김정환 Ph.D(고려대 경영학)</h4><h4 data-lang="en">Jung-Hwan Kim, Ph.D</h4><h4 data-lang="ja">キム・ジョンファン Ph.D(高麗大経営学)</h4>
+        <div class="team-title">CEO, Founder</div>
+        <ul class="team-bio">
+          <li data-lang="ko">현) 주식회사 위븐 대표이사</li><li data-lang="en">CEO, WEVEN Inc.</li><li data-lang="ja">現) 株式会社WEVEN 代表取締役</li>
+          <li data-lang="ko">전) 웹에이전시 블루스트림 대표이사 (9년)</li><li data-lang="en">Ex-CEO, BlueStream Agency (9 yrs)</li><li data-lang="ja">前) Webエージェンシー BlueStream 代表取締役 (9年)</li>
+          <li data-lang="ko">전) (주)케이브레인컴퍼니 CTO, R&amp;D 본부장</li><li data-lang="en">Ex-CTO, K-Brain Company</li><li data-lang="ja">前) K-Brain Company CTO、R&amp;D本部長</li>
+          <li data-lang="ko">2011, 웹어워드 코리아 대상, 최우수상 수상</li><li data-lang="en">2011 Web Award Korea Grand Prize</li><li data-lang="ja">2011年 Web Award Korea 大賞・最優秀賞受賞</li>
+          <li data-lang="ko">LG DIOS, SMART TV 등 다수 웹개발 PL</li><li data-lang="en">LG DIOS, Smart TV web dev PL</li><li data-lang="ja">LG DIOS、SMART TV等多数Web開発PL</li>
+          <li data-lang="ko">심층학습, 웹분류체계 등 논문 7건 등재</li><li data-lang="en">7 published papers (deep learning, web taxonomy)</li><li data-lang="ja">深層学習、Web分類体系等 論文7件登載</li>
+        </ul>
+      </div>
+      <div class="team-members">
+        <div class="team-member">
+          <div class="team-photo"><img src="../260303/lhn.png" alt="CO-Founder"></div>
+          <div class="team-info">
+            <div class="team-role-tag" data-lang="ko">크리에이티브</div><div class="team-role-tag" data-lang="en">Creative</div><div class="team-role-tag" data-lang="ja">クリエイティブ</div>
+            <h4 data-lang="ko">이효남 CO-Founder</h4><h4 data-lang="en">Hyo-Nam Lee, CO-Founder</h4><h4 data-lang="ja">イ・ヒョナム CO-Founder</h4>
+            <ul class="team-bio">
+              <li data-lang="ko">전) 주식회사 그레이블루 공동대표</li><li data-lang="en">Ex-Co-CEO, GrayBlue Inc.</li><li data-lang="ja">前) 株式会社GrayBlue 共同代表</li>
+              <li data-lang="ko">490만 팔로우 유튜버 쿠킹트리 디렉터</li><li data-lang="en">4.9M subscriber YouTube director</li><li data-lang="ja">490万フォロワー YouTuber クッキングツリー ディレクター</li>
+              <li data-lang="ko">다양한 브랜드의 디자인 경험 경력 25년</li><li data-lang="en">25 years of brand design experience</li><li data-lang="ja">多様なブランドのデザイン経験 経歴25年</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo"><img src="../260303/hjd.png" alt="CTO"></div>
+          <div class="team-info">
+            <div class="team-role-tag" data-lang="ko">기술총괄</div><div class="team-role-tag" data-lang="en">Tech Director</div><div class="team-role-tag" data-lang="ja">技術総括</div>
+            <h4 data-lang="ko">한정동 CTO, 이사</h4><h4 data-lang="en">Jung-Dong Han, CTO</h4><h4 data-lang="ja">ハン・ジョンドン CTO、取締役</h4>
+            <ul class="team-bio">
+              <li data-lang="ko">전) 블루스트림 CTO 3년</li><li data-lang="en">Ex-CTO, BlueStream (3 yrs)</li><li data-lang="ja">前) BlueStream CTO 3年</li>
+              <li data-lang="ko">LG 디오스 웹어워드코리아 대상</li><li data-lang="en">LG DIOS Web Award Korea Grand Prize</li><li data-lang="ja">LG DIOS Web Award Korea 大賞</li>
+              <li data-lang="ko">LG SMART TV 등 다수 웹 개발 PL</li><li data-lang="en">LG Smart TV web dev PL</li><li data-lang="ja">LG SMART TV等多数Web開発PL</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo"><img src="../260303/cys.png" alt="Global"></div>
+          <div class="team-info">
+            <div class="team-role-tag" data-lang="ko">해외서비스 총괄</div><div class="team-role-tag" data-lang="en">Global Service Head</div><div class="team-role-tag" data-lang="ja">海外サービス総括</div>
+            <h4 data-lang="ko">최용석 과장</h4><h4 data-lang="en">Yong-Seok Choi</h4><h4 data-lang="ja">チェ・ヨンソク 課長</h4>
+            <ul class="team-bio">
+              <li data-lang="ko">한국외대 통번역, 카투사 전역</li><li data-lang="en">HUFS Translation, KATUSA veteran</li><li data-lang="ja">韓国外大 通訳翻訳、KATUSA除隊</li>
+              <li data-lang="ko">일본 지사 주재원 담당예정</li><li data-lang="en">Japan branch liaison (planned)</li><li data-lang="ja">日本支社駐在員担当予定</li>
+              <li data-lang="ko">영어/일어 순차 번역 가능</li><li data-lang="en">EN/JP sequential interpretation</li><li data-lang="ja">英語/日本語 順次通訳可能</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo"><img src="../260303/ljg.png" alt="Advisor"></div>
+          <div class="team-info">
+            <div class="team-role-tag">Advisor</div>
+            <h4 data-lang="ko">Ph.D 이정구</h4><h4 data-lang="en">Jeong-Gu Lee, Ph.D</h4><h4 data-lang="ja">Ph.D イ・ジョング</h4>
+            <ul class="team-bio">
+              <li data-lang="ko">AI 전문가, 클라우드 인프라</li><li data-lang="en">AI expert, cloud infrastructure</li><li data-lang="ja">AI専門家、クラウドインフラ</li>
+              <li data-lang="ko">연세대 수학과, 고려대 경영학</li><li data-lang="en">Yonsei Mathematics, Korea Univ. MBA</li><li data-lang="ja">延世大数学科、高麗大経営学</li>
+              <li data-lang="ko">전) HPE Korea Business Developer</li><li data-lang="en">Ex-HPE Korea Business Developer</li><li data-lang="ja">前) HPE Korea Business Developer</li>
+            </ul>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo"><img src="../260303/lsh.png" alt="AI Lab"></div>
+          <div class="team-info">
+            <div class="team-role-tag" data-lang="ko">AI Lab 책임연구원</div><div class="team-role-tag" data-lang="en">AI Lab Lead Researcher</div><div class="team-role-tag" data-lang="ja">AI Lab 主任研究員</div>
+            <h4 data-lang="ko">이서혁</h4><h4 data-lang="en">Seo-Hyuk Lee</h4><h4 data-lang="ja">イ・ソヒョク</h4>
+            <ul class="team-bio">
+              <li data-lang="ko">AI 전문가 생성형 AI 완성</li><li data-lang="en">Generative AI specialist</li><li data-lang="ja">AI専門家 生成型AI完成</li>
+              <li data-lang="ko">연세대학교 학사, 성균관대 AI 석사</li><li data-lang="en">Yonsei Univ. B.S., Sungkyunkwan Univ. AI M.S.</li><li data-lang="ja">延世大学校 学士、成均館大 AI修士</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORM BUSINESS MODEL -->
+<div class="slide business" data-title-ko="비즈니스 모델" data-title-en="Business Model" data-title-ja="ビジネスモデル">
+  <div class="slide-inner">
+    <div class="section-label" data-lang="ko">Business Model</div><div class="section-label" data-lang="en">Business Model</div><div class="section-label" data-lang="ja">ビジネスモデル</div>
+    <div class="section-title" data-lang="ko">플랫폼 비즈니스모델 <span class="gradient-text">Zaemit</span></div>
+    <div class="section-title" data-lang="en">Platform Business Model <span class="gradient-text">Zaemit</span></div>
+    <div class="section-title" data-lang="ja">プラットフォームビジネスモデル <span class="gradient-text">Zaemit</span></div>
+    <!-- BM Ecosystem Diagram (full width, from 260303) -->
+    <div class="biz-diagram-wrap">
+      <svg class="biz-diagram-svg" viewBox="0 0 960 580" style="width:100%">
+        <defs>
+          <marker id="arrEnd" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1,1 L7,4 L1,7" fill="none" stroke="#7C3AED" stroke-width="1.5"/></marker>
+          <marker id="arrEndCyan" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1,1 L7,4 L1,7" fill="none" stroke="#22D3EE" stroke-width="1.5"/></marker>
+          <marker id="arrEndBlue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1,1 L7,4 L1,7" fill="none" stroke="#6366F1" stroke-width="1.5"/></marker>
+        </defs>
+        <!-- Zaemit 플랫폼 (top center) -->
+        <rect x="250" y="15" width="460" height="78" rx="39" fill="rgba(124,58,237,0.35)" stroke="rgba(124,58,237,0.6)" stroke-width="2"/>
+        <text x="480" y="50" fill="#fff" font-size="32" font-weight="800" text-anchor="middle" font-family="Plus Jakarta Sans,Pretendard Variable,sans-serif" data-lang="ko">Zaemit 플랫폼</text>
+        <text x="480" y="50" fill="#fff" font-size="32" font-weight="800" text-anchor="middle" font-family="Plus Jakarta Sans,Pretendard Variable,sans-serif" data-lang="en">Zaemit Platform</text>
+        <text x="480" y="50" fill="#fff" font-size="32" font-weight="800" text-anchor="middle" font-family="Noto Sans JP,Plus Jakarta Sans,sans-serif" data-lang="ja">Zaemit プラットフォーム</text>
+        <text x="480" y="76" fill="#A78BFA" font-size="15" text-anchor="middle" data-lang="ko">바이브코딩 기반 웹운영 플랫폼</text>
+        <text x="480" y="76" fill="#A78BFA" font-size="15" text-anchor="middle" data-lang="en">Vibe-Coding Web Operations Platform</text>
+        <text x="480" y="76" fill="#A78BFA" font-size="15" text-anchor="middle" data-lang="ja">バイブコーディング基盤Web運営</text>
+        <!-- LEFT: 공급자 (전문가) -->
+        <rect x="5" y="395" width="310" height="60" rx="30" fill="rgba(99,102,241,0.25)" stroke="rgba(99,102,241,0.5)" stroke-width="2"/>
+        <text x="160" y="432" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="ko">공급자 <tspan fill="#A5B4FC" font-size="17">(전문가)</tspan></text>
+        <text x="160" y="432" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="en">Supplier <tspan fill="#A5B4FC" font-size="16">(Expert)</tspan></text>
+        <text x="160" y="432" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="ja">供給者 <tspan fill="#A5B4FC" font-size="16">(専門家)</tspan></text>
+        <path d="M380,93 C300,160 200,250 170,385" fill="none" stroke="#6366F1" stroke-width="2" marker-end="url(#arrEndBlue)" opacity="0.7"/>
+        <text x="220" y="185" fill="#A5B4FC" font-size="16" font-weight="600" text-anchor="middle" data-lang="ko">플러그인/스타일팩</text>
+        <text x="220" y="206" fill="#A5B4FC" font-size="16" font-weight="600" text-anchor="middle" data-lang="ko">마켓 등록 · 판매</text>
+        <text x="220" y="185" fill="#A5B4FC" font-size="16" font-weight="600" text-anchor="middle" data-lang="en">Plugin/Style Pack</text>
+        <text x="220" y="206" fill="#A5B4FC" font-size="16" font-weight="600" text-anchor="middle" data-lang="en">Market Listing · Sales</text>
+        <text x="220" y="185" fill="#A5B4FC" font-size="16" font-weight="600" text-anchor="middle" data-lang="ja">プラグイン/スタイルパック</text>
+        <text x="220" y="206" fill="#A5B4FC" font-size="16" font-weight="600" text-anchor="middle" data-lang="ja">マーケット登録・販売</text>
+        <path d="M200,390 C240,280 310,170 420,93" fill="none" stroke="#6366F1" stroke-width="2" marker-end="url(#arrEndBlue)" opacity="0.7"/>
+        <text x="355" y="222" fill="#C4B5FD" font-size="16" font-weight="700" text-anchor="middle" data-lang="ko">판매 수익 70% 배분</text>
+        <text x="355" y="222" fill="#C4B5FD" font-size="16" font-weight="700" text-anchor="middle" data-lang="en">70% Revenue Share</text>
+        <text x="355" y="222" fill="#C4B5FD" font-size="16" font-weight="700" text-anchor="middle" data-lang="ja">販売収益70%配分</text>
+        <text x="160" y="480" fill="#A5B4FC" font-size="14" font-weight="600" text-anchor="middle" data-lang="ko">바이브코딩으로 플러그인 제작</text>
+        <text x="160" y="480" fill="#A5B4FC" font-size="14" font-weight="600" text-anchor="middle" data-lang="en">Build plugins via Vibe Coding</text>
+        <text x="160" y="480" fill="#A5B4FC" font-size="14" font-weight="600" text-anchor="middle" data-lang="ja">バイブコーディングでプラグイン制作</text>
+        <text x="160" y="500" fill="#94A3B8" font-size="13" text-anchor="middle" data-lang="ko">(플랫폼 수수료 30%)</text>
+        <text x="160" y="500" fill="#94A3B8" font-size="13" text-anchor="middle" data-lang="en">(Platform commission 30%)</text>
+        <text x="160" y="500" fill="#94A3B8" font-size="13" text-anchor="middle" data-lang="ja">(プラットフォーム手数料30%)</text>
+        <!-- CENTER: 리셀러 -->
+        <rect x="355" y="415" width="250" height="56" rx="28" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+        <text x="480" y="450" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="ko">리셀러</text>
+        <text x="480" y="450" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="en">Reseller</text>
+        <text x="480" y="450" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="ja">リセラー</text>
+        <path d="M480,93 L480,410" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrEnd)"/>
+        <text x="502" y="190" fill="#22D3EE" font-size="15" font-weight="600" data-lang="ko">화이트라벨 서비스</text>
+        <text x="502" y="190" fill="#22D3EE" font-size="15" font-weight="600" data-lang="en">White-label Service</text>
+        <text x="502" y="190" fill="#22D3EE" font-size="15" font-weight="600" data-lang="ja">ホワイトラベルサービス</text>
+        <text x="502" y="212" fill="#22D3EE" font-size="15" font-weight="600" data-lang="ko">파트너 등록</text>
+        <text x="502" y="212" fill="#22D3EE" font-size="15" font-weight="600" data-lang="en">Partner Registration</text>
+        <text x="502" y="212" fill="#22D3EE" font-size="15" font-weight="600" data-lang="ja">パートナー登録</text>
+        <text x="502" y="282" fill="#94A3B8" font-size="14" font-weight="600" data-lang="ko">리셀러 전용</text>
+        <text x="502" y="282" fill="#94A3B8" font-size="14" font-weight="600" data-lang="en">Reseller Dedicated</text>
+        <text x="502" y="282" fill="#94A3B8" font-size="14" font-weight="600" data-lang="ja">リセラー専用</text>
+        <text x="502" y="302" fill="#94A3B8" font-size="14" font-weight="600" data-lang="ko">스튜디오 · CRM 제공</text>
+        <text x="502" y="302" fill="#94A3B8" font-size="14" font-weight="600" data-lang="en">Studio · CRM Provided</text>
+        <text x="502" y="302" fill="#94A3B8" font-size="14" font-weight="600" data-lang="ja">スタジオ・CRM提供</text>
+        <text x="480" y="496" fill="#fff" font-size="14" font-weight="700" text-anchor="middle" data-lang="ko">말레이시아 동일 사업 확장</text>
+        <text x="480" y="496" fill="#fff" font-size="14" font-weight="700" text-anchor="middle" data-lang="en">Malaysia expansion (same model)</text>
+        <text x="480" y="496" fill="#fff" font-size="14" font-weight="700" text-anchor="middle" data-lang="ja">マレーシア同様事業拡大</text>
+        <!-- RIGHT: 사용자 (사업가) -->
+        <rect x="645" y="395" width="310" height="60" rx="30" fill="rgba(34,211,238,0.2)" stroke="rgba(34,211,238,0.5)" stroke-width="2"/>
+        <text x="800" y="432" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="ko">사용자 <tspan fill="#67E8F9" font-size="17">(사업가)</tspan></text>
+        <text x="800" y="432" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="en">User <tspan fill="#67E8F9" font-size="16">(Business)</tspan></text>
+        <text x="800" y="432" fill="#fff" font-size="24" font-weight="800" text-anchor="middle" data-lang="ja">ユーザー <tspan fill="#67E8F9" font-size="16">(事業者)</tspan></text>
+        <path d="M580,93 C680,170 760,270 790,385" fill="none" stroke="#22D3EE" stroke-width="2" marker-end="url(#arrEndCyan)" opacity="0.7"/>
+        <text x="730" y="290" fill="#94A3B8" font-size="16" font-weight="600" text-anchor="middle" data-lang="ko">HTML import → 웹운영</text>
+        <text x="730" y="290" fill="#94A3B8" font-size="16" font-weight="600" text-anchor="middle" data-lang="en">HTML Import → Web Hosting</text>
+        <text x="730" y="290" fill="#94A3B8" font-size="16" font-weight="600" text-anchor="middle" data-lang="ja">HTMLインポート → Web運営</text>
+        <text x="730" y="314" fill="#94A3B8" font-size="15" font-weight="600" text-anchor="middle" data-lang="ko">플러그인 설치 · 도메인 연결</text>
+        <text x="730" y="314" fill="#94A3B8" font-size="15" font-weight="600" text-anchor="middle" data-lang="en">Plugin Install · Domain Connect</text>
+        <text x="730" y="314" fill="#94A3B8" font-size="15" font-weight="600" text-anchor="middle" data-lang="ja">プラグイン設置・ドメイン接続</text>
+        <path d="M760,390 C720,280 650,170 540,93" fill="none" stroke="#22D3EE" stroke-width="2" marker-end="url(#arrEndCyan)" opacity="0.7"/>
+        <text x="720" y="128" fill="#22D3EE" font-size="15" font-weight="600" text-anchor="start" data-lang="ko">결제 수수료 0.8%</text>
+        <text x="720" y="128" fill="#22D3EE" font-size="15" font-weight="600" text-anchor="start" data-lang="en">Payment Commission 0.8%</text>
+        <text x="720" y="128" fill="#22D3EE" font-size="15" font-weight="600" text-anchor="start" data-lang="ja">決済手数料 0.8%</text>
+        <text x="700" y="152" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="ko">구독료 $20/월~</text>
+        <text x="700" y="152" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="en">Subscription $20/mo~</text>
+        <text x="700" y="152" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="ja">サブスク $20/月~</text>
+        <text x="700" y="176" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="ko">도메인 수익 (마진 40%)</text>
+        <text x="700" y="176" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="en">Domain Revenue (40% margin)</text>
+        <text x="700" y="176" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="ja">ドメイン収益 (マージン40%)</text>
+        <text x="700" y="200" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="ko">AI 크레딧 수익 (마진 300%)</text>
+        <text x="700" y="200" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="en">AI Credit Revenue (300% margin)</text>
+        <text x="700" y="200" fill="#fff" font-size="16" font-weight="700" text-anchor="start" data-lang="ja">AIクレジット収益 (マージン300%)</text>
+        <text x="800" y="480" fill="#67E8F9" font-size="15" font-weight="700" text-anchor="middle" data-lang="ko">무료 → 유료 전환 (용량/도메인 제한)</text>
+        <text x="800" y="480" fill="#67E8F9" font-size="15" font-weight="700" text-anchor="middle" data-lang="en">Free → Paid (storage/domain limits)</text>
+        <text x="800" y="480" fill="#67E8F9" font-size="15" font-weight="700" text-anchor="middle" data-lang="ja">無料 → 有料転換 (容量/ドメイン制限)</text>
+        <text x="800" y="500" fill="#94A3B8" font-size="13" text-anchor="middle" data-lang="ko">이커머스 결제 서비스 시 수수료 발생</text>
+        <text x="800" y="500" fill="#94A3B8" font-size="13" text-anchor="middle" data-lang="en">E-commerce payment fee on transactions</text>
+        <text x="800" y="500" fill="#94A3B8" font-size="13" text-anchor="middle" data-lang="ja">EC決済サービス時手数料発生</text>
+      </svg>
+    </div>
+    <!-- Revenue summary -->
+    <div class="biz-rev-summary" style="padding:0.78125vw 1.5625vw;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:0.78125vw;text-align:center">
+      <p data-lang="ko" style="font-size:max(18px,1.25vw);color:#C4B5FD;font-weight:600"><b style="color:#fff">핵심:</b> 구독료($20/월~) + 결제 수수료(0.8%) + 도메인(마진 40%) + AI 크레딧(마진 300%) + 마켓플레이스(수수료 30%)의 <b style="color:#fff">5중 수익 구조</b></p>
+      <p data-lang="en" style="font-size:max(18px,1.25vw);color:#C4B5FD;font-weight:600"><b style="color:#fff">Key:</b> Subscription ($20/mo~) + Payment fee (0.8%) + Domain (40% margin) + AI credits (300% margin) + Marketplace (30% fee) — <b style="color:#fff">5 revenue streams</b></p>
+      <p data-lang="ja" style="font-size:max(18px,1.25vw);color:#C4B5FD;font-weight:600"><b style="color:#fff">核心:</b> サブスク($20/月~) + 決済手数料(0.8%) + ドメイン(マージン40%) + AIクレジット(マージン300%) + マーケットプレイス(手数料30%)の<b style="color:#fff">5重収益構造</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- 29 ASK / Q&A -->
+<div class="slide ask" data-title-ko="Q&A" data-title-en="Q&A" data-title-ja="Q&A">
+  <div class="slide-inner">
+    <h2 data-lang="ko">함께 <span class="gradient-text">성장</span>합시다</h2>
+    <h2 data-lang="en">Let's <span class="gradient-text">Grow</span> Together</h2>
+    <h2 data-lang="ja">共に<span class="gradient-text">成長</span>しましょう</h2>
+    <p class="ask-desc" data-lang="ko">AI 바이브코딩 시대, 생성부터 운영까지<br>글로벌 Full-Lifecycle 웹 플랫폼의 미래</p>
+    <p class="ask-desc" data-lang="en">In the AI vibe-coding era,<br>the future of global Full-Lifecycle web platform</p>
+    <p class="ask-desc" data-lang="ja">AIバイブコーディング時代、生成から運用まで<br>グローバルフルライフサイクルウェブプラットフォームの未来</p>
+    <div class="ask-stats">
+      <div class="ask-stat"><div class="ask-stat-value" data-lang="ko">30억+</div><div class="ask-stat-value" data-lang="en">$2.3M+</div><div class="ask-stat-value" data-lang="ja">3億+</div><div class="ask-stat-label" data-lang="ko">2026 매출 목표</div><div class="ask-stat-label" data-lang="en">2026 Revenue Target</div><div class="ask-stat-label" data-lang="ja">2026売上目標</div></div>
+      <div class="ask-stat"><div class="ask-stat-value">31+</div><div class="ask-stat-label" data-lang="ko">특허 포트폴리오</div><div class="ask-stat-label" data-lang="en">Patent Portfolio</div><div class="ask-stat-label" data-lang="ja">特許ポートフォリオ</div></div>
+      <div class="ask-stat"><div class="ask-stat-value" data-lang="ko">4,100조</div><div class="ask-stat-value" data-lang="en">$3.1T</div><div class="ask-stat-value" data-lang="ja">4,100兆</div><div class="ask-stat-label" data-lang="ko">글로벌 웹 시장</div><div class="ask-stat-label" data-lang="en">Global Web Market</div><div class="ask-stat-label" data-lang="ja">グローバルウェブ市場</div></div>
+    </div>
+    <div class="cta-buttons">
+      <a class="btn-primary" href="https://zaemit.com" target="_blank"><span data-lang="ko">Zaemit 방문하기</span><span data-lang="en">Visit Zaemit</span><span data-lang="ja">Zaemitを訪問</span></a>
+      <a class="btn-secondary" href="mailto:ceo@zaemit.com"><span data-lang="ko">문의하기</span><span data-lang="en">Contact Us</span><span data-lang="ja">お問い合わせ</span></a>
+    </div>
+    <div class="ask-footer" data-lang="ko">ceo@zaemit.com · zaemit.com · studio.zaemit.com</div>
+    <div class="ask-footer" data-lang="en">ceo@zaemit.com · zaemit.com · studio.zaemit.com</div>
+    <div class="ask-footer" data-lang="ja">ceo@zaemit.com · zaemit.com · studio.zaemit.com</div>
+  </div>
+</div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+var slides = document.querySelectorAll('.slide');
+var total = slides.length;
+var current = 0;
+var lang = 'ko';
+
+// ── AUTO-ZOOM: fit slide-inner within safe area ──
+function fitSlideContent(slide) {
+  var inner = slide.querySelector('.slide-inner');
+  if (!inner) return;
+  inner.style.zoom = '';
+  inner.style.overflow = 'visible';
+  inner.style.maxHeight = 'none';
+  void inner.offsetHeight;
+
+  var naturalH = inner.scrollHeight;
+  var naturalW = inner.scrollWidth;
+  var vw = document.documentElement.clientWidth / 100;
+
+  var cs = getComputedStyle(slide);
+  var padTop = parseFloat(cs.paddingTop) || 0;
+  var padBottom = parseFloat(cs.paddingBottom) || 0;
+  var bottomReserve = Math.max(padBottom, 7 * vw);
+  var availH = slide.clientHeight - padTop - bottomReserve;
+
+  var padLeft = parseFloat(cs.paddingLeft) || 0;
+  var padRight = parseFloat(cs.paddingRight) || 0;
+  var availW = slide.clientWidth - padLeft - padRight;
+
+  if ((naturalH > availH || naturalW > availW) && naturalH > 0 && naturalW > 0) {
+    var z = Math.min(availH / naturalH, availW / naturalW);
+    inner.style.zoom = Math.max(0.5, Math.min(1, z)).toFixed(4);
+  }
+  inner.style.overflow = '';
+  inner.style.maxHeight = '';
+}
+
+function fitAllSlides() {
+  var hidden = [];
+  slides.forEach(function(s) {
+    if (!s.classList.contains('active')) {
+      s.style.display = 'flex';
+      s.style.visibility = 'hidden';
+      hidden.push(s);
+    }
+  });
+  void document.body.offsetHeight;
+  slides.forEach(function(s) { fitSlideContent(s); });
+  hidden.forEach(function(s) { s.style.display = ''; s.style.visibility = ''; });
+}
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(function() { requestAnimationFrame(fitAllSlides); });
+}
+window.addEventListener('load', function() { requestAnimationFrame(fitAllSlides); });
+window.addEventListener('resize', fitAllSlides);
+
+function goTo(idx, source) {
+  if (idx === current || idx < 0 || idx >= total) return;
+  slides[current].classList.remove('active');
+  current = idx;
+  var next = slides[current];
+  next.style.display = 'flex';
+  next.style.visibility = 'hidden';
+  fitSlideContent(next);
+  next.style.display = '';
+  next.style.visibility = '';
+  next.classList.remove('active');
+  void next.offsetHeight;
+  next.classList.add('active');
+  // Trigger chart drawing animation
+  var chartArea = next.querySelector('.mkt-chart-area');
+  if (chartArea) {
+    chartArea.classList.remove('animate');
+    void chartArea.offsetHeight;
+    chartArea.classList.add('animate');
+  }
+  // Handle videos
+  handleSlideVideos();
+  // Update slide info
+  if (window.irSlideInfo) window.irSlideInfo.current = current;
+  if (window.parent !== window) {
+    try { window.parent.postMessage({ type: 'slideChange', current: current, total: total }, '*'); } catch (e) {}
+  }
+}
+
+// Video handling
+function handleSlideVideos() {
+  slides.forEach(function(s, i) {
+    var videos = s.querySelectorAll('video');
+    videos.forEach(function(v) {
+      if (i === current) {
+        v.currentTime = 0;
+        v.play().catch(function() {});
+      } else {
+        v.pause();
+        v.currentTime = 0;
+      }
+    });
+  });
+}
+
+// Language switch
+function setLang(l) {
+  lang = l;
+  document.body.classList.remove('en', 'ja');
+  if (l === 'en') document.body.classList.add('en');
+  if (l === 'ja') document.body.classList.add('ja');
+  document.querySelectorAll('[data-lang]').forEach(function(el) {
+    el.style.display = '';
+  });
+  requestAnimationFrame(fitAllSlides);
+}
+window.setLang = setLang;
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  switch(e.key) {
+    case 'ArrowDown': case 'ArrowRight': case 'PageDown': case ' ':
+      e.preventDefault(); goTo(current + 1, 'keyboard'); break;
+    case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+      e.preventDefault(); goTo(current - 1, 'keyboard'); break;
+    case 'Home': e.preventDefault(); goTo(0, 'keyboard'); break;
+    case 'End': e.preventDefault(); goTo(total - 1, 'keyboard'); break;
+  }
+});
+
+// Mouse wheel
+var wheelAcc = 0, wheelTimer = null, wheelLocked = false;
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  if (wheelLocked) return;
+  wheelAcc += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(function() { wheelAcc = 0; }, 150);
+  if (Math.abs(wheelAcc) >= 80) {
+    goTo(wheelAcc > 0 ? current + 1 : current - 1, 'wheel');
+    wheelAcc = 0;
+    wheelLocked = true;
+    setTimeout(function() { wheelLocked = false; }, 400);
+  }
+}, { passive: false });
+
+// Touch
+var touchStartX = 0, touchStartY = 0, touchStartTime = 0, touchStartEl = null, hasMoved = false;
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now();
+  touchStartEl = e.target;
+  hasMoved = false;
+}, { passive: true });
+document.addEventListener('touchmove', function(e) {
+  var dx = Math.abs(e.touches[0].clientX - touchStartX);
+  var dy = Math.abs(e.touches[0].clientY - touchStartY);
+  if (dx > 10 || dy > 10) hasMoved = true;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  if (hasMoved) return;
+  if (touchStartEl && touchStartEl.closest('button, a, input')) return;
+  var dt = Date.now() - touchStartTime;
+  if (dt > 300) return;
+  var screenWidth = window.innerWidth;
+  if (touchStartX < 60) goTo(current - 1, 'touch');
+  else if (touchStartX > screenWidth - 60) goTo(current + 1, 'touch');
+});
+
+// Expose for parent viewer
+window.irSlideInfo = {
+  slides: Array.from(slides).map(function(slide, i) {
+    return {
+      index: i,
+      titleKo: slide.dataset.titleKo || '\uc2ac\ub77c\uc774\ub4dc ' + (i + 1),
+      titleEn: slide.dataset.titleEn || 'Slide ' + (i + 1),
+      titleJa: slide.dataset.titleJa || '\u30b9\u30e9\u30a4\u30c9 ' + (i + 1)
+    };
+  }),
+  total: total,
+  get current() { return current; }
+};
+window.goToSlide = function(idx) { goTo(idx, 'parent-viewer'); };
+</script>
+</body>
+</html>

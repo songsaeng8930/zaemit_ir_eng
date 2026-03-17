@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1280">
 <title>Zaemit × DMOA Azure 공동사업 제안 - WEVEN Zaemit IR</title>
-<meta name="description" content="바이브코딩으로 만들고, Azure Container Apps로 배포하는 한국판 V0 + Vercel · Bolt + Supabase — DMOA Azure 미팅용 발표 장표">
+<meta name="description" content="바이브코딩으로 만들고, Azure Container Apps로 배포하는 한국판 V0 + AWS · Bolt + Supabase — DMOA Azure 미팅용 발표 장표">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="WEVEN Zaemit">
 <meta property="og:title" content="Zaemit × DMOA Azure 공동사업 제안">
-<meta property="og:description" content="바이브코딩으로 만들고, Azure Container Apps로 배포하는 한국판 V0 + Vercel · Bolt + Supabase — DMOA Azure 미팅용 발표 장표">
+<meta property="og:description" content="바이브코딩으로 만들고, Azure Container Apps로 배포하는 한국판 V0 + AWS · Bolt + Supabase — DMOA Azure 미팅용 발표 장표">
 <meta property="og:image" content="http://ir.zaemit.com/ir/260302/og-image.png">
 <meta property="og:url" content="http://ir.zaemit.com/app/viewer.html?ir=260302">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zaemit × DMOA Azure 공동사업 제안">
-<meta name="twitter:description" content="바이브코딩으로 만들고, Azure Container Apps로 배포하는 한국판 V0 + Vercel · Bolt + Supabase">
+<meta name="twitter:description" content="바이브코딩으로 만들고, Azure Container Apps로 배포하는 한국판 V0 + AWS · Bolt + Supabase">
 <meta name="twitter:image" content="http://ir.zaemit.com/ir/260302/og-image.png">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -38,15 +38,9 @@ body.en{font-family:'Plus Jakarta Sans','Pretendard Variable',-apple-system,Blin
 body.ja{font-family:'Noto Sans JP','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif}
 
 /* ── LANG VISIBILITY ── */
-[data-lang="en"]{display:none !important}
-[data-lang="ko"]{display:revert}
-[data-lang="ja"]{display:none !important}
-body.en [data-lang="en"]{display:revert !important}
-body.en [data-lang="ko"]{display:none !important}
-body.en [data-lang="ja"]{display:none !important}
-body.ja [data-lang="ja"]{display:revert !important}
-body.ja [data-lang="ko"]{display:none !important}
-body.ja [data-lang="en"]{display:none !important}
+[]{display:revert}
+body.en []{display:none !important}
+body.ja []{display:none !important}
 
 /* ── MOTION TOGGLE ── */
 body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
@@ -60,7 +54,7 @@ body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-dura
 }
 .slide.active{display:flex;opacity:1;transition:opacity .5s ease}
 .slide .slide-inner{
-  max-width:100%;width:100%;max-height:calc(100vh - 6.25vw);overflow:hidden;
+  max-width:100%;width:100%;overflow:hidden;
   opacity:0;transform:translateY(1.5625vw);
   transition:opacity .45s ease .1s,transform .45s ease .1s;
 }
@@ -128,6 +122,10 @@ body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-dura
 .slide .awards-summary,
 .slide .gmo-plan-label,
 .slide .gmo-plan-cards,
+.slide .fp-chart,
+.slide .fp-table,
+.slide .fp-cards,
+.slide .fp-card,
 .slide .slide-bottom{opacity:0}
 
 /* Hero (page 1) */
@@ -207,9 +205,19 @@ body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-dura
 .slide.active .sales-layout{animation:aFadeUp .55s ease .5s both}
 .slide.active .sales-chart-wrap:nth-child(1){animation:aFadeUp .55s ease .45s both}
 .slide.active .sales-chart-wrap:nth-child(2){animation:aFadeUp .55s ease .65s both}
-/* GMO Pepabo plans */
+/* 일본 IT 대기업 plans */
 .slide.active .gmo-plan-label{animation:aFadeUp .5s ease .9s both}
 .slide.active .gmo-plan-cards{animation:aFadeUp .55s ease 1.05s both}
+/* Financial Projection */
+.slide.active .fp-chart{animation:aSlideR .55s ease .45s both}
+.slide.active .fp-table{animation:aSlideL .55s ease .55s both}
+.slide.active .fp-cards{animation:aFadeIn .3s ease .7s both}
+.slide.active .fp-card:nth-child(1){animation:aFadeUp .4s ease .75s both}
+.slide.active .fp-card:nth-child(2){animation:aFadeUp .4s ease .85s both}
+.slide.active .fp-card:nth-child(3){animation:aFadeUp .4s ease .95s both}
+.slide.active .fp-card:nth-child(4){animation:aFadeUp .4s ease 1.05s both}
+.slide.active .fp-card:nth-child(5){animation:aFadeUp .4s ease 1.15s both}
+.slide.active .fp-card:nth-child(6){animation:aFadeUp .4s ease 1.25s both}
 /* Slide bottom text */
 .slide.active .slide-bottom{animation:aFadeUp .5s ease .9s both}
 /* SVG draw */
@@ -420,7 +428,7 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
 
 /* ── STATS GRID (Slide 7) ── */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw;margin-top:2.5vw}
-.stat-card{background:rgba(255,255,255,0.07);border-radius:1.09375vw;padding:1.875vw;text-align:center;transition:transform .3s}
+.stat-card{background:rgba(255,255,255,0.07);border-radius:1.09375vw;padding:1.875vw;text-align:center;transition:transform .3s;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .stat-card:hover{transform:translateY(-0.3125vw)}
 .stat-val{font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;margin-bottom:0.3125vw}
 .stat-val.mint{color:var(--accent)}
@@ -493,7 +501,7 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
 .mkt-stage-current{background:linear-gradient(145deg,rgba(46,124,246,0.25),rgba(99,102,241,0.18));box-shadow:0 0 2.1875vw rgba(46,124,246,0.25)}
 .mkt-stage-current .mkt-stage-num{font-size:2.34375vw;font-weight:900;background:linear-gradient(135deg,#2E7CF6,#7DD3FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .mkt-stage-current .mkt-stage-text{color:#fff;font-weight:800;font-size:max(18px,1.015625vw);white-space:nowrap;text-shadow:0 0 1.40625vw rgba(46,124,246,0.5)}
-.mkt-stage-marker{margin-top:0.46875vw;font-size:max(18px,1.015625vw);font-weight:800;color:#FBBF24;letter-spacing:-0.15625vw;text-shadow:0 0 0.78125vw rgba(251,191,36,0.4)}
+.mkt-stage-marker{margin-top:0.46875vw;font-size:max(18px,1.015625vw);font-weight:800;color:#FBBF24;letter-spacing:0.03125vw;text-shadow:0 0 0.78125vw rgba(251,191,36,0.4)}
 /* comparison table */
 .mkt-table-wrap{margin-top:0.46875vw}
 .mkt-table{width:100%;border-collapse:collapse;font-size:max(18px,1.171875vw)}
@@ -582,37 +590,25 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
 <body>
 
 <!-- ======================== SLIDE 1: HERO ======================== -->
-<div class="slide hero active" data-title-ko="표지" data-title-en="Cover" data-title-ja="表紙">
+<div class="slide hero active" data-title-ko="표지">
   <div class="hero-grid"></div>
   <div class="slide-inner">
     <div class="hero-left">
-      <div class="hero-badge" data-lang="ko">공동사업 제안</div>
-      <div class="hero-badge" data-lang="en">Joint Business Proposal</div>
-      <div class="hero-badge" data-lang="ja">共同事業提案</div>
-      <h1 data-lang="ko"><span class="gradient-text">Zaemit</span> × <span class="partner-blue">DMOA Azure</span></h1>
-      <h1 data-lang="en"><span class="gradient-text">Zaemit</span> × <span class="partner-blue">DMOA Azure</span></h1>
-      <h1 data-lang="ja"><span class="gradient-text">Zaemit</span> × <span class="partner-blue">DMOA Azure</span></h1>
-      <p class="hero-sub" data-lang="ko">바이브코딩으로 만들고, Azure Container Apps로 배포하는<br>한국판 Zaemit + Azure</p>
-      <p class="hero-sub" data-lang="en">Vibe Code to Create, Azure Container Apps to Deploy<br>Korea's Zaemit + Azure</p>
-      <p class="hero-sub" data-lang="ja">バイブコーディングで作り、Azure Container Appsでデプロイする<br>韓国版 Zaemit + Azure</p>
+      <div class="hero-badge">공동사업 제안</div>
+      <h1><span class="gradient-text">Zaemit</span> × <span class="partner-blue">DMOA Azure</span></h1>
+      <p class="hero-sub">바이브코딩으로 만들고, Azure Container Apps로 배포하는<br>한국판 Zaemit + Azure</p>
       <div class="hero-stats">
         <div>
           <div class="hero-stat-value">10,000+</div>
-          <div class="hero-stat-label" data-lang="ko">주간 접속자</div>
-          <div class="hero-stat-label" data-lang="en">Weekly Visitors</div>
-          <div class="hero-stat-label" data-lang="ja">週間アクセス</div>
+          <div class="hero-stat-label">주간 접속자</div>
         </div>
         <div>
           <div class="hero-stat-value">9,000+</div>
-          <div class="hero-stat-label" data-lang="ko">생성 사이트</div>
-          <div class="hero-stat-label" data-lang="en">Sites Created</div>
-          <div class="hero-stat-label" data-lang="ja">生成サイト</div>
+          <div class="hero-stat-label">생성 사이트</div>
         </div>
         <div>
           <div class="hero-stat-value">10%</div>
-          <div class="hero-stat-label" data-lang="ko">전환율</div>
-          <div class="hero-stat-label" data-lang="en">Conversion Rate</div>
-          <div class="hero-stat-label" data-lang="ja">転換率</div>
+          <div class="hero-stat-label">전환율</div>
         </div>
       </div>
     </div>
@@ -630,77 +626,16 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
   </div>
 </div>
 
-<!-- ======================== SLIDE 2: ZAEMIT 소개 ======================== -->
-<div class="slide" data-title-ko="Zaemit 소개" data-title-en="About Zaemit" data-title-ja="Zaemit紹介" style="background:radial-gradient(ellipse at 30% 40%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark)">
-  <div class="slide-inner">
-    <div class="section-label" data-lang="ko">서비스 소개</div>
-    <div class="section-label" data-lang="en">About Zaemit</div>
-    <div class="section-label" data-lang="ja">サービス紹介</div>
-    <div class="section-title" data-lang="ko">VSCode 확장 프로그램 기반<br><span class="gradient-text">AI 웹 생성 엔진</span></div>
-    <div class="section-title" data-lang="en">VSCode Extension-Based<br><span class="gradient-text">AI Web Generation Engine</span></div>
-    <div class="section-title" data-lang="ja">VSCode拡張機能ベース<br><span class="gradient-text">AI Web生成エンジン</span></div>
-    <div class="section-desc" data-lang="ko">개발자의 IDE 안에서 탈AI급 디자인의 웹사이트를 생성하고, AI 크레딧으로 수익을 창출하는 플랫폼</div>
-    <div class="section-desc" data-lang="en">Platform that generates post-AI-level web designs inside the developer's IDE, monetized through AI credits</div>
-    <div class="section-desc" data-lang="ja">開発者のIDE内で脱AI級デザインのWebサイトを生成し、AIクレジットで収益を創出するプラットフォーム</div>
-    <div class="service-features">
-      <div class="svc-card">
-        <div class="svc-icon mint">
-          <svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-        </div>
-        <div class="svc-title" data-lang="ko">WebGen.GPT</div>
-        <div class="svc-title" data-lang="en">WebGen.GPT</div>
-        <div class="svc-title" data-lang="ja">WebGen.GPT</div>
-        <div class="svc-desc" data-lang="ko">6개 비전 AI + 자체 LLM<br>탈AI급 디자인 자동 생성</div>
-        <div class="svc-desc" data-lang="en">6 Vision AI + Proprietary LLM<br>Post-AI-level design generation</div>
-        <div class="svc-desc" data-lang="ja">6つのビジョンAI + 自社LLM<br>脱AI級デザイン自動生成</div>
-      </div>
-      <div class="svc-card">
-        <div class="svc-icon purple">
-          <svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
-        </div>
-        <div class="svc-title" data-lang="ko">VSCode Extension</div>
-        <div class="svc-title" data-lang="en">VSCode Extension</div>
-        <div class="svc-title" data-lang="ja">VSCode拡張機能</div>
-        <div class="svc-desc" data-lang="ko">개발자 IDE에 통합된 웹에디터<br>AI 크레딧 기반 수익 모델</div>
-        <div class="svc-desc" data-lang="en">Web editor integrated into developer IDE<br>AI credit-based revenue model</div>
-        <div class="svc-desc" data-lang="ja">開発者IDEに統合されたWebエディター<br>AIクレジットベース収益モデル</div>
-      </div>
-      <div class="svc-card">
-        <div class="svc-icon blue">
-          <svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
-        </div>
-        <div class="svc-title" data-lang="ko">국내 유일 기술</div>
-        <div class="svc-title" data-lang="en">Korea-Only Tech</div>
-        <div class="svc-title" data-lang="ja">国内唯一の技術</div>
-        <div class="svc-desc" data-lang="ko">PCT 4건 + 국내특허 21건<br>100% 국산 기술 기반</div>
-        <div class="svc-desc" data-lang="en">4 PCT + 21 Domestic Patents<br>100% Korean Technology</div>
-        <div class="svc-desc" data-lang="ja">PCT 4件 + 国内特許 21件<br>100%国産技術基盤</div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ======================== SLIDE 3: 웹사이트 시장 성장 ======================== -->
-<div class="slide market" data-title-ko="시장 기회" data-title-en="Market Opportunity" data-title-ja="市場機会" style="background:radial-gradient(ellipse at 40% 50%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 80%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark)">
+<div class="slide market" data-title-ko="시장 기회" style="background:radial-gradient(ellipse at 40% 50%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 80%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark)">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">시장 환경 및 기회</div><div class="section-label" data-lang="en">Market Environment</div><div class="section-label" data-lang="ja">市場環境と機会</div>
-    <div class="section-title" data-lang="ko">웹사이트 수는 2010년 2억개에서 14억개로<br><span style="color:#EF4444">7배 성장</span> <span style="font-size:20px;color:var(--text-muted)">(Netcraft, 2025.12)</span></div>
-    <div class="section-title" data-lang="en">Websites Grew from 200M to 1.4B Since 2010<br><span style="color:#EF4444">7x Growth</span> <span style="font-size:20px;color:var(--text-muted)">(Netcraft, Dec 2025)</span></div>
-    <div class="section-title" data-lang="ja">ウェブサイト数は2010年の2億から14億に<br><span style="color:#EF4444">7倍成長</span> <span style="font-size:20px;color:var(--text-muted)">(Netcraft, 2025.12)</span></div>
+    <div class="section-title">웹사이트 수는 2010년 2억개에서 14억개로<br><span style="color:#EF4444">7배 성장</span> <span style="font-size:20px;color:var(--text-muted)">(Netcraft, 2025.12)</span></div>
     <div class="market-content">
       <div class="mkt-bullets">
-        <div class="mkt-bullet" data-lang="ko"><span class="blue">디지털전환</span> : 사용자의 데이터 없이는 혁신과 지속성장을 동시에 취할 수 없어, 홈페이지가 필수</div>
-        <div class="mkt-bullet" data-lang="en"><span class="blue">Digital Transformation</span>: Without user data, innovation and sustainable growth are impossible — websites are essential</div>
-        <div class="mkt-bullet" data-lang="ja"><span class="blue">デジタル変革</span>：ユーザーデータなしには革新と持続的成長は不可能—ウェブサイトは必須</div>
-        <div class="mkt-bullet" data-lang="ko"><b>신뢰</b> : 93%의 소비자는 제품이나 서비스를 구매하기 전 홈페이지를 먼저 확인</div>
-        <div class="mkt-bullet" data-lang="en"><b>Trust</b>: 93% of consumers check a website before purchasing a product or service</div>
-        <div class="mkt-bullet" data-lang="ja"><b>信頼</b>：93%の消費者は製品やサービスを購入する前にウェブサイトを確認</div>
-        <div class="mkt-bullet" data-lang="ko">폭발하는 수요로 인한 웹사이트 빌더 (<b>No-Code, Low-Code</b>) 시장의 고도 성장</div>
-        <div class="mkt-bullet" data-lang="en">Explosive demand driving rapid growth of website builder (<b>No-Code, Low-Code</b>) market</div>
-        <div class="mkt-bullet" data-lang="ja">爆発的な需要によるウェブサイトビルダー（<b>No-Code, Low-Code</b>）市場の高度成長</div>
-        <div class="mkt-bullet" data-lang="ko">AI 이후 <b>바이브코딩</b>이라는 <span class="blue">새로운 패러다임</span> 탄생</div>
-        <div class="mkt-bullet" data-lang="en">Post-AI era births a <span class="blue">new paradigm</span>: <b>Vibe Coding</b></div>
-        <div class="mkt-bullet" data-lang="ja">AI以降<b>バイブコーディング</b>という<span class="blue">新しいパラダイム</span>の誕生</div>
+        <div class="mkt-bullet"><span class="blue">디지털전환</span> : 사용자의 데이터 없이는 혁신과 지속성장을 동시에 취할 수 없어, 홈페이지가 필수</div>
+        <div class="mkt-bullet"><b>신뢰</b> : 93%의 소비자는 제품이나 서비스를 구매하기 전 홈페이지를 먼저 확인</div>
+        <div class="mkt-bullet">폭발하는 수요로 인한 웹사이트 빌더 (<b>No-Code, Low-Code</b>) 시장의 고도 성장</div>
+        <div class="mkt-bullet">AI 이후 <b>바이브코딩</b>이라는 <span class="blue">새로운 패러다임</span> 탄생</div>
       </div>
       <div class="mkt-timeline">
         <div class="mkt-chart-area">
@@ -710,22 +645,12 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
             <path class="mkt-line mkt-line-vibe" d="M870,200 C880,198 900,196 920,194 C940,190 960,185 980,178 C990,172 1000,165 1000,160" stroke="#F97316" stroke-width="3.5" fill="none" stroke-linecap="round"/>
           </svg>
           <div class="mkt-chart-labels">
-            <div class="mkt-clabel green" style="top:32%" data-lang="ko">웹사이트 빌더 65% <span style="font-weight:400;font-size:18px">(source: w3techs)</span></div>
-            <div class="mkt-clabel green" style="top:32%" data-lang="en">Website Builder 65% <span style="font-weight:400;font-size:18px">(source: w3techs)</span></div>
-            <div class="mkt-clabel green" style="top:32%" data-lang="ja">ウェブサイトビルダー 65% <span style="font-weight:400;font-size:18px">(source: w3techs)</span></div>
-            <div class="mkt-clabel blue" style="top:66%" data-lang="ko">에이전시 30%</div>
-            <div class="mkt-clabel blue" style="top:66%" data-lang="en">Agency 30%</div>
-            <div class="mkt-clabel blue" style="top:66%" data-lang="ja">エージェンシー 30%</div>
-            <div class="mkt-clabel orange" style="top:82%" data-lang="ko">바이브코딩 5% <span style="font-weight:400;font-size:18px">(추정)</span></div>
-            <div class="mkt-clabel orange" style="top:82%" data-lang="en">Vibe Coding 5% <span style="font-weight:400;font-size:18px">(est.)</span></div>
-            <div class="mkt-clabel orange" style="top:82%" data-lang="ja">バイブコーディング 5% <span style="font-weight:400;font-size:18px">(推定)</span></div>
+            <div class="mkt-clabel green" style="top:32%">웹사이트 빌더 65% <span style="font-weight:400;font-size:18px">(source: w3techs)</span></div>
+            <div class="mkt-clabel blue" style="top:66%">에이전시 30%</div>
+            <div class="mkt-clabel orange" style="top:82%">바이브코딩 5% <span style="font-weight:400;font-size:18px">(추정)</span></div>
           </div>
         </div>
         <div class="mkt-years">
-          <div class="mkt-year"><div class="mkt-year-num">2010</div><div class="mkt-year-label" data-lang="ko">스마트폰 보급</div><div class="mkt-year-label" data-lang="en">Smartphone Era</div><div class="mkt-year-label" data-lang="ja">スマートフォン普及</div></div>
-          <div class="mkt-year"><div class="mkt-year-num">2015</div><div class="mkt-year-label" data-lang="ko">모바일 웹 확산</div><div class="mkt-year-label" data-lang="en">Mobile Web Boom</div><div class="mkt-year-label" data-lang="ja">モバイルウェブ拡散</div></div>
-          <div class="mkt-year"><div class="mkt-year-num">2020</div><div class="mkt-year-label" data-lang="ko">코로나19 디지털 전환</div><div class="mkt-year-label" data-lang="en">COVID-19 DX Shift</div><div class="mkt-year-label" data-lang="ja">COVID-19 DX転換</div></div>
-          <div class="mkt-year"><div class="mkt-year-num">2025</div><div class="mkt-year-label" data-lang="ko">바이브코딩 시대</div><div class="mkt-year-label" data-lang="en">Vibe Coding Era</div><div class="mkt-year-label" data-lang="ja">バイブコーディング時代</div><div style="font-weight:700;color:var(--accent);font-size:max(18px,1.09375vw);margin-top:0.15625vw" data-lang="ko">13.9억개</div><div style="font-weight:700;color:var(--accent);font-size:max(18px,1.09375vw);margin-top:0.15625vw" data-lang="en">1.39B</div><div style="font-weight:700;color:var(--accent);font-size:max(18px,1.09375vw);margin-top:0.15625vw" data-lang="ja">13.9億件</div></div>
         </div>
       </div>
     </div>
@@ -737,40 +662,25 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
 </div>
 
 <!-- ======================== SLIDE 4: 시장 규모 전망 ======================== -->
-<div class="slide mkt-forecast" data-title-ko="시장 규모 전망" data-title-en="Market Size Forecast" data-title-ja="市場規模展望" style="background:radial-gradient(ellipse at 50% 30%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.75vw">
+<div class="slide mkt-forecast" data-title-ko="시장 규모 전망" style="background:radial-gradient(ellipse at 50% 30%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.75vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">시장 환경 및 기회</div><div class="section-label" data-lang="en">Market Environment</div><div class="section-label" data-lang="ja">市場環境と機会</div>
-    <div class="section-title" data-lang="ko">글로벌 웹사이트 빌더 시장, <span style="color:var(--accent)">연 16.6%</span> 성장 중</div>
-    <div class="section-title" data-lang="en">Global Website Builder Market Growing at <span style="color:var(--accent)">16.6% CAGR</span></div>
-    <div class="section-title" data-lang="ja">グローバルウェブサイトビルダー市場、<span style="color:var(--accent)">年16.6%</span>成長中</div>
-    <div class="section-desc" data-lang="ko" style="margin-bottom:1.5625vw">SNS가 홈페이지를 대체할 것이라는 예측과 달리, 디지털 전환과 AI의 등장으로 시장은 오히려 가속 성장</div>
-    <div class="section-desc" data-lang="en" style="margin-bottom:1.5625vw">Contrary to predictions that SNS would replace websites, digital transformation and AI have accelerated market growth</div>
-    <div class="section-desc" data-lang="ja" style="margin-bottom:1.5625vw">SNSがホームページを代替するという予測に反し、DXとAIの登場で市場はむしろ加速成長</div>
+    <div class="section-title">글로벌 웹사이트 빌더 시장, <span style="color:var(--accent)">연 16.6%</span> 성장 중</div>
+    <div class="section-desc" style="margin-bottom:1.5625vw">SNS가 홈페이지를 대체할 것이라는 예측과 달리, 디지털 전환과 AI의 등장으로 시장은 오히려 가속 성장</div>
     <div class="mkt-fc-stats">
       <div style="padding:1.5625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-align:center">
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.96875vw;font-weight:800;color:#fff;line-height:1.1">13.9<span style="color:var(--accent)" data-lang="ko">억</span><span style="color:var(--accent)" data-lang="en">B</span><span style="color:var(--accent)" data-lang="ja">億</span></div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="ko">전세계 웹사이트 수 (Netcraft)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="en">Total Websites Worldwide (Netcraft)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="ja">全世界ウェブサイト数 (Netcraft)</div>
+        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw">전세계 웹사이트 수 (Netcraft)</div>
       </div>
       <div style="padding:1.5625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-align:center">
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.96875vw;font-weight:800;color:#fff;line-height:1.1">125<span style="color:var(--accent)" data-lang="ko">만</span><span style="color:var(--accent)" data-lang="en">M</span><span style="color:var(--accent)" data-lang="ja">万</span><span style="font-size:1.875vw;color:var(--text-muted)" data-lang="ko">/일</span><span style="font-size:1.875vw;color:var(--text-muted)" data-lang="en">/day</span><span style="font-size:1.875vw;color:var(--text-muted)" data-lang="ja">/日</span></div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="ko">매일 신규 웹사이트 생성</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="en">New Websites Created Daily</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="ja">毎日新規ウェブサイト生成</div>
+        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw">매일 신규 웹사이트 생성</div>
       </div>
       <div style="padding:1.5625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-align:center">
         <div style="font-family:'Plus Jakarta Sans';font-size:2.96875vw;font-weight:800;color:#fff;line-height:1.1">YoY <span style="color:var(--accent)">+5%</span></div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="ko">활성 사이트 증가율</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="en">Active Site Growth Rate</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw" data-lang="ja">アクティブサイト増加率</div>
+        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw">활성 사이트 증가율</div>
       </div>
     </div>
     <div class="mkt-fc-body">
       <div style="flex:2;background:rgba(21,18,43,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.5625vw 1.25vw">
-        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:0.9375vw" data-lang="ko">웹사이트 빌더 시장 규모 추이 (조 원)</div>
-        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:0.9375vw" data-lang="en">Website Builder Market Size Trend (KRW Trillion)</div>
-        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:0.9375vw" data-lang="ja">ウェブサイトビルダー市場規模推移 (兆ウォン)</div>
+        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:0.9375vw">웹사이트 빌더 시장 규모 추이 (조 원)</div>
         <svg viewBox="0 0 520 200" style="width:100%">
           <line x1="45" y1="170" x2="495" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
           <line x1="45" y1="127" x2="495" y2="127" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -801,21 +711,15 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
       <div style="flex:1;display:flex;flex-direction:column;gap:1.09375vw">
         <div style="flex:1;padding:1.40625vw;border-radius:1.09375vw;border:1px solid rgba(249,115,22,0.3);background:rgba(249,115,22,0.06);display:flex;flex-direction:column;justify-content:center">
           <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#F97316">₩7.3조 → ₩9.1조</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="ko">AI 웹빌더 시장 (2025→2026)<br>전년 대비 <b style="color:#F97316">+26%</b> 성장</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="en">AI Web Builder Market (2025→2026)<br>YoY <b style="color:#F97316">+26%</b> Growth</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="ja">AIウェブビルダー市場 (2025→2026)<br>前年比 <b style="color:#F97316">+26%</b> 成長</div>
+          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4">AI 웹빌더 시장 (2025→2026)<br>전년 대비 <b style="color:#F97316">+26%</b> 성장</div>
         </div>
         <div style="flex:1;padding:1.40625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;justify-content:center">
           <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:var(--accent)">CAGR 25%</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="ko">AI 웹빌더 연평균 성장률<br>₩2.2조 → ₩9.7조 (2026~2033)</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="en">AI Web Builder CAGR<br>₩2.2T → ₩9.7T (2026~2033)</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="ja">AIウェブビルダー年平均成長率<br>₩2.2兆 → ₩9.7兆 (2026~2033)</div>
+          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4">AI 웹빌더 연평균 성장률<br>₩2.2조 → ₩9.7조 (2026~2033)</div>
         </div>
         <div style="flex:1;padding:1.40625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;justify-content:center">
           <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:var(--primary)">CAGR 16.6%</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="ko">웹빌더 전체 시장 연평균 성장률<br>₩4.4조 → ₩11.1조 (2025~2031)</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="en">Total Web Builder Market CAGR<br>₩4.4T → ₩11.1T (2025~2031)</div>
-          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4" data-lang="ja">ウェブビルダー全体市場年平均成長率<br>₩4.4兆 → ₩11.1兆 (2025~2031)</div>
+          <div style="font-size:18px;color:var(--text-muted);margin-top:0.46875vw;line-height:1.4">웹빌더 전체 시장 연평균 성장률<br>₩4.4조 → ₩11.1조 (2025~2031)</div>
         </div>
       </div>
     </div>
@@ -827,40 +731,26 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
 </div>
 
 <!-- ======================== SLIDE 5: AI·노코드 시장 동인 ======================== -->
-<div class="slide mkt-ai-nocode" data-title-ko="AI·노코드 시장 동인" data-title-en="AI & No-Code Drivers" data-title-ja="AI・ノーコード市場要因" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,212,170,0.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.75vw">
+<div class="slide mkt-ai-nocode" data-title-ko="AI·노코드 시장 동인" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,212,170,0.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.75vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">시장 환경 및 기회</div><div class="section-label" data-lang="en">Market Environment</div><div class="section-label" data-lang="ja">市場環境と機会</div>
-    <div class="section-title" data-lang="ko">AI·노코드 혁명이 만드는 <span style="color:var(--accent)">$1,870억</span> 신시장</div>
-    <div class="section-title" data-lang="en">AI & No-Code Revolution Creating a <span style="color:var(--accent)">$187B</span> New Market</div>
-    <div class="section-title" data-lang="ja">AI・ノーコード革命が生み出す<span style="color:var(--accent)">$1,870億</span>新市場</div>
-    <div class="section-desc" data-lang="ko" style="margin-bottom:1.5625vw">AI가 제작 비용과 시간을 1/10로 낮추면서, 홈페이지 없이 버티던 수백만 소상공인이 시장에 진입</div>
-    <div class="section-desc" data-lang="en" style="margin-bottom:1.5625vw">As AI cuts production cost and time by 1/10, millions of small businesses that couldn't afford websites are entering the market</div>
-    <div class="section-desc" data-lang="ja" style="margin-bottom:1.5625vw">AIが制作コストと時間を1/10に下げ、ホームページなしで耐えていた数百万の小規模事業者が市場に参入</div>
+    <div class="section-title">AI·노코드 혁명이 만드는 <span style="color:var(--accent)">$1,870억</span> 신시장</div>
+    <div class="section-desc" style="margin-bottom:1.5625vw">AI가 제작 비용과 시간을 1/10로 낮추면서, 홈페이지 없이 버티던 수백만 소상공인이 시장에 진입</div>
     <div class="mkt-drv-grid">
       <div style="padding:1.71875vw;border-radius:1.09375vw;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);text-align:center">
         <div style="font-family:'Plus Jakarta Sans';font-size:3.28125vw;font-weight:800;color:#fff">89<span style="color:var(--accent)">%</span></div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="ko">중소기업(SMB) AI 채택률<br>(2026, Intuit &amp; ICIC)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="en">SMB AI Adoption Rate<br>(2026, Intuit &amp; ICIC)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="ja">中小企業AI採択率<br>(2026, Intuit &amp; ICIC)</div>
+        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4">중소기업(SMB) AI 채택률<br>(2026, Intuit &amp; ICIC)</div>
       </div>
       <div style="padding:1.71875vw;border-radius:1.09375vw;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);text-align:center">
-        <div style="font-family:'Plus Jakarta Sans';font-size:3.28125vw;font-weight:800;color:#fff">120<span style="color:#EF4444" data-lang="ko">만</span><span style="color:#EF4444" data-lang="en">M</span><span style="color:#EF4444" data-lang="ja">万</span></div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="ko">미국 개발자 부족 전망<br>(2026, US Chamber)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="en">US Developer Shortage Forecast<br>(2026, US Chamber)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="ja">米国開発者不足予測<br>(2026, US Chamber)</div>
+        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4">미국 개발자 부족 전망<br>(2026, US Chamber)</div>
       </div>
       <div style="padding:1.71875vw;border-radius:1.09375vw;background:rgba(0,102,255,0.06);border:1px solid rgba(0,102,255,0.2);text-align:center">
         <div style="font-family:'Plus Jakarta Sans';font-size:3.28125vw;font-weight:800;color:#fff">80<span style="color:var(--primary)">%</span></div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="ko">로우코드 비개발자 사용자<br>(Gartner 2026 전망)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="en">Low-Code Non-Developer Users<br>(Gartner 2026 Forecast)</div>
-        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4" data-lang="ja">ローコード非開発者ユーザー<br>(Gartner 2026予測)</div>
+        <div style="font-size:18px;color:var(--text-muted);margin-top:0.625vw;line-height:1.4">로우코드 비개발자 사용자<br>(Gartner 2026 전망)</div>
       </div>
     </div>
     <div class="mkt-nc-body">
       <div style="flex:1;background:rgba(21,18,43,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.5625vw">
-        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:1.25vw" data-lang="ko">노코드·로우코드 시장 규모</div>
-        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:1.25vw" data-lang="en">No-Code / Low-Code Market Size</div>
-        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:1.25vw" data-lang="ja">ノーコード・ローコード市場規模</div>
+        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:1.25vw">노코드·로우코드 시장 규모</div>
         <div style="display:flex;flex-direction:column;gap:1.09375vw">
           <div>
             <div style="display:flex;justify-content:space-between;margin-bottom:0.46875vw"><span style="font-size:18px;color:var(--text-muted)">2024</span><span style="font-family:'Plus Jakarta Sans';font-size:18px;font-weight:700;color:#E2E8F0">$28.75B</span></div>
@@ -885,34 +775,22 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
         <div style="flex:1;padding:1.5625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:1.25vw">
           <div style="width:3.75vw;height:3.75vw;border-radius:0.9375vw;background:rgba(0,212,170,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div>
           <div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="ko">제작 비용 붕괴</div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="en">Production Cost Collapse</div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="ja">制作コスト崩壊</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="ko">에이전시 수백~수천만 원 → AI 빌더 월 수만 원<br>제작 기간 2~4주 → AI 5~15분</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="en">Agency: Millions of KRW → AI Builder: Tens of thousands/mo<br>Production: 2~4 weeks → AI: 5~15 min</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="ja">エージェンシー 数百〜数千万ウォン → AIビルダー 月数万ウォン<br>制作期間 2〜4週 → AI 5〜15分</div>
+            <div style="font-size:1.5625vw;font-weight:700;color:#fff">제작 비용 붕괴</div>
+            <div style="font-size:18px;color:var(--text-muted);line-height:1.5">에이전시 수백~수천만 원 → AI 빌더 월 수만 원<br>제작 기간 2~4주 → AI 5~15분</div>
           </div>
         </div>
         <div style="flex:1;padding:1.5625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:1.25vw">
           <div style="width:3.75vw;height:3.75vw;border-radius:0.9375vw;background:rgba(0,102,255,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="ko">신규 수요 폭발</div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="en">Explosive New Demand</div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="ja">新規需要爆発</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="ko">홈페이지 없이 버티던 소상공인 수백만 명이<br>AI 덕분에 시장 진입 가능</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="en">Millions of small businesses without websites<br>can now enter the market thanks to AI</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="ja">ホームページなしで耐えていた数百万の小規模事業者が<br>AIのおかげで市場参入可能に</div>
+            <div style="font-size:1.5625vw;font-weight:700;color:#fff">신규 수요 폭발</div>
+            <div style="font-size:18px;color:var(--text-muted);line-height:1.5">홈페이지 없이 버티던 소상공인 수백만 명이<br>AI 덕분에 시장 진입 가능</div>
           </div>
         </div>
         <div style="flex:1;padding:1.5625vw;border-radius:1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:1.25vw">
           <div style="width:3.75vw;height:3.75vw;border-radius:0.9375vw;background:rgba(124,58,237,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
           <div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="ko">시장 양극화</div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="en">Market Polarization</div>
-            <div style="font-size:1.5625vw;font-weight:700;color:#fff" data-lang="ja">市場二極化</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="ko">범용 AI 빌더 vs 전문 도구로 양분<br>IR·브랜딩 등 전문 영역의 가치 상승</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="en">Split between general AI builders vs specialized tools<br>Rising value in specialized areas like IR & branding</div>
-            <div style="font-size:18px;color:var(--text-muted);line-height:1.5" data-lang="ja">汎用AIビルダー vs 専門ツールに二分<br>IR・ブランディングなど専門領域の価値上昇</div>
+            <div style="font-size:1.5625vw;font-weight:700;color:#fff">시장 양극화</div>
+            <div style="font-size:18px;color:var(--text-muted);line-height:1.5">범용 AI 빌더 vs 전문 도구로 양분<br>IR·브랜딩 등 전문 영역의 가치 상승</div>
           </div>
         </div>
       </div>
@@ -925,44 +803,41 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
 </div>
 
 <!-- ======================== SLIDE 6: 바이브코딩 시장 ======================== -->
-<div class="slide vibecoding-market" data-title-ko="바이브코딩 시장" data-title-en="Vibe Coding Market" data-title-ja="バイブコーディング市場" style="background:radial-gradient(ellipse at 50% 30%,rgba(124,58,237,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark)">
+<div class="slide vibecoding-market" data-title-ko="바이브코딩 시장" style="background:radial-gradient(ellipse at 50% 30%,rgba(124,58,237,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark)">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">바이브코딩 시장</div><div class="section-label" data-lang="en">Vibe Coding Market</div><div class="section-label" data-lang="ja">バイブコーディング市場</div>
-    <div class="section-title" data-lang="ko">전세계 Big4가 독식하는 Vibe코딩 시장<br>J 커브가 아닌 L 커브를 실현</div>
-    <div class="section-title" data-lang="en">Global Big 4 Dominate the Vibe Coding Market<br>Achieving an L-Curve, Not a J-Curve</div>
-    <div class="section-title" data-lang="ja">世界Big4が独占するVibeコーディング市場<br>JカーブではなくLカーブを実現</div>
+    <div class="section-label">바이브코딩 시장</div>
+    <div class="section-title">전세계 Big4가 독식하는 Vibe코딩 시장<br>J 커브가 아닌 L 커브를 실현</div>
+
     <div class="market-content">
       <div class="mkt-bullets">
-        <div class="mkt-bullet" data-lang="ko">바이브코딩으로 인한 전세계 SaaS의 <b>대폭락</b>, 이젠 만들어 쓰는 시대</div>
-        <div class="mkt-bullet" data-lang="en">Global SaaS <b>crash</b> driven by vibe coding — now it's the era of building your own</div>
-        <div class="mkt-bullet" data-lang="ja">バイブコーディングによる世界SaaSの<b>大暴落</b>、自分で作って使う時代へ</div>
+        <div class="mkt-bullet">바이브코딩으로 인한 전세계 SaaS의 <b>대폭락</b>, 이젠 만들어 쓰는 시대</div>
+
       </div>
-      <div class="mkt-maturity-label" data-lang="ko">바이브코딩 성숙도 5단계</div>
-      <div class="mkt-maturity-label" data-lang="en">5 Stages of Vibe Coding Maturity</div>
-      <div class="mkt-maturity-label" data-lang="ja">バイブコーディング成熟度5段階</div>
+      <div class="mkt-maturity-label">바이브코딩 성숙도 5단계</div>
+
       <div class="mkt-stages">
-        <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">1 단계</div><div class="mkt-stage-num" data-lang="en">Stage 1</div><div class="mkt-stage-num" data-lang="ja">第1段階</div><div class="mkt-stage-text" data-lang="ko">코드 스니펫</div><div class="mkt-stage-text" data-lang="en">Code Snippets</div><div class="mkt-stage-text" data-lang="ja">コードスニペット</div></div>
-        <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">2 단계</div><div class="mkt-stage-num" data-lang="en">Stage 2</div><div class="mkt-stage-num" data-lang="ja">第2段階</div><div class="mkt-stage-text" data-lang="ko">프로젝트 템플릿 생성</div><div class="mkt-stage-text" data-lang="en">Project Template Generation</div><div class="mkt-stage-text" data-lang="ja">プロジェクトテンプレート生成</div></div>
-        <div class="mkt-stage mkt-stage-current"><div class="mkt-stage-num" data-lang="ko">3 단계</div><div class="mkt-stage-num" data-lang="en">Stage 3</div><div class="mkt-stage-num" data-lang="ja">第3段階</div><div class="mkt-stage-text" data-lang="ko">풀 스택 애플리케이션</div><div class="mkt-stage-text" data-lang="en">Full-Stack Applications</div><div class="mkt-stage-text" data-lang="ja">フルスタックアプリケーション</div><div class="mkt-stage-marker" data-lang="ko">▲ Zaemit의 현재 단계</div><div class="mkt-stage-marker" data-lang="en">▲ Zaemit's Current Stage</div><div class="mkt-stage-marker" data-lang="ja">▲ Zaemitの現在段階</div></div>
-        <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">4 단계</div><div class="mkt-stage-num" data-lang="en">Stage 4</div><div class="mkt-stage-num" data-lang="ja">第4段階</div><div class="mkt-stage-text" data-lang="ko">맞춤형 비즈니스 로직</div><div class="mkt-stage-text" data-lang="en">Custom Business Logic</div><div class="mkt-stage-text" data-lang="ja">カスタムビジネスロジック</div></div>
-        <div class="mkt-stage"><div class="mkt-stage-num" data-lang="ko">5 단계</div><div class="mkt-stage-num" data-lang="en">Stage 5</div><div class="mkt-stage-num" data-lang="ja">第5段階</div><div class="mkt-stage-text" data-lang="ko">운영·유지보수 자동화</div><div class="mkt-stage-text" data-lang="en">Operations &amp; Maintenance Automation</div><div class="mkt-stage-text" data-lang="ja">運営・保守自動化</div></div>
+        <div class="mkt-stage"><div class="mkt-stage-num">1 단계</div><div class="mkt-stage-text">코드 스니펫</div></div>
+        <div class="mkt-stage"><div class="mkt-stage-num">2 단계</div><div class="mkt-stage-text">프로젝트 템플릿 생성</div></div>
+        <div class="mkt-stage mkt-stage-current"><div class="mkt-stage-num">3 단계</div><div class="mkt-stage-text">풀 스택 애플리케이션</div><div class="mkt-stage-marker">▲ Zaemit의 현재 단계</div></div>
+        <div class="mkt-stage"><div class="mkt-stage-num">4 단계</div><div class="mkt-stage-text">맞춤형 비즈니스 로직</div></div>
+        <div class="mkt-stage"><div class="mkt-stage-num">5 단계</div><div class="mkt-stage-text">운영·유지보수 자동화</div></div>
       </div>
       <div class="mkt-table-wrap">
       <table class="mkt-table">
         <thead><tr>
-          <th data-lang="ko">회사명</th><th data-lang="en">Company</th><th data-lang="ja">会社名</th>
-          <th data-lang="ko">창업년도</th><th data-lang="en">Founded</th><th data-lang="ja">創業年</th>
-          <th data-lang="ko">ARR($M)/달성 기간</th><th data-lang="en">ARR($M)/Time</th><th data-lang="ja">ARR($M)/期間</th>
-          <th data-lang="ko">성숙도 단계</th><th data-lang="en">Maturity</th><th data-lang="ja">成熟度</th>
-          <th data-lang="ko">월평균 성장율</th><th data-lang="en">Monthly Growth</th><th data-lang="ja">月平均成長率</th>
-          <th data-lang="ko">투자 현황($M)</th><th data-lang="en">Funding($M)</th><th data-lang="ja">調達($M)</th>
-          <th data-lang="ko">기업 가치($M)</th><th data-lang="en">Valuation($M)</th><th data-lang="ja">企業価値($M)</th>
+          <th>회사명</th>
+          <th>창업년도</th>
+          <th>ARR/달성 기간</th>
+          <th>성숙도 단계</th>
+          <th>월평균 성장율</th>
+          <th>투자 현황</th>
+          <th>기업 가치</th>
         </tr></thead>
         <tbody>
-          <tr><td class="co-name">Lovable</td><td>2023</td><td data-lang="ko">2,800억/8개월</td><td data-lang="en">$200M / 8mo</td><td data-lang="ja">$200M / 8ヶ月</td><td><span class="stage-badge s4" data-lang="ko">4단계</span><span class="stage-badge s4" data-lang="en">Stage 4</span><span class="stage-badge s4" data-lang="ja">第4段階</span></td><td class="growth">77.8%</td><td>530</td><td>6,600</td></tr>
-          <tr><td class="co-name">CURSOR</td><td>2022</td><td data-lang="ko">1.4조/12개월</td><td data-lang="en">$1B / 12mo</td><td data-lang="ja">$1B / 12ヶ月</td><td><span class="stage-badge s3" data-lang="ko">3단계</span><span class="stage-badge s3" data-lang="en">Stage 3</span><span class="stage-badge s3" data-lang="ja">第3段階</span></td><td class="growth">46.7%</td><td>2,465</td><td>29,300</td></tr>
-          <tr class="hl-row"><td class="co-name">V0</td><td>2018</td><td data-lang="ko">2,800억/8개월</td><td data-lang="en">$200M / 8mo</td><td data-lang="ja">$200M / 8ヶ月</td><td><span class="stage-badge s5" data-lang="ko">5단계</span><span class="stage-badge s5" data-lang="en">Stage 5</span><span class="stage-badge s5" data-lang="ja">第5段階</span></td><td class="growth" style="color:#F97316">73.5%</td><td>863</td><td>9,300</td></tr>
-          <tr><td class="co-name">bolt.new</td><td>2017</td><td data-lang="ko">500억/5개월</td><td data-lang="en">$36M / 5mo</td><td data-lang="ja">$36M / 5ヶ月</td><td><span class="stage-badge s4" data-lang="ko">4단계</span><span class="stage-badge s4" data-lang="en">Stage 4</span><span class="stage-badge s4" data-lang="ja">第4段階</span></td><td class="growth">108.9%</td><td>105.5</td><td>700</td></tr>
+          <tr><td class="co-name">Lovable</td><td>2023</td><td>4,200억/14개월</td><td><span class="stage-badge s4">4단계</span></td><td class="growth">50.2%</td><td>7,742억</td><td>9.2조</td></tr>
+          <tr><td class="co-name">CURSOR</td><td>2022</td><td>2.8조/20개월</td><td><span class="stage-badge s3">3단계</span></td><td class="growth">46.2%</td><td>4.8조</td><td>41조</td></tr>
+          <tr class="hl-row"><td class="co-name">V0</td><td>2015</td><td>590억/16개월</td><td><span class="stage-badge s5">5단계</span></td><td class="growth" style="color:#F97316">26.4%</td><td>1.2조</td><td>13조</td></tr>
+          <tr><td class="co-name">bolt.new</td><td>2017</td><td>560억/5개월</td><td><span class="stage-badge s4">4단계</span></td><td class="growth">108.9%</td><td>1,890억</td><td>9,800억</td></tr>
         </tbody>
       </table>
       </div>
@@ -971,99 +846,118 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
 </div>
 
 <!-- ======================== SLIDE 5: 시장 문제 ======================== -->
-<div class="slide problem" data-title-ko="시장 문제" data-title-en="The Problem" data-title-ja="市場の課題">
+<div class="slide problem" data-title-ko="시장 문제">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">시장 문제</div><div class="section-label" data-lang="en">The Problem</div><div class="section-label" data-lang="ja">市場の課題</div>
-    <div class="section-title" data-lang="ko">바이브코딩의 한계</div>
-    <div class="section-title" data-lang="en">Limitations of Vibe Coding</div>
-    <div class="section-title" data-lang="ja">バイブコーディングの限界</div>
-    <div class="section-desc" data-lang="ko">신기하고, 빠르지만 아직은 불안한 전문가용 바이브코딩과 결과물이라서 산업에 적용이 어려움</div>
-    <div class="section-desc" data-lang="en">Fascinating and fast, but still unreliable for professional vibe coding &mdash; making it difficult to apply in industry.</div>
-    <div class="section-desc" data-lang="ja">興味深く高速だが、プロ向けバイブコーディングとしてはまだ不安定で、産業適用が困難</div>
+    <div class="section-label">시장 문제</div>
+    <div class="section-title">바이브코딩의 한계</div>
+
+    <div class="section-desc">신기하고, 빠르지만 아직은 불안한 전문가용 바이브코딩과 결과물이라서 산업에 적용이 어려움</div>
+
     <div class="problem-flow">
       <div class="problem-col">
-        <div class="p-title" data-lang="ko">결과물의 불완전성</div>
-        <div class="p-title" data-lang="en">Incomplete Output</div>
-        <div class="p-title" data-lang="ja">結果物の不完全性</div>
-        <div class="p-desc" data-lang="ko">개발의 할루시네이션<br>디자인의 AI스러움</div>
-        <div class="p-desc" data-lang="en">Development Hallucination<br>AI-Looking Design</div>
-        <div class="p-desc" data-lang="ja">開発のハルシネーション<br>デザインのAIっぽさ</div>
+        <div class="p-title">결과물의 불완전성</div>
+
+        <div class="p-desc">개발의 할루시네이션<br>디자인의 AI스러움</div>
+
         <div class="p-arrow">↓</div>
-        <div class="p-box"><div class="p-box-text" data-lang="ko">20% 오류,<br>33%의 신뢰도</div><div class="p-box-text" data-lang="en">20% Error Rate,<br>33% Reliability</div><div class="p-box-text" data-lang="ja">20%エラー率、<br>33%の信頼性</div></div>
+        <div class="p-box"><div class="p-box-text">20% 오류,<br>33%의 신뢰도</div></div>
         <div class="p-arrow">↓</div>
-        <div class="p-need red" data-lang="ko">오류가 적고 정확하며,<br>탈AI 급 디자인 요구</div>
-        <div class="p-need red" data-lang="en">Fewer Errors, Accurate,<br>Non-AI-Level Design Demand</div>
-        <div class="p-need red" data-lang="ja">エラーが少なく正確で、<br>脱AI級デザイン需要</div>
+        <div class="p-need red">오류가 적고 정확하며,<br>탈AI 급 디자인 요구</div>
+
       </div>
       <div class="problem-col">
-        <div class="p-title" data-lang="ko">비싼 토큰 소모</div>
-        <div class="p-title" data-lang="en">Expensive Token Usage</div>
-        <div class="p-title" data-lang="ja">高額なトークン消費</div>
-        <div class="p-desc" data-lang="ko">프롬프트 제작 요청을 위해 LLM 학습 필요<br>오류가 나도 토큰을 돌려주지 않음</div>
-        <div class="p-desc" data-lang="en">Requires LLM training for prompt crafting.<br>Tokens are consumed even on failed outputs.</div>
-        <div class="p-desc" data-lang="ja">プロンプト作成にLLM学習が必要<br>エラーでもトークンは返金されない</div>
+        <div class="p-title">비싼 토큰 소모</div>
+
+        <div class="p-desc">프롬프트 제작 요청을 위해 LLM 학습 필요<br>오류가 나도 토큰을 돌려주지 않음</div>
+
         <div class="p-arrow">↓</div>
-        <div class="p-box"><div class="p-box-text" data-lang="ko">종량제 기반 서비스,<br>LLM API 토큰의 5배</div><div class="p-box-text" data-lang="en">Pay-Per-Use Model,<br>5x LLM API Token Cost</div><div class="p-box-text" data-lang="ja">従量制サービス、<br>LLM APIトークンの5倍</div></div>
+        <div class="p-box"><div class="p-box-text">종량제 기반 서비스,<br>LLM API 토큰의 5배</div></div>
         <div class="p-arrow">↓</div>
-        <div class="p-need orange" data-lang="ko">사소한 부분은<br>직접 편집 가능한 기능 요구</div>
-        <div class="p-need orange" data-lang="en">Need for Direct Editing<br>of Minor Details</div>
-        <div class="p-need orange" data-lang="ja">細かい部分は<br>直接編集可能な機能需要</div>
+        <div class="p-need orange">사소한 부분은<br>직접 편집 가능한 기능 요구</div>
+
       </div>
       <div class="problem-col">
-        <div class="p-title" data-lang="ko">복잡한 개발환경</div>
-        <div class="p-title" data-lang="en">Complex Dev Environment</div>
-        <div class="p-title" data-lang="ja">複雑な開発環境</div>
-        <div class="p-desc" data-lang="ko">네이티브 개발환경 이해 필요<br>작성된 코드를 직접 호스팅해야 함</div>
-        <div class="p-desc" data-lang="en">Requires native dev environment knowledge.<br>Must self-host the generated code.</div>
-        <div class="p-desc" data-lang="ja">ネイティブ開発環境の理解が必要<br>作成コードを自分でホスティング必要</div>
+        <div class="p-title">복잡한 개발환경</div>
+
+        <div class="p-desc">네이티브 개발환경 이해 필요<br>작성된 코드를 직접 호스팅해야 함</div>
+
         <div class="p-arrow">↓</div>
-        <div class="p-box"><div class="p-box-text" data-lang="ko">웹빌더보다 어려움<br>개발자가 반드시 필요</div><div class="p-box-text" data-lang="en">Harder Than Web Builders,<br>Developer Required</div><div class="p-box-text" data-lang="ja">Webビルダーより難しい<br>開発者が必ず必要</div></div>
+        <div class="p-box"><div class="p-box-text">웹빌더보다 어려움<br>개발자가 반드시 필요</div></div>
         <div class="p-arrow">↓</div>
-        <div class="p-need purple" data-lang="ko">웹기반 원클릭 운영,<br>통합 서비스 요구</div>
-        <div class="p-need purple" data-lang="en">Web-Based One-Click Ops,<br>Integrated Service Demand</div>
-        <div class="p-need purple" data-lang="ja">Web基盤ワンクリック運営、<br>統合サービス需要</div>
+        <div class="p-need purple">웹기반 원클릭 운영,<br>통합 서비스 요구</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 2: ZAEMIT 소개 ======================== -->
+<div class="slide" data-title-ko="솔루션" style="background:radial-gradient(ellipse at 30% 40%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">솔루션</div>
+    <div class="section-title">Zaemit 과 바이브코딩 기반<br><span class="gradient-text">새로운 패러다임</span></div>
+    <div class="section-desc">개발자의 IDE 안에서 탈AI급 디자인의 웹사이트를 생성하고, AI 크레딧으로 수익을 창출하는 플랫폼</div>
+    <div class="service-features">
+      <div class="svc-card">
+        <div class="svc-icon mint">
+          <svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+        </div>
+        <div class="svc-title">WebGen.GPT</div>
+        <div class="svc-desc">6개 비전 AI + 자체 LLM<br>탈AI급 디자인 자동 생성</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon purple">
+          <svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+        </div>
+        <div class="svc-title">VSCode Extension</div>
+        <div class="svc-desc">개발자 IDE에 통합된 웹에디터<br>AI 크레딧 기반 수익 모델</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon blue">
+          <svg width="2.1875vw" height="2.1875vw" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+        </div>
+        <div class="svc-title">국내 유일 기술</div>
+        <div class="svc-desc">PCT 4건 + 국내특허 21건<br>100% 국산 기술 기반</div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 6: 서비스 데모 ======================== -->
-<div class="slide demo-video" data-title-ko="서비스 데모" data-title-en="Service Demo" data-title-ja="サービスデモ">
+<div class="slide demo-video" data-title-ko="서비스 데모">
   <video id="demoVideo" muted playsinline loop style="max-width:95%;max-height:90%;object-fit:contain;border-radius:0.9375vw">
     <source src="../260203/zaemit_ai_kr.mp4" type="video/mp4">
   </video>
 </div>
 
-
 <!-- ======================== SLIDE 8: 바이브코딩 데모 ======================== -->
-<div class="slide demo-video" data-title-ko="바이브코딩 데모" data-title-en="Vibe Coding Demo" data-title-ja="バイブコーディングデモ" style="background:#000;padding:3.125vw 4.6875vw;display:flex;align-items:center;justify-content:center;overflow:hidden">
+<div class="slide demo-video" data-title-ko="바이브코딩 데모" style="background:#000;padding:3.125vw 4.6875vw;display:flex;align-items:center;justify-content:center;overflow:hidden">
   <video id="vibeDemoVideo" playsinline loop style="max-width:95%;max-height:90%;object-fit:contain;border-radius:0.9375vw">
     <source src="../260203/zaemit2.mp4" type="video/mp4">
   </video>
 </div>
 
 <!-- ======================== SLIDE 9: 탈AI 디자인 ======================== -->
-<div class="slide" data-title-ko="탈AI 디자인" data-title-en="Post-AI Design" data-title-ja="脱AIデザイン" style="background:radial-gradient(ellipse at 25% 35%,rgba(124,58,237,0.14) 0%,transparent 60%),radial-gradient(ellipse at 75% 75%,rgba(99,102,241,0.1) 0%,transparent 50%),var(--dark)">
-  <div class="slide-inner" style="display:flex;flex-direction:row;align-items:stretch;gap:2.5vw">
-    <div style="flex:1;display:flex;flex-direction:column;gap:0.625vw;min-width:0">
-      <div class="section-label" data-lang="ko">출시 예정</div><div class="section-label" data-lang="en">Coming Soon</div><div class="section-label" data-lang="ja">リリース予定</div>
-      <div class="section-title" data-lang="ko">탈AI 디자인 (자체 LLM)<br><span style="color:var(--accent)">3월 출시</span></div>
-      <div class="section-title" data-lang="en">Post-AI Design (Proprietary LLM)<br><span style="color:var(--accent)">March Launch</span></div>
-      <div class="section-title" data-lang="ja">脱AIデザイン (自社LLM)<br><span style="color:var(--accent)">3月リリース</span></div>
-      <div class="section-desc" data-lang="ko">AI가 만들어도 AI처럼 보이지 않는, 인간 디자이너 수준의 웹 디자인을 자체 LLM으로 구현 — 디자인 퀄리티 수직 상승</div>
-      <div class="section-desc" data-lang="en">Web designs indistinguishable from human designers — our proprietary LLM delivers a massive quality leap</div>
-      <div class="section-desc" data-lang="ja">AIが作ってもAIに見えない、人間デザイナーレベルのWebデザインを自社LLMで実現 — デザイン品質が垂直上昇</div>
-      <div style="display:flex;align-items:center;gap:0.78125vw;margin-top:auto">
+<div class="slide" data-title-ko="탈AI 디자인" style="background:radial-gradient(ellipse at 25% 35%,rgba(124,58,237,0.14) 0%,transparent 60%),radial-gradient(ellipse at 75% 75%,rgba(99,102,241,0.1) 0%,transparent 50%),var(--dark);align-items:flex-start;padding-top:6.25vw">
+  <div class="slide-inner" style="display:flex;flex-direction:row;align-items:stretch;gap:2.5vw;max-height:calc(100vh - 14vw);overflow:hidden">
+    <div style="flex:1;display:flex;flex-direction:column;gap:0.625vw;min-width:0;min-height:0">
+      <div class="section-label">출시 예정</div>
+      <div class="section-title">탈AI 디자인 (자체 LLM)<br><span style="color:var(--accent)">3월 출시</span></div>
+
+      <div class="section-desc">AI가 만들어도 AI처럼 보이지 않는, 인간 디자이너 수준의 웹 디자인을 자체 LLM으로 구현 — 디자인 퀄리티 수직 상승</div>
+
+      <div style="display:flex;align-items:center;gap:0.78125vw;margin-top:auto;flex-shrink:0">
         <div style="width:2.5vw;height:2.5vw;border-radius:0.625vw;background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(99,102,241,0.3));display:flex;align-items:center;justify-content:center;flex-shrink:0">
           <svg width="1.40625vw" height="1.40625vw" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"/><path d="M7 8h2"/><path d="M7 12h2"/><path d="M16 8h2"/><path d="M16 12h2"/></svg>
         </div>
-        <span data-lang="ko" style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">디자인 스타일 생성기</span>
-        <span data-lang="en" style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">Design Style Generator</span>
-        <span data-lang="ja" style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">デザインスタイル生成器</span>
+        <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">디자인 스타일 생성기</span>
+
       </div>
-      <img src="../260203/mdx (1).png" alt="MDX Design Style Generator" style="width:100%;border-radius:0;border:1px solid rgba(255,255,255,0.1);box-shadow:0 0.625vw 2.5vw rgba(0,0,0,0.4)">
+      <div style="flex:1;min-height:0;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 0.625vw 2.5vw rgba(0,0,0,0.4)">
+        <img src="../260203/mdx (1).png" alt="MDX Design Style Generator" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block">
+      </div>
     </div>
-    <div style="flex:1;display:flex;gap:1.25vw;align-items:stretch;min-width:0;overflow:hidden">
+    <div style="flex:1;display:flex;gap:1.25vw;align-items:stretch;min-width:0;min-height:0;overflow:hidden">
       <div style="flex:1;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 0.625vw 2.5vw rgba(0,0,0,0.4)">
         <img src="../260203/sample_design1.png" alt="AI Design Sample 1" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block">
       </div>
@@ -1074,193 +968,146 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
   </div>
 </div>
 
-<!-- ======================== GMO Pepabo 협력 현황 ======================== -->
-<div class="slide" data-title-ko="GMO Pepabo 협력" data-title-en="GMO Pepabo Partnership" data-title-ja="GMO Pepabo 協力" style="background:radial-gradient(ellipse at 35% 40%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 65% 75%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:3.125vw 4.6875vw 2.5vw">
+<!-- ======================== 일본 IT 대기업 협력 현황 ======================== -->
+<div class="slide" data-title-ko="일본 IT 대기업 협력" style="background:radial-gradient(ellipse at 35% 40%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 65% 75%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:3.125vw 4.6875vw 2.5vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">글로벌 파트너십</div>
-    <div class="section-label" data-lang="en">Global Partnership</div>
-    <div class="section-label" data-lang="ja">グローバルパートナーシップ</div>
-    <div class="section-title" data-lang="ko"><span class="gradient-text">GMO Pepabo</span> × Zaemit 협력 현황</div>
-    <div class="section-title" data-lang="en"><span class="gradient-text">GMO Pepabo</span> × Zaemit Partnership</div>
-    <div class="section-title" data-lang="ja"><span class="gradient-text">GMO Pepabo</span> × Zaemit 協力現況</div>
-    <div class="section-desc" data-lang="ko">일본 1위 호스팅 기업 GMO Pepabo와 Azure 기반 AI 웹 생성 서비스 공동 추진 · <span style="color:#34D399;font-weight:700">2026년 5월 오픈 예정</span></div>
-    <div class="section-desc" data-lang="en">Joint AI web generation on Azure with Japan's #1 hosting company · <span style="color:#34D399;font-weight:700">Launch: May 2026</span></div>
-    <div class="section-desc" data-lang="ja">日本1位ホスティング企業と Azure ベース AI Web生成サービス共同推進 · <span style="color:#34D399;font-weight:700">2026年5月オープン予定</span></div>
-    <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);gap:1.09375vw;margin-top:1.25vw">
-      <div class="stat-card" style="padding:1.25vw">
-        <div style="margin-bottom:0.46875vw"><svg width="2vw" height="2vw" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff" data-lang="ko">40<span style="font-size:1.25vw;color:var(--text-muted)">만+</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff" data-lang="en">400<span style="font-size:1.25vw;color:var(--text-muted)">K+</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff" data-lang="ja">40<span style="font-size:1.25vw;color:var(--text-muted)">万+</span></div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">기존 고객 수</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="en">Existing Customers</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ja">既存顧客数</div>
+    <div class="section-label">글로벌 파트너십</div>
+    <div class="section-title"><span class="gradient-text">일본 IT 대기업</span> × Zaemit 협력 현황</div>
+    <div class="section-desc">일본 IT 대기업과 Azure 기반 AI 웹 생성 서비스 공동 추진 · <span style="color:#34D399;font-weight:700">2026년 5월 오픈 예정</span></div>
+    <div style="display:flex;gap:1.5625vw;margin-top:1.25vw;align-items:stretch">
+      <div class="edge-img" style="flex:0 0 28%;border-radius:0.9375vw;overflow:hidden;max-height:18vw">
+        <img src="IMG_9270.jpg" alt="일본 IT 대기업 Meeting" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
-      <div class="stat-card" style="padding:1.25vw">
-        <div style="margin-bottom:0.46875vw"><svg width="2vw" height="2vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff" data-lang="ko">2,000<span style="font-size:1.25vw;color:var(--text-muted)">/년</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff" data-lang="en">2,000<span style="font-size:1.25vw;color:var(--text-muted)">/yr</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff" data-lang="ja">2,000<span style="font-size:1.25vw;color:var(--text-muted)">/年</span></div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">신규 유저 유입</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="en">New Users Annually</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ja">新規ユーザー流入</div>
-      </div>
-      <div class="stat-card" style="padding:1.25vw">
-        <div style="margin-bottom:0.46875vw"><svg width="2vw" height="2vw" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">BtoC</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">주요 타겟 시장</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="en">Primary Target</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ja">主要ターゲット</div>
-      </div>
-      <div class="stat-card" style="padding:1.25vw">
-        <div style="margin-bottom:0.46875vw"><svg width="2vw" height="2vw" viewBox="0 0 24 24" fill="none" stroke="var(--partner-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">Azure</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">인프라 기반</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="en">Infrastructure</div>
-        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ja">インフラ基盤</div>
+      <div class="stats-grid" style="flex:1;grid-template-columns:repeat(4,1fr);gap:0.78125vw">
+        <div class="stat-card" style="padding:1.09375vw;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">40<span style="font-size:1.25vw;color:var(--text-muted)">만+</span></div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">기존 고객 수</div>
+        </div>
+        <div class="stat-card" style="padding:1.09375vw;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">2,000<span style="font-size:1.25vw;color:var(--text-muted)">/년</span></div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">신규 유저 유입</div>
+        </div>
+        <div class="stat-card" style="padding:1.09375vw;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">BtoC</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">주요 타겟 시장</div>
+        </div>
+        <div class="stat-card" style="padding:1.09375vw;text-align:center">
+          <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">Azure</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">인프라 기반</div>
+        </div>
       </div>
     </div>
-    <div class="gmo-plan-label" style="font-weight:700;color:#fff;font-size:max(18px,1.40625vw);margin-top:1.5625vw;margin-bottom:0.78125vw" data-lang="ko">GMO Pepabo 희망 서비스 플랜 (Azure 기반)</div>
-    <div class="gmo-plan-label" style="font-weight:700;color:#fff;font-size:max(18px,1.40625vw);margin-top:1.5625vw;margin-bottom:0.78125vw" data-lang="en">GMO Pepabo Desired Service Plans (Azure-Based)</div>
-    <div class="gmo-plan-label" style="font-weight:700;color:#fff;font-size:max(18px,1.40625vw);margin-top:1.5625vw;margin-bottom:0.78125vw" data-lang="ja">GMO Pepabo 希望サービスプラン（Azureベース）</div>
+    <div class="gmo-plan-label" style="font-weight:700;color:#fff;font-size:max(18px,1.40625vw);margin-top:1.25vw;margin-bottom:0.625vw">일본 IT 대기업 희망 서비스 플랜 (Azure 기반)</div>
     <div class="gmo-plan-cards" style="display:flex;gap:1.5625vw">
-      <div class="stat-card" style="flex:1;text-align:left;padding:1.5625vw">
-        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:0.78125vw">
+      <div class="stat-card" style="flex:1;text-align:center;padding:1.25vw">
+        <div style="display:flex;align-items:center;justify-content:center;gap:0.625vw;margin-bottom:0.46875vw">
           <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 8v8"/><path d="m8.5 14 7-4"/><path d="m8.5 10 7 4"/></svg>
-          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">스타터 플랜</span>
-          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="en">Starter Plan</span>
-          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ja">スタータープラン</span>
+          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">스타터 플랜</span>
         </div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#818CF8" data-lang="ko">&#8361;10<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">만/월</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#818CF8" data-lang="en">&#8361;100<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">K/mo</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#818CF8" data-lang="ja">&#8361;10<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">万/月</span></div>
-        <div style="display:flex;flex-direction:column;gap:0.46875vw;margin-top:0.78125vw">
-          <div style="display:flex;align-items:center;gap:0.46875vw;font-size:max(18px,1.09375vw);color:var(--text)"><svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">사이트 1개 생성·호스팅</span><span data-lang="en">1 Site creation & hosting</span><span data-lang="ja">サイト1件 生成・ホスティング</span></div>
-          <div style="display:flex;align-items:center;gap:0.46875vw;font-size:max(18px,1.09375vw);color:var(--text)"><svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">AI 토큰 상당량 포함</span><span data-lang="en">Generous AI token allocation</span><span data-lang="ja">AIトークン相当量含む</span></div>
-          <div style="display:flex;align-items:center;gap:0.46875vw;font-size:max(18px,1.09375vw);color:var(--text)"><svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">쉽고 빠른 BtoC 호스팅</span><span data-lang="en">Fast & easy BtoC hosting</span><span data-lang="ja">簡単で速いBtoCホスティング</span></div>
-        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#818CF8">&#8361;10<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">만/월</span></div>
       </div>
-      <div class="stat-card" style="flex:1;text-align:left;padding:1.5625vw;border:1px solid rgba(129,140,248,0.3)">
-        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:0.78125vw">
+      <div class="stat-card" style="flex:1;text-align:center;padding:1.25vw;border:1px solid rgba(129,140,248,0.3)">
+        <div style="display:flex;align-items:center;justify-content:center;gap:0.625vw;margin-bottom:0.46875vw">
           <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
-          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">프로 플랜 (서버 렌탈)</span>
-          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="en">Pro Plan (Server Rental)</span>
-          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ja">プロプラン（サーバーレンタル）</span>
+          <span style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">프로 플랜 (서버 렌탈)</span>
         </div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#FBBF24" data-lang="ko">&#8361;50<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">만/월</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#FBBF24" data-lang="en">&#8361;500<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">K/mo</span></div>
-        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#FBBF24" data-lang="ja">&#8361;50<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">万/月</span></div>
-        <div style="display:flex;flex-direction:column;gap:0.46875vw;margin-top:0.78125vw">
-          <div style="display:flex;align-items:center;gap:0.46875vw;font-size:max(18px,1.09375vw);color:var(--text)"><svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">사이트 30개 이상 생성·호스팅</span><span data-lang="en">30+ Sites creation & hosting</span><span data-lang="ja">サイト30件以上 生成・ホスティング</span></div>
-          <div style="display:flex;align-items:center;gap:0.46875vw;font-size:max(18px,1.09375vw);color:var(--text)"><svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">대용량 AI 토큰 포함</span><span data-lang="en">Large AI token allocation</span><span data-lang="ja">大容量AIトークン含む</span></div>
-          <div style="display:flex;align-items:center;gap:0.46875vw;font-size:max(18px,1.09375vw);color:var(--text)"><svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">전용 Azure 서버 렌탈</span><span data-lang="en">Dedicated Azure server rental</span><span data-lang="ja">専用Azureサーバーレンタル</span></div>
-        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#FBBF24">&#8361;50<span style="font-size:1.25vw;font-weight:600;color:var(--text-muted)">만/월</span></div>
       </div>
+    </div>
+    <div class="slide-bottom" style="text-align:center;margin-top:0.9375vw">
+      <div style="font-size:max(18px,1.25vw);color:var(--text-muted)">첫해 보수적 시뮬레이션 기준 연간 예상 매출 <span style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#34D399">₩20억</span></div>
     </div>
   </div>
 </div>
 
 <!-- ======================== 글로벌 확장 로드맵 ======================== -->
-<div class="slide" data-title-ko="글로벌 확장" data-title-en="Global Expansion" data-title-ja="グローバル拡張" style="background:radial-gradient(ellipse at 40% 30%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark);padding:3.125vw 4.6875vw 2.5vw">
+<div class="slide" data-title-ko="글로벌 확장" style="background:radial-gradient(ellipse at 40% 30%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark);padding:2.5vw 4.6875vw 2vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">글로벌 확장 로드맵</div>
-    <div class="section-label" data-lang="en">Global Expansion Roadmap</div>
-    <div class="section-label" data-lang="ja">グローバル拡張ロードマップ</div>
-    <div class="section-title" data-lang="ko">Azure 기반 <span class="gradient-text">글로벌 파트너십</span> 확장</div>
-    <div class="section-title" data-lang="en">Azure-Based <span class="gradient-text">Global Partnership</span> Expansion</div>
-    <div class="section-title" data-lang="ja">Azureベース<span class="gradient-text">グローバルパートナーシップ</span>拡張</div>
-    <div class="section-desc" data-lang="ko">GMO Pepabo 모델을 기반으로 아시아·미국으로 동일 Azure 인프라 확장</div>
-    <div class="section-desc" data-lang="en">Expanding the GMO Pepabo model to Asia & US on the same Azure infrastructure</div>
-    <div class="section-desc" data-lang="ja">GMO Pepaboモデルを基盤にアジア・米国へ同一Azureインフラ拡張</div>
+    <div class="section-label">글로벌 확장 로드맵</div>
+    <div class="section-title">Azure 기반 <span class="gradient-text">글로벌 파트너십</span> 확장</div>
+    <div class="section-desc">일본 IT 대기업 성공 모델을 아시아·미국으로 동일 Azure 인프라 기반 확장</div>
     <div class="roadmap-phases" style="margin-top:1.5625vw">
-      <div class="roadmap-phase">
-        <div style="display:flex;align-items:center;gap:0.78125vw;margin-bottom:1.25vw">
-          <div style="width:3.125vw;height:3.125vw;border-radius:50%;background:linear-gradient(135deg,#EF4444,#F97316);display:flex;align-items:center;justify-content:center">
-            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <div class="roadmap-phase p1">
+        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.09375vw">
+          <div style="width:2.8125vw;height:2.8125vw;border-radius:50%;background:linear-gradient(135deg,#EF4444,#F97316);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="1.40625vw" height="1.40625vw" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           </div>
           <div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#EF4444" data-lang="ko">2026년 5월</div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#EF4444" data-lang="en">May 2026</div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#EF4444" data-lang="ja">2026年5月</div>
+            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#EF4444">2026년 5월</div>
+            <div style="font-size:1.5625vw;font-weight:800;color:#fff">일본 IT 대기업</div>
           </div>
         </div>
-        <h3 style="font-size:max(18px,1.40625vw);font-weight:700;margin-bottom:0.625vw">
-          <span data-lang="ko">GMO Pepabo 오픈</span><span data-lang="en">GMO Pepabo Launch</span><span data-lang="ja">GMO Pepabo オープン</span>
-        </h3>
         <div style="display:flex;flex-direction:column;gap:0.46875vw">
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ko">일본 시장 정식 서비스 오픈</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="en">Official service launch in Japan</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ja">日本市場正式サービスオープン</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ko">40만 고객 대상 AI 웹 생성 제공</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="en">AI web generation for 400K+ customers</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ja">40万顧客対象AI Web生成提供</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">일본 1위 호스팅 기업과 정식 오픈</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">40만 기존 고객 대상 AI 웹 생성</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">연간 신규 유저 2,000명 유입</div>
+        </div>
+        <div style="margin-top:1.09375vw;padding:0.625vw 0.9375vw;background:rgba(239,68,68,0.12);border-radius:0.625vw;text-align:center">
+          <span style="font-family:'Plus Jakarta Sans';font-size:max(18px,1.25vw);font-weight:800;color:#EF4444">첫해 ₩20억</span>
+          <span style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-left:0.3125vw">매출 시뮬레이션</span>
         </div>
       </div>
-      <div class="roadmap-phase">
-        <div style="display:flex;align-items:center;gap:0.78125vw;margin-bottom:1.25vw">
-          <div style="width:3.125vw;height:3.125vw;border-radius:50%;background:linear-gradient(135deg,#34D399,#2DD4BF);display:flex;align-items:center;justify-content:center">
-            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <div class="roadmap-phase p2">
+        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.09375vw">
+          <div style="width:2.8125vw;height:2.8125vw;border-radius:50%;background:linear-gradient(135deg,#34D399,#2DD4BF);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="1.40625vw" height="1.40625vw" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#34D399" data-lang="ko">2026년 7월</div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#34D399" data-lang="en">Jul 2026</div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#34D399" data-lang="ja">2026年7月</div>
+            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#34D399">2026년 7월</div>
+            <div style="font-size:1.5625vw;font-weight:800;color:#fff">말레이시아</div>
           </div>
         </div>
-        <h3 style="font-size:max(18px,1.40625vw);font-weight:700;margin-bottom:0.625vw">
-          <span data-lang="ko">말레이시아 진출</span><span data-lang="en">Malaysia Expansion</span><span data-lang="ja">マレーシア進出</span>
-        </h3>
         <div style="display:flex;flex-direction:column;gap:0.46875vw">
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ko">Humming Software (Azure 파트너)</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="en">Humming Software (Azure Partner)</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ja">Humming Software（Azureパートナー）</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ko">GMO Pepabo 동일 모델로 납품 준비 완료</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="en">Same model as GMO Pepabo, ready to deploy</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ja">GMO Pepabo同一モデルで納品準備完了</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">Humming Software (Azure 파트너)</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">일본 IT 대기업 동일 모델 납품 준비 완료</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">동남아 시장 교두보 확보</div>
+        </div>
+        <div style="margin-top:1.09375vw;padding:0.625vw 0.9375vw;background:rgba(52,211,153,0.12);border-radius:0.625vw;text-align:center">
+          <span style="font-size:max(18px,1.09375vw);font-weight:700;color:#34D399">동일 Azure 인프라 즉시 복제</span>
         </div>
       </div>
-      <div class="roadmap-phase">
-        <div style="display:flex;align-items:center;gap:0.78125vw;margin-bottom:1.25vw">
-          <div style="width:3.125vw;height:3.125vw;border-radius:50%;background:linear-gradient(135deg,#6366F1,#818CF8);display:flex;align-items:center;justify-content:center">
-            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="7" height="5" x="7" y="7" rx="1"/><rect width="7" height="5" x="10" y="12" rx="1"/></svg>
+      <div class="roadmap-phase p3">
+        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.09375vw">
+          <div style="width:2.8125vw;height:2.8125vw;border-radius:50%;background:linear-gradient(135deg,#6366F1,#818CF8);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="1.40625vw" height="1.40625vw" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="7" height="5" x="7" y="7" rx="1"/><rect width="7" height="5" x="10" y="12" rx="1"/></svg>
           </div>
           <div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#818CF8" data-lang="ko">2026년 8월~</div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#818CF8" data-lang="en">Aug 2026+</div>
-            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#818CF8" data-lang="ja">2026年8月〜</div>
+            <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#818CF8">2026년 8월~</div>
+            <div style="font-size:1.5625vw;font-weight:800;color:#fff">미국 실리콘밸리</div>
           </div>
         </div>
-        <h3 style="font-size:max(18px,1.40625vw);font-weight:700;margin-bottom:0.625vw">
-          <span data-lang="ko">미국 실리콘밸리 법인</span><span data-lang="en">US Silicon Valley Inc.</span><span data-lang="ja">米国シリコンバレー法人</span>
-        </h3>
         <div style="display:flex;flex-direction:column;gap:0.46875vw">
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ko">현지 법인 설립 및 신규 파트너 발굴</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="en">Local incorporation & new partner acquisition</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ja">現地法人設立及び新規パートナー発掘</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ko">Azure 글로벌 인프라 기반 미국 시장 공략</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="en">US market entry on Azure global infrastructure</div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)" data-lang="ja">Azureグローバルインフラ基盤で米国市場攻略</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">현지 법인 설립</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">Azure 글로벌 인프라 기반 미국 시장 공략</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">신규 파트너 발굴</div>
         </div>
+        <div style="margin-top:1.09375vw;padding:0.625vw 0.9375vw;background:rgba(99,102,241,0.12);border-radius:0.625vw;text-align:center">
+          <span style="font-size:max(18px,1.09375vw);font-weight:700;color:#818CF8">글로벌 HQ 설립</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-bottom" style="display:flex;align-items:center;gap:1.5625vw;margin-top:1.5625vw">
+      <div class="edge-img" style="flex:0 0 15%;border-radius:0.78125vw;overflow:hidden">
+        <img src="Picture1.png" alt="Global Zoom Meeting" style="width:100%;height:8vw;object-fit:cover;display:block">
+      </div>
+      <div style="flex:1">
+        <div style="font-size:1.875vw;font-weight:800;color:#fff">말레이시아 파트너십 확정 — <span style="color:var(--accent)">동일 Azure 인프라</span>로 즉시 복제</div>
+        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.3125vw">글로벌 줌미팅으로 Pricing & Plans 협의 진행 중</div>
       </div>
     </div>
   </div>
 </div>
 
+
 <!-- ======================== SLIDE: 성장 & 실적 ======================== -->
-<div class="slide sales-status" data-title-ko="성장 & 실적" data-title-en="Growth & Traction" data-title-ja="成長 & 実績" style="background:radial-gradient(ellipse at 60% 40%,rgba(46,124,246,0.08) 0%,transparent 60%),var(--dark)">
+<div class="slide sales-status" data-title-ko="성장 & 실적" style="background:radial-gradient(ellipse at 60% 40%,rgba(46,124,246,0.08) 0%,transparent 60%),var(--dark)">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">성장 & 실적</div><div class="section-label" data-lang="en">Growth & Traction</div><div class="section-label" data-lang="ja">成長 & 実績</div>
-    <div class="section-title" data-lang="ko">사이트 <span class="gradient-text">9,000</span>개 생성, 유료전환율 <span style="color:var(--accent)">10%</span></div>
-    <div class="section-title" data-lang="en"><span class="gradient-text">9,000</span> Sites Created, <span style="color:var(--accent)">10%</span> Paid Conversion</div>
-    <div class="section-title" data-lang="ja">サイト<span class="gradient-text">9,000</span>件生成、有料転換率<span style="color:var(--accent)">10%</span></div>
-    <div class="section-desc" data-lang="ko">자체 트래픽으로 검증된 프로덕트-마켓 핏</div>
-    <div class="section-desc" data-lang="en">Product-Market Fit Validated by Organic Traffic</div>
-    <div class="section-desc" data-lang="ja">自社トラフィックで検証されたプロダクト・マーケット・フィット</div>
+    <div class="section-label">성장 & 실적</div>
+    <div class="section-title">사이트 <span class="gradient-text">9,000</span>개 생성, 유료전환율 <span style="color:var(--accent)">10%</span></div>
+    <div class="section-desc">자체 트래픽으로 검증된 프로덕트-마켓 핏</div>
     <div class="sales-layout">
       <div class="sales-chart-wrap">
-        <div class="sales-chart-title" data-lang="ko">일자별 방문자 추이 <span style="color:var(--accent);font-weight:800">— 주간 12,650명</span></div>
-        <div class="sales-chart-title" data-lang="en">Daily Visitor Trend <span style="color:var(--accent);font-weight:800">— 12,650 / week</span></div>
-        <div class="sales-chart-title" data-lang="ja">日別訪問者推移 <span style="color:var(--accent);font-weight:800">— 週間 12,650名</span></div>
+        <div class="sales-chart-title">일자별 방문자 추이 <span style="color:var(--accent);font-weight:800">— 주간 12,650명</span></div>
         <svg class="muv-svg" viewBox="0 0 620 240">
           <line x1="40" y1="20" x2="600" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
           <line x1="40" y1="65" x2="600" y2="65" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
@@ -1291,7 +1138,6 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
           <circle cx="575" cy="99" r="3" fill="#2E7CF6" stroke="#fff" stroke-width="1"/>
           <rect x="490" y="40" width="100" height="34" rx="6" fill="rgba(30,35,60,0.95)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
           <text x="540" y="53" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">2026-02-22</text>
-          <text x="540" y="66" fill="#94A3B8" font-size="8" text-anchor="middle"><tspan data-lang="ko">일 방문: </tspan><tspan data-lang="en">Daily: </tspan><tspan data-lang="ja">日別: </tspan><tspan fill="#2E7CF6" font-weight="700">1,892</tspan></text>
           <text x="55" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">2/9</text>
           <text x="135" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">2/11</text>
           <text x="215" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">2/13</text>
@@ -1300,12 +1146,9 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
           <text x="455" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">2/19</text>
           <text x="535" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">2/21</text>
         </svg>
-        <div class="sales-legend"><i></i> <span data-lang="ko">일 방문자 수</span><span data-lang="en">Daily Visitors</span><span data-lang="ja">日別訪問者数</span></div>
       </div>
       <div class="sales-chart-wrap">
-        <div class="sales-chart-title" data-lang="ko">월별 방문자 추이 (2025.03 ~ 2026.02)</div>
-        <div class="sales-chart-title" data-lang="en">Monthly Visitor Trend (Mar 2025 – Feb 2026)</div>
-        <div class="sales-chart-title" data-lang="ja">月別訪問者推移 (2025.03 ~ 2026.02)</div>
+        <div class="sales-chart-title">월별 방문자 추이 (2025.03 ~ 2026.02)</div>
         <svg class="muv-svg" viewBox="0 0 620 240">
           <line x1="40" y1="20" x2="600" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
           <line x1="40" y1="56" x2="600" y2="56" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
@@ -1336,7 +1179,6 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
           <circle cx="575" cy="39" r="4" fill="#818CF8" stroke="#fff" stroke-width="1.5"/>
           <rect x="480" y="10" width="110" height="34" rx="6" fill="rgba(30,35,60,0.95)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
           <text x="535" y="24" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">2026-02</text>
-          <text x="535" y="37" fill="#94A3B8" font-size="8" text-anchor="middle"><tspan data-lang="ko">월 방문: </tspan><tspan data-lang="en">Monthly: </tspan><tspan data-lang="ja">月別: </tspan><tspan fill="#818CF8" font-weight="700">35,694</tspan></text>
           <text x="55" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">3월</text>
           <text x="102" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">4월</text>
           <text x="150" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">5월</text>
@@ -1350,57 +1192,48 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
           <text x="528" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">1월</text>
           <text x="575" y="216" fill="#94A3B8" font-size="8" text-anchor="middle">2월</text>
         </svg>
-        <div class="sales-legend"><i style="background:#818CF8"></i> <span data-lang="ko">월 방문자 수</span><span data-lang="en">Monthly Visitors</span><span data-lang="ja">月別訪問者数</span></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 9: 협업 기회 ======================== -->
-<div class="slide" data-title-ko="협업 기회" data-title-en="Partnership Opportunity" data-title-ja="協業機会" style="background:radial-gradient(ellipse at 25% 35%,rgba(124,58,237,0.12) 0%,transparent 60%),radial-gradient(ellipse at 75% 75%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark)">
+<div class="slide" data-title-ko="협업 기회" style="background:radial-gradient(ellipse at 25% 35%,rgba(124,58,237,0.12) 0%,transparent 60%),radial-gradient(ellipse at 75% 75%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark)">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">협업 기회</div>
-    <div class="section-label" data-lang="en">Partnership Opportunity</div>
-    <div class="section-label" data-lang="ja">協業機会</div>
-    <div class="section-title" data-lang="ko">왜 <span style="color:var(--accent)">지금</span>인가?</div>
-    <div class="section-title" data-lang="en">Why <span style="color:var(--accent)">Now</span>?</div>
-    <div class="section-title" data-lang="ja">なぜ<span style="color:var(--accent)">今</span>なのか？</div>
+    <div class="section-label">협업 기회</div>
+    <div class="section-title">왜 <span style="color:var(--accent)">지금</span>인가?</div>
     <div class="solution-flow">
       <div class="solution-step">
         <div class="step-number">과제 1</div>
         <div class="step-icon"><svg width="3.125vw" height="3.125vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
-        <h3 data-lang="ko">바이브코딩 시장 선점</h3>
-        <p data-lang="ko">AI 코딩 시장 CAGR 25.9% —<br>PaaS + AI 번들 부재 시<br>V0+Vercel · Bolt+Supabase에 선점권 상실</p>
+        <h3>바이브코딩 시장 선점</h3>
+        <p>AI 코딩 시장 CAGR 25.9% —<br>PaaS + AI 번들 부재 시<br>V0+Vercel · Bolt+Supabase에 선점권 상실</p>
       </div>
       <div class="solution-step">
         <div class="step-number">과제 2</div>
         <div class="step-icon"><svg width="3.125vw" height="3.125vw" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div>
-        <h3 data-lang="ko">"풀스택 AI 기업" 포지셔닝</h3>
-        <p data-lang="ko">Azure GPU 인프라 확장 중 —<br>GPU 위에서 동작하는<br>AI SaaS 레퍼런스 부재</p>
+        <h3>"풀스택 AI 기업" 포지셔닝</h3>
+        <p>Azure GPU 인프라 확장 중 —<br>GPU 위에서 동작하는<br>AI SaaS 레퍼런스 부재</p>
       </div>
       <div class="solution-step">
         <div class="step-number">과제 3</div>
         <div class="step-icon"><svg width="3.125vw" height="3.125vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3 data-lang="ko">Azure Container Apps 급성장 동력</h3>
-        <p data-lang="ko">성장 중인 Azure Container Apps에<br>킬러 콘텐츠를 결합해<br>폭발적 유입 가속</p>
+        <h3>Azure Container Apps 급성장 동력</h3>
+        <p>성장 중인 Azure Container Apps에<br>킬러 콘텐츠를 결합해<br>폭발적 유입 가속</p>
       </div>
     </div>
     <div class="slide-bottom" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff" data-lang="ko">이 3가지를 <span style="color:var(--accent)">동시에 해결</span>하는 파트너</div>
-      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw" data-lang="ko">Zaemit = Azure Container Apps의 킬러 앱 + GPU 위 AI SaaS 레퍼런스 + 바이브코딩 차별화 도구</div>
+      <div style="font-size:2.1875vw;font-weight:800;color:#fff">이 3가지를 <span style="color:var(--accent)">동시에 해결</span>하는 파트너</div>
+      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw">Zaemit = Azure Container Apps의 킬러 앱 + GPU 위 AI SaaS 레퍼런스 + 바이브코딩 차별화 도구</div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE: 경쟁 우위 ======================== -->
-<div class="slide" data-title-ko="경쟁 우위" data-title-en="Competitive Edge" data-title-ja="競争優位" style="background:radial-gradient(ellipse at 40% 40%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
+<div class="slide" data-title-ko="경쟁 우위" style="background:radial-gradient(ellipse at 40% 40%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">경쟁 우위</div>
-    <div class="section-label" data-lang="en">Competitive Edge</div>
-    <div class="section-label" data-lang="ja">競争優位</div>
-    <div class="section-title" data-lang="ko">글로벌 바이브코딩을 <span class="gradient-text">이기는 방법</span></div>
-    <div class="section-title" data-lang="en">How to <span class="gradient-text">Beat</span> Global Vibe Coding</div>
-    <div class="section-title" data-lang="ja">グローバルバイブコーディングに<span class="gradient-text">勝つ方法</span></div>
+    <div class="section-label">경쟁 우위</div>
+    <div class="section-title">글로벌 바이브코딩을 <span class="gradient-text">이기는 방법</span></div>
     <div style="display:flex;gap:2.5vw;margin-top:2.5vw;align-items:center">
       <div class="edge-img" style="flex:0 0 55%">
         <img src="vscode_zaemit.png" style="width:100%;max-height:42vh;object-fit:contain;object-position:left top;border-radius:0.9375vw;box-shadow:0 0.625vw 2.5vw rgba(0,0,0,0.4)">
@@ -1411,12 +1244,12 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
             <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             <span style="font-size:1.5625vw;font-weight:700;color:#fff">세계 1위 IDE, VSCode 이용자가 Zaemit으로</span>
           </div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:2.1875vw">월간 활성 사용자 1억 명의 VSCode 안에서<br>Zaemit이 유일한 전문가용 AI 디자인 확장 프로그램</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:2.1875vw">예) Claude에서 요청하면 에디터에 바로 반영<br>AI와 연동 가능한 MCP 서버 탑재</div>
         </div>
         <div class="edge-point">
           <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:0.3125vw">
             <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span style="font-size:1.5625vw;font-weight:700;color:#fff">바이브코딩에서 Azure Container Apps까지 한번에</span>
+            <span style="font-size:1.5625vw;font-weight:700;color:#fff">클릭 한번으로 Zaemit 웹 게시 (Container Apps) 활용</span>
           </div>
           <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:2.1875vw">AI 코드 생성 → 디자인 완성 → Azure Container Apps 배포<br>하나의 워크플로우로 연결, 별도 호스팅 불필요</div>
         </div>
@@ -1430,31 +1263,22 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
       </div>
     </div>
     <div class="edge-summary" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff" data-lang="ko">VibeCoding으로 개발하고, <span style="color:var(--accent)">Zaemit에서 다듬고, Azure Container Apps로 게시</span></div>
-      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw" data-lang="ko">세계 1위 IDE, VSCode 안에서 — 1억 명의 개발자에게 즉시 배포</div>
+      <div style="font-size:2.1875vw;font-weight:800;color:#fff">VibeCoding으로 개발하고, <span style="color:var(--accent)">Zaemit에서 다듬고, Azure Container Apps로 게시</span></div>
+      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw">세계 1위 IDE, VSCode 안에서 — 1억 명의 개발자에게 즉시 배포</div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 4: 시너지 ======================== -->
-<div class="slide" data-title-ko="제안 1 · 핵심 시너지" data-title-en="Proposal 1 · Synergy" data-title-ja="提案1 · シナジー" style="background:radial-gradient(ellipse at 40% 30%,rgba(46,124,246,0.08) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:3.90625vw 4.6875vw 3.125vw">
+<div class="slide" data-title-ko="방법 1 · 핵심 시너지" style="background:radial-gradient(ellipse at 40% 30%,rgba(46,124,246,0.08) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:3.90625vw 4.6875vw 3.125vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">제안 1 · 핵심 시너지</div>
-    <div class="section-label" data-lang="en">Proposal 1 · Core Synergy</div>
-    <div class="section-label" data-lang="ja">提案 1 · コアシナジー</div>
-    <div class="section-title" data-lang="ko">한국판 <span class="gradient-text">V0 + Vercel</span>, <span style="color:var(--partner-blue)">Bolt + Supabase</span></div>
-    <div class="section-title" data-lang="en"><span class="gradient-text">AI Generate</span> in VSCode → <span style="color:var(--partner-blue)">Deploy on Azure Container Apps</span> → GPU Inference</div>
-    <div class="section-title" data-lang="ja">VSCodeで<span class="gradient-text">AI生成</span> → <span style="color:var(--partner-blue)">Azure Container Appsでデプロイ</span> → GPU推論</div>
+    <div class="section-label">방법 1 · 핵심 시너지</div>
+    <div class="section-title">한국판 <span class="gradient-text">V0 + AWS</span>, <span style="color:var(--partner-blue)">Bolt + Supabase</span></div>
     <div class="synergy-flow">
       <div class="syn-box zaemit">
         <div class="syn-box-logo z-logo">Zaemit</div>
-        <div class="syn-box-title" data-lang="ko">"VSCode에서 AI로 생성"</div>
-        <div class="syn-box-title" data-lang="en">"AI Generate in VSCode"</div>
-        <div class="syn-box-title" data-lang="ja">"VSCodeでAI生成"</div>
+        <div class="syn-box-title">"VSCode에서 AI로 생성"</div>
         <div class="syn-box-features">
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">VSCode 확장 프로그램 내장</span><span data-lang="en">Built into VSCode Extension</span><span data-lang="ja">VSCode拡張機能内蔵</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">탈AI급 디자인 품질</span><span data-lang="en">Post-AI-level design quality</span><span data-lang="ja">脱AI級デザイン品質</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">AI 크레딧 과금 (GPU 추론)</span><span data-lang="en">AI credit billing (GPU inference)</span><span data-lang="ja">AIクレジット課金（GPU推論）</span></div>
         </div>
       </div>
       <div class="syn-arrow">
@@ -1462,220 +1286,198 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
       </div>
       <div class="syn-box partner">
         <div class="syn-box-logo n-logo">Azure Container Apps</div>
-        <div class="syn-box-title" data-lang="ko">"4번 클릭 배포"</div>
-        <div class="syn-box-title" data-lang="en">"Deploy in 4 Clicks"</div>
-        <div class="syn-box-title" data-lang="ja">"4クリックでデプロイ"</div>
+        <div class="syn-box-title">"4번 클릭 배포"</div>
         <div class="syn-box-features">
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">인프라 자동 구축</span><span data-lang="en">Auto infrastructure setup</span><span data-lang="ja">インフラ自動構築</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">오토 스케일링</span><span data-lang="en">Auto-scaling</span><span data-lang="ja">オートスケーリング</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">24/365 모니터링</span><span data-lang="en">24/365 Monitoring</span><span data-lang="ja">24/365モニタリング</span></div>
         </div>
       </div>
     </div>
     <div class="slide-bottom" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff;margin-bottom:0.625vw" data-lang="ko">이미 해외에서 <span style="color:var(--accent)">검증된 모델</span></div>
+      <div style="font-size:2.1875vw;font-weight:800;color:#fff;margin-bottom:0.625vw">이미 해외에서 <span style="color:var(--accent)">검증된 모델</span></div>
       <div style="display:flex;justify-content:center;gap:3.125vw;font-size:1.40625vw">
         <div><span style="color:var(--accent);font-weight:700">Bolt + Supabase</span> <span style="color:var(--text-muted)">출시 5개월 ARR</span> <span style="color:#fff;font-weight:700">580억원</span> <span style="color:var(--text-muted)">·</span> <span style="color:#fff;font-weight:700">1조원</span> <span style="color:var(--text-muted)">밸류 · 500만 사용자</span></div>
         <div style="color:rgba(255,255,255,0.15)">|</div>
-        <div><span style="color:var(--primary);font-weight:700">V0 + Vercel</span> <span style="color:var(--text-muted)">3년 전략적 제휴 ·</span> <span style="color:#fff;font-weight:700">13.5조원</span> <span style="color:var(--text-muted)">밸류 · 프론트엔드 클라우드</span></div>
+        <div><span style="color:var(--primary);font-weight:700">V0 + AWS</span> <span style="color:var(--text-muted)">3년 전략적 제휴 ·</span> <span style="color:#fff;font-weight:700">13.5조원</span> <span style="color:var(--text-muted)">밸류 · 프론트엔드 클라우드</span></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 6: Azure Container Apps 번들 딜 ======================== -->
-<div class="slide" data-title-ko="Azure Container Apps 번들 딜" data-title-en="Azure Container Apps Bundle Deal" data-title-ja="Azure Container Appsバンドルディール" style="background:radial-gradient(ellipse at 50% 30%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
+<div class="slide" data-title-ko="Azure Marketplace 등록" style="background:radial-gradient(ellipse at 50% 30%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">제안 2</div>
-    <div class="section-label" data-lang="en">Proposal 2</div>
-    <div class="section-label" data-lang="ja">提案 2</div>
-    <div class="section-title" data-lang="ko">Azure Container Apps × Zaemit <span class="gradient-text">번들 딜</span></div>
-    <div class="section-title" data-lang="en">Azure Container Apps × Zaemit <span class="gradient-text">Bundle Deal</span></div>
-    <div class="section-title" data-lang="ja">Azure Container Apps × Zaemit <span class="gradient-text">バンドルディール</span></div>
+    <div class="section-label">방법 2</div>
+    <div class="section-title">Azure Cloud <span class="gradient-text">Marketplace</span> 등록</div>
     <div class="market-cards">
       <div class="market-card">
         <div class="mc-value mint">A</div>
-        <div class="mc-label" data-lang="ko">Azure Container Apps 가입 시<br>Zaemit 크레딧 증정</div>
-        <div class="mc-label" data-lang="en">Zaemit Credits on<br>Azure Container Apps Sign-up</div>
-        <div class="mc-label" data-lang="ja">Azure Container Apps加入時<br>Zaemitクレジット贈呈</div>
-        <div class="mc-desc" data-lang="ko">Azure Container Apps 신규 가입자에게<br>Zaemit AI 크레딧 제공, 자연 유입</div>
-        <div class="mc-desc" data-lang="en">Offer Zaemit AI credits<br>to new Azure Container Apps users</div>
-        <div class="mc-desc" data-lang="ja">Azure Container Apps新規加入者に<br>Zaemit AIクレジット提供、自然流入</div>
+        <div class="mc-label">Marketplace 등재 &<br>글로벌 판매 채널 확보</div>
+        <div class="mc-desc">Zaemit을 Azure Marketplace에 등록하여<br>전 세계 Azure 고객에게 직접 판매</div>
       </div>
       <div class="market-card">
         <div class="mc-value blue">B</div>
-        <div class="mc-label" data-lang="ko">Zaemit 생성 사이트<br>Azure Container Apps 무료 호스팅</div>
-        <div class="mc-label" data-lang="en">Free Azure Container Apps Hosting<br>for Zaemit Sites</div>
-        <div class="mc-label" data-lang="ja">Zaemit生成サイト<br>Azure Container Apps無料ホスティング</div>
-        <div class="mc-desc" data-lang="ko">Zaemit으로 만든 사이트를<br>Azure Container Apps에 원클릭 배포, 진입장벽 제거</div>
-        <div class="mc-desc" data-lang="en">One-click deploy Zaemit sites<br>to Azure Container Apps, zero hosting barriers</div>
-        <div class="mc-desc" data-lang="ja">Zaemitで作ったサイトを<br>Azure Container Appsにワンクリックデプロイ</div>
+        <div class="mc-label">판매 프로모션<br>Azure 크레딧 제공</div>
+        <div class="mc-desc">Marketplace 판매 촉진을 위한<br>Azure 크레딧 지원 — 고객 진입장벽 제거</div>
       </div>
       <div class="market-card">
         <div class="mc-value" style="color:#7C3AED">C</div>
-        <div class="mc-label" data-lang="ko">DMOA Azure 크레딧<br>통합 결제</div>
-        <div class="mc-label" data-lang="en">DMOA Azure Credit<br>Unified Billing</div>
-        <div class="mc-label" data-lang="ja">DMOA Azureクレジット<br>統合決済</div>
-        <div class="mc-desc" data-lang="ko">DMOA Azure 크레딧으로<br>Zaemit 크레딧 결제, 기업 편의 극대화</div>
-        <div class="mc-desc" data-lang="en">Pay for Zaemit via DMOA Azure<br>credits, enterprise convenience</div>
-        <div class="mc-desc" data-lang="ja">DMOA AzureクレジットでZaemit決済<br>企業顧客の利便性を最大化</div>
+        <div class="mc-label">공동 GTM &<br>마케팅 혜택</div>
+        <div class="mc-desc">공동 마케팅 캠페인, 기술 지원,<br>ISV 파트너 프로그램 통한 Go-To-Market 가속</div>
       </div>
     </div>
     <div class="slide-bottom" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff" data-lang="ko"><span style="color:var(--accent)">무료인데 써볼 이유가 있는</span> 플랫폼</div>
-      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw" data-lang="ko">Azure Container Apps(무료) + Zaemit 크레딧(번들) = <span style="color:var(--accent);font-weight:700">개발자 유입 → 크레딧 소비 → GPU 매출</span></div>
+      <div style="font-size:2.1875vw;font-weight:800;color:#fff"><span style="color:var(--accent)">단순 번들이 아닌</span> 마켓 판매 생태계</div>
+      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw">Marketplace 등재 + 프로모션 크레딧 + GTM 지원 = <span style="color:var(--accent);font-weight:700">글로벌 Azure 고객 → Zaemit 유입 → 매출 확대</span></div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 7: Z.STUDIO — 전문가 시장 확장 ======================== -->
-<div class="slide" data-title-ko="Z.STUDIO · 전문가 시장" data-title-en="Z.STUDIO · Pro Market" data-title-ja="Z.STUDIO・プロ市場" style="background:radial-gradient(ellipse at 60% 40%,rgba(124,58,237,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 70%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
-  <div class="slide-inner">
-    <div class="section-label" data-lang="ko">제안 3</div>
-    <div class="section-label" data-lang="en">Proposal 3</div>
-    <div class="section-label" data-lang="ja">提案 3</div>
-    <div class="section-title" data-lang="ko"><span class="gradient-text">Z.STUDIO</span> — 웹 에이전시 · 전문가 시장까지</div>
-    <div class="section-title" data-lang="en"><span class="gradient-text">Z.STUDIO</span> — Expanding to Agencies &amp; Pros</div>
-    <div class="section-title" data-lang="ja"><span class="gradient-text">Z.STUDIO</span> — Webエージェンシー・プロ市場へ</div>
-    <div style="display:flex;gap:2.5vw;margin-top:2.5vw;align-items:center">
-      <div style="flex:0 0 58%">
-        <img src="zstudio.png" style="width:100%;border-radius:0.9375vw;box-shadow:0 0.625vw 2.5vw rgba(0,0,0,0.4)">
-      </div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:1.5625vw">
-        <div>
-          <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:0.3125vw">
-            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span style="font-size:1.5625vw;font-weight:700;color:#fff">고객 CRM · 사이트 일괄 관리</span>
-          </div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:2.1875vw">에이전시가 고객별 사이트를<br>한 대시보드에서 관리 — 납품 · 유지보수 · 과금 통합</div>
-        </div>
-        <div>
-          <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:0.3125vw">
-            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span style="font-size:1.5625vw;font-weight:700;color:#fff">템플릿 공유 · 팀 협업</span>
-          </div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:2.1875vw">디자인 템플릿을 팀 내 공유,<br>실시간 협업 편집 — 에이전시 생산성 극대화</div>
-        </div>
-        <div>
-          <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:0.3125vw">
-            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span style="font-size:1.5625vw;font-weight:700;color:#fff">Azure Container Apps에서 프로 플랜 제공</span>
-          </div>
-          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.6;padding-left:2.1875vw">개인 개발자 → 에이전시 → 엔터프라이즈<br>Azure Container Apps 고객 단가 상승</div>
-        </div>
-      </div>
-    </div>
-    <div class="slide-bottom" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff" data-lang="ko">Z.STUDIO = Azure Container Apps의 프로 플랜<br><span style="color:var(--accent)">고객 단가와 시장 범위를 동시에 확장</span></div>
-      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw" data-lang="ko">개발자 너머, 웹 에이전시 · 전문가까지 — Azure Container Apps 고객 범위 확장</div>
-    </div>
-  </div>
-</div>
-
 <!-- ======================== SLIDE 7: AI 모델 마켓플레이스 ======================== -->
-<div class="slide" data-title-ko="AI 모델 마켓플레이스" data-title-en="AI Model Marketplace" data-title-ja="AIモデルマーケットプレイス" style="background:radial-gradient(ellipse at 30% 50%,rgba(46,124,246,0.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 40%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
+<div class="slide" data-title-ko="탈AI급 디자인+바이브코딩 솔루션 DMOA 유통" style="background:radial-gradient(ellipse at 30% 50%,rgba(46,124,246,0.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 40%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">제안 4</div>
-    <div class="section-label" data-lang="en">Proposal 4</div>
-    <div class="section-label" data-lang="ja">提案 4</div>
-    <div class="section-title" data-lang="ko">LLM 유통 + <span class="gradient-text">탈AI급 디자인 모델</span> 제공</div>
-    <div class="section-title" data-lang="en">LLM Distribution + <span class="gradient-text">Beyond-AI Design Model</span></div>
-    <div class="section-title" data-lang="ja">LLM流通 + <span class="gradient-text">脱AI級デザインモデル</span>提供</div>
+    <div class="section-label">방법 3</div>
+    <div class="section-title"><span class="gradient-text">탈AI급 디자인</span> + 바이브코딩 솔루션 <span style="color:var(--accent)">DMOA 유통</span></div>
     <div class="synergy-flow">
       <div class="syn-box" style="background:linear-gradient(160deg,rgba(0,120,212,0.18),rgba(0,120,212,0.06));box-shadow:0 0.625vw 3.125vw rgba(0,120,212,0.12)">
-        <div class="syn-box-logo" style="color:#0078D4">Azure OpenAI Service</div>
-        <div class="syn-box-title" data-lang="ko">"검증된 이중 수익 전략"</div>
+        <div class="syn-box-logo" style="color:#0078D4">LLM 유통 및 자체 LLM 도입 전략</div>
+        <div class="syn-box-title">"탈AI 디자인 LLM 기반 SaaS"</div>
         <div class="syn-box-features">
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">GPT-4o · o1 · Gemini API <span style="color:#fff;font-weight:600">Azure 마켓플레이스</span> 리셀링</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">오픈 LLM(Llama, Phi 등) <span style="color:#fff;font-weight:600">Azure GPU로 추론</span> → 수익 창출</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">API 리셀링 = <span style="color:#fff;font-weight:600">개발자 유입</span>, 자체 모델 = <span style="color:#fff;font-weight:600">GPU 수익</span></span></div>
+          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Zaemit <span style="color:#fff;font-weight:600">디자인 생성 LLM</span> — 프롬프트 → 탈AI급 웹디자인 자동 생성</span></div>
+          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>자체 학습 데이터 10만+ 디자인 기반 <span style="color:#fff;font-weight:600">Fine-tuned 모델</span> Azure GPU 추론</span></div>
+          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>API 모듈 형태로 <span style="color:#fff;font-weight:600">DMOA 고객사에 공급</span> — B2B SaaS 수익 모델</span></div>
         </div>
       </div>
       <div class="syn-arrow">
         <svg class="syn-arrow-icon" width="3.125vw" height="3.125vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </div>
       <div class="syn-box partner">
-        <div class="syn-box-logo n-logo">DMOA + Zaemit</div>
-        <div class="syn-box-title" data-lang="ko">"LLM 유통 + AI 디자인 모델"</div>
+        <div class="syn-box-logo n-logo" style="font-size:1.875vw;white-space:nowrap">새로운 VibeCoding 솔루션 + DMOA 유통</div>
+        <div class="syn-box-title">"VSCode × Zaemit 에디터 통합"</div>
         <div class="syn-box-features">
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">Azure OpenAI(GPT-4o) <span style="color:#fff;font-weight:600">리셀링</span> → 개발자 유입 촉진</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">오픈 LLM + <span style="color:var(--accent);font-weight:600">Zaemit 디자인 모델</span> → Azure GPU 추론, 수익 창출</span></div>
-          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-lang="ko">탈AI급 웹 디자인 + <span style="color:var(--accent);font-weight:600">이미지 생성</span> → DMOA만의 차별화 AI 모델</span></div>
+          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>VSCode 결합 Zaemit 에디터에서 <span style="color:var(--accent);font-weight:600">Figma 디자인 직접 로드</span></span></div>
+          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Claude · ChatGPT에서 <span style="color:var(--accent);font-weight:600">Zaemit MCP 호출</span> → 디자인+코드 동시 생성</span></div>
+          <div class="syn-feature"><svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>DMOA Azure 인프라로 <span style="color:var(--accent);font-weight:600">기업 고객 유통</span> — 바이브코딩 올인원 솔루션</span></div>
         </div>
       </div>
     </div>
     <div class="slide-bottom" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff" data-lang="ko">API 리셀링으로 유입, <span style="color:var(--accent)">자체 모델로 수익</span></div>
-      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw" data-lang="ko">Azure OpenAI Service의 검증된 전략 — Azure GPU + Zaemit 디자인 모델로 <span style="color:var(--accent);font-weight:700">차별화된 AI 마켓플레이스</span></div>
+      <div style="font-size:2.1875vw;font-weight:800;color:#fff">디자인 LLM으로 차별화, <span style="color:var(--accent)">바이브코딩으로 시장 선점</span></div>
+      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw">Figma → Zaemit 에디터 → Claude/ChatGPT 연동 — <span style="color:var(--accent);font-weight:700">DMOA 유통망으로 기업 시장 공략</span></div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 8: 특허 출원 현황 ======================== -->
-<div class="slide" data-title-ko="특허 출원 현황" data-title-en="Patent Portfolio" data-title-ja="特許出願現況" style="background:radial-gradient(ellipse at 40% 30%,rgba(124,58,237,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
+<div class="slide" data-title-ko="특허 출원 현황" style="background:radial-gradient(ellipse at 40% 30%,rgba(124,58,237,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">지식재산권</div>
-    <div class="section-label" data-lang="en">Intellectual Property</div>
-    <div class="section-label" data-lang="ja">知的財産権</div>
-    <div class="section-title" data-lang="ko">특허 등록 <span class="gradient-text">3건</span> · 출원 <span style="color:var(--accent)">21건</span> · PCT 국제특허 <span style="color:#7C3AED">4건</span></div>
-    <div class="section-title" data-lang="en"><span class="gradient-text">3</span> Registered · <span style="color:var(--accent)">21</span> Filed · <span style="color:#7C3AED">4</span> PCT</div>
-    <div class="section-title" data-lang="ja">特許登録<span class="gradient-text">3件</span> · 出願<span style="color:var(--accent)">21件</span> · PCT<span style="color:#7C3AED">4件</span></div>
+    <div class="section-label">지식재산권</div>
+    <div class="section-title">특허 등록 <span class="gradient-text">3건</span> · 출원 <span style="color:var(--accent)">21건</span> · PCT 국제특허 <span style="color:#7C3AED">4건</span></div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw;margin-top:2.5vw">
       <div class="market-card">
         <div class="mc-value mint">21건</div>
-        <div class="mc-label" data-lang="ko">국내특허 출원</div>
-        <div class="mc-desc" data-lang="ko">AI 웹 자동생성, 멀티테넌트 아키텍처,<br>실시간 협업 편집 등 핵심 기술 보호</div>
+        <div class="mc-label">국내특허 출원</div>
+        <div class="mc-desc">AI 웹 자동생성, 멀티테넌트 아키텍처,<br>실시간 협업 편집 등 핵심 기술 보호</div>
       </div>
       <div class="market-card">
         <div class="mc-value blue">4건</div>
-        <div class="mc-label" data-lang="ko">PCT 국제특허 출원</div>
-        <div class="mc-desc" data-lang="ko">글로벌 시장 진출을 위한<br>핵심 원천기술 국제 보호</div>
+        <div class="mc-label">PCT 국제특허 출원</div>
+        <div class="mc-desc">글로벌 시장 진출을 위한<br>핵심 원천기술 국제 보호</div>
       </div>
       <div class="market-card">
         <div class="mc-value" style="color:#7C3AED">3건</div>
-        <div class="mc-label" data-lang="ko">국내특허 등록 완료</div>
-        <div class="mc-desc" data-lang="ko">등록 완료된 특허를 기반으로<br>독점적 기술 경쟁력 확보</div>
+        <div class="mc-label">국내특허 등록 완료</div>
+        <div class="mc-desc">등록 완료된 특허를 기반으로<br>독점적 기술 경쟁력 확보</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw;margin-top:1.5625vw">
       <div class="market-card">
         <div class="step-icon"><svg width="2.5vw" height="2.5vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
-        <div class="mc-label" data-lang="ko">GS 소프트웨어 인증</div>
-        <div class="mc-desc" data-lang="ko">국가 공인 소프트웨어 품질 인증<br>공공기관 납품 자격 확보</div>
+        <div class="mc-label">GS 소프트웨어 인증</div>
+        <div class="mc-desc">국가 공인 소프트웨어 품질 인증<br>공공기관 납품 자격 확보</div>
       </div>
       <div class="market-card">
         <div class="step-icon"><svg width="2.5vw" height="2.5vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h10"/></svg></div>
-        <div class="mc-label" data-lang="ko">프로그램 등록 4건</div>
-        <div class="mc-desc" data-lang="ko">컴퓨터 프로그램 저작권 등록<br>소프트웨어 자산 법적 보호</div>
+        <div class="mc-label">프로그램 등록 4건</div>
+        <div class="mc-desc">컴퓨터 프로그램 저작권 등록<br>소프트웨어 자산 법적 보호</div>
       </div>
       <div class="market-card">
         <div class="step-icon"><svg width="2.5vw" height="2.5vw" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-        <div class="mc-label" data-lang="ko">논문 7건 발표</div>
-        <div class="mc-desc" data-lang="ko">AI 웹 생성 관련 학술 논문 발표<br>기술력의 학술적 검증</div>
+        <div class="mc-label">논문 7건 발표</div>
+        <div class="mc-desc">AI 웹 생성 관련 학술 논문 발표<br>기술력의 학술적 검증</div>
       </div>
     </div>
     <div class="slide-bottom" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff" data-lang="ko">100% 자체 기술, <span style="color:var(--accent)">특허로 보호</span></div>
-      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw" data-lang="ko">DMOA가 투자할 기술이 법적으로 보호된 <span style="color:var(--accent);font-weight:700">독점적 원천기술</span></div>
+      <div style="font-size:2.1875vw;font-weight:800;color:#fff">100% 자체 기술, <span style="color:var(--accent)">특허로 보호</span></div>
+      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw">DMOA가 투자할 기술이 법적으로 보호된 <span style="color:var(--accent);font-weight:700">독점적 원천기술</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 기술특례상장 여정 ======================== -->
+<div class="slide" data-title-ko="기술특례상장 여정" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,102,255,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark);padding:3.90625vw 4.6875vw 3.125vw">
+  <div class="slide-inner" style="gap:0">
+    <div class="section-label">기술특례상장</div>
+    <div class="section-title">매출 <span style="color:var(--accent)">30억</span> → <span style="color:var(--accent)">60억</span> → <span style="color:var(--accent)">120억</span> · 2029 IPO 목표</div>
+    <div style="display:flex;gap:1.875vw;margin-top:1.25vw;width:100%;align-items:stretch">
+      <div class="fp-chart" style="flex:1;background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:0.9375vw;padding:1.5625vw 1.25vw;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-bottom:0.9375vw">매출 추이 및 전망 (억 원)</div>
+        <svg viewBox="0 -8 420 203" style="width:100%">
+          <line x1="22" y1="10" x2="22" y2="165" stroke="rgba(255,255,255,0.06)" stroke-width="1"/><line x1="22" y1="165" x2="415" y2="165" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><line x1="22" y1="126" x2="415" y2="126" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/><line x1="22" y1="88" x2="415" y2="88" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/><line x1="22" y1="49" x2="415" y2="49" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="18" y="169" fill="#94A3B8" font-size="10" text-anchor="end">0</text><text x="18" y="130" fill="#94A3B8" font-size="10" text-anchor="end">30</text><text x="18" y="92" fill="#94A3B8" font-size="10" text-anchor="end">60</text><text x="18" y="53" fill="#94A3B8" font-size="10" text-anchor="end">90</text><text x="18" y="14" fill="#94A3B8" font-size="10" text-anchor="end">120</text>
+          <rect x="30" y="162.9" width="48" height="2.1" rx="2" fill="rgba(59,130,246,0.5)"/><text x="54" y="159" fill="#94A3B8" font-size="9" text-anchor="middle">1.6</text><text x="54" y="181" fill="#94A3B8" font-size="10" text-anchor="middle">2022</text>
+          <rect x="85" y="154.8" width="48" height="10.2" rx="2" fill="rgba(59,130,246,0.6)"/><text x="109" y="151" fill="#94A3B8" font-size="9" text-anchor="middle">7.9</text><text x="109" y="181" fill="#94A3B8" font-size="10" text-anchor="middle">2023</text>
+          <rect x="140" y="152.0" width="48" height="13.0" rx="2" fill="rgba(59,130,246,0.7)"/><text x="164" y="148" fill="#94A3B8" font-size="9" text-anchor="middle">10.1</text><text x="164" y="181" fill="#94A3B8" font-size="10" text-anchor="middle">2024</text>
+          <rect x="195" y="145.6" width="48" height="19.4" rx="2" fill="rgba(59,130,246,0.85)"/><text x="219" y="142" fill="#E2E8F0" font-size="9" text-anchor="middle">15</text><text x="219" y="181" fill="#E2E8F0" font-size="10" text-anchor="middle">2025E</text>
+          <rect x="250" y="126.25" width="48" height="38.75" rx="2" fill="rgba(0,102,255,0.9)"/><text x="274" y="123" fill="#E2E8F0" font-size="9" text-anchor="middle">30</text><text x="274" y="181" fill="#E2E8F0" font-size="10" text-anchor="middle">2026E</text>
+          <rect x="305" y="87.5" width="48" height="77.5" rx="2" fill="rgba(0,102,255,1)"/><text x="329" y="84" fill="#fff" font-size="9" text-anchor="middle" font-weight="600">60</text><text x="329" y="181" fill="#E2E8F0" font-size="10" text-anchor="middle">2027E</text>
+          <rect x="360" y="10" width="48" height="155" rx="2" fill="url(#fpGrad302)"/><text x="384" y="6" fill="#fff" font-size="11" text-anchor="middle" font-weight="800">120</text><text x="384" y="181" fill="#fff" font-size="10" text-anchor="middle" font-weight="700">2028E</text>
+          <text x="109" y="191" fill="#00D4AA" font-size="8" text-anchor="middle">+394%</text><text x="164" y="191" fill="#00D4AA" font-size="8" text-anchor="middle">+28%</text><text x="219" y="191" fill="#00D4AA" font-size="8" text-anchor="middle">+49%</text><text x="274" y="191" fill="#00D4AA" font-size="8" text-anchor="middle">+100%</text><text x="329" y="191" fill="#00D4AA" font-size="8" text-anchor="middle">+100%</text><text x="384" y="191" fill="#00D4AA" font-size="8" text-anchor="middle">+100%</text>
+          <defs><linearGradient id="fpGrad302" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00D4AA"/><stop offset="100%" stop-color="#0066FF"/></linearGradient></defs>
+        </svg>
+      </div>
+      <div class="fp-table" style="flex:1;background:rgba(17,22,51,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:0.9375vw;padding:1.09375vw 0.78125vw">
+        <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff;margin-bottom:0.625vw">매출 프로젝션 & 추정 손익 (억 원)</div>
+        <table style="width:100%;border-collapse:collapse;font-size:max(18px,1.09375vw)">
+          <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1)"><th style="text-align:left;padding:0.3125vw;color:#94A3B8;font-weight:500"></th><th style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:500">2024</th><th style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:500">2025E</th><th style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:500">2026E</th><th style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:500">2027E</th><th style="text-align:right;padding:0.3125vw;color:#fff;font-weight:700">2028E</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#0066FF;font-weight:600"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0066FF;margin-right:4px"></span>구독 서비스</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">0.5</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">6.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">15.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">36.0</td><td style="text-align:right;padding:0.3125vw;color:#fff;font-weight:700">70.0</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#7C3AED;font-weight:600"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#7C3AED;margin-right:4px"></span>제작 에이전시</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">6.7</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">3.5</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">10.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">16.0</td><td style="text-align:right;padding:0.3125vw;color:#fff;font-weight:700">36.0</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#F59E0B;font-weight:600"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#F59E0B;margin-right:4px"></span>솔루션 판매</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">1.8</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">4.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">3.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">4.5</td><td style="text-align:right;padding:0.3125vw;color:#fff;font-weight:700">8.0</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#00D4AA;font-weight:600"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00D4AA;margin-right:4px"></span>부가/커머스/유지보수</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">1.3</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">1.5</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">2.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0">3.5</td><td style="text-align:right;padding:0.3125vw;color:#fff;font-weight:700">6.0</td></tr>
+            <tr style="border-top:1.5px solid rgba(0,102,255,0.4);border-bottom:1.5px solid rgba(255,255,255,0.08)"><td style="padding:0.3125vw;color:var(--accent);font-weight:800">매출 합계</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0;font-weight:700">10.2</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0;font-weight:700">15.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0;font-weight:700">30.0</td><td style="text-align:right;padding:0.3125vw;color:#E2E8F0;font-weight:700">60.0</td><td style="text-align:right;padding:0.3125vw;color:#fff;font-weight:800">120.0</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#94A3B8;padding-left:0.78125vw">급여</td><td style="text-align:right;padding:0.3125vw;color:#64748B">—</td><td style="text-align:right;padding:0.3125vw;color:#64748B">6.0</td><td style="text-align:right;padding:0.3125vw;color:#64748B">9.0</td><td style="text-align:right;padding:0.3125vw;color:#64748B">14.0</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">19.1</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#94A3B8;padding-left:0.78125vw">외주/R&D</td><td style="text-align:right;padding:0.3125vw;color:#64748B">—</td><td style="text-align:right;padding:0.3125vw;color:#64748B">2.5</td><td style="text-align:right;padding:0.3125vw;color:#64748B">4.0</td><td style="text-align:right;padding:0.3125vw;color:#64748B">7.0</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">13.1</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#94A3B8;padding-left:0.78125vw">마케팅/기타</td><td style="text-align:right;padding:0.3125vw;color:#64748B">—</td><td style="text-align:right;padding:0.3125vw;color:#64748B">0.1</td><td style="text-align:right;padding:0.3125vw;color:#64748B">3.0</td><td style="text-align:right;padding:0.3125vw;color:#64748B">12.0</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">10.7</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:0.3125vw;color:#E2E8F0;font-weight:600">판관비 합계</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:600">—</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:600">8.6</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:600">16.0</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:600">33.0</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8;font-weight:700">42.9</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#00D4AA;font-weight:700">영업이익</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">—</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA;font-weight:600">+1.4</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA;font-weight:600">+14.0</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA;font-weight:600">+27.0</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA;font-weight:800">+77.1</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:0.3125vw;color:#94A3B8">영업이익률</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">—</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA">14.0%</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA">46.7%</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA">45.0%</td><td style="text-align:right;padding:0.3125vw;color:#00D4AA;font-weight:700">64.2%</td></tr>
+            <tr><td style="padding:0.3125vw;color:var(--accent);font-weight:700">순이익</td><td style="text-align:right;padding:0.3125vw;color:#94A3B8">—</td><td style="text-align:right;padding:0.3125vw;color:var(--accent);font-weight:600">+1.2</td><td style="text-align:right;padding:0.3125vw;color:var(--accent);font-weight:600">+11.2</td><td style="text-align:right;padding:0.3125vw;color:var(--accent);font-weight:600">+22.1</td><td style="text-align:right;padding:0.3125vw;color:var(--accent);font-weight:800">+59.9</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="fp-cards" style="display:flex;gap:0.78125vw;margin-top:1.25vw;width:100%">
+      <div class="fp-card" style="flex:1;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.15);border-radius:0.625vw;padding:0.625vw 0.78125vw;text-align:center"><div style="font-size:1.5625vw;font-weight:800;color:#00D4AA;font-family:'Plus Jakarta Sans'">2026</div><div style="font-size:max(18px,0.9375vw);color:#94A3B8;margin-top:0.15625vw">흑자전환</div></div>
+      <div class="fp-card" style="flex:1;background:rgba(0,102,255,0.08);border:1px solid rgba(0,102,255,0.15);border-radius:0.625vw;padding:0.625vw 0.78125vw;text-align:center"><div style="font-size:1.5625vw;font-weight:800;color:var(--accent);font-family:'Plus Jakarta Sans'">시리즈A</div><div style="font-size:max(18px,0.9375vw);color:#94A3B8;margin-top:0.15625vw">2027 투자 유치</div></div>
+      <div class="fp-card" style="flex:1;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.15);border-radius:0.625vw;padding:0.625vw 0.78125vw;text-align:center"><div style="font-size:1.5625vw;font-weight:800;color:#A78BFA;font-family:'Plus Jakarta Sans'">preIPO</div><div style="font-size:max(18px,0.9375vw);color:#94A3B8;margin-top:0.15625vw">2028 투자 유치</div></div>
+      <div class="fp-card" style="flex:1;background:rgba(0,102,255,0.08);border:1px solid rgba(0,102,255,0.15);border-radius:0.625vw;padding:0.625vw 0.78125vw;text-align:center"><div style="font-size:1.5625vw;font-weight:800;color:var(--accent);font-family:'Plus Jakarta Sans'">120<span style="font-size:max(18px,0.9375vw);font-weight:600">억</span></div><div style="font-size:max(18px,0.9375vw);color:#94A3B8;margin-top:0.15625vw">2028 매출</div></div>
+      <div class="fp-card" style="flex:1;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.15);border-radius:0.625vw;padding:0.625vw 0.78125vw;text-align:center"><div style="font-size:1.5625vw;font-weight:800;color:#00D4AA;font-family:'Plus Jakarta Sans'">64.2<span style="font-size:max(18px,0.9375vw);font-weight:600">%</span></div><div style="font-size:max(18px,0.9375vw);color:#94A3B8;margin-top:0.15625vw">영업이익률</div></div>
+      <div class="fp-card" style="flex:1;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.15);border-radius:0.625vw;padding:0.625vw 0.78125vw;text-align:center"><div style="font-size:1.5625vw;font-weight:800;color:#F59E0B;font-family:'Plus Jakarta Sans'">IPO</div><div style="font-size:max(18px,0.9375vw);color:#94A3B8;margin-top:0.15625vw">2029 상장</div></div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 9: 수상 및 글로벌 현황 ======================== -->
-<div class="slide" data-title-ko="수상 · 글로벌 실적" data-title-en="Awards & Global" data-title-ja="受賞・グローバル実績" style="background:radial-gradient(ellipse at 50% 30%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
+<div class="slide" data-title-ko="수상 · 글로벌 실적" style="background:radial-gradient(ellipse at 50% 30%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:4.375vw 4.6875vw 3.125vw">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">검증된 역량</div>
-    <div class="section-label" data-lang="en">Proven Track Record</div>
-    <div class="section-label" data-lang="ja">検証された実力</div>
-    <div class="section-title" data-lang="ko"><span style="color:var(--accent)">중기부 장관상</span> 수상 · <span class="gradient-text">CES 2026</span> 참가</div>
-    <div class="section-title" data-lang="en"><span style="color:var(--accent)">Minister Award</span> · <span class="gradient-text">CES 2026</span></div>
-    <div class="section-title" data-lang="ja"><span style="color:var(--accent)">中企部長官賞</span>受賞 · <span class="gradient-text">CES 2026</span>参加</div>
+    <div class="section-label">검증된 역량</div>
+    <div class="section-title"><span style="color:var(--accent)">중기부 장관상</span> 수상 · <span class="gradient-text">CES 2026</span> 참가</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;margin-top:2.5vw">
       <!-- 좌: 수상 실적 -->
       <div class="awards-col">
         <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.5625vw">
           <svg width="1.875vw" height="1.875vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 17 7 17 7"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-          <span style="font-size:1.5625vw;font-weight:700;color:var(--accent)" data-lang="ko">2025년 수상 실적</span>
+          <span style="font-size:1.5625vw;font-weight:700;color:var(--accent)">2025년 수상 실적</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:1.25vw;padding-left:0.625vw">
           <div style="display:flex;align-items:flex-start;gap:0.78125vw">
@@ -1683,8 +1485,8 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
               <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
             <div>
-              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">중소벤처기업부 장관상</div>
-              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">도약패키지 IR 경진대회 대상 — 정부 최고 등급 인정</div>
+              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">중소벤처기업부 장관상</div>
+              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw">도약패키지 IR 경진대회 대상 — 정부 최고 등급 인정</div>
             </div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:0.78125vw">
@@ -1692,8 +1494,8 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
               <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
             <div>
-              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">특허전략개발원장상</div>
-              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">IP-R&D 우수기업상 — 지식재산 전략 우수성 인정</div>
+              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">특허전략개발원장상</div>
+              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw">IP-R&D 우수기업상 — 지식재산 전략 우수성 인정</div>
             </div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:0.78125vw">
@@ -1701,8 +1503,8 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
               <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
             <div>
-              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">창업진흥원상 외 2건</div>
-              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">창업중심대학 우수상, 대전세종중소벤처기업청장상</div>
+              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">창업진흥원상 외 2건</div>
+              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw">창업중심대학 우수상, 대전세종중소벤처기업청장상</div>
             </div>
           </div>
         </div>
@@ -1711,7 +1513,7 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
       <div class="awards-col">
         <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.5625vw">
           <svg width="1.875vw" height="1.875vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          <span style="font-size:1.5625vw;font-weight:700;color:var(--primary)" data-lang="ko">CES 2026 · 글로벌 성과</span>
+          <span style="font-size:1.5625vw;font-weight:700;color:var(--primary)">CES 2026 · 글로벌 성과</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:1.25vw;padding-left:0.625vw">
           <div style="display:flex;align-items:flex-start;gap:0.78125vw">
@@ -1719,8 +1521,8 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
               <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <div>
-              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">CES 2026 라스베이거스 참가</div>
-              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">세계 최대 IT 전시회에서 Zaemit 라이브 시연 — 현장 반응 폭발적</div>
+              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">CES 2026 라스베이거스 참가</div>
+              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw">세계 최대 IT 전시회에서 Zaemit 라이브 시연 — 현장 반응 폭발적</div>
             </div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:0.78125vw">
@@ -1728,8 +1530,8 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
               <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <div>
-              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">MOU 9건 · LOI 4건 · NDA 2건</div>
-              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">일본 · 미국 · 동남아 — 다수 기업과 파트너십 체결</div>
+              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">MOU 9건 · LOI 4건 · NDA 2건</div>
+              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw">일본 · 미국 · 동남아 — 다수 기업과 파트너십 체결</div>
             </div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:0.78125vw">
@@ -1737,65 +1539,53 @@ body.no-motion .mkt-clabel{opacity:1 !important;transform:translateX(0) !importa
               <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <div>
-              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff" data-lang="ko">일본 수출 $145K 달성</div>
-              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw" data-lang="ko">일본 1위 인프라 대기업 NDA 체결 — 40만 고객 대상 프리미엄 상품 기획</div>
+              <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">일본 수출 $145K 달성</div>
+              <div style="font-size:max(18px,0.9375vw);color:var(--text-muted);margin-top:0.15625vw">일본 1위 인프라 대기업 NDA 체결 — 40만 고객 대상 프리미엄 상품 기획</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="awards-summary slide-bottom" style="text-align:center;margin-top:2.8125vw">
-      <div style="font-size:2.1875vw;font-weight:800;color:#fff" data-lang="ko">정부가 인정하고, <span style="color:var(--accent)">글로벌이 검증한 기술력</span></div>
-      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw" data-lang="ko">장관상 수상 + CES 현장 반응 + 일본 수출 실적 = <span style="color:var(--accent);font-weight:700">DMOA가 믿고 협업할 파트너</span></div>
+      <div style="font-size:2.1875vw;font-weight:800;color:#fff">정부가 인정하고, <span style="color:var(--accent)">글로벌이 검증한 기술력</span></div>
+      <div style="font-size:1.40625vw;color:var(--text-muted);margin-top:0.46875vw">장관상 수상 + CES 현장 반응 + 일본 수출 실적 = <span style="color:var(--accent);font-weight:700">DMOA가 믿고 협업할 파트너</span></div>
     </div>
   </div>
 </div>
 
 <!-- ======================== SLIDE 10: NEXT STEP ======================== -->
-<div class="slide" data-title-ko="Next Step" data-title-en="Next Step" data-title-ja="ネクストステップ" style="background:radial-gradient(ellipse at 50% 50%,rgba(46,124,246,0.12) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark)">
+<div class="slide" data-title-ko="Next Step" style="background:radial-gradient(ellipse at 50% 50%,rgba(46,124,246,0.12) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark)">
   <div class="slide-inner">
-    <div class="section-label" data-lang="ko">Next Step</div>
-    <div class="section-label" data-lang="en">Next Step</div>
-    <div class="section-label" data-lang="ja">ネクストステップ</div>
-    <div class="section-title" data-lang="ko">한국에서 성공하고, <span class="gradient-text">글로벌</span>로 갑시다</div>
-    <div class="section-title" data-lang="en">Win in Korea, Go <span class="gradient-text">Global</span></div>
-    <div class="section-title" data-lang="ja">韓国で成功し、<span class="gradient-text">グローバル</span>へ</div>
+    <div class="section-label">Next Step</div>
+    <div class="section-title">함께 <span class="gradient-text">글로벌</span>로 갑시다</div>
     <div class="next-content">
       <div>
         <div class="next-col-title">
           <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
-          <span data-lang="ko">제안 액션 아이템</span>
-          <span data-lang="en">Proposed Action Items</span>
-          <span data-lang="ja">提案アクションアイテム</span>
+          <span>액션 아이템</span>
         </div>
         <div class="next-items">
-          <div class="next-item"><div class="next-num mint">1</div><div class="next-text" data-lang="ko">기술 PoC: VSCode → Azure Container Apps 원클릭 배포 데모</div><div class="next-text" data-lang="en">Tech PoC: VSCode → Azure Container Apps one-click deploy demo</div><div class="next-text" data-lang="ja">技術PoC：VSCode → Azure Container Appsワンクリックデプロイデモ</div></div>
-          <div class="next-item"><div class="next-num mint">2</div><div class="next-text" data-lang="ko">DMOA Azure GPU 인프라에서 AI 추론 PoC</div><div class="next-text" data-lang="en">AI inference PoC on DMOA Azure GPU infrastructure</div><div class="next-text" data-lang="ja">DMOA Azure GPUインフラでAI推論PoC</div></div>
-          <div class="next-item"><div class="next-num mint">3</div><div class="next-text" data-lang="ko">크레딧 번들 + 마켓플레이스 등록 협의</div><div class="next-text" data-lang="en">Credit bundle + Marketplace listing discussion</div><div class="next-text" data-lang="ja">クレジットバンドル + マーケットプレイス登録協議</div></div>
-          <div class="next-item"><div class="next-num mint">4</div><div class="next-text" data-lang="ko">Solution Partner MOU 체결</div><div class="next-text" data-lang="en">Solution Partner MOU signing</div><div class="next-text" data-lang="ja">ソリューションパートナーMOU締結</div></div>
+          <div class="next-item"><div class="next-num mint">1</div><div class="next-text">기술 PoC: VSCode → Azure Container Apps 원클릭 배포 데모</div></div>
+          <div class="next-item"><div class="next-num mint">2</div><div class="next-text">DMOA Azure GPU 인프라에서 AI 추론 PoC</div></div>
+          <div class="next-item"><div class="next-num mint">3</div><div class="next-text">크레딧 번들 + 마켓플레이스 등록 협의</div></div>
+          <div class="next-item"><div class="next-num mint">4</div><div class="next-text">Solution Partner MOU 체결</div></div>
         </div>
       </div>
       <div>
         <div class="next-col-title">
           <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-          <span data-lang="ko">프로세스</span>
-          <span data-lang="en">Process</span>
-          <span data-lang="ja">プロセス</span>
+          <span>프로세스</span>
         </div>
         <div class="next-items">
-          <div class="next-item"><div class="next-num mint">1</div><div class="next-text" data-lang="ko">기술 PoC 시작</div><div class="next-text" data-lang="en">Start Tech PoC</div><div class="next-text" data-lang="ja">技術PoC開始</div></div>
-          <div class="next-item"><div class="next-num mint">2</div><div class="next-text" data-lang="ko">PoC 결과 공유 + MOU 체결</div><div class="next-text" data-lang="en">PoC results sharing + MOU signing</div><div class="next-text" data-lang="ja">PoC結果共有 + MOU締結</div></div>
-          <div class="next-item"><div class="next-num mint">3</div><div class="next-text" data-lang="ko">마켓플레이스 등록 + 공동 상품 기획</div><div class="next-text" data-lang="en">Marketplace listing + joint product planning</div><div class="next-text" data-lang="ja">マーケットプレイス登録 + 共同商品企画</div></div>
+          <div class="next-item"><div class="next-num mint">1</div><div class="next-text">기술 PoC 시작</div></div>
+          <div class="next-item"><div class="next-num mint">2</div><div class="next-text">PoC 결과 공유 + MOU 체결</div></div>
+          <div class="next-item"><div class="next-num mint">3</div><div class="next-text">마켓플레이스 등록 + 공동 상품 기획</div></div>
         </div>
       </div>
     </div>
     <div class="next-timeline">
-      <div class="next-timeline-title" data-lang="ko">CEO 김정환 · kjh@weven.kr · +82-10-8447-4567</div>
-      <div class="next-timeline-title" data-lang="en">CEO 김정환 · kjh@weven.kr · +82-10-8447-4567</div>
-      <div class="next-timeline-title" data-lang="ja">CEO 김정환 · kjh@weven.kr · +82-10-8447-4567</div>
-      <div class="next-timeline-desc" data-lang="ko">한국판 V0 + Vercel · Bolt + Supabase, 함께 만들어갑시다.</div>
-      <div class="next-timeline-desc" data-lang="en">Let's build Korea's V0 + Vercel · Bolt + Supabase together.</div>
-      <div class="next-timeline-desc" data-lang="ja">韓国版 V0 + Vercel · Bolt + Supabase、共に作っていきましょう。</div>
+      <div class="next-timeline-title">CEO 김정환 · kjh@weven.kr · +82-10-8447-4567</div>
+      <div class="next-timeline-desc">한국판 V0 + AWS · Bolt + Supabase, 함께 만들어갑시다.</div>
     </div>
   </div>
 </div>
@@ -1903,44 +1693,42 @@ function handleSlideMedia(slide) {
   }
 }
 
-// Auto-zoom: scale slide-inner to fit within available viewport height
+// Auto-zoom: scale slide-inner to fit within safe area (80px top, 50px bottom)
 function fitSlideContent(slide) {
   var inner = slide.querySelector('.slide-inner');
   if (!inner) return;
-  // Reset zoom and temporarily remove max-height/overflow to measure true natural height
   inner.style.zoom = '';
-  inner.style.maxHeight = 'none';
   inner.style.overflow = 'visible';
+  inner.style.maxHeight = 'none';
   void inner.offsetHeight;
-  var cs = getComputedStyle(slide);
-  var padTop = parseFloat(cs.paddingTop) || 0;
-  var padBot = parseFloat(cs.paddingBottom) || 0;
-  var bottomUI = window.innerWidth * 0.07;
-  var availH = slide.clientHeight - padTop - Math.max(padBot, bottomUI);
   var naturalH = inner.scrollHeight;
-  // Restore constraints
-  inner.style.maxHeight = '';
-  inner.style.overflow = '';
+  // Centered content must clear top bar (80px) + footer (50px) → need zoomedH <= vh - 160
+  var availH = slide.clientHeight - 160;
   if (naturalH > availH && naturalH > 0) {
-    inner.style.zoom = (availH / naturalH).toFixed(4);
+    inner.style.zoom = Math.max(0.3, availH / naturalH).toFixed(4);
   }
+  inner.style.overflow = '';
+  inner.style.maxHeight = '';
 }
 
 function fitAllSlides() {
+  var hidden = [];
   slides.forEach(function(s) {
-    var wasHidden = !s.classList.contains('active');
-    if (wasHidden) { s.style.display = 'flex'; s.style.visibility = 'hidden'; }
-    fitSlideContent(s);
-    if (wasHidden) { s.style.display = ''; s.style.visibility = ''; }
+    if (!s.classList.contains('active')) {
+      s.style.display = 'flex';
+      s.style.visibility = 'hidden';
+      hidden.push(s);
+    }
   });
+  void document.body.offsetHeight;
+  slides.forEach(function(s) { fitSlideContent(s); });
+  hidden.forEach(function(s) { s.style.display = ''; s.style.visibility = ''; });
 }
 
-// Run after fonts loaded for accurate measurement
 if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(fitAllSlides);
-} else {
-  window.addEventListener('load', fitAllSlides);
+  document.fonts.ready.then(function() { requestAnimationFrame(fitAllSlides); });
 }
+window.addEventListener('load', function() { requestAnimationFrame(fitAllSlides); });
 window.addEventListener('resize', fitAllSlides);
 
 function goTo(idx, source) {
@@ -1949,11 +1737,16 @@ function goTo(idx, source) {
   slides[current].classList.remove('active');
   current = idx;
   var next = slides[current];
+  // Pre-fit zoom before activation so entrance animation plays correctly
+  next.style.display = 'flex';
+  next.style.visibility = 'hidden';
+  fitSlideContent(next);
+  next.style.display = '';
+  next.style.visibility = '';
   next.classList.remove('active');
   void next.offsetHeight;
   next.classList.add('active');
   updateIndicator();
-  fitSlideContent(next);
   handleSlideMedia(next);
   if (window.parent !== window) {
     try {

@@ -7,6 +7,10 @@ let lang = 'ko';
 let irVersion = '2601';  // IR 버전 (기본값)
 let pageZooms = [];
 let pageAlignments = [];  // [{titleH: 'left', contentV: 'top', contentH: 'center'}, ...]
+let pageLayouts = [];  // 'auto' | 'row' | 'column' per slide
+let pageFontDeltas = [];  // per-slide content font size delta in px (default 0)
+let pageTitleZooms = [];  // per-slide title zoom % (default 100)
+let pageTitleFontDeltas = [];  // per-slide title font size delta in px (default 0)
 let globalZoom = 100;
 let titleScale = 100;
 let titleAlignH = 'left';  // left, center, right (title horizontal alignment)
@@ -64,6 +68,18 @@ function loadZooms() {
     if (savedAlignH) {
       contentAlignH = savedAlignH;
     }
+    const savedFontDeltas = localStorage.getItem('printPreviewFontDeltas');
+    if (savedFontDeltas) {
+      pageFontDeltas = JSON.parse(savedFontDeltas);
+    }
+    const savedTitleZooms = localStorage.getItem('printPreviewTitleZooms');
+    if (savedTitleZooms) {
+      pageTitleZooms = JSON.parse(savedTitleZooms);
+    }
+    const savedTitleFontDeltas = localStorage.getItem('printPreviewTitleFontDeltas');
+    if (savedTitleFontDeltas) {
+      pageTitleFontDeltas = JSON.parse(savedTitleFontDeltas);
+    }
   } catch (e) {
     console.warn('Failed to load zoom settings:', e);
   }
@@ -78,6 +94,9 @@ function saveZooms() {
     localStorage.setItem('printPreviewTitleAlignH', titleAlignH);
     localStorage.setItem('printPreviewAlignV', contentAlignV);
     localStorage.setItem('printPreviewAlignH', contentAlignH);
+    localStorage.setItem('printPreviewFontDeltas', JSON.stringify(pageFontDeltas));
+    localStorage.setItem('printPreviewTitleZooms', JSON.stringify(pageTitleZooms));
+    localStorage.setItem('printPreviewTitleFontDeltas', JSON.stringify(pageTitleFontDeltas));
   } catch (e) {
     console.warn('Failed to save zoom settings:', e);
   }
@@ -108,6 +127,13 @@ async function fetchSlides() {
       // making text and layout disproportionately large.
       // Also strip max(18px,...) wrappers so text scales proportionally.
       newStyle.textContent = convertVwCss(styleEl.textContent);
+      // 260304: Replace green accent (#00D4AA) with blue (#3B82F6) for print
+      if (irVersion === '260304') {
+        newStyle.textContent = newStyle.textContent
+          .replace(/#00D4AA/gi, '#3B82F6')
+          .replace(/rgba\(0,212,170/g, 'rgba(59,130,246')
+          .replace(/rgba\(0, 212, 170/g, 'rgba(59,130,246');
+      }
       document.head.appendChild(newStyle);
     }
 
@@ -148,8 +174,30 @@ async function fetchSlides() {
       pageAlignments = Array(total).fill(null).map(() => ({ titleH: null, contentV: null, contentH: null }));
     }
 
+    // Initialize pageFontDeltas if empty
+    if (pageFontDeltas.length !== total) {
+      pageFontDeltas = Array(total).fill(0);
+    }
+
+    // Initialize pageTitleZooms if empty
+    if (pageTitleZooms.length !== total) {
+      pageTitleZooms = Array(total).fill(100);
+    }
+
+    // Initialize pageTitleFontDeltas if empty
+    if (pageTitleFontDeltas.length !== total) {
+      pageTitleFontDeltas = Array(total).fill(0);
+    }
+
     // Render slides
     renderSlides();
+
+    // Apply saved per-slide settings
+    requestAnimationFrame(() => {
+      applyAllTitleZooms();
+      applyAllTitleFontDeltas();
+      applyAllFontDeltas();
+    });
 
     hideLoading();
   } catch (e) {
@@ -174,8 +222,10 @@ function renderSlides() {
       updateSlideScale(idx);
       applyContentZoom(idx, pageZooms[idx]);
     });
-    // Apply saved title scale
-    applyTitleScale(titleScale);
+    // Apply saved per-slide title zooms (replaces global applyTitleScale)
+    for (let i = 0; i < total; i++) {
+      applyPageTitleZoom(i, pageTitleZooms[i]);
+    }
     // Apply saved alignments
     applyTitleAlignment();
     applyContentAlignment();
@@ -200,7 +250,8 @@ function fixGradientTextForPDF() {
         // ir-2602, ir-260202 (light theme) = #6366F1 (indigo)
         const isLightTheme = clone.classList.contains('ir-2602') ||
                             clone.classList.contains('ir-260202');
-        const fallbackColor = isLightTheme ? '#6366F1' : '#00D4AA';
+        const is260304 = clone.classList.contains('ir-260304');
+        const fallbackColor = isLightTheme ? '#6366F1' : is260304 ? '#3B82F6' : '#00D4AA';
 
         // Remove gradient background and apply solid color
         el.style.setProperty('background', 'none', 'important');
@@ -223,9 +274,20 @@ function createSlideWrapper(slide, idx) {
   const titleKey = 'title' + lang.charAt(0).toUpperCase() + lang.slice(1);
   const slideTitle = slide.dataset[titleKey] || '';
 
+  // Detect original layout from slide-inner
+  const origInner = slide.querySelector('.slide-inner');
+  const origIsRow = origInner && origInner.style.flexDirection === 'row';
+  if (!pageLayouts[idx]) pageLayouts[idx] = origIsRow ? 'row' : 'column';
+
   // Header
   const header = document.createElement('div');
   header.className = 'preview-slide-header';
+
+  const layoutLabel = lang === 'ko' ? '레이아웃:' : 'Layout:';
+  const rowLabel = lang === 'ko' ? '가로' : 'Row';
+  const colLabel = lang === 'ko' ? '세로' : 'Col';
+
+  const fmtDelta = (v) => (v > 0 ? '+' : '') + v + 'px';
 
   header.innerHTML = `
     <div class="slide-info">
@@ -233,31 +295,66 @@ function createSlideWrapper(slide, idx) {
       <span class="slide-title">${slideTitle}</span>
     </div>
     <div class="slide-controls">
-      <div class="zoom-control">
-        <label>${lang === 'ko' ? '줌:' : 'Zoom:'}</label>
-        <input type="range" min="50" max="150" value="${pageZooms[idx]}"
-               data-idx="${idx}" oninput="setPageZoom(${idx}, this.value)">
-        <span class="zoom-val" id="zoomVal${idx}">${pageZooms[idx]}%</span>
-      </div>
-      <div class="page-content-h-align-control">
-        <label>H:</label>
-        <div class="page-content-h-align-buttons" id="pageContentHAlignBtns${idx}">
-          <button class="page-content-h-btn" data-h="left" onclick="setPageContentHAlign(${idx}, 'left')" title="Left">◀</button>
-          <button class="page-content-h-btn" data-h="center" onclick="setPageContentHAlign(${idx}, 'center')" title="Center">●</button>
-          <button class="page-content-h-btn" data-h="right" onclick="setPageContentHAlign(${idx}, 'right')" title="Right">▶</button>
+      <div class="slide-controls-row">
+        <span class="control-group-label">T</span>
+        <div class="zoom-control">
+          <label>${lang === 'ko' ? '줌:' : 'Zm:'}</label>
+          <input type="range" min="50" max="150" value="${pageTitleZooms[idx]}"
+                 id="titleZoomSlider${idx}" oninput="setPageTitleZoom(${idx}, this.value)">
+          <span class="zoom-val" id="titleZoomVal${idx}">${pageTitleZooms[idx]}%</span>
+        </div>
+        <div class="page-font-control">
+          <label>${lang === 'ko' ? '글꼴:' : 'Ft:'}</label>
+          <button class="page-font-btn" onclick="setPageTitleFontDelta(${idx}, -1)" title="-1px">A−</button>
+          <span class="page-font-val" id="titleFontVal${idx}">${fmtDelta(pageTitleFontDeltas[idx] || 0)}</span>
+          <button class="page-font-btn" onclick="setPageTitleFontDelta(${idx}, 1)" title="+1px">A+</button>
+          <button class="page-font-btn page-font-reset" onclick="resetPageTitleFontDelta(${idx})" title="Reset">↺</button>
         </div>
       </div>
-      <div class="page-content-v-align-control">
-        <label>V:</label>
-        <div class="page-content-v-align-buttons" id="pageContentVAlignBtns${idx}">
-          <button class="page-content-v-btn" data-v="top" onclick="setPageContentVAlign(${idx}, 'top')" title="Top">↑</button>
-          <button class="page-content-v-btn" data-v="middle" onclick="setPageContentVAlign(${idx}, 'middle')" title="Middle">●</button>
-          <button class="page-content-v-btn" data-v="bottom" onclick="setPageContentVAlign(${idx}, 'bottom')" title="Bottom">↓</button>
+      <div class="slide-controls-row">
+        <span class="control-group-label">C</span>
+        <div class="zoom-control">
+          <label>${lang === 'ko' ? '줌:' : 'Zm:'}</label>
+          <input type="range" min="50" max="150" value="${pageZooms[idx]}"
+                 data-idx="${idx}" oninput="setPageZoom(${idx}, this.value)">
+          <span class="zoom-val" id="zoomVal${idx}">${pageZooms[idx]}%</span>
+        </div>
+        <div class="page-font-control">
+          <label>${lang === 'ko' ? '글꼴:' : 'Ft:'}</label>
+          <button class="page-font-btn" onclick="setPageFontDelta(${idx}, -1)" title="-1px">A−</button>
+          <span class="page-font-val" id="fontVal${idx}">${fmtDelta(pageFontDeltas[idx] || 0)}</span>
+          <button class="page-font-btn" onclick="setPageFontDelta(${idx}, 1)" title="+1px">A+</button>
+          <button class="page-font-btn page-font-reset" onclick="resetPageFontDelta(${idx})" title="Reset">↺</button>
         </div>
       </div>
-      <button class="page-auto-fit-btn" onclick="autoFitPage(${idx})" title="${lang === 'ko' ? '자동 맞춤' : 'Auto Fit'}">
-        ${lang === 'ko' ? '자동맞춤' : 'Auto Fit'}
-      </button>
+      <div class="slide-controls-row">
+        <div class="page-content-h-align-control">
+          <label>H:</label>
+          <div class="page-content-h-align-buttons" id="pageContentHAlignBtns${idx}">
+            <button class="page-content-h-btn" data-h="left" onclick="setPageContentHAlign(${idx}, 'left')" title="Left">◀</button>
+            <button class="page-content-h-btn" data-h="center" onclick="setPageContentHAlign(${idx}, 'center')" title="Center">●</button>
+            <button class="page-content-h-btn" data-h="right" onclick="setPageContentHAlign(${idx}, 'right')" title="Right">▶</button>
+          </div>
+        </div>
+        <div class="page-content-v-align-control">
+          <label>V:</label>
+          <div class="page-content-v-align-buttons" id="pageContentVAlignBtns${idx}">
+            <button class="page-content-v-btn" data-v="top" onclick="setPageContentVAlign(${idx}, 'top')" title="Top">↑</button>
+            <button class="page-content-v-btn" data-v="middle" onclick="setPageContentVAlign(${idx}, 'middle')" title="Middle">●</button>
+            <button class="page-content-v-btn" data-v="bottom" onclick="setPageContentVAlign(${idx}, 'bottom')" title="Bottom">↓</button>
+          </div>
+        </div>
+        <div class="page-layout-control">
+          <label>${layoutLabel}</label>
+          <div class="page-layout-buttons" id="pageLayoutBtns${idx}">
+            <button class="page-layout-btn${pageLayouts[idx] === 'row' ? ' active' : ''}" data-layout="row" onclick="setPageLayout(${idx}, 'row')" title="${rowLabel}">☰</button>
+            <button class="page-layout-btn${pageLayouts[idx] === 'column' ? ' active' : ''}" data-layout="column" onclick="setPageLayout(${idx}, 'column')" title="${colLabel}">☷</button>
+          </div>
+        </div>
+        <button class="page-auto-fit-btn" onclick="autoFitPage(${idx})" title="${lang === 'ko' ? '자동 맞춤' : 'Auto Fit'}">
+          ${lang === 'ko' ? '자동맞춤' : 'Auto Fit'}
+        </button>
+      </div>
     </div>
   `;
   wrapper.appendChild(header);
@@ -319,6 +416,11 @@ function createSlideWrapper(slide, idx) {
   // Convert vw to px in inline styles and SVG attributes
   convertVwInDom(clone);
 
+  // 260304: Replace green accent (#00D4AA) with blue (#3B82F6) in inline styles & SVG
+  if (irVersion === '260304') {
+    replaceGreenAccent(clone);
+  }
+
   // Replace <video> elements with MOVIE placeholder
   replaceVideosWithPlaceholder(clone);
 
@@ -331,9 +433,43 @@ function createSlideWrapper(slide, idx) {
   return wrapper;
 }
 
-// Replace <video> elements with MOVIE placeholder
+// 260304: Replace green accent (#00D4AA) with blue (#3B82F6) in cloned DOM
+function replaceGreenAccent(node) {
+  const walk = (el) => {
+    // Replace in inline style attribute
+    const style = el.getAttribute('style');
+    if (style && (style.includes('#00D4AA') || style.includes('0,212,170') || style.includes('0, 212, 170'))) {
+      el.setAttribute('style', style
+        .replace(/#00D4AA/gi, '#3B82F6')
+        .replace(/rgba\(0,\s*212,\s*170/g, 'rgba(59,130,246'));
+    }
+    // Replace in SVG fill/stroke/stop-color attributes
+    ['fill', 'stroke', 'stop-color'].forEach(attr => {
+      const val = el.getAttribute(attr);
+      if (val && val.includes('#00D4AA')) {
+        el.setAttribute(attr, val.replace(/#00D4AA/gi, '#3B82F6'));
+      }
+    });
+    // Recurse
+    for (let i = 0; i < el.children.length; i++) {
+      walk(el.children[i]);
+    }
+  };
+  walk(node);
+}
+
+// Replace <video> elements with fallback image or MOVIE placeholder
 function replaceVideosWithPlaceholder(element) {
   element.querySelectorAll('video').forEach(video => {
+    // Check for sibling .video-fallback image
+    const fallback = video.parentNode.querySelector('.video-fallback');
+    if (fallback) {
+      // Show fallback image, remove video
+      fallback.style.display = 'block';
+      video.remove();
+      return;
+    }
+
     const placeholder = document.createElement('div');
     placeholder.className = 'video-placeholder';
 
@@ -416,6 +552,14 @@ function applyContentZoom(idx, zoomPercent) {
   const zoom = zoomPercent / 100;
   // 2601은 hero, 2602는 cover 클래스 사용
   const isCover = clone.classList.contains('cover') || clone.classList.contains('hero');
+
+  // row 레이아웃이면 content-wrapper 생성 건너뛰고 slide-inner 전체에 zoom 적용
+  const isRowLayout = pageLayouts[idx] === 'row';
+  if (isRowLayout) {
+    slideInner.style.setProperty('transform-origin', 'top left', 'important');
+    slideInner.style.setProperty('transform', `scale(${zoom})`, 'important');
+    return;
+  }
 
   // Title 요소 목록 (Cover/Hero 페이지는 title 없음 - 전체가 콘텐츠)
   const titleSelectors = isCover ? [] : ['.section-label', '.section-title', '.section-desc'];
@@ -502,8 +646,15 @@ function setTitleScale(value) {
   // Update display
   document.getElementById('titleScaleValue').textContent = val + '%';
 
-  // Apply to all slides
-  applyTitleScale(val);
+  // Apply to all per-slide title zooms
+  for (let i = 0; i < total; i++) {
+    pageTitleZooms[i] = val;
+    applyPageTitleZoom(i, val);
+    const titleZoomValEl = document.getElementById('titleZoomVal' + i);
+    if (titleZoomValEl) titleZoomValEl.textContent = val + '%';
+    const titleZoomSlider = document.getElementById('titleZoomSlider' + i);
+    if (titleZoomSlider) titleZoomSlider.value = val;
+  }
 
   // Save
   saveZooms();
@@ -658,7 +809,31 @@ function applyContentAlignment() {
 // 타이틀 고정, content-wrapper 내부에서 콘텐츠 수직 정렬만 적용
 // 수평 정렬은 transform-origin만 변경 (너비 유지)
 function applyContentAlignmentToSlide(clone, alignV, alignH) {
+  const slideInner = clone.querySelector('.slide-inner');
   const contentWrapper = clone.querySelector('.slide-inner > .content-wrapper');
+
+  // row 레이아웃 (content-wrapper 없이 slide-inner 직접 제어)
+  // pageLayouts에서 해당 인덱스를 찾기
+  const frame = clone.closest('.preview-slide-frame');
+  const frameId = frame ? frame.id : '';
+  const idxMatch = frameId.match(/\d+$/);
+  const idx = idxMatch ? parseInt(idxMatch[0]) : -1;
+  const isRowByLayout = idx >= 0 && pageLayouts[idx] === 'row';
+
+  if (isRowByLayout && slideInner) {
+    // row 레이아웃: slide-inner에 직접 정렬 적용
+    const alignValue = alignV === 'middle' ? 'center' : alignV === 'bottom' ? 'flex-end' : 'flex-start';
+    slideInner.style.setProperty('align-items', alignValue, 'important');
+
+    const justifyValue = alignH === 'center' ? 'center' : alignH === 'right' ? 'flex-end' : 'flex-start';
+    slideInner.style.setProperty('justify-content', justifyValue, 'important');
+
+    const originX = alignH === 'left' ? 'left' : alignH === 'right' ? 'right' : 'center';
+    const originY = alignV === 'top' ? 'top' : alignV === 'bottom' ? 'bottom' : 'center';
+    slideInner.style.setProperty('transform-origin', `${originX} ${originY}`, 'important');
+    return;
+  }
+
   if (!contentWrapper) return;
 
   // 2601은 hero, 2602는 cover 클래스 사용
@@ -798,6 +973,24 @@ function resetToFit() {
   // Reset all page alignments to follow global
   pageAlignments = Array(total).fill(null).map(() => ({ titleH: null, contentV: null, contentH: null }));
 
+  // Reset font deltas
+  pageFontDeltas = Array(total).fill(0);
+  pageTitleZooms = Array(total).fill(100);
+  pageTitleFontDeltas = Array(total).fill(0);
+  for (let i = 0; i < total; i++) {
+    applyPageFontDelta(i);
+    applyPageTitleZoom(i, 100);
+    applyPageTitleFontDelta(i);
+    const fontValEl = document.getElementById('fontVal' + i);
+    if (fontValEl) fontValEl.textContent = '0px';
+    const titleFontValEl = document.getElementById('titleFontVal' + i);
+    if (titleFontValEl) titleFontValEl.textContent = '0px';
+    const titleZoomValEl = document.getElementById('titleZoomVal' + i);
+    if (titleZoomValEl) titleZoomValEl.textContent = '100%';
+    const titleZoomSlider = document.getElementById('titleZoomSlider' + i);
+    if (titleZoomSlider) titleZoomSlider.value = 100;
+  }
+
   // Reset global alignments to defaults
   titleAlignH = 'left';
   contentAlignV = 'middle';
@@ -818,8 +1011,7 @@ function resetToFit() {
     applyContentZoom(i, 100);
   }
 
-  // Apply title scale
-  applyTitleScale(100);
+  // Title zooms and font deltas already reset in loop above
 
   // Apply alignments
   applyTitleAlignment();
@@ -914,6 +1106,47 @@ function setLoadingProgress(percent, text) {
 }
 
 // Auto fit page - calculate optimal zoom to fit content in frame and center it
+// Set page layout (row or column)
+function setPageLayout(idx, layout) {
+  pageLayouts[idx] = layout;
+
+  const frame = document.getElementById('previewFrame' + idx);
+  if (!frame) return;
+
+  const clone = frame.querySelector('.slide-clone');
+  if (!clone) return;
+
+  const slideInner = clone.querySelector('.slide-inner');
+  if (!slideInner) return;
+
+  // Remove existing content-wrapper if switching to row
+  if (layout === 'row') {
+    const cw = slideInner.querySelector(':scope > .content-wrapper');
+    if (cw) {
+      // Move children back to slide-inner
+      while (cw.firstChild) {
+        slideInner.insertBefore(cw.firstChild, cw);
+      }
+      cw.remove();
+    }
+    slideInner.style.setProperty('flex-direction', 'row', 'important');
+    slideInner.style.setProperty('align-items', 'stretch', 'important');
+    slideInner.style.removeProperty('transform');
+  } else {
+    slideInner.style.setProperty('flex-direction', 'column', 'important');
+    slideInner.style.removeProperty('transform');
+  }
+
+  // Re-apply zoom
+  applyContentZoom(idx, pageZooms[idx]);
+
+  // Update button states
+  const btns = document.querySelectorAll(`#pageLayoutBtns${idx} .page-layout-btn`);
+  btns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.layout === layout);
+  });
+}
+
 function autoFitPage(idx) {
   const frame = document.getElementById('previewFrame' + idx);
   if (!frame) return;
@@ -1034,6 +1267,214 @@ function autoFitPage(idx) {
 
     saveZooms();
   });
+}
+
+// ═══════════════════════════════════════════════════════════
+// PER-PAGE TITLE ZOOM
+// ═══════════════════════════════════════════════════════════
+
+function setPageTitleZoom(idx, value) {
+  const val = parseInt(value);
+  pageTitleZooms[idx] = val;
+
+  const valEl = document.getElementById('titleZoomVal' + idx);
+  if (valEl) valEl.textContent = val + '%';
+
+  applyPageTitleZoom(idx, val);
+  saveZooms();
+}
+
+function applyPageTitleZoom(idx, zoomPercent) {
+  const frame = document.getElementById('previewFrame' + idx);
+  if (!frame) return;
+  const clone = frame.querySelector('.slide-clone');
+  if (!clone) return;
+
+  const scale = zoomPercent / 100;
+  const titleSelectors = ['.section-label', '.section-title', '.section-desc'];
+
+  titleSelectors.forEach(selector => {
+    clone.querySelectorAll(selector).forEach(el => {
+      el.style.setProperty('transform', `scale(${scale})`, 'important');
+      el.style.setProperty('transform-origin', 'top left', 'important');
+      if (scale < 1) {
+        const originalHeight = el.offsetHeight;
+        const scaledHeight = originalHeight * scale;
+        el.style.setProperty('margin-bottom', (scaledHeight - originalHeight) + 'px', 'important');
+      } else if (scale > 1) {
+        const originalHeight = el.offsetHeight;
+        const scaledHeight = originalHeight * scale;
+        el.style.setProperty('margin-bottom', (scaledHeight - originalHeight) + 'px', 'important');
+      } else {
+        el.style.removeProperty('margin-bottom');
+      }
+    });
+  });
+}
+
+// Apply all saved title zooms on initial render
+function applyAllTitleZooms() {
+  for (let i = 0; i < total; i++) {
+    if (pageTitleZooms[i] && pageTitleZooms[i] !== 100) {
+      applyPageTitleZoom(i, pageTitleZooms[i]);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// PER-PAGE TITLE FONT SIZE ADJUSTMENT (+/- 1px delta)
+// ═══════════════════════════════════════════════════════════
+
+function setPageTitleFontDelta(idx, direction) {
+  if (!pageTitleFontDeltas[idx]) pageTitleFontDeltas[idx] = 0;
+  pageTitleFontDeltas[idx] += direction;
+  applyPageTitleFontDelta(idx);
+  const valEl = document.getElementById('titleFontVal' + idx);
+  if (valEl) valEl.textContent = (pageTitleFontDeltas[idx] > 0 ? '+' : '') + pageTitleFontDeltas[idx] + 'px';
+  saveZooms();
+}
+
+function resetPageTitleFontDelta(idx) {
+  pageTitleFontDeltas[idx] = 0;
+  applyPageTitleFontDelta(idx);
+  const valEl = document.getElementById('titleFontVal' + idx);
+  if (valEl) valEl.textContent = '0px';
+  saveZooms();
+}
+
+function applyPageTitleFontDelta(idx) {
+  const frame = document.getElementById('previewFrame' + idx);
+  if (!frame) return;
+  const clone = frame.querySelector('.slide-clone');
+  if (!clone) return;
+  const delta = pageTitleFontDeltas[idx] || 0;
+
+  const titleSelectors = ['.section-label', '.section-title', '.section-desc'];
+
+  titleSelectors.forEach(selector => {
+    clone.querySelectorAll(selector).forEach(el => {
+      // Process the title element and all its children
+      const elements = [el, ...el.querySelectorAll('*')];
+      elements.forEach(target => {
+        if (target.tagName === 'BR' || target.tagName === 'SVG' || target.closest('svg')) return;
+
+        const cs = window.getComputedStyle(target);
+        const currentSize = parseFloat(cs.fontSize);
+        if (!currentSize || isNaN(currentSize)) return;
+
+        if (!target.hasAttribute('data-orig-title-font-size')) {
+          target.setAttribute('data-orig-title-font-size', currentSize.toString());
+        }
+
+        const origSize = parseFloat(target.getAttribute('data-orig-title-font-size'));
+        if (delta === 0) {
+          target.style.fontSize = origSize + 'px';
+        } else {
+          target.style.fontSize = Math.max(1, origSize + delta) + 'px';
+        }
+      });
+    });
+  });
+}
+
+function applyAllTitleFontDeltas() {
+  for (let i = 0; i < total; i++) {
+    if (pageTitleFontDeltas[i] && pageTitleFontDeltas[i] !== 0) {
+      applyPageTitleFontDelta(i);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// PER-PAGE CONTENT FONT SIZE ADJUSTMENT (+/- 1px delta)
+// ═══════════════════════════════════════════════════════════
+
+function setPageFontDelta(idx, direction) {
+  if (!pageFontDeltas[idx]) pageFontDeltas[idx] = 0;
+  pageFontDeltas[idx] += direction;
+  applyPageFontDelta(idx);
+  const valEl = document.getElementById('fontVal' + idx);
+  if (valEl) valEl.textContent = (pageFontDeltas[idx] > 0 ? '+' : '') + pageFontDeltas[idx] + 'px';
+  saveZooms();
+}
+
+function resetPageFontDelta(idx) {
+  pageFontDeltas[idx] = 0;
+  applyPageFontDelta(idx);
+  const valEl = document.getElementById('fontVal' + idx);
+  if (valEl) valEl.textContent = '0px';
+  saveZooms();
+}
+
+function applyPageFontDelta(idx) {
+  const frame = document.getElementById('previewFrame' + idx);
+  if (!frame) return;
+  const clone = frame.querySelector('.slide-clone');
+  if (!clone) return;
+  const delta = pageFontDeltas[idx] || 0;
+
+  // Collect all content elements (skip titles: section-label, section-title, section-desc)
+  const titleClasses = ['section-label', 'section-title', 'section-desc'];
+
+  function isTitle(el) {
+    return titleClasses.some(cls => el.classList && el.classList.contains(cls));
+  }
+
+  function isInsideTitle(el) {
+    let node = el;
+    while (node && node !== clone) {
+      if (isTitle(node)) return true;
+      node = node.parentElement;
+    }
+    return false;
+  }
+
+  // Walk all text-containing elements within content only
+  const allElements = clone.querySelectorAll('*');
+  allElements.forEach(el => {
+    // Skip non-visible or structural elements
+    if (el.tagName === 'STYLE' || el.tagName === 'SCRIPT' || el.tagName === 'SVG' ||
+        el.closest('svg') || el.tagName === 'BR' || el.tagName === 'IMG') return;
+
+    // Skip title elements and their children
+    if (isTitle(el) || isInsideTitle(el)) {
+      // Reset to original if previously modified
+      if (el.hasAttribute('data-orig-font-size')) {
+        const origSize = parseFloat(el.getAttribute('data-orig-font-size'));
+        el.style.fontSize = origSize + 'px';
+      }
+      return;
+    }
+
+    const cs = window.getComputedStyle(el);
+    const currentSize = parseFloat(cs.fontSize);
+    if (!currentSize || isNaN(currentSize)) return;
+
+    // Store original font-size on first application
+    if (!el.hasAttribute('data-orig-font-size')) {
+      el.setAttribute('data-orig-font-size', currentSize.toString());
+    }
+
+    if (delta === 0) {
+      // Reset to original
+      el.style.fontSize = el.getAttribute('data-orig-font-size') + 'px';
+    } else {
+      const origSize = parseFloat(el.getAttribute('data-orig-font-size'));
+      const newSize = Math.max(1, origSize + delta);
+      el.style.fontSize = newSize + 'px';
+    }
+  });
+}
+
+// Apply all saved font deltas on initial render
+function applyAllFontDeltas() {
+  for (let i = 0; i < total; i++) {
+    if (pageFontDeltas[i] && pageFontDeltas[i] !== 0) {
+      applyPageFontDelta(i);
+      const valEl = document.getElementById('fontVal' + i);
+      if (valEl) valEl.textContent = (pageFontDeltas[i] > 0 ? '+' : '') + pageFontDeltas[i] + 'px';
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════

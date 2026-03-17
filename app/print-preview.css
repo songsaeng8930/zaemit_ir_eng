@@ -227,7 +227,7 @@ html {
 .preview-slide-wrapper {
   background: var(--pp-dark);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   width: 100% !important;
   max-width: 1400px !important;
@@ -235,11 +235,12 @@ html {
 
 .preview-slide-header {
   background: rgba(255,255,255,0.05);
-  padding: 12px 20px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--pp-border);
+  gap: 12px;
 }
 
 .slide-info {
@@ -278,18 +279,39 @@ html {
   accent-color: var(--pp-accent);
 }
 
+.slide-controls-row .zoom-control input[type="range"] {
+  width: 60px;
+}
+
 .zoom-control .zoom-val {
   font-size: 12px;
   color: var(--pp-text);
   font-weight: 600;
-  min-width: 40px;
+  min-width: 36px;
 }
 
 /* Slide controls container */
 .slide-controls {
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.slide-controls-row {
+  display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
+}
+
+.control-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--pp-accent);
+  background: rgba(0,212,170,0.15);
+  padding: 1px 6px;
+  border-radius: 3px;
+  min-width: 18px;
+  text-align: center;
 }
 
 /* Per-page alignment controls - shared */
@@ -455,6 +477,101 @@ html {
   background: rgba(124, 58, 237, 0.3);
   border-color: rgba(124, 58, 237, 0.6);
   color: #C4B5FD;
+}
+
+/* Layout toggle buttons */
+.page-layout-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-layout-control label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.page-layout-buttons {
+  display: flex;
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.page-layout-btn {
+  width: 24px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: var(--pp-muted);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  opacity: 0.6;
+}
+
+.page-layout-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--pp-text);
+  opacity: 1;
+}
+
+.page-layout-btn.active {
+  background: #3B82F6;
+  color: #fff;
+  opacity: 1;
+}
+
+/* Per-page font size control */
+.page-font-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-font-control label {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.page-font-btn {
+  width: 24px;
+  height: 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: var(--pp-muted);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.page-font-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--pp-text);
+  border-color: var(--pp-accent);
+}
+
+.page-font-btn.page-font-reset {
+  font-size: 13px;
+  width: 20px;
+}
+
+.page-font-val {
+  font-size: 11px;
+  color: var(--pp-text);
+  font-weight: 600;
+  min-width: 32px;
+  text-align: center;
 }
 
 /* ── SLIDE FRAME ── */
@@ -806,6 +923,7 @@ body.light-theme .video-placeholder svg,
   justify-content: flex-start !important;
   opacity: 1 !important;
   visibility: visible !important;
+  overflow: visible !important;
   top: 0 !important;
   left: 0 !important;
   right: auto !important;
@@ -846,6 +964,14 @@ body.light-theme .slide-clone.slide.cover,
   justify-content: flex-start !important; /* 타이틀 항상 위에 */
   opacity: 1 !important;
   transform: none !important;
+  overflow: visible !important;
+}
+
+/* slide-inner에 인라인 flex-direction:row가 있으면 유지 */
+.slide-clone .slide-inner[style*="flex-direction:row"],
+.slide-clone .slide-inner[style*="flex-direction: row"] {
+  flex-direction: row !important;
+  align-items: stretch !important;
 }
 
 /* ── ANIMATION RESET - Show final state ── */
