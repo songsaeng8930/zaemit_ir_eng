@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Zaemit 경쟁사 비교 분석</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#3B82F6;--accent2:#7C3AED;
+  --dark:#0A0E27;--dark2:#111633;--dark3:#1a1f42;
+  --text:#E2E8F0;--text-muted:#94A3B8;
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#7C3AED 50%,#3B82F6 100%);
+  --gradient2:linear-gradient(135deg,#3B82F6 0%,#0066FF 100%);
+  --gradient3:linear-gradient(135deg,#7C3AED 0%,#EC4899 100%);
+  --zaemit:#0066FF;--imweb:#FF6B35;
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:4.6875vw 7.8125vw 7vw;opacity:0;
+  transition:left .35s cubic-bezier(.16,1,.3,1);
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(2.5vw)}to{opacity:1;transform:translateX(0)}}
+
+/* All animatable children start hidden */
+.slide .section-label,.slide .section-title,.slide .section-desc,
+.slide .hero-left,.slide .hero-right,.slide .hero-stats,
+.slide .content-area,.slide .versus-area,.slide .img-placeholder,
+.slide .feature-list,.slide .comp-two-col,.slide .pricing-compare,
+.slide .timeline,.slide .conclusion-highlight,.slide .conclusion-points,
+.slide .collab-grid > *,.slide .card-grid > *,.slide .comp-row,
+.slide .timeline-item{opacity:0}
+
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+.slide.active .content-area{animation:aFadeUp .5s ease .55s both}
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .7s both}
+.slide.active .versus-area{animation:aScaleIn .5s ease .55s both}
+.slide.active .img-placeholder{animation:aFadeIn .6s ease .6s both}
+.slide.active .feature-list{animation:aFadeUp .5s ease .55s both}
+.slide.active .comp-two-col{animation:aFadeIn .3s ease .5s both}
+.slide.active .pricing-compare{animation:aFadeIn .3s ease .5s both}
+.slide.active .timeline{animation:aFadeIn .3s ease .5s both}
+.slide.active .conclusion-highlight{animation:aScaleIn .6s ease .5s both}
+.slide.active .conclusion-points{animation:aFadeUp .5s ease .7s both}
+.slide.active .card-grid > *:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .card-grid > *:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .card-grid > *:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .collab-grid > *:nth-child(1){animation:aSlideR .45s ease .55s both}
+.slide.active .collab-grid > *:nth-child(2){animation:aSlideR .45s ease .65s both}
+.slide.active .collab-grid > *:nth-child(3){animation:aSlideR .45s ease .75s both}
+.slide.active .collab-grid > *:nth-child(4){animation:aSlideL .45s ease .55s both}
+.slide.active .collab-grid > *:nth-child(5){animation:aSlideL .45s ease .65s both}
+.slide.active .collab-grid > *:nth-child(6){animation:aSlideL .45s ease .75s both}
+.slide.active .collab-grid > *:nth-child(7){animation:aSlideL .45s ease .85s both}
+.slide.active .comp-row:nth-child(1){animation:aFadeUp .4s ease .5s both}
+.slide.active .comp-row:nth-child(2){animation:aFadeUp .4s ease .58s both}
+.slide.active .comp-row:nth-child(3){animation:aFadeUp .4s ease .66s both}
+.slide.active .comp-row:nth-child(4){animation:aFadeUp .4s ease .74s both}
+.slide.active .comp-row:nth-child(5){animation:aFadeUp .4s ease .82s both}
+.slide.active .comp-row:nth-child(6){animation:aFadeUp .4s ease .90s both}
+.slide.active .comp-row:nth-child(7){animation:aFadeUp .4s ease .98s both}
+.slide.active .comp-row:nth-child(8){animation:aFadeUp .4s ease 1.06s both}
+.slide.active .comp-row:nth-child(9){animation:aFadeUp .4s ease 1.14s both}
+.slide.active .timeline-item:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .timeline-item:nth-child(2){animation:aFadeUp .4s ease .7s both}
+.slide.active .timeline-item:nth-child(3){animation:aFadeUp .4s ease .85s both}
+.slide.active .timeline-item:nth-child(4){animation:aFadeUp .4s ease 1.0s both}
+
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,body.no-motion .slide.active .section-title,
+body.no-motion .slide.active .section-desc,body.no-motion .slide.active .content-area,
+body.no-motion .slide.active .hero-left,body.no-motion .slide.active .hero-right,
+body.no-motion .slide.active .hero-stats,body.no-motion .slide.active .hero-badge,
+body.no-motion .slide.active .versus-area,
+body.no-motion .slide.active .img-placeholder,body.no-motion .slide.active .feature-list,
+body.no-motion .slide.active .comp-two-col,body.no-motion .slide.active .pricing-compare,
+body.no-motion .slide.active .timeline,body.no-motion .slide.active .conclusion-highlight,
+body.no-motion .slide.active .conclusion-points,body.no-motion .slide.active .card-grid > *,
+body.no-motion .slide.active .collab-grid > *,body.no-motion .slide.active .comp-row,
+body.no-motion .slide.active .timeline-item{opacity:1 !important;transform:none !important}
+body.no-motion .orbit-ring{animation:none !important}
+body.no-motion .hero-badge::before{animation:none !important}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(124,58,237,0.1) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.08) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:4.6875vw 4.6875vw}
+.hero .slide-inner{display:flex;align-items:center;gap:5vw}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.875vw;border-radius:3.125vw;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--accent);font-size:max(18px,1.09375vw);font-weight:600;text-transform:uppercase;letter-spacing:0.117vw;margin-bottom:2.1875vw}
+.hero-badge::before{content:'';width:0.625vw;height:0.625vw;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:4.6875vw;font-weight:800;line-height:1.05;color:#fff;margin-bottom:1.5625vw;letter-spacing:-0.195vw}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.5625vw;color:var(--text-muted);line-height:1.7;margin-bottom:3.125vw;max-width:48.4375vw}
+.hero-stats{display:flex;gap:3vw}
+.hero-stat{text-align:center;min-width:7.8125vw}
+.hero-stat-value{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:max(18px,1.015625vw);color:var(--text-muted);margin-top:0.46875vw;text-transform:uppercase;letter-spacing:0.078vw}
+.hero-right{flex:.7;position:relative}
+.hero-visual{width:100%;aspect-ratio:1;position:relative;background:radial-gradient(circle at center,rgba(0,102,255,0.2),transparent 70%);border-radius:50%}
+.orbit-ring{position:absolute;border:1px solid rgba(255,255,255,0.06);border-radius:50%;animation:rot 20s linear infinite}
+.orbit-ring:nth-child(1){inset:10%}.orbit-ring:nth-child(2){inset:25%;animation-duration:30s;animation-direction:reverse}.orbit-ring:nth-child(3){inset:40%;animation-duration:25s}
+@keyframes rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.orbit-dot{position:absolute;width:0.9375vw;height:0.9375vw;border-radius:50%;background:var(--accent);box-shadow:0 0 1.5625vw var(--accent)}
+.orbit-ring:nth-child(1) .orbit-dot{top:0;left:50%;transform:translate(-50%,-50%)}
+.orbit-ring:nth-child(2) .orbit-dot{bottom:10%;right:0;background:var(--accent2);box-shadow:0 0 1.5625vw var(--accent2)}
+.orbit-ring:nth-child(3) .orbit-dot{top:50%;left:0;transform:translate(-50%,-50%);background:var(--primary);box-shadow:0 0 1.5625vw var(--primary)}
+.center-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8.59375vw;height:8.59375vw;border-radius:2.1875vw;background:var(--gradient1);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:2.65625vw;font-weight:800;color:#fff;box-shadow:0 1.5625vw 4.6875vw rgba(0,102,255,0.4)}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.12) 0%,transparent 65%),var(--dark)}
+.section-divider .slide-inner{max-width:62.5vw;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.divider-num{font-family:'Plus Jakarta Sans';font-size:max(18px,1.40625vw);font-weight:500;letter-spacing:0.46875vw;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1.25vw}
+.divider-title{font-family:'Plus Jakarta Sans';font-size:5vw;font-weight:800;color:#fff;letter-spacing:-0.078125vw;line-height:1.1}
+
+/* ── SECTION HEADERS (260304 match) ── */
+.section-label{display:inline-flex;align-items:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:600;text-transform:uppercase;letter-spacing:0.195vw;color:var(--accent);margin-bottom:0.46875vw}
+.section-label::before{content:'';width:2.1875vw;height:0.15625vw;background:var(--accent)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;color:#fff;line-height:1.12;margin-bottom:0.78125vw;letter-spacing:-0.117vw}
+.section-desc{font-size:1.40625vw;color:var(--text-muted);line-height:1.6;max-width:100%;margin-bottom:1.5625vw}
+
+/* ── VERSUS ── */
+.versus-area{display:grid;grid-template-columns:1fr auto 1fr;gap:2.5vw;align-items:center}
+.versus-card{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:1.40625vw;padding:2.5vw;text-align:center}
+.versus-card.zaemit{border-color:rgba(0,102,255,0.3)}
+.versus-card.competitors{border-color:rgba(255,107,53,0.3)}
+.versus-card h3{font-family:'Plus Jakarta Sans';font-size:2.1875vw;font-weight:800;margin-bottom:0.9375vw}
+.versus-card.zaemit h3{color:var(--primary)}
+.versus-card.competitors h3{color:var(--imweb)}
+.versus-card p{font-size:max(18px,1.25vw);color:var(--text-muted);line-height:1.65}
+.versus-card .target-badge{display:inline-block;padding:0.46875vw 1.5625vw;border-radius:3.125vw;font-size:max(18px,1.09375vw);font-weight:700;margin-top:1.25vw}
+.versus-card.zaemit .target-badge{background:rgba(0,102,255,0.15);color:var(--primary)}
+.versus-card.competitors .target-badge{background:rgba(255,107,53,0.15);color:var(--imweb)}
+.vs-divider{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:800;color:rgba(255,255,255,0.15)}
+
+/* ── SPLIT LAYOUT (text + image) ── */
+.split-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;align-items:center}
+.split-layout.reverse{direction:rtl}
+.split-layout.reverse > *{direction:ltr}
+
+/* ── FEATURE LIST ── */
+.feature-list{display:flex;flex-direction:column;gap:0.78125vw}
+.feature-item{display:flex;align-items:flex-start;gap:0.78125vw;font-size:max(18px,1.25vw);color:var(--text);line-height:1.45}
+.feature-item svg{flex-shrink:0;margin-top:0.234375vw}
+.highlight-tag{color:var(--primary);font-weight:700}
+.highlight-green{color:#22C55E;font-weight:700}
+.highlight-purple{color:var(--accent2);font-weight:700}
+
+/* ── IMAGE PLACEHOLDER ── */
+.img-placeholder{
+  background:rgba(17,22,51,0.6);border:1px dashed rgba(255,255,255,0.12);
+  border-radius:1.40625vw;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:0.9375vw;
+  color:var(--text-muted);font-size:max(18px,1.09375vw);
+  min-height:20.3125vw;
+}
+.img-placeholder svg{opacity:0.3}
+.img-placeholder.small{min-height:14.0625vw}
+
+/* ── CARD GRID ── */
+.card-grid{display:grid;gap:1.875vw}
+.card-grid.cols-2{grid-template-columns:1fr 1fr}
+.card-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.info-card{
+  background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);
+  border-radius:1.40625vw;padding:2.1875vw 1.875vw;
+}
+.info-card .card-icon{
+  width:3.515625vw;height:3.515625vw;border-radius:0.78125vw;
+  display:flex;align-items:center;justify-content:center;margin-bottom:1.40625vw;
+}
+.info-card .card-icon.blue{background:rgba(0,102,255,0.15)}
+.info-card .card-icon.green{background:rgba(34,197,94,0.15)}
+.info-card .card-icon.purple{background:rgba(124,58,237,0.15)}
+.info-card .card-icon.orange{background:rgba(255,107,53,0.15)}
+.info-card h4{font-size:1.875vw;font-weight:800;color:#fff;margin-bottom:0.46875vw}
+.info-card p{font-size:max(18px,1.25vw);color:var(--text-muted);line-height:1.5}
+
+/* ── COMPARISON TWO-COL ── */
+.comp-two-col{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw}
+.comp-card{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:1.40625vw;padding:2.1875vw}
+.comp-card.zaemit-card{border-color:rgba(0,102,255,0.25)}
+.comp-card.competitor-card{border-color:rgba(255,107,53,0.25)}
+.comp-card-header{display:flex;align-items:center;gap:0.9375vw;margin-bottom:1.875vw}
+.comp-card-logo{width:2.8125vw;height:2.8125vw;border-radius:0.625vw;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:max(18px,1.25vw)}
+.zaemit-card .comp-card-logo{background:rgba(0,102,255,0.2);color:var(--primary)}
+.competitor-card .comp-card-logo{background:rgba(255,107,53,0.2);color:var(--imweb)}
+.comp-card-name{font-family:'Plus Jakarta Sans';font-size:1.875vw;font-weight:700}
+.zaemit-card .comp-card-name{color:var(--primary)}
+.competitor-card .comp-card-name{color:var(--imweb)}
+.comp-badge{display:inline-block;padding:0.3125vw 1.09375vw;border-radius:0.46875vw;font-size:max(18px,1.09375vw);font-weight:700;margin-left:auto}
+.comp-badge.blue{background:rgba(59,130,246,0.12);color:var(--accent)}
+.comp-badge.orange{background:rgba(255,107,53,0.12);color:var(--imweb)}
+
+/* ── COLLABORATION GRID ── */
+.collab-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9375vw}
+.collab-item{display:flex;align-items:center;gap:1.09375vw;background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:0.9375vw;padding:1.09375vw 1.5625vw}
+.collab-icon{width:2.8125vw;height:2.8125vw;border-radius:0.625vw;display:flex;align-items:center;justify-content:center;background:rgba(59,130,246,0.12);flex-shrink:0}
+.collab-item h5{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:0.15625vw}
+.collab-item p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.35}
+
+/* ── COMPARISON TABLE ── */
+.comp-table-wrap{overflow:hidden;border-radius:1.40625vw;border:1px solid rgba(255,255,255,0.08)}
+.comp-row{display:grid;grid-template-columns:2fr 3fr 3fr}
+.comp-row.header{background:rgba(59,130,246,0.12)}
+.comp-row:not(.header){border-top:1px solid rgba(255,255,255,0.06)}
+.comp-row:not(.header):nth-child(odd){background:rgba(255,255,255,0.02)}
+.comp-cell{padding:1.25vw 1.5625vw;font-size:max(18px,1.171875vw);display:flex;align-items:center;gap:0.625vw;line-height:1.5}
+.comp-row.header .comp-cell{font-weight:700;font-size:max(18px,1.25vw);color:#fff}
+.comp-cell.label{font-weight:600;color:#fff;background:rgba(255,255,255,0.02);white-space:nowrap}
+.comp-cell .check{color:#22C55E}.comp-cell .cross{color:#EF4444}.comp-cell .partial{color:#F59E0B}
+
+/* ── PRICING COMPARE ── */
+.pricing-compare{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw}
+.pricing-box{background:rgba(17,22,51,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:1.40625vw;padding:2.5vw}
+.pricing-box.highlight{border-color:rgba(59,130,246,0.35)}
+.pricing-box h4{font-family:'Plus Jakarta Sans';font-size:1.875vw;font-weight:700;margin-bottom:1.5625vw;display:flex;align-items:center;gap:0.625vw}
+.pricing-box.highlight h4{color:var(--primary)}
+.pricing-box h4.competitor-h{color:var(--imweb)}
+.pricing-feat{display:flex;align-items:center;gap:0.78125vw;padding:0.78125vw 0;font-size:max(18px,1.25vw);color:var(--text);border-bottom:1px solid rgba(255,255,255,0.04)}
+.pricing-feat svg{flex-shrink:0}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;gap:1.5625vw;position:relative;padding-top:2.5vw}
+.timeline::before{content:'';position:absolute;top:1.5625vw;left:0;right:0;height:0.234375vw;background:linear-gradient(90deg,rgba(59,130,246,0.15) 0%,rgba(59,130,246,0.5) 50%,rgba(124,58,237,0.7) 100%);border-radius:0.15625vw}
+.timeline-item{flex:1;position:relative}
+.timeline-item::before{content:'';position:absolute;top:-1.09375vw;left:0;width:1.09375vw;height:1.09375vw;border-radius:50%;background:var(--accent);box-shadow:0 0 1.09375vw rgba(59,130,246,0.4);border:0.15625vw solid var(--dark)}
+.timeline-item h5{font-family:'Plus Jakarta Sans';font-size:max(18px,1.40625vw);font-weight:800;color:var(--accent);margin-bottom:0.625vw}
+.timeline-item p{font-size:max(18px,1.171875vw);color:var(--text-muted);line-height:1.55}
+
+/* ── CONCLUSION ── */
+.conclusion-highlight{
+  background:linear-gradient(135deg,rgba(0,102,255,0.1),rgba(124,58,237,0.06));
+  border:1px solid rgba(59,130,246,0.2);border-radius:1.40625vw;
+  padding:3.125vw 3.90625vw;text-align:center;margin-bottom:2.5vw;
+}
+.conclusion-highlight h3{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:800;color:#fff;margin-bottom:1.25vw;letter-spacing:-0.078vw}
+.conclusion-highlight p{font-size:1.5625vw;color:var(--text-muted);line-height:1.7;max-width:54.6875vw;margin:0 auto}
+.conclusion-points{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.1875vw}
+.conclusion-point{text-align:center;padding:1.875vw}
+.conclusion-point .point-num{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:800;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.78125vw}
+.conclusion-point h5{font-size:1.5625vw;font-weight:700;color:#fff;margin-bottom:0.46875vw}
+.conclusion-point p{font-size:max(18px,1.171875vw);color:var(--text-muted);line-height:1.55}
+</style>
+</head>
+<body>
+
+<!-- ===== 01 COVER ===== -->
+<div class="slide hero active" data-title-ko="Zaemit 경쟁사 비교">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge">Competitive Analysis 2026</div>
+      <h1><span class="gradient-text">Zaemit</span> vs 경쟁사</h1>
+      <div class="hero-sub">
+        웹 빌더 시장에서 Zaemit이 아임웹·식스샵 대비<br>어떤 차별적 가치를 제공하는지 비교 분석합니다.
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">AI</div>
+          <div class="hero-stat-label">Vibe Coding</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">7+</div>
+          <div class="hero-stat-label">Studio Features</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">Pro</div>
+          <div class="hero-stat-label">Editor Quality</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="center-logo">Z</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 ZAEMIT 소개 ===== -->
+<div class="slide" data-title-ko="Zaemit 소개"
+     style="background:radial-gradient(ellipse at 30% 40%,rgba(0,102,255,0.1) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">About Zaemit</div>
+    <div class="section-title">AI 기반 웹 빌더, <span class="gradient-text">Zaemit</span></div>
+    <div class="section-desc">대화형 AI 편집과 바이브코딩을 결합한 차세대 웹 빌더 플랫폼</div>
+    <div class="content-area">
+      <div class="card-grid cols-3">
+        <div class="info-card">
+          <div class="card-icon blue">
+            <svg width="1.875vw" height="1.875vw" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h4>대화형 편집</h4>
+          <p>AI와 대화하며 웹사이트를 구축하는 <span class="highlight-tag">바이브코딩</span> 방식의 에디터</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon green">
+            <svg width="1.875vw" height="1.875vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h4>웹 중점 포지셔닝</h4>
+          <p>쇼핑몰이 아닌 <span class="highlight-green">웹사이트 제작</span>에 특화된 전문 플랫폼</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon purple">
+            <svg width="1.875vw" height="1.875vw" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h4>에디터 프로 품질</h4>
+          <p>전문가 수준의 <span class="highlight-purple">최상 품질</span> 에디터를 일반 소비자도 사용 가능</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 비교 대상 ===== -->
+<div class="slide" data-title-ko="비교 대상"
+     style="background:radial-gradient(ellipse at 70% 60%,rgba(255,107,53,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Competitors</div>
+    <div class="section-title">비교 대상 — 아임웹 · 식스샵</div>
+    <div class="section-desc">국내 대표 웹 빌더 서비스와의 포지셔닝 차이를 분석합니다.</div>
+    <div class="content-area">
+      <div class="versus-area">
+        <div class="versus-card zaemit">
+          <h3>Zaemit</h3>
+          <p>AI 서비스로 포지셔닝<br>대화형 편집 + 바이브코딩</p>
+          <div class="target-badge">웹사이트 중점</div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="versus-card competitors">
+          <h3>아임웹 · 식스샵</h3>
+          <p>커뮤니티·후기 등 콘텐츠 제공<br>다수의 플러그인 생태계</p>
+          <div class="target-badge">쇼핑몰 중점</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 04 DIVIDER: 에디터 & AI ===== -->
+<div class="slide section-divider" data-title-ko="에디터 & AI">
+  <div class="slide-inner">
+    <div class="divider-num">SECTION 01</div>
+    <div class="divider-title">에디터 & AI 기능</div>
+  </div>
+</div>
+
+<!-- ===== 05 에디터 품질 ===== -->
+<div class="slide" data-title-ko="에디터 품질"
+     style="background:radial-gradient(ellipse at 20% 70%,rgba(0,102,255,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Editor Quality</div>
+    <div class="section-title">에디터 품질 비교</div>
+    <div class="section-desc">Zaemit은 프로 수준의 에디터를 일반 소비자에게도 제공합니다.</div>
+    <div class="content-area">
+      <div class="split-layout">
+        <div class="feature-list">
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><span class="highlight-tag">에디터 프로</span> — 최상 품질의 비주얼 에디터</span>
+          </div>
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><span class="highlight-tag">일반 에디터</span>로도 소비자에게 제공 가능</span>
+          </div>
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><span class="highlight-green">고품질 테마</span>가 풍부하게 제공</span>
+          </div>
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>경쟁사: 기본 블록 에디터, <b style="color:var(--imweb)">테마 부족</b></span>
+          </div>
+        </div>
+        <div class="img-placeholder">
+          <svg width="3.90625vw" height="3.90625vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          에디터 UI 비교 이미지
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 06 AI & 바이브코딩 ===== -->
+<div class="slide" data-title-ko="AI & 바이브코딩"
+     style="background:radial-gradient(ellipse at 80% 30%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">AI & Vibe Coding</div>
+    <div class="section-title">AI 대화형 편집 · 바이브코딩</div>
+    <div class="section-desc">Zaemit만의 AI 기반 웹 제작 방식 — 대화하며 만드는 웹사이트</div>
+    <div class="content-area">
+      <div class="split-layout reverse">
+        <div class="img-placeholder">
+          <svg width="3.90625vw" height="3.90625vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          AI 대화형 편집 화면 캡처
+        </div>
+        <div class="feature-list">
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><span class="highlight-tag">대화형 편집</span> — 자연어로 디자인 수정</span>
+          </div>
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><span class="highlight-purple">바이브코딩</span> — 코드 없이 AI가 구현</span>
+          </div>
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><span class="highlight-green">Runner 2.1</span> 오픈 — AI 자동화 엔진</span>
+          </div>
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>MCP 연동 예정 (2026년 5월)</span>
+          </div>
+          <div class="feature-item">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <span>경쟁사: AI 편집 기능 <b style="color:#EF4444">미제공</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 07 DIVIDER: 협업 & 비즈니스 ===== -->
+<div class="slide section-divider" data-title-ko="협업 & 비즈니스">
+  <div class="slide-inner">
+    <div class="divider-num">SECTION 02</div>
+    <div class="divider-title">협업 & 비즈니스 기능</div>
+  </div>
+</div>
+
+<!-- ===== 08 스튜디오 협업 ===== -->
+<div class="slide" data-title-ko="스튜디오 협업"
+     style="background:radial-gradient(ellipse at 50% 30%,rgba(59,130,246,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Studio Collaboration</div>
+    <div class="section-title">스튜디오 협업 — <span class="gradient-text">Zaemit</span> 독점</div>
+    <div class="section-desc">웹 에이전시와 스튜디오를 위한 통합 협업 도구를 제공합니다.</div>
+    <div class="content-area">
+      <div class="collab-grid">
+        <div class="collab-item">
+          <div class="collab-icon">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          </div>
+          <div><h5>워크스페이스 초대</h5><p>팀원 초대 및 역할 기반 협업</p></div>
+        </div>
+        <div class="collab-item">
+          <div class="collab-icon">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div><h5>코멘트 기능</h5><p>디자인 위 직접 피드백 남기기</p></div>
+        </div>
+        <div class="collab-item">
+          <div class="collab-icon">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div><h5>구독 리셀러 프로그램</h5><p>파트너사 구독 재판매 수익 모델</p></div>
+        </div>
+        <div class="collab-item">
+          <div class="collab-icon">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div><h5>고객 컨펌 CRM</h5><p>고객 승인 워크플로 관리</p></div>
+        </div>
+        <div class="collab-item">
+          <div class="collab-icon">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div><h5>라이브러리 공유</h5><p>디자인 에셋 팀 내 공유</p></div>
+        </div>
+        <div class="collab-item">
+          <div class="collab-icon">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div><h5>사이트 관리 & 연장</h5><p>고객 사이트 목록 · 만료 관리</p></div>
+        </div>
+        <div class="collab-item">
+          <div class="collab-icon">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          </div>
+          <div><h5>화이트라벨링</h5><p>자사 브랜드로 에디터 제공</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 09 DIVIDER: CMS & 콘텐츠 ===== -->
+<div class="slide section-divider" data-title-ko="CMS & 콘텐츠">
+  <div class="slide-inner">
+    <div class="divider-num">SECTION 03</div>
+    <div class="divider-title">CMS & 콘텐츠 관리</div>
+  </div>
+</div>
+
+<!-- ===== 10 CMS 비교 ===== -->
+<div class="slide" data-title-ko="CMS 비교"
+     style="background:radial-gradient(ellipse at 30% 60%,rgba(0,102,255,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">CMS Comparison</div>
+    <div class="section-title">CMS 관리 기능 비교</div>
+    <div class="section-desc">Zaemit은 고도화된 CMS를, 경쟁사는 쉬운 CMS를 지향합니다.</div>
+    <div class="content-area">
+      <div class="comp-two-col">
+        <div class="comp-card zaemit-card">
+          <div class="comp-card-header">
+            <div class="comp-card-logo">Z</div>
+            <div class="comp-card-name">Zaemit</div>
+            <span class="comp-badge blue">고도화</span>
+          </div>
+          <div class="feature-list" style="opacity:1">
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>그룹 관리 — 콘텐츠 체계적 분류</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>권한 관리 — 역할별 접근 제어</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>통계 — 상세 방문 · 유입 분석</span>
+            </div>
+          </div>
+        </div>
+        <div class="comp-card competitor-card">
+          <div class="comp-card-header">
+            <div class="comp-card-logo">A</div>
+            <div class="comp-card-name">아임웹 · 식스샵</div>
+            <span class="comp-badge orange">간편</span>
+          </div>
+          <div class="feature-list" style="opacity:1">
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>정제된 CMS — 쉬운 사용성</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>커뮤니티 · 후기 콘텐츠 기능</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>세밀한 권한 · 그룹 관리 미흡</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 11 DIVIDER: 테마 & 확장성 ===== -->
+<div class="slide section-divider" data-title-ko="테마 & 확장성">
+  <div class="slide-inner">
+    <div class="divider-num">SECTION 04</div>
+    <div class="divider-title">테마 · 템플릿 · 확장성</div>
+  </div>
+</div>
+
+<!-- ===== 12 테마 & 템플릿 ===== -->
+<div class="slide" data-title-ko="테마 & 템플릿"
+     style="background:radial-gradient(ellipse at 60% 40%,rgba(124,58,237,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Themes & Templates</div>
+    <div class="section-title">테마 · 블록 템플릿 비교</div>
+    <div class="section-desc">Zaemit은 AI 기반 무한 확장 템플릿을, 경쟁사는 레이아웃 관점의 블록을 제공합니다.</div>
+    <div class="content-area">
+      <div class="comp-two-col">
+        <div class="comp-card zaemit-card">
+          <div class="comp-card-header">
+            <div class="comp-card-logo">Z</div>
+            <div class="comp-card-name">Zaemit</div>
+          </div>
+          <div class="feature-list" style="opacity:1">
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><span class="highlight-tag">고품질 테마</span> 다수 제공</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>AI 완성 템플릿 — <span class="highlight-green">무한 확장</span> 가능</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>블록 템플릿 + AI 조합으로 생산성 극대화</span>
+            </div>
+          </div>
+          <div class="img-placeholder small" style="margin-top:1.5625vw;opacity:1">
+            <svg width="2.8125vw" height="2.8125vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Zaemit 테마 갤러리 캡처
+          </div>
+        </div>
+        <div class="comp-card competitor-card">
+          <div class="comp-card-header">
+            <div class="comp-card-logo">A</div>
+            <div class="comp-card-name">아임웹 · 식스샵</div>
+          </div>
+          <div class="feature-list" style="opacity:1">
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span><b style="color:#F59E0B">테마 부족</b> — 선택지 제한적</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>블록 템플릿 — 레이아웃 관점에 한정</span>
+            </div>
+            <div class="feature-item">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>AI 기반 템플릿 생성 기능 없음</span>
+            </div>
+          </div>
+          <div class="img-placeholder small" style="margin-top:1.5625vw;opacity:1">
+            <svg width="2.8125vw" height="2.8125vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            경쟁사 테마 비교 캡처
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 13 확장성 ===== -->
+<div class="slide" data-title-ko="확장성 비교"
+     style="background:radial-gradient(ellipse at 40% 70%,rgba(59,130,246,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Extensibility</div>
+    <div class="section-title">확장성 · 플러그인 비교</div>
+    <div class="section-desc">Zaemit 플러그인 생태계가 2026년 상반기 오픈 예정입니다.</div>
+    <div class="content-area">
+      <div class="card-grid cols-2">
+        <div class="info-card">
+          <div class="card-icon blue">
+            <svg width="1.875vw" height="1.875vw" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <h4>Zaemit 플러그인</h4>
+          <p><span class="highlight-tag">2026 상반기 오픈</span> 예정<br>확장 가능한 플러그인 생태계 구축 중</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon orange">
+            <svg width="1.875vw" height="1.875vw" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <h4>아임웹 · 식스샵 플러그인</h4>
+          <p>이미 <b style="color:var(--imweb)">수많은 플러그인</b> 보유<br>쇼핑몰 중심 결제·배송·마케팅 플러그인</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 14 DIVIDER: 가격 정책 ===== -->
+<div class="slide section-divider" data-title-ko="가격 정책">
+  <div class="slide-inner">
+    <div class="divider-num">SECTION 05</div>
+    <div class="divider-title">가격 · 무료 정책</div>
+  </div>
+</div>
+
+<!-- ===== 15 가격 정책 비교 ===== -->
+<div class="slide" data-title-ko="가격 정책 비교"
+     style="background:radial-gradient(ellipse at 70% 50%,rgba(0,102,255,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">무료 시작 · 가격 정책 비교</div>
+    <div class="section-desc">두 서비스 모두 무료로 시작 가능하지만, 무료의 품질이 다릅니다.</div>
+    <div class="content-area">
+      <div class="pricing-compare">
+        <div class="pricing-box highlight">
+          <h4>
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Zaemit 무료 플랜
+          </h4>
+          <div class="pricing-feat">
+            <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            무료 시작 가능
+          </div>
+          <div class="pricing-feat">
+            <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <b style="color:#22C55E">띠배너 없음</b> — 깨끗한 무료 사이트
+          </div>
+          <div class="pricing-feat">
+            <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            프로 에디터 기능 무료 체험
+          </div>
+        </div>
+        <div class="pricing-box">
+          <h4 class="competitor-h">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            아임웹 · 식스샵 무료 플랜
+          </h4>
+          <div class="pricing-feat">
+            <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            무료 시작 가능
+          </div>
+          <div class="pricing-feat">
+            <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <b style="color:#EF4444">여러모로 제한적인</b> 무료 — 기능 제약 多
+          </div>
+          <div class="pricing-feat">
+            <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <b style="color:#EF4444">띠배너 노출</b> — 브랜드 이미지 저해
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 16 DIVIDER: 미래 전략 ===== -->
+<div class="slide section-divider" data-title-ko="미래 전략">
+  <div class="slide-inner">
+    <div class="divider-num">SECTION 06</div>
+    <div class="divider-title">미래 발전 방향</div>
+  </div>
+</div>
+
+<!-- ===== 17 미래 로드맵 ===== -->
+<div class="slide" data-title-ko="미래 로드맵"
+     style="background:radial-gradient(ellipse at 50% 50%,rgba(124,58,237,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Future Roadmap</div>
+    <div class="section-title">Zaemit 미래 발전 방향</div>
+    <div class="section-desc">바이브코딩과 MCP 연동으로 AI 웹 빌더의 새로운 기준을 만듭니다.</div>
+    <div class="content-area">
+      <div class="timeline">
+        <div class="timeline-item">
+          <h5>Runner 2.1</h5>
+          <p>AI 자동화 엔진 오픈<br>블록 템플릿 자동 생성</p>
+        </div>
+        <div class="timeline-item">
+          <h5>플러그인 오픈</h5>
+          <p>2026 상반기<br>확장 가능 생태계 구축</p>
+        </div>
+        <div class="timeline-item">
+          <h5>MCP 연동</h5>
+          <p>2026년 5월 예정<br>바이브코딩 MCP 통합</p>
+        </div>
+        <div class="timeline-item">
+          <h5>AI 템플릿 무한 확장</h5>
+          <p>AI 기반 템플릿 생성<br>사용자 맞춤 자동 완성</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 18 종합 비교표 ===== -->
+<div class="slide" data-title-ko="종합 비교표"
+     style="background:radial-gradient(ellipse at 50% 30%,rgba(99,102,241,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Summary</div>
+    <div class="section-title">종합 비교표</div>
+    <div class="content-area">
+      <div class="comp-table-wrap">
+        <div class="comp-row header">
+          <div class="comp-cell label">비교 항목</div>
+          <div class="comp-cell" style="color:var(--primary)">Zaemit</div>
+          <div class="comp-cell" style="color:var(--imweb)">아임웹 · 식스샵</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">타겟 시장</div>
+          <div class="comp-cell"><span class="check">●</span> 웹사이트 중점</div>
+          <div class="comp-cell"><span class="partial">●</span> 쇼핑몰 중점</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">AI 편집</div>
+          <div class="comp-cell"><span class="check">●</span> 대화형 + 바이브코딩</div>
+          <div class="comp-cell"><span class="cross">●</span> 미제공</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">에디터 품질</div>
+          <div class="comp-cell"><span class="check">●</span> 프로 최상 품질</div>
+          <div class="comp-cell"><span class="partial">●</span> 기본 블록 에디터</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">스튜디오 협업</div>
+          <div class="comp-cell"><span class="check">●</span> 7개 기능 제공</div>
+          <div class="comp-cell"><span class="cross">●</span> 미제공</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">CMS</div>
+          <div class="comp-cell"><span class="check">●</span> 고도화 (그룹·권한·통계)</div>
+          <div class="comp-cell"><span class="partial">●</span> 간편 (쉬움)</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">테마</div>
+          <div class="comp-cell"><span class="check">●</span> 고품질 다수</div>
+          <div class="comp-cell"><span class="cross">●</span> 부족</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">무료 플랜</div>
+          <div class="comp-cell"><span class="check">●</span> 띠배너 없음</div>
+          <div class="comp-cell"><span class="cross">●</span> 제한적 + 띠배너</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell label">플러그인</div>
+          <div class="comp-cell"><span class="partial">●</span> 상반기 오픈 예정</div>
+          <div class="comp-cell"><span class="check">●</span> 다수 보유</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 19 결론 ===== -->
+<div class="slide" data-title-ko="결론"
+     style="background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.1) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Conclusion</div>
+    <div class="section-title">왜 <span class="gradient-text">Zaemit</span>인가</div>
+    <div class="conclusion-highlight">
+      <h3>AI + 협업 + 프로 에디터</h3>
+      <p>Zaemit은 단순한 웹 빌더가 아닌, AI 기반 대화형 편집과<br>스튜디오 협업 생태계를 갖춘 차세대 웹 제작 플랫폼입니다.</p>
+    </div>
+    <div class="conclusion-points">
+      <div class="conclusion-point">
+        <div class="point-num">01</div>
+        <h5>AI 기술 리더십</h5>
+        <p>대화형 편집 · 바이브코딩 ·<br>MCP 연동으로 미래 선점</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">02</div>
+        <h5>스튜디오 생태계</h5>
+        <p>화이트라벨 · 리셀러 ·<br>CRM으로 B2B 시장 장악</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">03</div>
+        <h5>품질 차별화</h5>
+        <p>프로 에디터 · 고품질 테마 ·<br>깨끗한 무료 플랜</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  window.irConfig={version:'260305',theme:'dark',languages:['ko'],defaultLang:'ko'};
+
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.zoom='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.5,Math.min(1,z));if(z<1)inner.style.zoom=z}
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  function goTo(idx,src){
+    if(idx<0||idx>=total||idx===current)return;
+    slides[current].classList.remove('active');current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    document.body.classList.remove('en','ja','ko');
+    if(nl!=='ko')document.body.classList.add(nl);
+    document.querySelectorAll('[data-lang]').forEach(function(el){el.style.display=el.dataset.lang===nl?'':'none'});
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||'Slide '+(i+1),titleJa:s.dataset.titleJa||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
+    total:total,mainTotal:total,appendixStart:total,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
+      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body>
+</html>
