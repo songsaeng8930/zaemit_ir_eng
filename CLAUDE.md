@@ -127,6 +127,45 @@
 - **zoom이 0.75 미만이면 콘텐츠가 너무 많다는 신호** → 항목 수를 줄이거나 슬라이드를 분할할 것
 - **새 슬라이드 추가 시**: 콘텐츠 양이 많아도 자동 zoom이 처리하지만, zoom이 과하면 가독성이 떨어지므로 콘텐츠 양을 조절하는 것이 우선
 
+### 0-E. 슬라이드 레이아웃 — 절대 규칙
+
+#### 수직 가운데 정렬 필수
+
+> **모든 슬라이드의 `slide-inner`는 `display:flex;flex-direction:column;justify-content:center`로 콘텐츠를 수직 가운데 정렬한다.**
+
+- 타이틀(section-label, section-title, section-desc)과 콘텐츠 사이에 자연스러운 간격이 유지되어야 한다.
+- 콘텐츠가 상단에 붙거나, 타이틀과 콘텐츠가 밀착되면 안 된다.
+- `fitSlideContent` zoom 적용 후에도 수직 가운데 정렬이 유지되어야 한다.
+
+#### 보더(border) 디자인 최소화 — 강력 권고
+
+> **카드, 박스, 컨테이너에 border를 사용하지 않는다. 배경색(background)과 그림자(box-shadow)로 영역을 구분한다.**
+
+- `border: 1px solid ...` 스타일의 카드/박스 외곽선 사용 금지.
+- **다크 테마**: `background: rgba(17,22,51,0.6)` 또는 `rgba(255,255,255,0.03~0.06)` 배경색으로 영역 구분.
+- **라이트 테마**: `box-shadow` + 밝은 배경색으로 영역 구분.
+- **허용 예외**: 테이블 구분선(`border-bottom: 1px solid ...`), 프로그레스바, 구분자(divider) 등 구조적으로 필요한 선만 허용.
+- `border-top`, `border-left` 등 accent border (강조 보더) 절대 사용 금지.
+
+#### 아이콘은 반드시 Lucide 인라인 SVG만 사용
+
+> **이모지, Font Awesome, Material Icons 등 다른 아이콘 시스템을 절대 사용하지 않는다.**
+
+- 이모지(📊🔽🚀💡✅ 등)를 아이콘 대용으로 사용 금지.
+- 모든 아이콘은 **Lucide** 인라인 SVG로 작성한다.
+- 형식: `<svg width="N" height="N" viewBox="0 0 24 24" fill="none" stroke="COLOR" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">...</svg>`
+- 참고: https://lucide.dev/icons
+- SVG의 `width`, `height` 속성은 vw 단위로 변환하지 않아도 됨 (SVG 좌표계 예외).
+
+#### 프레젠테이션 폰트 크기 — 웹사이트 크기 금지
+
+> **슬라이드는 프레젠테이션이다. 웹사이트용 작은 폰트(12px, 13px, 14px 등)를 절대 사용하지 않는다.**
+
+- 모든 텍스트는 최소 18px(1.40625vw) 이상.
+- 카드 설명, 표 셀, 배지 라벨 등 모든 텍스트에 `max(18px, Xvw)` 패턴 적용.
+- 프레젠테이션에서 관객이 읽을 수 있는 크기여야 한다.
+- `fitSlideContent` zoom이 자동 축소하므로, 개별 폰트를 줄이지 않는다.
+
 ### 1. IR 페이지에 viewer 중복 UI 금지
 
 > **IR 페이지(ir/XXXXXX/index.html)에는 viewer가 제공하는 UI를 넣지 않는다.**
@@ -165,8 +204,9 @@ wrapper만 씌우고, 원본 스타일은 그대로 유지한다.
 ### 5. 전역 함수 노출
 IR 페이지에서 `window.setLang`, `window.goToSlide` 함수를 전역으로 노출해야 한다.
 
-### 6. 아이콘은 Lucide SVG만 사용
-- 이모지(📊🔽🚀 등)를 아이콘으로 사용하지 않는다.
+### 6. 아이콘은 Lucide SVG만 사용 (0-E 참조, 절대 규칙)
+- 이모지(📊🔽🚀💡✅ 등)를 아이콘으로 **절대** 사용하지 않는다.
+- Font Awesome, Material Icons 등 다른 아이콘 라이브러리도 사용하지 않는다.
 - 모든 아이콘은 **Lucide** 인라인 SVG를 사용한다.
 - 형식: `<svg width="N" height="N" viewBox="0 0 24 24" fill="none" stroke="COLOR" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">...</svg>`
 - 참고: https://lucide.dev/icons
@@ -190,7 +230,10 @@ IR 페이지에서 `window.setLang`, `window.goToSlide` 함수를 전역으로 �
 | justify-content: center를 slide-inner에 적용 | 타이틀도 움직임 - content-wrapper에만 적용 |
 | width: 100%를 모든 자식에 적용 | Cover/Hero 가로 레이아웃 깨짐 - 제외 처리 |
 | setLang 함수 미노출 | viewer에서 언어 전환 안됨 |
-| border-top / border-left 강조 보더 사용 | 카드/박스에 상단·좌측 컬러 보더(accent border) 사용 금지 - 전체 border만 사용 |
+| **⚠️ border 사용** | **카드/박스에 border 사용 금지!** 배경색(background)과 그림자(box-shadow)로 영역 구분. accent border도 금지 |
+| **⚠️ 이모지 아이콘 사용** | **이모지/Font Awesome 등 금지!** 반드시 Lucide 인라인 SVG만 사용 |
+| **⚠️ 콘텐츠 상단 붙음** | `slide-inner`에 `display:flex;flex-direction:column;justify-content:center` 필수 — 수직 가운데 정렬 |
+| **⚠️ 웹사이트용 작은 폰트** | 12px, 13px, 14px 등 프레젠테이션에 부적합한 작은 폰트 금지. 최소 18px 이상 |
 | **일본어 번역 누락** | SVG `<text>`, 차트 라벨, 연도 축 등에서 `data-lang="ja"` 빠짐 — 반드시 3개 국어 확인 |
 | **일본어 텍스트 overflow** | SVG pill/rect 너비 부족으로 텍스트 넘침 — 너비 확장 또는 폰트 축소, `white-space:nowrap` 활용 |
 | **⚠️ font-size에 px 단위 사용** | **가장 흔한 실수!** 모든 font-size는 vw 단위 + `max(18px, Xvw)` 패턴 필수. **인라인 style이 자주 누락됨** |

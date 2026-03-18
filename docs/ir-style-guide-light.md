@@ -5,6 +5,43 @@
 
 ---
 
+## 0. 핵심 디자인 원칙 — 절대 규칙
+
+> **이 규칙은 다크/라이트 테마 모두에 적용되며, 어떤 상황에서도 위반하지 않는다.**
+
+### 0.1 수직 가운데 정렬 필수
+
+> **모든 슬라이드의 `slide-inner`는 `display:flex;flex-direction:column;justify-content:center`로 콘텐츠를 수직 가운데 정렬한다.**
+
+- 타이틀과 콘텐츠가 상단에 붙으면 안 된다.
+- `fitSlideContent` zoom 적용 후에도 수직 가운데 정렬이 유지되어야 한다.
+
+### 0.2 보더(border) 사용 금지
+
+> **카드, 박스, 컨테이너에 border를 사용하지 않는다.**
+
+- ❌ `border: 1px solid #E2E8F0` — 카드 외곽선
+- ❌ `border-top: 4px solid #4F46E5` — accent border
+- ✅ `box-shadow: var(--light-shadow-md)` — 그림자로 영역 구분
+- ✅ `background: var(--light-bg-tertiary)` — 배경색 차이로 구분
+- **허용 예외**: 테이블 행 구분선, 프로그레스바, 구분자(divider)
+
+### 0.3 아이콘은 Lucide 인라인 SVG만
+
+> **이모지, Font Awesome, Material Icons 등 절대 사용하지 않는다.**
+
+- 모든 아이콘은 **Lucide** 인라인 SVG: `<svg viewBox="0 0 24 24" fill="none" stroke="COLOR" stroke-width="2" ...>`
+- 참고: https://lucide.dev/icons
+
+### 0.4 프레젠테이션 폰트 크기
+
+> **슬라이드는 웹사이트가 아닌 프레젠테이션이다. 모든 텍스트는 최소 18px 이상.**
+
+- vw 단위 + `max(18px, Xvw)` 패턴 필수 (CLAUDE.md 섹션 0-B 참조)
+- 웹사이트용 작은 폰트(12px, 13px, 14px) 절대 사용 금지
+
+---
+
 ## 1. 색상 팔레트
 
 ```css
@@ -96,10 +133,9 @@ body.light-theme .section-desc {
 ### 3.2 카드
 
 ```css
-/* 라이트 테마 카드 */
+/* 라이트 테마 카드 — border 사용 금지, 그림자로 구분 */
 body.light-theme .card {
   background: var(--light-bg-primary);
-  border: 1px solid var(--light-border-light);
   border-radius: 16px;
   padding: 24px;
   box-shadow: var(--light-shadow-md);
@@ -108,13 +144,11 @@ body.light-theme .card {
 
 body.light-theme .card:hover {
   box-shadow: var(--light-shadow-lg);
-  border-color: var(--light-border-medium);
 }
 
-/* 강조 카드 */
+/* 강조 카드 — 배경색 차이로 강조 */
 body.light-theme .card-highlight {
   background: var(--light-bg-accent);
-  border: 1px solid var(--light-border-accent);
 }
 
 /* 그라데이션 헤더 카드 */
