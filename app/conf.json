@@ -4,6 +4,56 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260815_invest_relations_guide",
+      "name": "투자자 질의 대응 — 네 가지 질문 (Zaemit 컨셉)",
+      "nameEn": "Investor Q&A — Four Questions (Zaemit Concept)",
+      "description": "인력·리텐션·기술 로드맵·GTM 네 가지 질의에 압축 답변하는 Zaemit 컨셉 덱",
+      "descriptionEn": "Compact Zaemit-concept deck answering four investor questions: talent, retention, roadmap, GTM",
+      "date": "2026-08-15",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260814_introduce",
+      "name": "Zaemit × WEVEN 소개자료 (Zaemit 컨셉)",
+      "nameEn": "Zaemit × WEVEN Introduction (Zaemit Concept)",
+      "description": "Zaemit 컨셉 디자인 시스템 적용 — 파스텔 메쉬 · 미니멀 에디토리얼 소개자료",
+      "descriptionEn": "Zaemit concept design system — pastel mesh, minimal editorial deck",
+      "date": "2026-08-14",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260814_invest_relations",
+      "name": "투자자 질의 대응 확장판 (Deep-Dive Q&A)",
+      "nameEn": "Investor Deep-Dive Q&A (Extended)",
+      "description": "주식회사 위븐 투자자 질의 대응 — 매출·구독, 재무·계획, GTM, 기술·인력 전 영역",
+      "descriptionEn": "WEVEN Inc. Investor Q&A Deck — Revenue, Financials, GTM, Technology & Talent",
+      "date": "2026-08-14",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260811_zaemit_26_st",
+      "name": "투자자 질의 대응 (Deep-Dive Q&A)",
+      "nameEn": "Investor Deep-Dive Q&A",
+      "description": "주식회사 위븐 투자자 질의 대응 발표 자료 — 기술·인력 & GTM",
+      "descriptionEn": "WEVEN Inc. Investor Q&A Deck — Technology, Talent & GTM",
+      "date": "2026-08-11",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260806_kakao",
+      "name": "카카오 오픈이노베이션 제안",
+      "nameEn": "Kakao Open Innovation Proposal",
+      "description": "Zaemit × 카카오 그룹 오픈이노베이션 협력 제안 PT",
+      "descriptionEn": "Zaemit × Kakao Group — Open Innovation Partnership Proposal",
+      "date": "2026-08-06",
+      "theme": "dark",
+      "default": false
+    },
+    {
       "id": "260304",
       "name": "IR Deck",
       "nameEn": "IR Deck",

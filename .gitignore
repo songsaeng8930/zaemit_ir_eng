@@ -1,3 +1,12 @@
 
 # Zaemit AI tool config (auto-generated)
 .mcp.json
+
+# FTP 접속 정보 (커밋 금지)
+.env
+
+# Claude Code 개인 설정 (커밋 금지)
+.claude/settings.local.json
+
+# 인쇄 미리보기 원본 저장 시 자동 백업
+*.bak

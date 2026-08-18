@@ -6,7 +6,9 @@
 2. **[docs/ir-print-compatibility.md](docs/ir-print-compatibility.md)** - 프린트 미리보기 호환성 규칙 (**새 IR 생성 시 필수!**)
 3. **[docs/ir-style-guide.md](docs/ir-style-guide.md)** - 다크 테마 스타일 가이드
 4. **[docs/ir-style-guide-light.md](docs/ir-style-guide-light.md)** - 라이트 테마 스타일 가이드
-5. **[docs/ir-i18n-guide.md](docs/ir-i18n-guide.md)** - 다국어(KO/EN/JA) 대응 가이드
+5. **[docs/ir-style-guide-zaemit.md](docs/ir-style-guide-zaemit.md)** - **Zaemit 컨셉** 스타일 가이드 (제3의 디자인 — 파스텔 메쉬 · 미니멀 에디토리얼)
+6. **[docs/ir-i18n-guide.md](docs/ir-i18n-guide.md)** - 다국어(KO/EN/JA) 대응 가이드
+7. **[docs/ir-copy-style-guide.md](docs/ir-copy-style-guide.md)** - **IR 카피 말투 지침** (모든 슬라이드 텍스트 작성·수정 시 필수! AI 슬롭 금지 패턴 + 대표 화법 기준)
 
 ---
 
@@ -194,6 +196,7 @@ wrapper만 씌우고, 원본 스타일은 그대로 유지한다.
 - **260202**: 라이트 테마, `.cover` 클래스, 인라인 스크립트, `body.ko/en` 언어 시스템
 - **260302**: 다크 테마, 인라인 스크립트, **한국어(KO) 전용** — 영문/일문 불필요, `data-lang` 속성 사용하지 않음, vw 단위 전면 적용
 - **260303**: 다크 테마, `.hero` 클래스, 인라인 스크립트, `body.ko/en/ja` 언어 시스템, **3개 국어(KO/EN/JA)**, vw 단위 전면 적용, 16:9 콘텐츠 프레임, `fitSlideContent` 자동 zoom
+- **260814_introduce**: **Zaemit 컨셉** (제3의 디자인 테마 — docs/ir-style-guide-zaemit.md 필독), 인라인 스크립트, **한국어(KO) 전용**, vw 단위 전면 적용, `fitSlideContent` 자동 zoom, 파스텔 메쉬 배경(`.mesh` + 슬라이드별 변주), 시그니처 카드(1px 헤어라인 보더 허용 예외), `data-appendix` 부록 슬라이드
 - **260203**: 다크 테마, `.hero` 클래스, 인라인 스크립트, `body.ko/en/ja` 언어 시스템, **3개 국어(KO/EN/JA)** 지원, 뷰포트 `width=1280` 고정
 
 ### 4. 언어 시스템 (버전별 다름!)
@@ -243,6 +246,7 @@ IR 페이지에서 `window.setLang`, `window.goToSlide` 함수를 전역으로 �
 | **⚠️ body에 font-size 미선언** | `body`에 반드시 `font-size:max(18px,1.25vw)` 선언. 없으면 브라우저 기본 16px 적용됨 |
 | **zoom이 0.7 미만으로 과도 축소** | 콘텐츠가 너무 많아 가독성 저하 — 항목 수를 줄이거나 슬라이드 분할로 대응 |
 | **콘텐츠 넘침 시 폰트 개별 축소** | 폰트를 개별적으로 줄이지 않는다 — `fitSlideContent()` 자동 zoom이 전체를 균일 축소하므로 콘텐츠만 작성하면 됨 |
+| **⚠️ AI 슬롭 말투** | "X가 아니라 Y" 대구 반복, 은유 동사(시동·점화·정조준·올라타다), 자문자답, 근거 없는 최상급 금지 — [docs/ir-copy-style-guide.md](docs/ir-copy-style-guide.md) 필독 |
 
 ---
 
@@ -326,8 +330,11 @@ IR 페이지에서 `window.setLang`, `window.goToSlide` 함수를 전역으로 �
 ## 개발 서버
 
 ```bash
-npx http-server -p 8080 -c-1 --cors
+node server.js        # 권장 — 정적 서빙 + 인쇄 미리보기 "원본 저장" API (POST /api/save-ir)
+npx http-server -p 8080 -c-1 --cors   # 대안 (저장 API 없음 — 원본 저장 시 파일 선택 방식으로 폴백)
 ```
+
+- 인쇄 미리보기의 "텍스트 편집" → "원본 저장"은 `node server.js`로 띄웠을 때 `ir/<버전>/index.html`에 바로 저장됨 (덮어쓰기 전 `index.html.bak` 자동 백업)
 
 - Viewer: http://127.0.0.1:8080/app/viewer.html?ir=260203
 - 일본어: http://127.0.0.1:8080/app/viewer.html?ir=260203&lang=ja

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>WEVEN 투자자 질의 대응 — Deep-Dive Q&A</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#3B82F6;--accent2:#7C3AED;
+  --dark:#0A0E27;--dark2:#111633;--dark3:#1a1f42;
+  --text:#E2E8F0;--text-muted:#94A3B8;
+  --green:#22C55E;--red:#EF4444;--amber:#F59E0B;
+  --card:rgba(17,22,51,0.72);--card2:rgba(255,255,255,0.04);
+  --shadow:0 0.9375vw 2.5vw rgba(0,0,0,0.35);
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#7C3AED 50%,#3B82F6 100%);
+  --gradient2:linear-gradient(135deg,#3B82F6 0%,#0066FF 100%);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:4.6875vw 7.8125vw 7vw;opacity:0;
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(2.5vw)}to{opacity:1;transform:translateX(0)}}
+
+.slide .section-label,.slide .section-title,.slide .section-desc,
+.slide .hero-left,.slide .hero-right,.slide .hero-stats,
+.slide .content-area,.slide .versus-area,
+.slide .card-grid > *,.slide .flow-area,
+.slide .timeline-item,.slide .conclusion-highlight,.slide .conclusion-points,
+.slide .insight-bar,.slide .track-row,.slide .stat-strip{opacity:0}
+
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+.slide.active .content-area{animation:aFadeUp .5s ease .55s both}
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .7s both}
+.slide.active .versus-area{animation:aScaleIn .5s ease .55s both}
+.slide.active .flow-area{animation:aFadeUp .5s ease .55s both}
+.slide.active .stat-strip{animation:aFadeUp .5s ease .55s both}
+.slide.active .insight-bar{animation:aFadeUp .5s ease .9s both}
+.slide.active .card-grid > *:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .card-grid > *:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .card-grid > *:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .card-grid > *:nth-child(4){animation:aFadeUp .45s ease 1.0s both}
+.slide.active .track-row:nth-child(1){animation:aFadeUp .4s ease .5s both}
+.slide.active .track-row:nth-child(2){animation:aFadeUp .4s ease .6s both}
+.slide.active .track-row:nth-child(3){animation:aFadeUp .4s ease .7s both}
+.slide.active .track-row:nth-child(4){animation:aFadeUp .4s ease .8s both}
+.slide.active .track-row:nth-child(5){animation:aFadeUp .4s ease .9s both}
+.slide.active .track-row:nth-child(6){animation:aFadeUp .4s ease 1.0s both}
+.slide.active .timeline-item:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .timeline-item:nth-child(2){animation:aFadeUp .4s ease .68s both}
+.slide.active .timeline-item:nth-child(3){animation:aFadeUp .4s ease .81s both}
+.slide.active .timeline-item:nth-child(4){animation:aFadeUp .4s ease .94s both}
+.slide.active .timeline-item:nth-child(5){animation:aFadeUp .4s ease 1.07s both}
+.slide.active .conclusion-highlight{animation:aScaleIn .6s ease .5s both}
+.slide.active .conclusion-points{animation:aFadeUp .5s ease .7s both}
+
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,body.no-motion .slide.active .section-title,body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .hero-left,body.no-motion .slide.active .hero-right,body.no-motion .slide.active .hero-stats,
+body.no-motion .slide.active .content-area,body.no-motion .slide.active .versus-area,
+body.no-motion .slide.active .card-grid > *,body.no-motion .slide.active .flow-area,
+body.no-motion .slide.active .timeline-item,body.no-motion .slide.active .conclusion-highlight,body.no-motion .slide.active .conclusion-points,
+body.no-motion .slide.active .insight-bar,body.no-motion .slide.active .track-row,body.no-motion .slide.active .stat-strip{opacity:1 !important;transform:none !important}
+body.no-motion .orbit-ring{animation:none !important}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(124,58,237,0.08) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.08) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:4.6875vw 4.6875vw}
+.hero .slide-inner{flex-direction:row;align-items:center;gap:5vw}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.875vw;border-radius:3.125vw;background:rgba(59,130,246,0.1);color:var(--accent);font-size:max(18px,1.09375vw);font-weight:600;text-transform:uppercase;letter-spacing:0.117vw;margin-bottom:2.1875vw}
+.hero-badge::before{content:'';width:0.625vw;height:0.625vw;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:4.6875vw;font-weight:800;line-height:1.08;color:#fff;margin-bottom:1.5625vw;letter-spacing:-0.195vw}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.5625vw;color:var(--text-muted);line-height:1.7;margin-bottom:3.125vw;max-width:48.4375vw}
+.hero-stats{display:flex;gap:3vw}
+.hero-stat{text-align:center;min-width:7.8125vw}
+.hero-stat-value{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:max(18px,1.015625vw);color:var(--text-muted);margin-top:0.46875vw;text-transform:uppercase;letter-spacing:0.078vw}
+.hero-right{flex:.7;position:relative}
+.hero-visual{width:100%;aspect-ratio:1;position:relative;background:radial-gradient(circle at center,rgba(0,102,255,0.2),transparent 70%);border-radius:50%}
+.orbit-ring{position:absolute;border:1px solid rgba(255,255,255,0.06);border-radius:50%;animation:rot 20s linear infinite}
+.orbit-ring:nth-child(1){inset:10%}.orbit-ring:nth-child(2){inset:25%;animation-duration:30s;animation-direction:reverse}.orbit-ring:nth-child(3){inset:40%;animation-duration:25s}
+@keyframes rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.orbit-dot{position:absolute;width:0.9375vw;height:0.9375vw;border-radius:50%;background:var(--accent);box-shadow:0 0 1.5625vw var(--accent)}
+.orbit-ring:nth-child(1) .orbit-dot{top:0;left:50%;transform:translate(-50%,-50%)}
+.orbit-ring:nth-child(2) .orbit-dot{bottom:10%;right:0;background:var(--accent2);box-shadow:0 0 1.5625vw rgba(124,58,237,0.6)}
+.orbit-ring:nth-child(3) .orbit-dot{top:50%;left:0;transform:translate(-50%,-50%);background:var(--primary);box-shadow:0 0 1.5625vw var(--primary)}
+.center-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10.15625vw;height:10.15625vw;border-radius:2.1875vw;background:var(--gradient1);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff;box-shadow:0 1.5625vw 4.6875vw rgba(0,102,255,0.4)}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{background:radial-gradient(ellipse at 50% 50%,rgba(0,102,255,0.12) 0%,transparent 65%),var(--dark)}
+.section-divider .slide-inner{max-width:70vw;text-align:center;align-items:center}
+.divider-num{font-family:'Plus Jakarta Sans';font-size:max(18px,1.40625vw);font-weight:500;letter-spacing:0.46875vw;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1.25vw}
+.divider-title{font-family:'Plus Jakarta Sans';font-size:5vw;font-weight:800;color:#fff;letter-spacing:-0.078125vw;line-height:1.1}
+.divider-sub{font-size:1.5625vw;color:var(--text-muted);margin-top:1.5625vw;line-height:1.6}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:600;text-transform:uppercase;letter-spacing:0.195vw;color:var(--accent);margin-bottom:0.46875vw}
+.section-label::before{content:'';width:2.1875vw;height:0.15625vw;background:var(--accent)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;color:#fff;line-height:1.12;margin-bottom:0.78125vw;letter-spacing:-0.117vw}
+.section-desc{font-size:1.40625vw;color:var(--text-muted);line-height:1.6;max-width:100%;margin-bottom:1.5625vw}
+.section-desc b{color:var(--text);font-weight:700}
+
+/* ── CARD GRID ── */
+.card-grid{display:grid;gap:1.875vw}
+.card-grid.cols-2{grid-template-columns:1fr 1fr}
+.card-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.info-card{background:var(--card);border-radius:1.40625vw;padding:2.1875vw 1.875vw;box-shadow:var(--shadow)}
+.info-card .card-icon{width:3.515625vw;height:3.515625vw;border-radius:0.78125vw;display:flex;align-items:center;justify-content:center;margin-bottom:1.40625vw}
+.info-card .card-icon.blue{background:rgba(0,102,255,0.15)}
+.info-card .card-icon.green{background:rgba(34,197,94,0.15)}
+.info-card .card-icon.purple{background:rgba(124,58,237,0.15)}
+.info-card .card-icon.amber{background:rgba(245,158,11,0.13)}
+.info-card .card-icon.red{background:rgba(239,68,68,0.15)}
+.info-card h4{font-size:1.71875vw;font-weight:800;color:#fff;margin-bottom:0.625vw;line-height:1.25}
+.info-card p{font-size:max(18px,1.171875vw);color:var(--text-muted);line-height:1.55}
+.info-card .card-tag{display:inline-block;padding:0.3125vw 1.09375vw;border-radius:3.125vw;font-size:max(18px,1.015625vw);font-weight:700;margin-bottom:0.9375vw}
+.card-tag.blue{background:rgba(0,102,255,0.15);color:var(--accent)}
+.card-tag.purple{background:rgba(124,58,237,0.15);color:#A78BFA}
+.card-tag.green{background:rgba(34,197,94,0.15);color:var(--green)}
+.card-tag.red{background:rgba(239,68,68,0.15);color:var(--red)}
+.card-tag.amber{background:rgba(245,158,11,0.13);color:var(--amber)}
+.highlight-tag{color:var(--accent);font-weight:700}
+.highlight-green{color:var(--green);font-weight:700}
+.highlight-red{color:var(--red);font-weight:700}
+.highlight-purple{color:#A78BFA;font-weight:700}
+.highlight-amber{color:var(--amber);font-weight:700}
+
+/* ── VERSUS ── */
+.versus-area{display:grid;grid-template-columns:1fr auto 1fr;gap:2.5vw;align-items:stretch}
+.versus-card{background:var(--card);border-radius:1.40625vw;padding:2.5vw;text-align:center;box-shadow:var(--shadow)}
+.versus-card h3{font-family:'Plus Jakarta Sans';font-size:2.03125vw;font-weight:800;margin-bottom:0.9375vw}
+.versus-card.lose h3{color:var(--text-muted)}
+.versus-card.win h3{color:var(--accent)}
+.versus-card p{font-size:max(18px,1.25vw);color:var(--text-muted);line-height:1.65}
+.versus-card .target-badge{display:inline-block;padding:0.46875vw 1.5625vw;border-radius:3.125vw;font-size:max(18px,1.09375vw);font-weight:700;margin-top:1.25vw}
+.versus-card.win .target-badge{background:rgba(0,102,255,0.15);color:var(--accent)}
+.versus-card.lose .target-badge{background:rgba(255,255,255,0.06);color:var(--text-muted)}
+.vs-divider{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:800;color:rgba(255,255,255,0.15);align-self:center}
+
+/* ── FLOW ── */
+.flow-area{display:flex;align-items:stretch;gap:1.25vw}
+.flow-step{flex:1;background:var(--card);border-radius:1.25vw;padding:1.875vw 1.5625vw;text-align:center;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:0.78125vw}
+.flow-step .flow-icon{width:3.90625vw;height:3.90625vw;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05)}
+.flow-step.done .flow-icon{background:rgba(34,197,94,0.12)}
+.flow-step.zaemit-fill .flow-icon{background:rgba(0,102,255,0.15)}
+.flow-step h5{font-size:1.40625vw;font-weight:800;color:#fff;line-height:1.3}
+.flow-step p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.5}
+.flow-step .flow-state{font-size:max(18px,1.015625vw);font-weight:700;padding:0.234375vw 1.09375vw;border-radius:3.125vw}
+.flow-state.ok{background:rgba(34,197,94,0.12);color:var(--green)}
+.flow-state.fill{background:rgba(0,102,255,0.15);color:var(--accent)}
+.flow-state.violet{background:rgba(124,58,237,0.15);color:#A78BFA}
+.flow-arrow{display:flex;align-items:center;color:rgba(255,255,255,0.25);flex-shrink:0}
+
+/* ── INSIGHT BAR ── */
+.insight-bar{margin-top:1.875vw;background:linear-gradient(135deg,rgba(0,102,255,0.12),rgba(124,58,237,0.07));border-radius:1.09375vw;padding:1.5625vw 2.1875vw;display:flex;align-items:center;gap:1.25vw;box-shadow:var(--shadow)}
+.insight-bar svg{flex-shrink:0}
+.insight-bar p{font-size:1.40625vw;color:#fff;line-height:1.55;font-weight:600}
+.insight-bar p b{color:var(--accent)}
+
+/* ── TRACK TABLE ── */
+.track-table{overflow:hidden;border-radius:1.40625vw;background:var(--card);box-shadow:var(--shadow)}
+.track-row{display:grid;grid-template-columns:2.2fr 3.4fr 3fr}
+.track-row.header{background:rgba(59,130,246,0.12)}
+.track-row:not(.header){border-top:1px solid rgba(255,255,255,0.06)}
+.track-cell{padding:1.09375vw 1.40625vw;font-size:max(18px,1.09375vw);display:flex;align-items:center;gap:0.625vw;line-height:1.45;color:var(--text-muted)}
+.track-row.header .track-cell{font-weight:700;color:#fff;font-size:max(18px,1.171875vw)}
+.track-cell.name{font-weight:700;color:#fff}
+.track-cell .track-no{width:1.875vw;height:1.875vw;border-radius:50%;background:rgba(0,102,255,0.2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:max(18px,1.015625vw);flex-shrink:0}
+.track-pill{display:inline-block;padding:0.234375vw 0.9375vw;border-radius:3.125vw;font-size:max(18px,1.015625vw);font-weight:700;white-space:nowrap}
+.track-pill.now{background:rgba(34,197,94,0.12);color:var(--green)}
+.track-pill.mid{background:rgba(245,158,11,0.12);color:var(--amber)}
+.track-pill.long{background:rgba(255,255,255,0.06);color:var(--text-muted)}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;gap:1.5625vw;position:relative;padding-top:2.5vw}
+.timeline::before{content:'';position:absolute;top:1.5625vw;left:0;right:0;height:0.234375vw;background:linear-gradient(90deg,rgba(59,130,246,0.15) 0%,rgba(59,130,246,0.55) 55%,rgba(124,58,237,0.7) 100%);border-radius:0.15625vw}
+.timeline-item{flex:1;position:relative;background:var(--card);border-radius:1.09375vw;padding:1.5625vw;box-shadow:var(--shadow)}
+.timeline-item::before{content:'';position:absolute;top:-1.328125vw;left:1.5625vw;width:1.09375vw;height:1.09375vw;border-radius:50%;background:var(--accent);box-shadow:0 0 1.09375vw rgba(59,130,246,0.4)}
+.timeline-item.hot::before{background:var(--accent2);box-shadow:0 0 1.09375vw rgba(124,58,237,0.5)}
+.timeline-item .tl-date{font-family:'Plus Jakarta Sans';font-size:max(18px,1.09375vw);font-weight:800;color:var(--accent);margin-bottom:0.46875vw;text-transform:uppercase;letter-spacing:0.078vw}
+.timeline-item.hot .tl-date{color:#A78BFA}
+.timeline-item h5{font-size:1.40625vw;font-weight:800;color:#fff;margin-bottom:0.46875vw;line-height:1.3}
+.timeline-item p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.5}
+
+/* ── RISK CARDS ── */
+.risk-card{background:var(--card);border-radius:1.25vw;padding:1.71875vw 1.875vw;box-shadow:var(--shadow)}
+.risk-card .risk-head{display:flex;align-items:center;gap:0.9375vw;margin-bottom:0.9375vw}
+.risk-card .risk-head .risk-icon{width:2.65625vw;height:2.65625vw;border-radius:0.625vw;background:rgba(239,68,68,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.risk-card h4{font-size:1.484375vw;font-weight:800;color:#fff;line-height:1.3}
+.risk-card .risk-defense{display:flex;gap:0.625vw;align-items:flex-start;background:rgba(34,197,94,0.07);border-radius:0.78125vw;padding:0.9375vw 1.09375vw;font-size:max(18px,1.09375vw);color:var(--text);line-height:1.5}
+.risk-card .risk-defense b{color:var(--green)}
+.risk-card .risk-defense svg{flex-shrink:0;margin-top:0.15625vw}
+
+/* ── CONCLUSION ── */
+.conclusion-highlight{background:linear-gradient(135deg,rgba(0,102,255,0.12),rgba(124,58,237,0.07));border-radius:1.40625vw;padding:3.125vw 3.90625vw;text-align:center;margin-bottom:2.5vw;box-shadow:var(--shadow)}
+.conclusion-highlight h3{font-family:'Plus Jakarta Sans';font-size:2.65625vw;font-weight:800;color:#fff;margin-bottom:1.25vw;letter-spacing:-0.078vw;line-height:1.25}
+.conclusion-highlight p{font-size:1.5625vw;color:var(--text-muted);line-height:1.7;max-width:60vw;margin:0 auto}
+.conclusion-highlight p b{color:#fff}
+.conclusion-points{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.1875vw}
+.conclusion-point{text-align:center;padding:1.5625vw}
+.conclusion-point .point-num{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:800;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.78125vw}
+.conclusion-point h5{font-size:1.5625vw;font-weight:700;color:#fff;margin-bottom:0.46875vw}
+.conclusion-point p{font-size:max(18px,1.171875vw);color:var(--text-muted);line-height:1.55}
+
+/* ── STAT STRIP ── */
+.stat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1.875vw;margin-bottom:1.875vw}
+.stat-box{background:var(--card);border-radius:1.09375vw;padding:1.71875vw 1.5625vw;text-align:center;box-shadow:var(--shadow)}
+.stat-box .stat-value{font-family:'Plus Jakarta Sans';font-size:2.5vw;font-weight:800;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15}
+.stat-box .stat-label{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.46875vw;line-height:1.4}
+</style>
+</head>
+<body>
+
+<!-- ===== 01 COVER ===== -->
+<div class="slide hero active" data-title-ko="표지">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge">투자자 질의 대응 · 2026.08</div>
+      <h1>Deep-Dive <span class="gradient-text">Q&amp;A</span><br>투자자 질의 대응</h1>
+      <div class="hero-sub">
+        기술·인력, 그리고 GTM.<br>
+        투자자의 7가지 핵심 질의에 주식회사 위븐이 즉답합니다.
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">7</div>
+          <div class="hero-stat-label">핵심 질의</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">2</div>
+          <div class="hero-stat-label">파트 구성</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">3단</div>
+          <div class="hero-stat-label">즉답·논리·증빙</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="center-logo">WEVEN</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 답변 원칙 & 목차 ===== -->
+<div class="slide" data-title-ko="답변 원칙과 목차"
+     style="background:radial-gradient(ellipse at 30% 40%,rgba(59,130,246,0.07) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Overview</div>
+    <div class="section-title">모든 질문에 <span class="gradient-text">즉답 + 백업 자료</span>로 답합니다</div>
+    <div class="section-desc">실사에서 요구되는 것은 긴 설명이 아니라 <b>한 줄 답변 → 논리 전개 → 증빙 자료</b>의 3단 구조입니다.</div>
+    <div class="content-area">
+      <div class="card-grid cols-2">
+        <div class="info-card">
+          <div class="card-tag blue">Part 1 — 기술 · 인력</div>
+          <h4>Technology &amp; Talent</h4>
+          <p>
+            Q1-1. 글로벌 AI 기업으로부터 침범당하지 않을 인력풀이 있는가<br>
+            Q1-2. 내부 인력풀은 충분한가 — 리텐션 체계<br>
+            Q1-3. 향후 5년 기술 로드맵 — 무엇을, 누가, 글로벌 경쟁력은<br>
+            Q1-4. 필요한 리소스와 조달 계획
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="card-tag purple">Part 2 — GTM</div>
+          <h4>Go-To-Market</h4>
+          <p>
+            Q2-1. 누가, 어디서부터 마케팅을 시작하는가<br>
+            Q2-2. 어떤 커리어·퍼포먼스의 인력을 확보했는가<br>
+            Q2-3. 마일스톤별 투입 리소스와 목표 KPI<br>
+            &nbsp;+&nbsp; 예상 후속 질문 — 2차 방어선
+          </p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <p>모든 답변에는 특허·논문·운영 대시보드·계약 문서 등 <b>검증 가능한 증빙</b>이 뒤따릅니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 DIVIDER — PART 1 ===== -->
+<div class="slide section-divider" data-title-ko="Part 1 — 기술·인력">
+  <div class="slide-inner">
+    <div class="divider-num">Part 1</div>
+    <div class="divider-title">기술 · 인력</div>
+    <div class="divider-sub">Technology &amp; Talent —<br>글로벌 AI 기업과의 경쟁 구도, 리텐션, 5개년 로드맵, 리소스 조달</div>
+  </div>
+</div>
+
+<!-- ===== 04 Q1-1a 경쟁 구도 재정의 ===== -->
+<div class="slide" data-title-ko="Q1-1 — 침범당하지 않는가"
+     style="background:radial-gradient(ellipse at 20% 60%,rgba(0,102,255,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q1-1 — 글로벌 AI 침범 방어</div>
+    <div class="section-title">프론티어 모델은 경쟁자가 아니라 <span class="gradient-text">공급자</span>입니다</div>
+    <div class="section-desc">한 줄 답변 — <b>우리는 '모델 성능'으로 경쟁하지 않습니다.</b> 위븐의 해자는 AI 생성 레이어 위의 오케스트레이션·운영 레이어입니다.</div>
+    <div class="content-area">
+      <div class="versus-area">
+        <div class="versus-card lose">
+          <h3>모델 레이어</h3>
+          <p>OpenAI · Anthropic · Google이 경쟁하는 곳.<br>더 좋은 모델이 나올수록 위븐의 원가는 <span class="highlight-green">내려가고</span> 산출물 품질은 <span class="highlight-green">올라갑니다</span>.</p>
+          <div class="target-badge">위븐이 경쟁하지 않는 곳</div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="versus-card win">
+          <h3>오케스트레이션 · 운영 레이어</h3>
+          <p>섹션 카탈로그, RAG 파이프라인, 운영 자동화 루프,<br>GMO 페파보 채널 파트너십 —<br>모델 성능으로는 <span class="highlight-tag">복제되지 않는 도메인 자산</span>.</p>
+          <div class="target-badge">위븐의 해자</div>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        <p>이미 <b>멀티 벤더 하이브리드</b>로 운영 중 — 생성은 프론티어 API 에스컬레이션, 고빈도 운영 루프는 자체 호스팅 모델 <b>Apollon</b>(Qwen3.6-35B-A3B 기반). 특정 벤더 종속이 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 05 Q1-1b 검증 가능한 산출물 ===== -->
+<div class="slide" data-title-ko="Q1-1 — 검증 가능한 산출물"
+     style="background:radial-gradient(ellipse at 70% 30%,rgba(124,58,237,0.07) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q1-1 — 인력의 경쟁력</div>
+    <div class="section-title">커리어 나열이 아니라 <span class="gradient-text">검증 가능한 산출물</span>로 답합니다</div>
+    <div class="content-area">
+      <div class="track-table">
+        <div class="track-row header">
+          <div class="track-cell">산출물</div>
+          <div class="track-cell">내용</div>
+          <div class="track-cell">의미</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">1</span>특허</div>
+          <div class="track-cell">멀티에이전트 아키텍처 관련 특허 출원</div>
+          <div class="track-cell">기술의 법적 방어선</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">2</span>학술 논문</div>
+          <div class="track-cell">Retrieve–Verify–Escalate 프레임워크 — SCI급 저널 투고</div>
+          <div class="track-cell">기술의 학술적 검증</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">3</span>자체 모델 운영</div>
+          <div class="track-cell">Apollon — LoRA 파인튜닝 · vLLM 멀티 LoRA 서빙 · 프로덕션 투입</div>
+          <div class="track-cell">"논문이 아니라 실전"이라는 증거</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">4</span>멀티에이전트</div>
+          <div class="track-cell">DAG 오케스트레이터 + 4개 전문 에이전트(WebGen·ImgGen·Dev·Ops) 상용 운영</div>
+          <div class="track-cell">글로벌에서도 상용 사례가 드문 영역</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">5</span>MCP 생태계</div>
+          <div class="track-cell">Zaemit MCP 툴셋 — Claude 등 외부 AI에서 사이트 직접 제작·운영</div>
+          <div class="track-cell">AI 네이티브 배포 채널 선점</div>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <p>대표는 고려대 디지털경영 박사·IT 경력 20년+로 <b>파인튜닝부터 사업 전략까지 풀스택 커버</b> — 초기 단계에서 이는 리스크가 아니라 실행 속도의 원천입니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 06 Q1-2 리텐션 3층 구조 ===== -->
+<div class="slide" data-title-ko="Q1-2 — 리텐션 체계"
+     style="background:radial-gradient(ellipse at 40% 40%,rgba(34,197,94,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q1-2 — 내부 인력풀과 리텐션</div>
+    <div class="section-title">리텐션은 <span class="gradient-text">3층 구조</span>로 설계되어 있습니다</div>
+    <div class="content-area">
+      <div class="card-grid cols-3">
+        <div class="info-card">
+          <div class="card-tag blue">1층 — 지분</div>
+          <div class="card-icon blue">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h4>스톡옵션</h4>
+          <p>핵심 인력 대상 부여 수량·행사가·<span class="highlight-tag">베스팅 조건</span>으로 장기 정착을 설계. 부여 내역은 Fully Diluted 주주명부와 함께 별도 제출.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-tag amber">2층 — 금전 보상</div>
+          <div class="card-icon amber">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="6" x2="12" y2="18"/></svg>
+          </div>
+          <h4>직무발명보상</h4>
+          <p>출원 보상 → 등록 보상 → 실시(수익화) 보상의 <span class="highlight-amber">3단계 규정</span>으로 특허 성과가 개인 보상으로 직결되는 체계.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-tag green">3층 — 비금전 · 실행 중</div>
+          <div class="card-icon green">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h4>논문 공저 · 발명자 등재</h4>
+          <p>RVE 논문 공저, 특허 발명자 등재, 컨퍼런스 발표 등 기술 브랜딩 — <span class="highlight-green">이미 팀원이 참여해 실행 중</span>입니다.</p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <p>"충분한가"에 대한 정직한 답 — 현 단계에는 충분하며, Year 2 이후 확장 채용이 <b>이번 라운드 자금의 용처(Use of Proceeds)</b>입니다. 무엇이 부족하고 누구를 뽑을지 정해져 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 07 Q1-3a 5개년 로드맵 ===== -->
+<div class="slide" data-title-ko="Q1-3 — 5개년 로드맵"
+     style="background:radial-gradient(ellipse at 60% 40%,rgba(0,102,255,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q1-3 — 5개년 기술 로드맵</div>
+    <div class="section-title">종착점은 <span class="gradient-text">웹사이트를 대신 운영하는 AI</span>입니다</div>
+    <div class="section-desc">생성(Creation)은 경쟁이 치열하지만, 운영 자동화(Operation)는 아직 <b>글로벌하게 비어 있는 자리</b>입니다.</div>
+    <div class="content-area">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-date">2026 H2</div>
+          <h5>Phase 1 · 생성 완성도</h5>
+          <p>생성 파이프라인 안정화, zaemit style 파인튜닝 고도화, MCP 툴셋 정식화</p>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">2027</div>
+          <h5>Phase 2 · 운영 자동화</h5>
+          <p>콘텐츠 갱신·SEO·게시판 자동 루프, 고빈도 루프의 Apollon 전환율 확대</p>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">2028</div>
+          <h5>Phase 3 · 플랫폼화</h5>
+          <p>화이트라벨/OEM 아키텍처 — 일본 GMO 모델의 일반화, 파트너 API</p>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">2029</div>
+          <h5>Phase 4 · 데이터 해자</h5>
+          <p>업종별 LoRA 모델 라인업, 운영 데이터 기반 성과 예측·개선 제안</p>
+        </div>
+        <div class="timeline-item hot">
+          <div class="tl-date">2030</div>
+          <h5>Phase 5 · 자율 운영</h5>
+          <p>목표(매출·문의 수) 기반으로 사이트를 자율 개선하는 AI Site Operator</p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <p>아키텍처·모델 전략은 <b>대표가 직접 리드</b>(특허 발명자·논문 저자로 검증) — 구현은 현 개발팀 + Phase 2부터 ML 엔지니어 채용(Use of Proceeds).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 08 Q1-3b 글로벌 경쟁력 ===== -->
+<div class="slide" data-title-ko="Q1-3 — 글로벌 경쟁력"
+     style="background:radial-gradient(ellipse at 30% 60%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q1-3 — 글로벌 경쟁력의 근거</div>
+    <div class="section-title">3가지 각도에서 <span class="gradient-text">글로벌 경쟁력</span>을 증명합니다</div>
+    <div class="content-area">
+      <div class="card-grid cols-3">
+        <div class="info-card">
+          <div class="card-icon blue">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <h4>포지셔닝</h4>
+          <p>Wix·Framer·Lovable 등 글로벌 플레이어는 <span class="highlight-red">'생성'에서 경쟁 중</span>. 운영 자동화 루프를 SMB 웹사이트에 상용 적용한 사례는 드뭅니다. 공유 멀티테넌트 구조가 '지속 운영'에 유리합니다.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon green">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h4>원가 구조</h4>
+          <p>고빈도 운영 루프를 자체 호스팅 Apollon으로 처리 → 사이트 수가 늘어도 <span class="highlight-green">운영 원가가 선형으로 늘지 않는 구조</span>. TCO 분석 자료 보유.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon purple">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h4>외부 검증</h4>
+          <p>특허 + SCI급 논문 + 일본 대기업 <span class="highlight-purple">GMO 페파보 파트너십</span> — 기술이 내부 주장이 아니라 외부 검증을 통과했다는 증거.</p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <p>증빙 — 기술 로드맵 1페이지 도식, 아키텍처 다이어그램, <b>경쟁사 비교표, TCO 분석 요약</b>을 첨부 자료로 제출합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 09 Q1-4 리소스 조달 ===== -->
+<div class="slide" data-title-ko="Q1-4 — 리소스 조달"
+     style="background:radial-gradient(ellipse at 65% 35%,rgba(0,102,255,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q1-4 — 리소스와 조달 계획</div>
+    <div class="section-title">리소스 조달 계획이 곧 <span class="gradient-text">투자금 사용 계획</span>입니다</div>
+    <div class="content-area">
+      <div class="track-table">
+        <div class="track-row header">
+          <div class="track-cell">리소스</div>
+          <div class="track-cell">필요 내용</div>
+          <div class="track-cell">조달 방식</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">1</span>GPU 인프라</div>
+          <div class="track-cell">자체 모델 추론 · 파인튜닝</div>
+          <div class="track-cell">클라우드 크레딧(AWS Bedrock 보유) + 자체 GPU 서버 하이브리드 — TCO 분석 완료</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">2</span>인력</div>
+          <div class="track-cell">ML 엔지니어 · 백엔드 · 파트너 엔지니어</div>
+          <div class="track-cell">이번 라운드 Use of Proceeds — 채용 계획표 연동</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">3</span>데이터</div>
+          <div class="track-cell">운영 데이터 · 스타일 학습 데이터</div>
+          <div class="track-cell">서비스 운영에서 자체 축적 — 사이트 증가 = 데이터 증가의 플라이휠</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">4</span>비희석 자금</div>
+          <div class="track-cell">R&amp;D 보조</div>
+          <div class="track-cell">정부 과제 실적 보유(NIPA·중기부) — 후속 과제 지속 확보</div>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+        <p>투자금은 <b>기술 인력 · GTM · 인프라</b>에 배분되며, 배분 비율은 5개년 계획과 정합성을 맞춰 Use of Proceeds 표로 제시합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 10 DIVIDER — PART 2 ===== -->
+<div class="slide section-divider" data-title-ko="Part 2 — GTM">
+  <div class="slide-inner">
+    <div class="divider-num">Part 2</div>
+    <div class="divider-title">Go-To-Market</div>
+    <div class="divider-sub">누가, 어디서부터, 어떤 KPI로 —<br>구독 곡선을 세우는 시장 진입 전략</div>
+  </div>
+</div>
+
+<!-- ===== 11 Q2-1a 시장 진입 순서 ===== -->
+<div class="slide" data-title-ko="Q2-1 — 시장 진입 순서"
+     style="background:radial-gradient(ellipse at 50% 30%,rgba(59,130,246,0.08) 0%,transparent 55%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q2-1 — 어디서부터 시작하는가</div>
+    <div class="section-title">B2C 대중이 아니라 <span class="gradient-text">웹을 업으로 하는 전문가</span>부터</div>
+    <div class="section-desc">에이전시·프리랜서·인하우스 마케터 — <b>1명이 수십 개 사이트를 만드는 멀티플라이어</b>이고, 채널은 이미 열려 있습니다.</div>
+    <div class="content-area">
+      <div class="track-table">
+        <div class="track-row header" style="grid-template-columns:2.4fr 4fr 2.2fr">
+          <div class="track-cell">시장</div>
+          <div class="track-cell">채널</div>
+          <div class="track-cell">상태</div>
+        </div>
+        <div class="track-row" style="grid-template-columns:2.4fr 4fr 2.2fr">
+          <div class="track-cell name"><span class="track-no">1</span>국내 전문가 시장</div>
+          <div class="track-cell">대표 Threads 브랜딩 · 세미나 · 프리랜서 마켓 접점</div>
+          <div class="track-cell"><span class="track-pill now">진행 중 — 7월 오픈</span></div>
+        </div>
+        <div class="track-row" style="grid-template-columns:2.4fr 4fr 2.2fr">
+          <div class="track-cell name"><span class="track-no">2</span>일본</div>
+          <div class="track-cell">GMO 페파보 OEM(수익배분) — 구축 후 월 이용료 전환 IYP 모델</div>
+          <div class="track-cell"><span class="track-pill mid">계약 협의</span></div>
+        </div>
+        <div class="track-row" style="grid-template-columns:2.4fr 4fr 2.2fr">
+          <div class="track-cell name"><span class="track-no">3</span>글로벌 셀프서브</div>
+          <div class="track-cell">Microsoft 마켓플레이스 · MCP 기반 AI 네이티브 유통(Claude 등)</div>
+          <div class="track-cell"><span class="track-pill mid">준비 중</span></div>
+        </div>
+        <div class="track-row" style="grid-template-columns:2.4fr 4fr 2.2fr">
+          <div class="track-cell name"><span class="track-no">4</span>동남아</div>
+          <div class="track-cell">말레이시아 — 파트너 기반 진입 방식 검토</div>
+          <div class="track-cell"><span class="track-pill long">탐색</span></div>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <p>비치헤드(Beachhead) → 확장의 순서가 설계되어 있으며, <b>국내 전문가 채널이 가장 짧은 시간에 구독을 쌓는 경로</b>입니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 12 Q2-1b 왜 전문가부터 ===== -->
+<div class="slide" data-title-ko="Q2-1 — 왜 전문가부터"
+     style="background:radial-gradient(ellipse at 30% 50%,rgba(34,197,94,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q2-1 — 왜 전문가부터인가</div>
+    <div class="section-title">전문가 1명 = 사이트 N개 = <span class="gradient-text">구독 N건</span></div>
+    <div class="section-desc">CAC는 1명분, LTV는 N배 — 구독 곡선을 기하급수로 세우는 <b>구조적 장치</b>입니다.</div>
+    <div class="content-area">
+      <div class="flow-area">
+        <div class="flow-step done">
+          <div class="flow-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h5>전문가 1명 확보</h5>
+          <p>에이전시 · 프리랜서 · 인하우스 마케터</p>
+          <div class="flow-state ok">CAC 1명분</div>
+        </div>
+        <div class="flow-arrow">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="flow-step zaemit-fill">
+          <div class="flow-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h5>사이트 N개 제작</h5>
+          <p>고객사 프로젝트마다 재밋으로 구축</p>
+          <div class="flow-state fill">멀티플라이어</div>
+        </div>
+        <div class="flow-arrow">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="flow-step done">
+          <div class="flow-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <h5>구독 N건 발생</h5>
+          <p>사이트마다 월 구독 — 이탈률 낮은 정착 고객</p>
+          <div class="flow-state ok">LTV N배</div>
+        </div>
+        <div class="flow-arrow">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="flow-step zaemit-fill">
+          <div class="flow-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <h5>리셀러로 진화</h5>
+          <p>정착한 전문가는 공급 채널이 됨</p>
+          <div class="flow-state violet">수익모델 4축 연결</div>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <p>"하반기 구독 곡선 세우기"와 정합 — 전문가는 전환 비용에 민감하지만 <b>한번 정착하면 이탈률이 낮습니다</b>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 13 Q2-2 Founder-led → 시스템 ===== -->
+<div class="slide" data-title-ko="Q2-2 — GTM 인력"
+     style="background:radial-gradient(ellipse at 60% 50%,rgba(0,102,255,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q2-2 — GTM 인력의 커리어와 퍼포먼스</div>
+    <div class="section-title">Founder-led에서 <span class="gradient-text">시스템</span>으로 전환합니다</div>
+    <div class="section-desc">초기 단계에서 founder-led sales는 약점이 아니라 <b>표준</b>입니다 — 다만 "언제까지"에 대한 답이 정해져 있습니다.</div>
+    <div class="content-area">
+      <div class="stat-strip">
+        <div class="stat-box">
+          <div class="stat-value">Threads</div>
+          <div class="stat-label">대표 개인 브랜딩 — 바이브코딩 콘텐츠로 전문가 도달</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">세미나</div>
+          <div class="stat-label">개최·강연 실적으로 전문가 접점과 전환 축적</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">7월 오픈</div>
+          <div class="stat-label">Zaemit.ai 정식 오픈 — 구축 프로젝트 실적 축적 중</div>
+        </div>
+      </div>
+      <div class="track-table">
+        <div class="track-row header" style="grid-template-columns:1.8fr 2.6fr 4.2fr">
+          <div class="track-cell">시기</div>
+          <div class="track-cell">포지션</div>
+          <div class="track-cell">미션</div>
+        </div>
+        <div class="track-row" style="grid-template-columns:1.8fr 2.6fr 4.2fr">
+          <div class="track-cell"><span class="track-pill now">라운드 직후</span></div>
+          <div class="track-cell name">그로스 마케터</div>
+          <div class="track-cell">SaaS 퍼포먼스 마케팅 경험 — 국내 전문가 채널 CAC 최적화, 유료 전환율 개선</div>
+        </div>
+        <div class="track-row" style="grid-template-columns:1.8fr 2.6fr 4.2fr">
+          <div class="track-cell"><span class="track-pill mid">+6개월</span></div>
+          <div class="track-cell name">콘텐츠 · 커뮤니티</div>
+          <div class="track-cell">개발자·마케터 커뮤니티 운영 경험 — 전문가 커뮤니티 구축, 리셀러 온보딩</div>
+        </div>
+        <div class="track-row" style="grid-template-columns:1.8fr 2.6fr 4.2fr">
+          <div class="track-cell"><span class="track-pill long">Phase 3</span></div>
+          <div class="track-cell name">일본 BD</div>
+          <div class="track-cell">일본어 · SaaS 파트너 세일즈 — OEM 확장, IYP 후속 (GMO 협업 구조로 대체 가능)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 14 Q2-3 KPI & 마일스톤 ===== -->
+<div class="slide" data-title-ko="Q2-3 — KPI와 마일스톤"
+     style="background:radial-gradient(ellipse at 40% 60%,rgba(124,58,237,0.07) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Q2-3 — 마일스톤과 목표 KPI</div>
+    <div class="section-title">KPI의 중심축은 하나 — <span class="gradient-text">재밋 구독 MRR</span></div>
+    <div class="section-desc">마일스톤은 구독 곡선의 <b>변곡점</b>으로 정의하고, 리소스는 각 변곡점을 만드는 데 배분합니다.</div>
+    <div class="content-area">
+      <div class="timeline">
+        <div class="timeline-item hot">
+          <div class="tl-date">M1 · 2026 H2</div>
+          <h5>구독 전환 시작</h5>
+          <p>대표 GTM 집중 + 그로스 채용 1 — 구독 MRR 월 배수 성장 곡선 목표</p>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">M2 · 2027 H1</div>
+          <h5>국내 곡선 검증</h5>
+          <p>퍼포먼스 마케팅 본격화 — MRR 돌파, CAC 회수기간 관리, 리셀러·NRR</p>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">M3 · 2027</div>
+          <h5>일본 매출 개시</h5>
+          <p>GMO OEM 운영 지원 — 일본 경유 구독 사이트, 구축→구독 전환율</p>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">M4 · 2028</div>
+          <h5>글로벌 셀프서브</h5>
+          <p>MS 마켓플레이스 · MCP 채널 운영 — 해외 매출 비중, 채널별 CAC</p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <p>KPI 설계 원칙 — 헤드라인은 총매출이 아닌 <b>서비스매출(구독)</b>, 지원금은 KPI에서 제외해 별도 표기, 모든 마케팅 지출은 "구독 MRR에 기여했는가"로 사후 평가.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 15 2차 방어선 ===== -->
+<div class="slide" data-title-ko="예상 후속 질문 — 2차 방어선"
+     style="background:radial-gradient(ellipse at 70% 40%,rgba(239,68,68,0.05) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Appendix — 2차 방어선</div>
+    <div class="section-title">예상 후속 질문에도 <span class="gradient-text">답이 준비되어</span> 있습니다</div>
+    <div class="content-area">
+      <div class="card-grid cols-2">
+        <div class="risk-card">
+          <div class="risk-head">
+            <div class="risk-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h4>"Apollon이 프론티어보다 성능이 낮은데 왜 자체 호스팅인가?"</h4>
+          </div>
+          <div class="risk-defense">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>성능이 아니라 <b>원가·지연시간·데이터 주권</b>의 문제. 고빈도 루프를 자체 처리해야 사이트 증가 시 마진이 방어되고, 품질 구간은 프론티어로 에스컬레이션(RVE가 바로 이 설계).</div>
+          </div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-head">
+            <div class="risk-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+            </div>
+            <h4>"핵심 개발자가 이탈하면?"</h4>
+          </div>
+          <div class="risk-defense">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>아키텍처·프롬프트·파인튜닝 파이프라인이 <b>문서화·특허화</b>되어 개인 의존도가 구조적으로 낮음 + 스톡옵션 베스팅 + 직무발명보상.</div>
+          </div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-head">
+            <div class="risk-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h4>"월 2배 구독 성장의 근거는?"</h4>
+          </div>
+          <div class="risk-defense">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>절대 수치가 작은 초기 구간의 목표이며, <b>전문가 1명당 N개 사이트 구조</b>가 배수 성장의 장치. 3개월 실적으로 증명하겠다는 커밋으로 답변.</div>
+          </div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-head">
+            <div class="risk-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <h4>"GMO가 직접 만들면 되지 않나?"</h4>
+          </div>
+          <div class="risk-defense">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>수익배분 OEM 계약 자체가 GMO의 <b>'buy' 결정 증거</b>. 멀티에이전트 오케스트레이션은 웹호스팅사의 핵심 역량 밖이며, 특허·논문이 진입장벽.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 16 결론 ===== -->
+<div class="slide" data-title-ko="결론"
+     style="background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.1) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(124,58,237,0.07) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">결론</div>
+    <div class="section-title"><span class="gradient-text">즉답할 수 있는 회사</span>가 실사를 통과합니다</div>
+    <div class="conclusion-highlight">
+      <p>위븐은 <b>모델 성능이 아니라 오케스트레이션·운영 레이어</b>에서 경쟁하고,<br>특허·논문·자체 모델 운영이라는 <b>검증 가능한 산출물</b>로 기술을 증명하며,<br>모든 GTM 활동을 <b>구독 MRR 하나의 KPI</b>로 수렴시킵니다.</p>
+    </div>
+    <div class="conclusion-points">
+      <div class="conclusion-point">
+        <div class="point-num">01</div>
+        <h5>기술</h5>
+        <p>특허 + SCI급 논문 + Apollon 상용 운영 —<br>외부 검증을 통과한 기술 자산</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">02</div>
+        <h5>시장</h5>
+        <p>국내 전문가 → 일본 GMO → 글로벌 —<br>이미 열려 있는 채널의 순차 확장</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">03</div>
+        <h5>KPI</h5>
+        <p>구독 MRR 단일 지표 —<br>지원금 분리, 채널별 CAC 사후 평가</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  window.irConfig={version:'260811_zaemit_26_st',theme:'dark',languages:['ko'],defaultLang:'ko'};
+
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.zoom='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.5,Math.min(1,z));if(z<1)inner.style.zoom=z}
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  function goTo(idx,src){
+    if(idx<0||idx>=total||idx===current)return;
+    slides[current].classList.remove('active');current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    document.body.classList.remove('en','ja','ko');
+    if(nl!=='ko')document.body.classList.add(nl);
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
+    total:total,mainTotal:total,appendixStart:total,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
+      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body>
+</html>

@@ -211,6 +211,494 @@ html {
   background: rgba(239,68,68,0.3);
 }
 
+/* ── TEXT EDIT MODE ── */
+.btn-edit {
+  background: rgba(245,158,11,0.15);
+  color: #F59E0B;
+  border: 1px solid rgba(245,158,11,0.3);
+}
+
+.btn-edit:hover {
+  background: rgba(245,158,11,0.25);
+}
+
+.btn-edit.active {
+  background: #F59E0B;
+  color: #111;
+}
+
+.btn-save {
+  background: rgba(34,197,94,0.15);
+  color: #22C55E;
+  border: 1px solid rgba(34,197,94,0.3);
+}
+
+.btn-save:hover:not(:disabled) {
+  background: rgba(34,197,94,0.3);
+}
+
+.btn-save:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-save.dirty {
+  background: #22C55E;
+  color: #fff;
+  animation: savePulse 1.6s ease infinite;
+}
+
+.btn-save.saving {
+  background: rgba(34,197,94,0.35);
+  color: #fff;
+  opacity: 0.85;
+  animation: none;
+}
+
+.btn-save.saved {
+  background: #16A34A;
+  color: #fff;
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes savePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+}
+
+body.edit-mode .slide-clone {
+  outline: 2px dashed rgba(245,158,11,0.5);
+  outline-offset: -2px;
+  cursor: text;
+}
+
+body.edit-mode .slide-clone:focus-within {
+  outline: 2px solid #F59E0B;
+  outline-offset: -2px;
+}
+
+body.edit-mode .slide-clone [contenteditable]:focus {
+  outline: none;
+}
+
+/* ── ELEMENT INSPECTOR (edit mode) ── */
+#ppInspHover {
+  position: fixed;
+  display: none;
+  z-index: 9000;
+  pointer-events: none;
+  outline: 1.5px dashed #3B82F6;
+  outline-offset: 1px;
+  background: rgba(59,130,246,0.07);
+}
+
+#ppInspSel {
+  position: fixed;
+  display: none;
+  z-index: 9001;
+  pointer-events: none;
+  outline: 2px solid #3B82F6;
+  outline-offset: 0;
+}
+
+.pp-insp-toolbar {
+  position: absolute;
+  bottom: 100%;
+  left: -2px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #1E293B;
+  border-radius: 6px;
+  padding: 3px;
+  pointer-events: auto;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+}
+
+.pp-insp-toolbar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+  cursor: pointer;
+  color: #fff;
+}
+
+#ppInspCopy { background: #8B5CF6; }
+#ppInspCopy:hover { background: #7C3AED; }
+#ppInspDup { background: #3B82F6; }
+#ppInspDup:hover { background: #2563EB; }
+#ppInspDel { background: #EF4444; }
+#ppInspDel:hover { background: #DC2626; }
+
+/* 순서 이동 컨트롤 — 리스트 항목(flex/grid 자식, li)·인라인 span 선택 시에만 표시 */
+#ppInspSel:not(.pp-can-move) .pp-mv { display: none; }
+.pp-insp-toolbar .pp-mv { background: #475569; }
+.pp-insp-toolbar .pp-mv:hover:not(:disabled) { background: #334155; }
+.pp-insp-toolbar .pp-mv:disabled { opacity: 0.35; cursor: default; }
+#ppInspMove { background: #10B981; cursor: grab; }
+#ppInspMove:hover:not(:disabled) { background: #059669; }
+#ppInspMove.pp-active { cursor: grabbing; }
+/* 세로 리스트(column flex, 블록 li 등)는 화살표를 위/아래 방향으로 회전 */
+#ppInspSel.pp-mv-y #ppInspMvPrev svg,
+#ppInspSel.pp-mv-y #ppInspMvNext svg { transform: rotate(90deg); }
+
+/* 이동 드래그 중 드롭 위치 표시선 */
+#ppInspDropLine {
+  position: fixed;
+  display: none;
+  z-index: 9003;
+  pointer-events: none;
+  background: #F59E0B;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.25), 0 0 8px rgba(245,158,11,0.7);
+}
+
+
+/* 여백 핸들: 평소엔 숨기고 근처 호버/드래그 중에만 표시 */
+.pp-h-pad, .pp-h-mar {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.pp-h-pad:hover, .pp-h-mar:hover, .pp-insp-handle.pp-active {
+  opacity: 1;
+}
+
+/* 박스모델 시각화: 마진(주황 빗살)·패딩(초록 빗살)·콘텐츠(점선) */
+.pp-box-mar, .pp-box-pad, .pp-box-content {
+  position: absolute;
+  pointer-events: none;
+  display: none;
+}
+.pp-box-mar {
+  background: repeating-linear-gradient(45deg, rgba(245,158,11,0.18) 0 4px, rgba(245,158,11,0.05) 4px 8px);
+}
+.pp-box-pad {
+  background: repeating-linear-gradient(45deg, rgba(34,197,94,0.16) 0 4px, rgba(34,197,94,0.04) 4px 8px);
+}
+.pp-box-content {
+  outline: 1px dashed rgba(148,163,184,0.5);
+  outline-offset: -1px;
+}
+
+/* 우측 프로퍼티 패널 */
+#ppInspPanel {
+  position: fixed;
+  top: 92px;
+  right: 12px;
+  width: 244px;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  display: none;
+  z-index: 9002;
+  background: #151B2E;
+  border-radius: 10px;
+  padding: 10px 12px 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+}
+
+.pp-panel-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 4px;
+}
+
+.pp-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pp-panel-tag {
+  font: 600 11px/1.5 'Consolas', monospace;
+  color: #7DD3FC;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pp-panel-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94A3B8;
+  margin: 10px 0 4px;
+}
+
+.pp-panel-group::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.pp-g-font::before { background: #8B5CF6; border-radius: 50%; }
+.pp-g-size::before { background: #3B82F6; border-radius: 2px; }
+.pp-g-pad::before  { background: #22C55E; }
+.pp-g-mar::before  { background: #F59E0B; }
+
+.pp-panel-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.pp-panel-row label {
+  width: 44px;
+  font-size: 11px;
+  color: #CBD5E1;
+  flex-shrink: 0;
+}
+
+.pp-panel-row input {
+  flex: 1;
+  min-width: 0;
+  height: 22px;
+  background: #0D1220;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  color: #E2E8F0;
+  font-size: 11px;
+  padding: 0 6px;
+  outline: none;
+  transition: border-color 0.12s;
+}
+
+.pp-panel-row input:hover:not(:disabled):not(:focus) {
+  border-color: rgba(59,130,246,0.35);
+}
+
+.pp-panel-row input:focus {
+  border-color: #3B82F6;
+}
+
+.pp-panel-row.changed input {
+  border-color: rgba(59,130,246,0.55);
+  color: #93C5FD;
+}
+
+.pp-panel-row .pp-unit {
+  font-size: 10px;
+  color: #64748B;
+  flex-shrink: 0;
+}
+
+/* 셀렉트 (폰트·굵기) — 네이티브 렌더링 제거 후 패널 톤으로 통일 */
+.pp-panel-row select {
+  flex: 1;
+  min-width: 0;
+  height: 22px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #0D1220;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 9px 9px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  color: #E2E8F0;
+  font-size: 11px;
+  line-height: 20px;
+  padding: 0 20px 0 7px;
+  outline: none;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pp-panel-row select:hover:not(:disabled) { border-color: rgba(59,130,246,0.5); }
+.pp-panel-row select:focus {
+  border-color: #3B82F6;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2393C5FD' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+.pp-panel-row select:disabled { opacity: 0.35; cursor: default; }
+/* 펼침 목록 (Chromium은 option 배경/글자색만 반영) */
+.pp-panel-row select option {
+  background: #151B2E;
+  color: #E2E8F0;
+  font-size: 12px;
+}
+.pp-panel-row.changed select { border-color: rgba(59,130,246,0.55); color: #93C5FD; }
+
+/* 색상 스와치 + 헥스 입력 */
+.pp-panel-row input[type="color"] {
+  flex: none;
+  width: 26px;
+  height: 22px;
+  padding: 1px;
+  background: #0D1220;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pp-panel-row input[type="color"]::-webkit-color-swatch-wrapper { padding: 1px; }
+.pp-panel-row input[type="color"]::-webkit-color-swatch { border: none; border-radius: 3px; }
+.pp-panel-row input.pp-color-hex {
+  font-family: 'Consolas', monospace;
+  font-size: 10px;
+}
+
+/* 토글(기울임/밑줄/취소선)·정렬 버튼 그룹 */
+.pp-btn-group {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.pp-btn-group button {
+  flex: 1;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0D1220;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  color: #94A3B8;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+}
+.pp-btn-group button:hover:not(:disabled) {
+  border-color: rgba(59,130,246,0.5);
+  color: #CBD5E1;
+}
+.pp-btn-group button.on {
+  background: rgba(59,130,246,0.28);
+  border-color: #3B82F6;
+  color: #93C5FD;
+}
+.pp-btn-group button:disabled { opacity: 0.3; cursor: default; }
+
+.pp-row-reset {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  background: #0D1220;
+  color: #94A3B8;
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+}
+
+.pp-row-reset:hover:not(:disabled) {
+  border-color: rgba(59,130,246,0.5);
+  background: rgba(59,130,246,0.18);
+  color: #93C5FD;
+}
+
+.pp-row-reset:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.pp-insp-handle {
+  position: absolute;
+  pointer-events: auto;
+}
+
+/* 실제 히트 영역을 점보다 넓게 — 근처만 가도 리사이즈 커서가 뜨도록 */
+.pp-insp-handle::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+
+/* 크기 핸들 (파랑 사각형): 오른쪽=너비, 아래=높이, 모서리=둘 다 */
+.pp-h-size {
+  width: 8px;
+  height: 8px;
+  background: #3B82F6;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+.pp-h-e  { right: -4px;  top: 50%;    transform: translateY(-50%); cursor: ew-resize; }
+.pp-h-s  { bottom: -4px; left: 50%;   transform: translateX(-50%); cursor: ns-resize; }
+.pp-h-se { right: -4px;  bottom: -4px; cursor: nwse-resize; }
+
+/* 패딩 핸들 (초록 원, 테두리 안쪽) — 각 변 정가운데 */
+.pp-h-pad {
+  width: 7px;
+  height: 7px;
+  background: #22C55E;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+.pp-h-pt { top: 5px;    left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.pp-h-pb { bottom: 5px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.pp-h-pl { left: 5px;   top: 50%;  transform: translateY(-50%); cursor: ew-resize; }
+.pp-h-pr { right: 5px;  top: 50%;  transform: translateY(-50%); cursor: ew-resize; }
+
+/* 마진 핸들 (주황 원, 테두리 바깥쪽) — 각 변 정가운데 */
+.pp-h-mar {
+  width: 7px;
+  height: 7px;
+  background: #F59E0B;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+.pp-h-mt { top: -14px;    left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.pp-h-mb { bottom: -14px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.pp-h-ml { left: -14px;   top: 50%;  transform: translateY(-50%); cursor: ew-resize; }
+.pp-h-mr { right: -14px;  top: 50%;  transform: translateY(-50%); cursor: ew-resize; }
+
+/* 캔버스(슬라이드 루트) 선택 시: 박스모델 확인 전용 —
+   삭제/복제 툴바와 크기·마진 핸들 숨김 (패딩 핸들은 유지) */
+#ppInspSel.pp-root-sel .pp-insp-toolbar,
+#ppInspSel.pp-root-sel .pp-h-size,
+#ppInspSel.pp-root-sel .pp-h-mar { display: none; }
+
+.pp-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(17,22,51,0.95);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10000;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.pp-toast.visible {
+  opacity: 1;
+}
+
+.pp-toast.error {
+  background: rgba(153,27,27,0.95);
+}
+
+@media print {
+  body.edit-mode .slide-clone {
+    outline: none !important;
+  }
+}
+
 /* ── PREVIEW CONTENT ── */
 .preview-content {
   padding: 24px;
@@ -821,7 +1309,9 @@ body.light-theme .video-placeholder svg,
 .loading-text {
   font-size: 18px;
   font-weight: 600;
-  color: var(--pp-text);
+  /* 오버레이 배경은 테마와 무관하게 항상 어두우므로 흰색 고정
+     (라이트 테마에서 var(--pp-text)=#0F172A는 보이지 않음) */
+  color: #fff;
 }
 
 .loading-bar {
@@ -965,6 +1455,15 @@ body.light-theme .slide-clone.slide.cover,
   opacity: 1 !important;
   transform: none !important;
   overflow: visible !important;
+}
+
+/* 간지(section-divider) 슬라이드: slide-inner에 max-width(원본 70vw)가 있어
+   위의 stretch/flex-start 오버라이드만으로는 왼쪽으로 붙는다 —
+   좌우 auto 마진 + 수직 가운데로 원본(viewer)과 동일한 센터링을 복원 */
+.slide-clone.section-divider .slide-inner {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  justify-content: center !important;
 }
 
 /* slide-inner에 인라인 flex-direction:row가 있으면 유지 */
@@ -1213,4 +1712,44 @@ body.light-theme .slide-clone.slide.cover,
 .slide-clone.ir-260202 .status-partners span {
   background: #F1F5F9 !important;
   color: #64748B !important;
+}
+
+/* ── PAGE MANAGEMENT BUTTONS (페이지 이동/복제/삭제) ── */
+.page-manage-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+}
+
+.page-manage-btn {
+  width: 24px;
+  height: 22px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: var(--pp-muted);
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  padding: 0;
+}
+
+.page-manage-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.12);
+  color: var(--pp-text);
+  border-color: var(--pp-accent);
+}
+
+.page-manage-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.page-manage-btn.page-manage-danger:hover:not(:disabled) {
+  background: rgba(239,68,68,0.15);
+  color: #F87171;
+  border-color: rgba(239,68,68,0.5);
 }
