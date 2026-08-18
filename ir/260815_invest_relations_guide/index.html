@@ -243,6 +243,19 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
 .kbar .kval{margin-left:0.703125vw;font-size:max(18px,1.015625vw);font-weight:800;letter-spacing:-0.01em;color:var(--z-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
 .kbar .kval .ksh{margin-left:0.3125vw;font-weight:600;color:var(--z-note)}
 .kduo .glabel .tnum{font-weight:700;color:var(--z-accent)}
+
+/* ── 10 재무 2×2 프로젝션 ── */
+.pj2{margin-top:2.65625vw;display:grid;grid-template-columns:1fr 1fr;gap:1.09375vw}
+.pj2 .pjcell{height:10.15625vw;padding:1.40625vw 1.875vw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.46875vw;text-align:center}
+.pjcell .plab{font-size:max(18px,1.015625vw);font-weight:600;letter-spacing:-0.005em;color:var(--z-note)}
+.pjcell .pnum{font-size:3.90625vw;font-weight:800;letter-spacing:-0.02em;line-height:1;color:var(--z-accent);font-variant-numeric:tabular-nums}
+.pjcell .pcap{font-size:max(18px,1.015625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.4;color:var(--z-ink)}
+.pjcell.ablock .plab{color:rgba(255,255,255,.85)}
+.pjcell.ablock .pnum{color:#fff}
+.pjcell.ablock .pcap{color:rgba(255,255,255,.92)}
+.pjpath{margin-top:1.40625vw;display:flex;align-items:baseline;justify-content:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:700;letter-spacing:-0.01em;color:var(--z-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pjpath .sub{font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
+.pjpath .arr{color:var(--z-note);font-weight:400}
 </style>
 </head>
 <body>
@@ -680,42 +693,36 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
   <div class="slide-inner">
     <div class="head">
       <div class="section-label">재무 - <span class="num">10</span></div>
-      <div class="section-title h3s m-rise">매출은 30억에서 <span class="pt-c">400억</span>으로,<br>해외 비중은 20%에서 60%로 갑니다</div>
-      <div class="section-desc m-rise" style="--d:.3s">사이트당 연 27만원(실단가 277,200원)과 채널별 구독 목표로 계산한 기본안입니다. 26~28년은 확정 목표이고, 29~30년은 성장률 둔화(55%→43%)를 가정한 연장입니다.</div>
+      <div class="section-title h3s m-rise">매출은 30억에서 <span class="pt-c">600억</span>으로,<br>해외 비중은 20%에서 65%로 갑니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">사이트당 연 27만원(실단가 277,200원)과 채널별 구독 목표로 계산한 기본안입니다. 26~28년은 확정 목표이고, 29~30년은 마켓플레이스 · DI 확장 매출이 합류해 <b>증가폭이 커지는</b> 가정입니다.</div>
     </div>
-    <div class="chlist card m-rise" style="--d:.5s">
-      <div class="chrow">
-        <div class="no tnum">'26</div>
-        <div class="nm">합계 30억</div>
-        <div class="ds">국내 24 · 해외 6. 에이전시 구독 전환 실증과 일본 OEM 개시</div>
-        <span class="pill live">해외 20%</span>
+    <div class="pj2 m-stagger">
+      <div class="pjcell card">
+        <div class="plab">2026 · 국내</div>
+        <div class="pnum">24억</div>
+        <div class="pcap">SI 구축 · 에이전시 구독 전환</div>
       </div>
-      <div class="chrow">
-        <div class="no tnum">'27</div>
-        <div class="nm">합계 80억</div>
-        <div class="ds">국내 48 · 해외 32. 일본 정식 론칭 · 미국 개시 · preA 20억 집행</div>
-        <span class="pill live">해외 40%</span>
+      <div class="pjcell card">
+        <div class="plab">2026 · 해외</div>
+        <div class="pnum">6억</div>
+        <div class="pcap">일본 OEM 개시 · MS 등록</div>
       </div>
-      <div class="chrow">
-        <div class="no tnum">'28</div>
-        <div class="nm">합계 180억</div>
-        <div class="ds">국내 90 · 해외 90. <b>디자인 마켓플레이스 오픈</b> · preIPO 240억</div>
-        <span class="pill live">해외 50%</span>
+      <div class="pjcell card">
+        <div class="plab">2030 · 국내</div>
+        <div class="pnum">210억</div>
+        <div class="pcap">구독 · 마켓플레이스 (8.8배)</div>
       </div>
-      <div class="chrow">
-        <div class="no tnum">'29</div>
-        <div class="nm">합계 280억</div>
-        <div class="ds">국내 126 · 해외 154. 파워포인트 · 브로셔 등 DI 확장 매출 합류</div>
-        <span class="pill soon">가정 · 해외 55%</span>
-      </div>
-      <div class="chrow">
-        <div class="no tnum">'30</div>
-        <div class="nm">합계 400억</div>
-        <div class="ds">국내 160 · 해외 240. <b>디자인 자동화 표준</b> · 상장 절차 진행</div>
-        <span class="pill soon">가정 · 해외 60%</span>
+      <div class="pjcell ablock">
+        <div class="plab">2030 · 해외</div>
+        <div class="pnum">390억</div>
+        <div class="pcap">글로벌 셀프서브 · DI 확장 (65배)</div>
       </div>
     </div>
-    <p class="appendix-note m-rise" style="--d:.8s">※ 구독(반복매출) 비중은 같은 기간 20% → 50%로 상승 · 상세 모델과 민감도는 실사 자료로 제출합니다</p>
+    <div class="pjpath m-rise" style="--d:.7s">
+      <span>합계 30</span><span class="arr">→</span><span>80</span><span class="arr">→</span><span>180</span><span class="arr">→</span><span>350</span><span class="arr">→</span><span>600억</span>
+      <span class="sub">· 증가폭 +50 → +100 → +170 → +250 (29~30년 가정)</span>
+    </div>
+    <p class="appendix-note m-rise" style="--d:.85s">※ 구독(반복매출) 비중은 같은 기간 20% → 55%로 상승 · 상세 모델과 민감도는 실사 자료로 제출합니다</p>
   </div>
 </div>
 
