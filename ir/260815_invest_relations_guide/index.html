@@ -244,18 +244,31 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
 .kbar .kval .ksh{margin-left:0.3125vw;font-weight:600;color:var(--z-note)}
 .kduo .glabel .tnum{font-weight:700;color:var(--z-accent)}
 
-/* ── 10 재무 2×2 프로젝션 ── */
-.pj2{margin-top:2.65625vw;display:grid;grid-template-columns:1fr 1fr;gap:1.09375vw}
-.pj2 .pjcell{height:10.15625vw;padding:1.40625vw 1.875vw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.46875vw;text-align:center}
-.pjcell .plab{font-size:max(18px,1.015625vw);font-weight:600;letter-spacing:-0.005em;color:var(--z-note)}
-.pjcell .pnum{font-size:3.90625vw;font-weight:800;letter-spacing:-0.02em;line-height:1;color:var(--z-accent);font-variant-numeric:tabular-nums}
-.pjcell .pcap{font-size:max(18px,1.015625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.4;color:var(--z-ink)}
-.pjcell.ablock .plab{color:rgba(255,255,255,.85)}
-.pjcell.ablock .pnum{color:#fff}
-.pjcell.ablock .pcap{color:rgba(255,255,255,.92)}
-.pjpath{margin-top:1.40625vw;display:flex;align-items:baseline;justify-content:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:700;letter-spacing:-0.01em;color:var(--z-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
-.pjpath .sub{font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
-.pjpath .arr{color:var(--z-note);font-weight:400}
+/* ── 10 재무 프로젝션: 좌 손익 테이블 + 우 주요 내용 ── */
+.fduo{margin-top:2.34375vw;display:grid;grid-template-columns:1.62fr 1fr;gap:1.40625vw;align-items:stretch}
+.ftbl{padding:1.71875vw 2.03125vw 1.5625vw;display:flex;flex-direction:column}
+.frow{display:grid;grid-template-columns:11.71875vw repeat(5,1fr);align-items:center;gap:0.625vw;padding:0.703125vw 0;border-top:1px solid #EDF1F8}
+.frow:first-child{border-top:0}
+.frow.fhead{padding-top:0;padding-bottom:0.78125vw;border-top:0;border-bottom:1px solid #D8E0EE}
+.frow.fhead span{font-size:max(18px,0.9375vw);font-weight:700;letter-spacing:-0.01em;color:var(--z-ink);text-align:right;font-variant-numeric:tabular-nums}
+.frow.fhead span:first-child{text-align:left}
+.frow.fhead .fa{color:var(--z-note);font-weight:600}
+.frow .fk{font-size:max(18px,0.9375vw);font-weight:600;letter-spacing:-0.015em;line-height:1.3;color:var(--z-ink)}
+.frow .fk .fs{display:block;font-size:max(18px,0.78125vw);font-weight:500;color:var(--z-note)}
+.frow .fv{font-size:max(18px,0.9765625vw);font-weight:500;letter-spacing:-0.01em;text-align:right;color:var(--z-ink);font-variant-numeric:tabular-nums}
+.frow.fsum{border-top:1.5px solid #C9D6EA}
+.frow.fsum .fk,.frow.fsum .fv{font-weight:800}
+.frow.fcost .fk,.frow.fcost .fv{color:var(--z-note);font-weight:500}
+.frow.fprofit .fk{font-weight:800;color:var(--z-accent)}
+.frow.fprofit .fv{font-weight:800;color:var(--z-accent)}
+.fside{display:flex;flex-direction:column;gap:1.09375vw}
+.fkey{flex:1;padding:1.328125vw 1.5625vw;display:flex;flex-direction:column;justify-content:center;gap:0.3125vw}
+.fkey .kt{display:flex;align-items:baseline;gap:0.625vw;font-size:max(18px,1.171875vw);font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
+.fkey .kt .kb{font-size:1.71875vw;color:var(--z-accent);font-variant-numeric:tabular-nums}
+.fkey .kd{font-size:max(18px,0.9375vw);font-weight:500;letter-spacing:-0.01em;line-height:1.45;color:var(--z-ink)}
+.fkey.ablock{align-items:flex-start}
+.fkey.ablock .kt,.fkey.ablock .kt .kb{color:#fff}
+.fkey.ablock .kd{color:rgba(255,255,255,.92)}
 </style>
 </head>
 <body>
@@ -693,36 +706,66 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
   <div class="slide-inner">
     <div class="head">
       <div class="section-label">재무 - <span class="num">10</span></div>
-      <div class="section-title h3s m-rise">매출은 30억에서 <span class="pt-c">600억</span>으로,<br>해외 비중은 20%에서 65%로 갑니다</div>
-      <div class="section-desc m-rise" style="--d:.3s">사이트당 연 27만원(실단가 277,200원)과 채널별 구독 목표로 계산한 기본안입니다. 26~28년은 확정 목표이고, 29~30년은 마켓플레이스 · DI 확장 매출이 합류해 <b>증가폭이 커지는</b> 가정입니다.</div>
+      <div class="section-title h3s m-rise">매출은 30억에서 <span class="pt-c">600억</span>으로,<br>수입 항목과 지출까지 함께 공개합니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">사이트당 연 27만원(실단가 277,200원) 기준 기본안입니다. 26~28년은 확정 목표이고, 29~30년은 <b>증가폭이 커지는</b> 가정입니다. <span style="color:var(--z-note)">(단위: 억원)</span></div>
     </div>
-    <div class="pj2 m-stagger">
-      <div class="pjcell card">
-        <div class="plab">2026 · 국내</div>
-        <div class="pnum">24억</div>
-        <div class="pcap">SI 구축 · 에이전시 구독 전환</div>
+    <div class="fduo">
+      <div class="ftbl card m-rise" style="--d:.5s">
+        <div class="frow fhead">
+          <span>수입 항목</span><span>2026</span><span>2027</span><span>2028</span><span class="fa">2029*</span><span class="fa">2030*</span>
+        </div>
+        <div class="frow">
+          <div class="fk">국내 구독<span class="fs">에이전시 · 전문가 채널</span></div>
+          <div class="fv">4</div><div class="fv">15</div><div class="fv">38</div><div class="fv">65</div><div class="fv">110</div>
+        </div>
+        <div class="frow">
+          <div class="fk">국내 SI · 제작대행<span class="fs">구축이 구독의 입구</span></div>
+          <div class="fv">20</div><div class="fv">33</div><div class="fv">52</div><div class="fv">75</div><div class="fv">100</div>
+        </div>
+        <div class="frow">
+          <div class="fk">일본 OEM<span class="fs">구축 + 월 이용료 배분</span></div>
+          <div class="fv">5</div><div class="fv">20</div><div class="fv">40</div><div class="fv">65</div><div class="fv">90</div>
+        </div>
+        <div class="frow">
+          <div class="fk">글로벌 셀프서브<span class="fs">MS · MCP · 메신저</span></div>
+          <div class="fv">1</div><div class="fv">12</div><div class="fv">30</div><div class="fv">85</div><div class="fv">150</div>
+        </div>
+        <div class="frow">
+          <div class="fk">마켓플레이스 · DI 확장<span class="fs">28년 오픈 · 수수료</span></div>
+          <div class="fv">—</div><div class="fv">—</div><div class="fv">20</div><div class="fv">60</div><div class="fv">150</div>
+        </div>
+        <div class="frow fsum">
+          <div class="fk">매출 합계</div>
+          <div class="fv">30</div><div class="fv">80</div><div class="fv">180</div><div class="fv">350</div><div class="fv">600</div>
+        </div>
+        <div class="frow fcost">
+          <div class="fk">지출 합계<span class="fs">인건비 · 인프라 · 마케팅</span></div>
+          <div class="fv">28</div><div class="fv">64</div><div class="fv">126</div><div class="fv">228</div><div class="fv">360</div>
+        </div>
+        <div class="frow fprofit">
+          <div class="fk">영업이익 (률)</div>
+          <div class="fv">2 <span style="font-weight:500">(7%)</span></div><div class="fv">16 <span style="font-weight:500">(20%)</span></div><div class="fv">54 <span style="font-weight:500">(30%)</span></div><div class="fv">122 <span style="font-weight:500">(35%)</span></div><div class="fv">240 <span style="font-weight:500">(40%)</span></div>
+        </div>
       </div>
-      <div class="pjcell card">
-        <div class="plab">2026 · 해외</div>
-        <div class="pnum">6억</div>
-        <div class="pcap">일본 OEM 개시 · MS 등록</div>
-      </div>
-      <div class="pjcell card">
-        <div class="plab">2030 · 국내</div>
-        <div class="pnum">210억</div>
-        <div class="pcap">구독 · 마켓플레이스 (8.8배)</div>
-      </div>
-      <div class="pjcell ablock">
-        <div class="plab">2030 · 해외</div>
-        <div class="pnum">390억</div>
-        <div class="pcap">글로벌 셀프서브 · DI 확장 (65배)</div>
+      <div class="fside m-stagger" style="--sd:.6s">
+        <div class="fkey card">
+          <div class="kt"><span class="kb tnum">+50 → +250</span>증가폭 확대</div>
+          <div class="kd">28년 마켓플레이스, 29년 DI 확장(파워포인트 · 브로셔)이 기존 구독 위에 얹히는 구조라 연간 증가폭이 계속 커집니다.</div>
+        </div>
+        <div class="fkey card">
+          <div class="kt"><span class="kb tnum">7% → 40%</span>영업이익률</div>
+          <div class="kd">고빈도 운영을 자체 모델 Apollon이 처리해, 사이트가 늘어도 지출이 비례해 늘지 않습니다. 손익분기는 26.04 통과.</div>
+        </div>
+        <div class="fkey card">
+          <div class="kt"><span class="kb tnum">20% → 65%</span>해외 비중</div>
+          <div class="kd">일본 OEM · 글로벌 셀프서브 · 마켓플레이스가 해외 우선 출시라, 성장의 무게중심이 해외로 이동합니다.</div>
+        </div>
+        <div class="fkey ablock">
+          <div class="kt">구독 비중 20% → 55%</div>
+          <div class="kd">상장 밸류에이션은 구독 배수로 계산됩니다. 헤드라인은 합계가 아니라 이 곡선입니다. ※ 29~30년(*)은 가정, 상세 모델은 실사 자료로 제출.</div>
+        </div>
       </div>
     </div>
-    <div class="pjpath m-rise" style="--d:.7s">
-      <span>합계 30</span><span class="arr">→</span><span>80</span><span class="arr">→</span><span>180</span><span class="arr">→</span><span>350</span><span class="arr">→</span><span>600억</span>
-      <span class="sub">· 증가폭 +50 → +100 → +170 → +250 (29~30년 가정)</span>
-    </div>
-    <p class="appendix-note m-rise" style="--d:.85s">※ 구독(반복매출) 비중은 같은 기간 20% → 55%로 상승 · 상세 모델과 민감도는 실사 자료로 제출합니다</p>
   </div>
 </div>
 
