@@ -173,8 +173,9 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
 /* ── 03 리더진 ── */
 .lgrid{margin-top:2.65625vw;display:grid;grid-template-columns:repeat(4,1fr);gap:1.09375vw}
 .lcard{padding:1.71875vw 1.5625vw;display:flex;flex-direction:column}
-.lcard .avatar{width:3.90625vw;height:3.90625vw;border-radius:50%;background:rgba(59,130,246,.08);color:var(--z-accent);display:flex;align-items:center;justify-content:center}
+.lcard .avatar{width:4.6875vw;height:4.6875vw;border-radius:50%;background:rgba(59,130,246,.08);color:var(--z-accent);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .lcard .avatar svg{width:1.953125vw;height:1.953125vw}
+.lcard .avatar img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 .lcard .mrole{margin-top:1.09375vw;font-size:max(18px,0.859375vw);font-weight:600;letter-spacing:-0.01em;color:var(--z-accent)}
 .lcard .mname{margin-top:0.234375vw;font-size:1.484375vw;font-weight:800;letter-spacing:-0.02em;line-height:1.25;color:var(--z-ink)}
 .lcard ul{margin-top:0.859375vw;list-style:none;display:flex;flex-direction:column;gap:0.3125vw}
@@ -344,9 +345,7 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
     </div>
     <div class="lgrid m-stagger">
       <div class="lcard card">
-        <div class="avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
+        <div class="avatar"><img src="assets/26_1.png" alt="김정환 대표 프로필"></div>
         <div class="mrole">CEO · Founder</div>
         <div class="mname">김정환 Ph.D</div>
         <ul>
@@ -356,9 +355,7 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
         </ul>
       </div>
       <div class="lcard card">
-        <div class="avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        </div>
+        <div class="avatar"><img src="assets/26_3.png" alt="한정동 CTO 프로필"></div>
         <div class="mrole">CTO · 이사</div>
         <div class="mname">한정동</div>
         <ul>
@@ -368,9 +365,7 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
         </ul>
       </div>
       <div class="lcard card">
-        <div class="avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-        </div>
+        <div class="avatar"><img src="assets/26_2.png" alt="이효남 이사 프로필"></div>
         <div class="mrole">Co-Founder · 크리에이티브</div>
         <div class="mname">이효남</div>
         <ul>
@@ -380,9 +375,7 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
         </ul>
       </div>
       <div class="lcard card">
-        <div class="avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.4 1 2.3h6c0-.9.4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
-        </div>
+        <div class="avatar"><img src="assets/26_4.png" alt="이정구 연구소장 프로필"></div>
         <div class="mrole">AI Lab 연구소장</div>
         <div class="mname">이정구 Ph.D(에이전시 출신x)</div>
         <ul>
@@ -482,7 +475,7 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
         <div class="wm">5</div>
         <div class="lab">2030</div>
         <div class="tit">자동화<br>표준</div>
-        <div class="desc">사람이 사람에게 정보를 알리고 홍보하기 위한 비즈니스 수단 홈페이지에서 AI가 AI에게 홍보를 하고, 회사 뿐만 아니라 개인과 각정 정보가 하나로 모이는 프로필 대표 채널로 웹사이트 시장을 확장합니다.<br><br> 코인 성장과 맞물려 개인의 채널에 지갑이 연동되고 명함이 필요 없는 새로운 확장입니다.</div>
+        <div class="desc">사람이 사람에게 정보를 알리고 홍보하기 위한 비즈니스 수단 홈페이지에서 AI가 AI에게 홍보를 하고, 회사 뿐만 아니라 개인과 각 정보가 하나로 모이는 프로필 대표 채널로 웹사이트 시장을 확장합니다.<br><br> 코인 성장과 맞물려 개인의 채널에 지갑이 연동되고 명함이 필요 없는 새로운 확장입니다.</div>
       </div>
     </div>
   </div>
@@ -708,8 +701,8 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
   <div class="slide-inner">
     <div class="head">
       <div class="section-label">재무 - <span class="num">10</span></div>
-      <div class="section-title h3s m-rise">구독이 7억에서 <span class="pt-c">450억</span>으로 큽니다.<br>수입 항목과 지출까지 함께 공개합니다</div>
-      <div class="section-desc m-rise" style="--d:.3s">사이트당 연 27만원(실단가 277,200원) 기준 기본안입니다. 26~28년은 확정 목표이고, 29~30년은 <b>증가폭이 커지는</b> 가정입니다. <span style="color:var(--z-note)">(단위: 억원)</span></div>
+      <div class="section-title h3s m-rise">5개년 프로젝션, 구독이 7억에서 <span class="pt-c">450억</span>으로 성장<br></div>
+      <div class="section-desc m-rise" style="--d:.3s">사이트당 연 27만원(실단가 277,200원) 기준 / 26~28년은 확정 목표이고, 29~30년은 <b>증가폭이 커지는</b> 가정입니다. <span style="color:var(--z-note)">(단위: 억원)</span></div>
     </div>
     <div class="fduo">
       <div class="ftbl card m-rise" style="--d:.5s">
@@ -760,11 +753,11 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
         </div>
         <div class="fkey card">
           <div class="kt"><span class="kb tnum">7% → 40%</span>영업이익률</div>
-          <div class="kd">고빈도 운영을 자체 모델 Apollon이 처리해, 사이트가 늘어도 지출이 비례해 늘지 않습니다. 손익분기는 26.04 통과.</div>
+          <div class="kd">고빈도 운영을 자체 모델 Apollon이 처리해, <br>사이트가 늘어도 지출이 비례해 늘지 않습니다. 손익분기는 26.04 통과</div>
         </div>
         <div class="fkey ablock">
           <div class="kt">구독 비중 23% → 75%</div>
-          <div class="kd">상장 밸류에이션은 구독 배수로 계산됩니다. 헤드라인은 합계가 아니라 이 곡선입니다. ※ 29~30년(*)은 가정, 상세 모델은 실사 자료로 제출.</div>
+          <div class="kd">상장 밸류에이션은 구독 배수로 계산됩니다. 헤드라인은 합계가 아니라 이 곡선입니다. <br>※ 29~30년(*)은 가정, 상세 모델은 실사 자료로 제출</div>
         </div>
       </div>
     </div>
