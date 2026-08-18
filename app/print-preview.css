@@ -338,6 +338,21 @@ body.edit-mode .slide-clone [contenteditable]:focus {
 #ppInspDel { background: #EF4444; }
 #ppInspDel:hover { background: #DC2626; }
 
+/* 스타일 복사/붙여넣기/삭제 그룹 — 기존 버튼과 구분선으로 분리 */
+.pp-tb-sep {
+  width: 1px;
+  height: 16px;
+  margin: 0 2px;
+  background: rgba(255,255,255,0.22);
+  flex: none;
+}
+#ppInspStyleCopy { background: #06B6D4; }
+#ppInspStyleCopy:hover { background: #0891B2; }
+#ppInspStylePaste { background: #F59E0B; }
+#ppInspStylePaste:hover { background: #D97706; }
+#ppInspStyleClear { background: #64748B; }
+#ppInspStyleClear:hover { background: #475569; }
+
 /* 순서 이동 컨트롤 — 리스트 항목(flex/grid 자식, li)·인라인 span 선택 시에만 표시 */
 #ppInspSel:not(.pp-can-move) .pp-mv { display: none; }
 .pp-insp-toolbar .pp-mv { background: #475569; }

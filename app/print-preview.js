@@ -1925,6 +1925,16 @@ function inspEnsureUI() {
       <button type="button" id="ppInspDel" title="${delLabel}">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
       </button>
+      <span class="pp-tb-sep"></span>
+      <button type="button" id="ppInspStyleCopy" title="${lang === 'ko' ? '스타일 복사 (Ctrl+Shift+C)' : 'Copy style (Ctrl+Shift+C)'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/></svg>
+      </button>
+      <button type="button" id="ppInspStylePaste" title="${lang === 'ko' ? '스타일 붙여넣기 (Ctrl+Shift+V)' : 'Paste style (Ctrl+Shift+V)'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.622 17.897-10.68-2.913"/><path d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z"/><path d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15"/></svg>
+      </button>
+      <button type="button" id="ppInspStyleClear" title="${lang === 'ko' ? '인라인 스타일 삭제' : 'Clear inline style'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+      </button>
     </div>
   ` + INSP_HANDLES.map(h =>
     `<div class="pp-insp-handle ${h[4]}" data-hkey="${h[0]}" title="${h[5]}"></div>`
@@ -1944,6 +1954,9 @@ function inspEnsureUI() {
   document.getElementById('ppInspDel').addEventListener('click', inspDelete);
   document.getElementById('ppInspDup').addEventListener('click', inspDuplicate);
   document.getElementById('ppInspCopy').addEventListener('click', inspCopy);
+  document.getElementById('ppInspStyleCopy').addEventListener('click', inspStyleCopy);
+  document.getElementById('ppInspStylePaste').addEventListener('click', inspStylePaste);
+  document.getElementById('ppInspStyleClear').addEventListener('click', inspStyleClear);
   document.getElementById('ppInspMvPrev').addEventListener('click', () => inspMoveStep(-1));
   document.getElementById('ppInspMvNext').addEventListener('click', () => inspMoveStep(1));
   document.getElementById('ppInspMove').addEventListener('pointerdown', inspMoveDragStart);
@@ -2771,6 +2784,40 @@ function inspStylePaste() {
   showToast(lang === 'ko'
     ? '요소에 스타일이 적용되었습니다. (Ctrl+Z로 취소 가능)'
     : 'Style applied to the element. (Ctrl+Z to undo)');
+}
+
+// 선택 요소의 인라인 style 제거 — class 기반 원래 모습으로 되돌린다 (3벌 반영)
+function inspStyleClear() {
+  if (!inspSel || inspSel.classList.contains('slide-clone')) {
+    showToast(lang === 'ko'
+      ? '스타일을 삭제할 요소를 먼저 선택하세요.'
+      : 'Select an element first.', true);
+    return;
+  }
+  const el = inspSel;
+  const { sEl, srcEl } = inspCounterparts(el);
+  const targets = [el, sEl, srcEl].filter(Boolean);
+  const prev = targets.map(t => ({ t, s: t.getAttribute('style') }));
+  if (!prev.some(o => o.s)) {
+    showToast(lang === 'ko'
+      ? '삭제할 인라인 스타일이 없습니다.'
+      : 'This element has no inline style.', true);
+    return;
+  }
+  targets.forEach(t => t.removeAttribute('style'));
+  markEditsDirty();
+  inspPanelUpdate();
+  inspPushUndo(() => {
+    prev.forEach(o => {
+      if (o.s === null) o.t.removeAttribute('style');
+      else o.t.setAttribute('style', o.s);
+    });
+    markEditsDirty();
+    inspPanelUpdate();
+  });
+  showToast(lang === 'ko'
+    ? '인라인 스타일을 삭제했습니다. (Ctrl+Z로 취소 가능)'
+    : 'Inline style cleared. (Ctrl+Z to undo)');
 }
 
 // ── 순서 이동 (리스트 항목 / 인라인 span) ──
