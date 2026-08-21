@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Zaemit — 국산 AI 풀스택 제안 (서울특별시)</title>
+<meta name="description" content="FuriosaAI RNGD · Upstage Solar Pro 4 · Kakao PlayMCP를 결합한 국산 AI 풀스택으로 서울시 소상공인·청년·관광 지원사업에 Zaemit을 제안합니다">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#3B82F6;--accent2:#7C3AED;
+  --furiosa:#FF5A36;--furiosa-dim:rgba(255,90,54,0.12);
+  --kakao:#FEE500;--kakao-dim:rgba(254,229,0,0.12);
+  --dark:#0A0E27;--dark2:#111633;--dark3:#1a1f42;
+  --text:#E2E8F0;--text-muted:#94A3B8;
+  --green:#22C55E;--red:#EF4444;--amber:#F59E0B;
+  --card:rgba(17,22,51,0.72);--card2:rgba(255,255,255,0.04);
+  --shadow:0 0.9375vw 2.5vw rgba(0,0,0,0.35);
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#7C3AED 50%,#3B82F6 100%);
+  --gradient2:linear-gradient(135deg,#3B82F6 0%,#0066FF 100%);
+  --gradientF:linear-gradient(135deg,#FF5A36 0%,#F59E0B 100%);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:4.6875vw 7.8125vw 7vw;opacity:0;
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(2.5vw)}to{opacity:1;transform:translateX(0)}}
+
+.slide .section-label,.slide .section-title,.slide .section-desc,
+.slide .hero-left,.slide .hero-right,.slide .hero-stats,
+.slide .content-area,
+.slide .card-grid > *,.slide .track-row,
+.slide .conclusion-highlight,.slide .conclusion-points,
+.slide .insight-bar,.slide .check-item{opacity:0}
+
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+.slide.active .content-area{animation:aFadeUp .5s ease .55s both}
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .7s both}
+.slide.active .insight-bar{animation:aFadeUp .5s ease .9s both}
+.slide.active .card-grid > *:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .card-grid > *:nth-child(2){animation:aFadeUp .45s ease .7s both}
+.slide.active .card-grid > *:nth-child(3){animation:aFadeUp .45s ease .85s both}
+.slide.active .track-row:nth-child(1){animation:aFadeUp .4s ease .5s both}
+.slide.active .track-row:nth-child(2){animation:aFadeUp .4s ease .56s both}
+.slide.active .track-row:nth-child(3){animation:aFadeUp .4s ease .62s both}
+.slide.active .track-row:nth-child(4){animation:aFadeUp .4s ease .68s both}
+.slide.active .track-row:nth-child(5){animation:aFadeUp .4s ease .74s both}
+.slide.active .track-row:nth-child(6){animation:aFadeUp .4s ease .8s both}
+.slide.active .track-row:nth-child(7){animation:aFadeUp .4s ease .86s both}
+.slide.active .check-item:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .check-item:nth-child(2){animation:aFadeUp .4s ease .65s both}
+.slide.active .check-item:nth-child(3){animation:aFadeUp .4s ease .75s both}
+.slide.active .check-item:nth-child(4){animation:aFadeUp .4s ease .85s both}
+.slide.active .conclusion-highlight{animation:aScaleIn .6s ease .5s both}
+.slide.active .conclusion-points{animation:aFadeUp .5s ease .7s both}
+
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,body.no-motion .slide.active .section-title,body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .hero-left,body.no-motion .slide.active .hero-right,body.no-motion .slide.active .hero-stats,
+body.no-motion .slide.active .content-area,
+body.no-motion .slide.active .card-grid > *,body.no-motion .slide.active .track-row,
+body.no-motion .slide.active .conclusion-highlight,body.no-motion .slide.active .conclusion-points,
+body.no-motion .slide.active .insight-bar,body.no-motion .slide.active .check-item{opacity:1 !important;transform:none !important}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(255,90,54,0.08) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(254,229,0,0.05) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:4.6875vw 4.6875vw}
+.hero .slide-inner{flex-direction:row;align-items:center;gap:5vw}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.875vw;border-radius:3.125vw;background:rgba(0,102,255,0.15);color:var(--accent);font-size:max(18px,1.09375vw);font-weight:600;text-transform:uppercase;letter-spacing:0.117vw;margin-bottom:2.1875vw}
+.hero-badge::before{content:'';width:0.625vw;height:0.625vw;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:4.0625vw;font-weight:800;line-height:1.15;color:#fff;margin-bottom:1.5625vw;letter-spacing:-0.156vw}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.furiosa-text{color:var(--furiosa)}
+.hero-sub{font-size:1.40625vw;color:var(--text-muted);line-height:1.7;margin-bottom:3.125vw;max-width:44vw}
+.hero-stats{display:flex;gap:3vw}
+.hero-stat{text-align:center;min-width:7.8125vw}
+.hero-stat-value{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:max(18px,1.015625vw);color:var(--text-muted);margin-top:0.46875vw;text-transform:uppercase;letter-spacing:0.078vw}
+.hero-right{flex:.72}
+.partner-card{background:var(--card);border-radius:1.40625vw;padding:2.1875vw;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:1.09375vw}
+.pc-label{font-size:max(18px,1.015625vw);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3125vw}
+.pc-chip{display:flex;align-items:center;gap:0.9375vw;padding:1.09375vw 1.328125vw;border-radius:0.78125vw;background:rgba(255,255,255,.04);font-size:1.171875vw;font-weight:700;color:#fff}
+.pc-chip .pc-dot{width:0.703125vw;height:0.703125vw;border-radius:50%;flex:none}
+.pc-chip.furiosa .pc-dot{background:var(--furiosa)}
+.pc-chip.upstage .pc-dot{background:var(--accent)}
+.pc-chip.kakao .pc-dot{background:var(--kakao)}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:600;text-transform:uppercase;letter-spacing:0.195vw;color:var(--accent);margin-bottom:0.46875vw}
+.section-label::before{content:'';width:2.1875vw;height:0.15625vw;background:var(--accent)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:2.65625vw;font-weight:700;color:#fff;line-height:1.15;margin-bottom:0.78125vw;letter-spacing:-0.1vw}
+.section-desc{font-size:1.328125vw;color:var(--text-muted);line-height:1.6;max-width:100%;margin-bottom:1.5625vw}
+
+/* ── CARD GRID ── */
+.card-grid{display:grid;gap:1.5625vw}
+.card-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.info-card{background:var(--card);border-radius:1.40625vw;padding:1.875vw 1.71875vw;box-shadow:var(--shadow)}
+.info-card .card-icon{width:3.125vw;height:3.125vw;border-radius:0.78125vw;display:flex;align-items:center;justify-content:center;margin-bottom:1.171875vw}
+.info-card .card-icon.blue{background:rgba(0,102,255,0.15)}
+.info-card .card-icon.orange{background:var(--furiosa-dim)}
+.info-card .card-icon.kakao{background:var(--kakao-dim)}
+.info-card h4{font-size:1.5625vw;font-weight:800;color:#fff;margin-bottom:0.546875vw;line-height:1.25}
+.info-card p{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.55}
+.info-card .card-tag{display:inline-block;padding:0.3125vw 1.09375vw;border-radius:3.125vw;font-size:max(18px,0.9375vw);font-weight:700;margin-bottom:0.859375vw}
+.card-tag.blue{background:rgba(0,102,255,0.15);color:var(--accent)}
+.card-tag.orange{background:var(--furiosa-dim);color:var(--furiosa)}
+.card-tag.kakao{background:var(--kakao-dim);color:var(--kakao)}
+
+/* ── TRACK TABLE ── */
+.track-table{overflow:hidden;border-radius:1.40625vw;background:var(--card);box-shadow:var(--shadow)}
+.track-row{display:grid;grid-template-columns:1.4fr 2.6fr 4fr}
+.track-row.header{background:rgba(0,102,255,0.12)}
+.track-row:not(.header){border-top:1px solid rgba(255,255,255,0.06)}
+.track-cell{padding:0.9375vw 1.328125vw;font-size:max(18px,1.015625vw);display:flex;align-items:center;gap:0.625vw;line-height:1.4;color:var(--text-muted)}
+.track-row.header .track-cell{font-weight:700;font-size:max(18px,1.09375vw);color:#fff}
+.track-cell.name{font-weight:700;color:#fff;background:rgba(255,255,255,0.02)}
+
+/* ── CHECKLIST ── */
+.check-list{display:grid;grid-template-columns:1fr 1fr;gap:0.9375vw}
+.check-item{display:flex;align-items:center;gap:1.09375vw;background:var(--card);border-radius:0.9375vw;padding:1.09375vw 1.40625vw;box-shadow:var(--shadow)}
+.check-item .check-no{width:2.34375vw;height:2.34375vw;border-radius:50%;background:rgba(0,102,255,0.18);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:max(18px,1.09375vw);flex-shrink:0;font-family:'Plus Jakarta Sans'}
+.check-item h5{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:0.15625vw;line-height:1.35}
+.check-item p{font-size:max(18px,0.9765625vw);color:var(--text-muted);line-height:1.4}
+
+/* ── INSIGHT BAR ── */
+.insight-bar{margin-top:1.5625vw;background:linear-gradient(135deg,rgba(0,102,255,0.12),rgba(124,58,237,0.07));border-radius:1.09375vw;padding:1.328125vw 1.875vw;display:flex;align-items:center;gap:1.25vw;box-shadow:var(--shadow)}
+.insight-bar svg{flex-shrink:0}
+.insight-bar p{font-size:1.25vw;color:#fff;line-height:1.55;font-weight:600}
+.insight-bar p b{color:var(--accent)}
+
+/* ── CONCLUSION ── */
+.conclusion-highlight{background:linear-gradient(135deg,rgba(0,102,255,0.12),rgba(124,58,237,0.06));border-radius:1.40625vw;padding:2.65625vw 3.515625vw;text-align:center;margin-bottom:2.1875vw;box-shadow:var(--shadow)}
+.conclusion-highlight h3{font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff;margin-bottom:1.09375vw;letter-spacing:-0.06vw;line-height:1.3}
+.conclusion-highlight p{font-size:1.328125vw;color:var(--text-muted);line-height:1.7;max-width:58vw;margin:0 auto}
+.conclusion-points{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.875vw}
+.conclusion-point{text-align:center;padding:1.328125vw}
+.conclusion-point .point-num{font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.625vw}
+.conclusion-point h5{font-size:1.328125vw;font-weight:700;color:#fff;margin-bottom:0.390625vw}
+.conclusion-point p{font-size:max(18px,1.015625vw);color:var(--text-muted);line-height:1.5}
+
+/* ── FOOTNOTE ── */
+.footnote{margin-top:1.09375vw;font-size:max(18px,0.9375vw);color:rgba(148,163,184,0.75);line-height:1.5}
+</style>
+</head>
+<body>
+
+<!-- ===== 01 표지 ===== -->
+<div class="slide hero active" data-title-ko="표지">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge">국산 AI 풀스택 제안 · 서울특별시</div>
+      <h1><span class="gradient-text">Zaemit</span>, 국산 AI 풀스택으로<br>서울시 소상공인의<br>온라인 전환을 돕겠습니다</h1>
+      <div class="hero-sub">
+        FuriosaAI · Upstage · Kakao — 국내 AI 3사와의 협력을 기반으로,<br>
+        자치구 단위 지원사업에 바로 투입 가능한 웹빌더를 제안합니다.
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-label">협력 파트너 — 퓨리오사·업스테이지·카카오</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">25</div>
+          <div class="hero-stat-label">자치구 확산 가능 구조</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="partner-card">
+        <div class="pc-label">국산 AI 파트너</div>
+        <div class="pc-chip furiosa"><span class="pc-dot"></span>FuriosaAI — RNGD</div>
+        <div class="pc-chip upstage"><span class="pc-dot"></span>Upstage — Solar Pro 4</div>
+        <div class="pc-chip kakao"><span class="pc-dot"></span>Kakao — PlayMCP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 문제와 해법 — 국산 AI 풀스택 ===== -->
+<div class="slide" data-title-ko="문제와 해법 - 국산 AI 풀스택" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,102,255,0.06) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">문제와 해법</div>
+    <div class="section-title">서울시 소상공인의 온라인 전환 격차를, <span class="gradient-text">국산 AI 풀스택</span>으로 좁힙니다</div>
+    <div class="section-desc">사업체 규모가 가장 큰 지자체인 만큼 격차의 절대 규모도 크고, 자치구별 지원 편차도 존재합니다. 인프라·문서운영·대화채널 3개 영역에서 국내 파트너와 함께 해법을 만듭니다.</div>
+    <div class="content-area">
+      <div class="card-grid cols-3">
+        <div class="info-card">
+          <div class="card-tag orange">인프라</div>
+          <div class="card-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF5A36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M20 15h2M20 9h2M2 15h2M2 9h2"/></svg></div>
+          <h4>FuriosaAI — RNGD</h4>
+          <p>Zaemit의 자체 모델 Apollon 추론을 저전력 국산 NPU로 옮기는 파일럿을 제작하는 중입니다</p>
+        </div>
+        <div class="info-card">
+          <div class="card-tag blue">문서·운영</div>
+          <div class="card-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h4>Upstage — Solar Pro 4</h4>
+          <p>자사의 서비스는 5개의 에이전트가 웹제작을 대행합니다. 이들을 하나씩 국산 모델로 대체하겠습니다</p>
+        </div>
+        <div class="info-card">
+          <div class="card-tag kakao">대화형 채널</div>
+          <div class="card-icon kakao"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FEE500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
+          <h4>Kakao — PlayMCP</h4>
+          <p>카카오톡 기반 대화형 제작 채널에, MCP 기반 서비스가 연결되어 친숙한 서비스로 소비자에게 다가갑니다</p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        <p>서울시가 표준 도구로 채택하면, 25개 자치구가 <b>동일한 조건으로</b> 지원을 받을 수 있습니다</p>
+      </div>
+      <p class="footnote">※ 세 협력 모두 2026년 8월 기준 파일럿 단계이며, 상용 적용은 9월 중 예정입니다</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 공공부문 적합성과 제품 ===== -->
+<div class="slide" data-title-ko="공공부문 적합성과 제품" style="background:radial-gradient(ellipse at 70% 40%,rgba(34,197,94,0.06) 0%,transparent 55%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">공공부문 적합성과 제품</div>
+    <div class="section-title">국산 AI 스택이라 <span class="gradient-text">예산 심사</span>에 유리하고, <span class="gradient-text">대화</span>만으로 완성됩니다</div>
+    <div class="section-desc">지자체 지원사업 예산 심사에서 강점이 되는 이유와, 소상공인이 실제로 받는 결과물입니다</div>
+    <div class="content-area">
+      <div class="check-list">
+        <div class="check-item">
+          <div class="check-no">01</div>
+          <div><h5>데이터 국내 처리</h5><p>온프레미스 옵션으로 생성 데이터가 국외로 전송되지 않습니다</p></div>
+        </div>
+        <div class="check-item">
+          <div class="check-no">02</div>
+          <div><h5>국산 기술 활용</h5><p>하드웨어부터 모델까지 국내 기업 기술로 구성할 수 있습니다</p></div>
+        </div>
+        <div class="check-item">
+          <div class="check-no">03</div>
+          <div><h5>조달 리스크 완화</h5><p>해외 클라우드 종속성에 대한 감사 지적을 줄일 수 있습니다</p></div>
+        </div>
+        <div class="check-item">
+          <div class="check-no">04</div>
+          <div><h5>예산 효율</h5><p>고빈도 운영 구간을 자체·국산 모델로 처리해, 이용이 늘어도 비용이 비례해 늘지 않습니다</p></div>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <p>쇼핑몰·예약·온라인강의·게시판·정기결제까지, <b>대화만으로</b> 20개가 넘는 기능을 기획부터 제작·갱신까지 진행합니다</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 04 도입 방안 — 기관 매핑 ===== -->
+<div class="slide" data-title-ko="도입 방안 - 유관기관 매핑" style="background:radial-gradient(ellipse at 60% 40%,rgba(0,102,255,0.05) 0%,transparent 55%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">도입 방안</div>
+    <div class="section-title">기존 지원기관과 <span class="gradient-text">연계</span>해 자치구 단위로 확산합니다</div>
+    <div class="section-desc">서울시 산하·출자 기관의 지원사업 예산 안에서 제작 도구로 결합하는 안입니다</div>
+    <div class="content-area">
+      <div class="track-table">
+        <div class="track-row header">
+          <div class="track-cell name">영역</div>
+          <div class="track-cell">연계 기관·사업</div>
+          <div class="track-cell">활용 방식</div>
+        </div>
+        <div class="track-row"><div class="track-cell name">소상공인</div><div class="track-cell">서울신용보증재단 디지털전환 지원</div><div class="track-cell">지원 대상 사업체에 온라인몰·홈페이지를 무상·보조로 제작하고, 통계로 방문자·매출을 바로 확인해 집행 실적을 정리</div></div>
+        <div class="track-row"><div class="track-cell name">창업</div><div class="track-cell">서울산업진흥원(SBA) 창업 지원</div><div class="track-cell">입주·보육 기업의 제작비 부담을 없애, 재고·마케팅 등 초기 사업비로 돌리도록 지원</div></div>
+        <div class="track-row"><div class="track-cell name">관광</div><div class="track-cell">서울관광재단 지역관광 활성화</div><div class="track-cell">게스트하우스·식당·체험 프로그램에 예약 채널을 붙여 전화 예약과 고수수료 플랫폼 의존을 줄이고, 예약 데이터를 관광 통계로 활용</div></div>
+        <div class="track-row"><div class="track-cell name">사회적경제</div><div class="track-cell">서울시 사회적경제지원센터</div><div class="track-cell">사회적기업·협동조합·마을기업이 판매와 후원·회원 관리를 한 사이트에서 운영하고, 매출 지표 자동 집계로 성과보고 부담을 줄임</div></div>
+        <div class="track-row"><div class="track-cell name">청년</div><div class="track-cell">서울청년센터 청년창업 지원</div><div class="track-cell">상담 결과물이 그날부터 운영 가능한 사이트로 남도록, 상담과 제작을 한 흐름으로 연결</div></div>
+        <div class="track-row"><div class="track-cell name">골목상권</div><div class="track-cell">자치구 골목상권 활성화 사업</div><div class="track-cell">상권 내 점포 공동 홍보 페이지를 한 사이트에서 관리해, 자치구가 점포별 대응 없이 상권 단위로 운영</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 05 결론 ===== -->
+<div class="slide" data-title-ko="결론" style="background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(254,229,0,0.05) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">실행 로드맵과 결론</div>
+    <div class="section-title"><span class="gradient-text">Zaemit</span>이 서울시 국산 AI 지원의 표준이 되겠습니다</div>
+    <div class="section-desc">1단계 제안·협의 → 2단계 자치구 파일럿 → 3단계 국산 AI 스택 PoC 병행 → 4단계 25개 자치구 확대로 진행합니다. 1번은 예산 편성 없이 설명회만으로 시작할 수 있습니다.</div>
+    <div class="conclusion-highlight">
+      <p>서울시가 첫 광역지자체 파트너가 되어 주시면, 국산 AI 풀스택 검증과 소상공인 지원을 동시에 시작할 수 있습니다.<br>퓨리오사·업스테이지·카카오와의 협의는 이미 진행 중이며, 서울시 파일럿 결과를 이 협의에 함께 반영하겠습니다.</p>
+    </div>
+    <div class="conclusion-points">
+      <div class="conclusion-point">
+        <div class="point-num">01</div>
+        <h5>지금 시작</h5>
+        <p>유관기관 설명회 일정 조율만으로 시작</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">02</div>
+        <h5>국산 기술</h5>
+        <p>퓨리오사·업스테이지·카카오 3사 병행 협의</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">03</div>
+        <h5>Win-Win</h5>
+        <p>소상공인은 무상 웹사이트,<br>서울시는 국산 AI 지원사업 레퍼런스</p>
+      </div>
+    </div>
+    <p class="footnote" style="text-align:center;margin-top:1.5625vw">WEVEN Inc. · CEO 김정환 · 010.8447.4567 · kjh@weven.kr · 2026.08.19</p>
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  window.irConfig={version:'260819_seoul_kstack',theme:'dark',languages:['ko'],defaultLang:'ko'};
+
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.zoom='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.5,Math.min(1,z));if(z<1)inner.style.zoom=z}
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  function goTo(idx,src){
+    if(idx<0||idx>=total||idx===current)return;
+    slides[current].classList.remove('active');current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    document.body.classList.remove('en','ja','ko');
+    if(nl!=='ko')document.body.classList.add(nl);
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
+    total:total,mainTotal:total,appendixStart:total,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
+      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body></html>

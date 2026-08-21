@@ -175,7 +175,7 @@ async function fetchSlides() {
     document.body.classList.add(lang);
 
     // Apply theme class based on IR version (zaemit 컨셉은 라이트 계열로 처리)
-    const isLightTheme = irVersion === '2602' || irVersion === '260202' || irVersion === '260814_introduce';
+    const isLightTheme = irVersion === '2602' || irVersion === '260202' || irVersion === '260814_introduce' || irVersion === '260820_gcontest_proposal';
     if (isLightTheme) {
       document.body.classList.add('light-theme');
     }
@@ -288,7 +288,7 @@ function fixGradientTextForPDF() {
         const isLightTheme = clone.classList.contains('ir-2602') ||
                             clone.classList.contains('ir-260202');
         const is260304 = clone.classList.contains('ir-260304');
-        const isZaemit = clone.classList.contains('ir-260814_introduce');
+        const isZaemit = clone.classList.contains('ir-260814_introduce') || clone.classList.contains('ir-260820_gcontest_proposal');
         const fallbackColor = isZaemit ? '#3B82F6' : isLightTheme ? '#6366F1' : is260304 ? '#3B82F6' : '#00D4AA';
 
         // Remove gradient background and apply solid color
@@ -434,7 +434,7 @@ function createSlideWrapper(slide, idx) {
   clone.classList.add('ir-' + irVersion);
 
   // 테마 배경색 직접 적용 (CSS 규칙보다 확실하게)
-  const isZaemitTheme = irVersion === '260814_introduce';
+  const isZaemitTheme = irVersion === '260814_introduce' || irVersion === '260820_gcontest_proposal';
   const isLightTheme = irVersion === '2602' || irVersion === '260202';
   const isCover = clone.classList.contains('cover');
 
@@ -3619,7 +3619,7 @@ async function exportPDF() {
 
       // Determine background color based on IR version (light vs dark theme)
       const isLightTheme = irVersion === '2602' || irVersion === '260202';
-      const bgColor = irVersion === '260814_introduce' ? '#FDFDFF' : isLightTheme ? '#FFFFFF' : '#0A0E27';
+      const bgColor = (irVersion === '260814_introduce' || irVersion === '260820_gcontest_proposal') ? '#FDFDFF' : isLightTheme ? '#FFFFFF' : '#0A0E27';
 
       const canvas = await html2canvas(clone, {
         scale: 2,

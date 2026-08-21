@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Zaemit × Upstage — Solar 통합 제안</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#3B82F6;--accent2:#7C3AED;
+  --upstage:#F59E0B;--upstage-dim:rgba(245,158,11,0.12);
+  --dark:#0A0E27;--dark2:#111633;--dark3:#1a1f42;
+  --text:#E2E8F0;--text-muted:#94A3B8;
+  --green:#22C55E;--red:#EF4444;--amber:#F59E0B;
+  --card:rgba(17,22,51,0.72);--card2:rgba(255,255,255,0.04);
+  --shadow:0 0.9375vw 2.5vw rgba(0,0,0,0.35);
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#7C3AED 50%,#3B82F6 100%);
+  --gradient2:linear-gradient(135deg,#3B82F6 0%,#0066FF 100%);
+  --gradientU:linear-gradient(135deg,#F59E0B 0%,#FB923C 100%);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:4.6875vw 7.8125vw 7vw;opacity:0;
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(2.5vw)}to{opacity:1;transform:translateX(0)}}
+
+.slide .section-label,.slide .section-title,.slide .section-desc,
+.slide .hero-left,.slide .hero-right,.slide .hero-stats,
+.slide .content-area,.slide .track-row,
+.slide .conclusion-highlight,.slide .conclusion-points,
+.slide .insight-bar{opacity:0}
+
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+.slide.active .content-area{animation:aFadeUp .5s ease .55s both}
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .7s both}
+.slide.active .insight-bar{animation:aFadeUp .5s ease .9s both}
+.slide.active .track-row:nth-child(1){animation:aFadeUp .4s ease .5s both}
+.slide.active .track-row:nth-child(2){animation:aFadeUp .4s ease .58s both}
+.slide.active .track-row:nth-child(3){animation:aFadeUp .4s ease .66s both}
+.slide.active .track-row:nth-child(4){animation:aFadeUp .4s ease .74s both}
+.slide.active .conclusion-highlight{animation:aScaleIn .6s ease .5s both}
+.slide.active .conclusion-points{animation:aFadeUp .5s ease .7s both}
+
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,body.no-motion .slide.active .section-title,body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .hero-left,body.no-motion .slide.active .hero-right,body.no-motion .slide.active .hero-stats,
+body.no-motion .slide.active .content-area,
+body.no-motion .slide.active .conclusion-highlight,body.no-motion .slide.active .conclusion-points,
+body.no-motion .slide.active .insight-bar,body.no-motion .slide.active .track-row{opacity:1 !important;transform:none !important}
+body.no-motion .orbit-ring{animation:none !important}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(245,158,11,0.08) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.08) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:4.6875vw 4.6875vw}
+.hero .slide-inner{flex-direction:row;align-items:center;gap:5vw}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.875vw;border-radius:3.125vw;background:var(--upstage-dim);color:var(--upstage);font-size:max(18px,1.09375vw);font-weight:600;text-transform:uppercase;letter-spacing:0.117vw;margin-bottom:2.1875vw}
+.hero-badge::before{content:'';width:0.625vw;height:0.625vw;border-radius:50%;background:var(--upstage);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:4.6875vw;font-weight:800;line-height:1.08;color:#fff;margin-bottom:1.5625vw;letter-spacing:-0.195vw}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.upstage-text{color:var(--upstage)}
+.hero-sub{font-size:1.5625vw;color:var(--text-muted);line-height:1.7;margin-bottom:3.125vw;max-width:48.4375vw}
+.hero-stats{display:flex;gap:3vw}
+.hero-stat{text-align:center;min-width:7.8125vw}
+.hero-stat-value{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:max(18px,1.015625vw);color:var(--text-muted);margin-top:0.46875vw;text-transform:uppercase;letter-spacing:0.078vw}
+.hero-right{flex:.7;position:relative}
+.hero-visual{width:100%;aspect-ratio:1;position:relative;background:radial-gradient(circle at center,rgba(245,158,11,0.18),transparent 70%);border-radius:50%}
+.orbit-ring{position:absolute;border:1px solid rgba(255,255,255,0.06);border-radius:50%;animation:rot 20s linear infinite}
+.orbit-ring:nth-child(1){inset:10%}.orbit-ring:nth-child(2){inset:25%;animation-duration:30s;animation-direction:reverse}.orbit-ring:nth-child(3){inset:40%;animation-duration:25s}
+@keyframes rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.orbit-dot{position:absolute;width:0.9375vw;height:0.9375vw;border-radius:50%;background:var(--accent);box-shadow:0 0 1.5625vw var(--accent)}
+.orbit-ring:nth-child(1) .orbit-dot{top:0;left:50%;transform:translate(-50%,-50%)}
+.orbit-ring:nth-child(2) .orbit-dot{bottom:10%;right:0;background:var(--upstage);box-shadow:0 0 1.5625vw rgba(245,158,11,0.6)}
+.orbit-ring:nth-child(3) .orbit-dot{top:50%;left:0;transform:translate(-50%,-50%);background:var(--primary);box-shadow:0 0 1.5625vw var(--primary)}
+.center-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10.15625vw;height:10.15625vw;border-radius:2.1875vw;background:var(--gradient1);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff;box-shadow:0 1.5625vw 4.6875vw rgba(0,102,255,0.4)}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:600;text-transform:uppercase;letter-spacing:0.195vw;color:var(--accent);margin-bottom:0.46875vw}
+.section-label::before{content:'';width:2.1875vw;height:0.15625vw;background:var(--accent)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:700;color:#fff;line-height:1.12;margin-bottom:0.78125vw;letter-spacing:-0.117vw}
+.section-desc{font-size:1.40625vw;color:var(--text-muted);line-height:1.6;max-width:100%;margin-bottom:1.5625vw}
+
+.highlight-tag{color:var(--accent);font-weight:700}
+.highlight-orange{color:var(--upstage);font-weight:700}
+.highlight-green{color:var(--green);font-weight:700}
+.highlight-red{color:var(--red);font-weight:700}
+.highlight-purple{color:var(--accent2);font-weight:700}
+
+/* ── INSIGHT BAR ── */
+.insight-bar{margin-top:1.875vw;background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(0,102,255,0.07));border-radius:1.09375vw;padding:1.5625vw 2.1875vw;display:flex;align-items:center;gap:1.25vw;box-shadow:var(--shadow)}
+.insight-bar svg{flex-shrink:0}
+.insight-bar p{font-size:1.40625vw;color:#fff;line-height:1.55;font-weight:600}
+.insight-bar p b{color:var(--upstage)}
+
+/* ── TRACK TABLE ── */
+.track-table{overflow:hidden;border-radius:1.40625vw;background:var(--card);box-shadow:var(--shadow)}
+.track-row{display:grid;grid-template-columns:2.6fr 2.6fr 2.6fr 1.8fr}
+.track-row.header{background:rgba(245,158,11,0.12)}
+.track-row:not(.header){border-top:1px solid rgba(255,255,255,0.06)}
+.track-cell{padding:1.09375vw 1.40625vw;font-size:max(18px,1.09375vw);display:flex;align-items:center;gap:0.625vw;line-height:1.45;color:var(--text-muted)}
+.track-row.header .track-cell{font-weight:700;color:#fff;font-size:max(18px,1.171875vw)}
+.track-cell.name{font-weight:700;color:#fff}
+.track-cell .track-no{width:1.875vw;height:1.875vw;border-radius:50%;background:var(--upstage-dim);color:var(--upstage);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:max(18px,1.015625vw);flex-shrink:0}
+.track-pill{display:inline-block;padding:0.234375vw 0.9375vw;border-radius:3.125vw;font-size:max(18px,1.015625vw);font-weight:700}
+.track-pill.now{background:rgba(34,197,94,0.12);color:var(--green)}
+.track-pill.mid{background:rgba(245,158,11,0.12);color:var(--amber)}
+.track-pill.long{background:rgba(255,255,255,0.06);color:var(--text-muted)}
+
+/* ── CONCLUSION ── */
+.conclusion-highlight{background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(0,102,255,0.06));border-radius:1.40625vw;padding:3.125vw 3.90625vw;text-align:center;margin-bottom:2.5vw;box-shadow:var(--shadow)}
+.conclusion-highlight h3{font-family:'Plus Jakarta Sans';font-size:2.65625vw;font-weight:800;color:#fff;margin-bottom:1.25vw;letter-spacing:-0.078vw;line-height:1.25}
+.conclusion-highlight p{font-size:1.5625vw;color:var(--text-muted);line-height:1.7;max-width:60vw;margin:0 auto}
+.conclusion-points{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.1875vw}
+.conclusion-point{text-align:center;padding:1.5625vw}
+.conclusion-point .point-num{font-family:'Plus Jakarta Sans';font-size:2.8125vw;font-weight:800;background:var(--gradientU);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.78125vw}
+.conclusion-point h5{font-size:1.5625vw;font-weight:700;color:#fff;margin-bottom:0.46875vw}
+.conclusion-point p{font-size:max(18px,1.171875vw);color:var(--text-muted);line-height:1.55}
+
+/* ── FOOTNOTE ── */
+.footnote{margin-top:1.25vw;font-size:max(18px,0.9375vw);color:rgba(148,163,184,0.75);line-height:1.5}
+</style>
+</head>
+<body>
+
+<!-- ===== 01 COVER ===== -->
+<div class="slide hero active" data-title-ko="표지">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge">AI 모델 파트너십 제안 2026</div>
+      <h1><span class="gradient-text">Zaemit</span> × <span class="upstage-text">Upstage</span><br>협력 제안</h1>
+      <div class="hero-sub">
+        Zaemit의 웹 생성은 챗GPT·Claude·Gemini가, 운영은 자체 모델 Apollon이 맡고 있습니다.<br>
+        이 구조에 Solar Pro 4를 결합해, 단가와 한국어 품질 문제를 함께 풀겠습니다.
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-label">통합 방안 — 운영·카피·문서</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="center-logo">Z×U</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 현재 구조 + 통합 방안 3가지 ===== -->
+<div class="slide" data-title-ko="현재 구조와 통합 방안" style="background:radial-gradient(ellipse at 50% 30%,rgba(245,158,11,0.07) 0%,transparent 55%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">제안 배경 · 3개 통합 방안</div>
+    <div class="section-title">Zaemit은 이미 <span class="gradient-text">세 겹의 모델</span>을 함께 씁니다<br>남은 과제는 <span class="upstage-text">단가와 한국어</span>입니다</div>
+    <div class="section-desc">생성은 글로벌 LLM, 반복 운영은 자체 모델 Apollon이 맡는 하이브리드 구조입니다. <br><span class="highlight-red">사이트 수가 늘수록 호출 단가와 한국어 카피 편집 부담이 함께 커지는 지점</span>에 Solar Pro 4를 결합하는 방안을 제안합니다.</div>
+    <div class="content-area">
+      <div class="track-table">
+        <div class="track-row header">
+          <div class="track-cell">방안</div>
+          <div class="track-cell">내용</div>
+          <div class="track-cell">양측이 얻는 것</div>
+          <div class="track-cell">첫 행동</div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">1</span>운영 대체</div>
+          <div class="track-cell">Apollon 고빈도 운영 응답 일부를 <br>Solar Pro 4로 전환</div>
+          <div class="track-cell">Zaemit: 단가·속도 검증<br>Upstage: SaaS 상용 레퍼런스</div>
+          <div class="track-cell"><span class="track-pill now">PoC 신청</span></div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">2</span>카피·문서</div>
+          <div class="track-cell">한국어 카피 다듬기 + Document AI로 <br>제안서·계약서 초안 생성</div>
+          <div class="track-cell">Zaemit: 한국어 품질 개선<br>Upstage: Document AI 상용 사례</div>
+          <div class="track-cell"><span class="track-pill mid">PoC 이후 협의</span></div>
+        </div>
+        <div class="track-row">
+          <div class="track-cell name"><span class="track-no">3</span>온프레미스 옵션</div>
+          <div class="track-cell">국외전송 민감 고객 대상 <br>1GPU 온프레미스 구동 제공</div>
+          <div class="track-cell">Zaemit: 고객 신뢰도 확보<br>Upstage: 온프레미스 레퍼런스</div>
+          <div class="track-cell"><span class="track-pill long">성과 확보 후</span></div>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        <p>Solar Pro 4의 낮은 단가와 문서 처리 강점은 그대로 쓰고, <b>검증되지 않은 범용 생성 영역은 기존 구조가 그대로 감쌉니다</b>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 결론 ===== -->
+<div class="slide" data-title-ko="결론" style="background:radial-gradient(ellipse at 20% 50%,rgba(245,158,11,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(0,102,255,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">결론</div>
+    <div class="section-title"><span class="gradient-text">Zaemit</span>이 <span class="upstage-text">Solar</span>의 다음 상용 레퍼런스가 되겠습니다</div>
+    <div class="conclusion-highlight">
+      <p>Apollon은 이미 프로덕션에서 운영 중이며, 남은 과제는 단가와 한국어 품질입니다.<br>Solar Pro 4의 강점은 그대로 활용하고, 검증되지 않은 영역은 기존 구조로 보완하며 통합하겠습니다.<br>그 결과는 국산 AI 모델의 SaaS 상용 적용 사례가 될 것입니다.</p>
+    </div>
+    <div class="conclusion-points">
+      <div class="conclusion-point">
+        <div class="point-num">01</div>
+        <h5>바로 시작</h5>
+        <p>PoC 신청,<br>API 연동 및 실측 착수</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">02</div>
+        <h5>이미 검증된 구조</h5>
+        <p>Apollon: 프로덕션 운영 중<br>Solar는 그 위에 편입만 하면 됩니다</p>
+      </div>
+      <div class="conclusion-point">
+        <div class="point-num">03</div>
+        <h5>Win-Win</h5>
+        <p>Upstage는 SaaS 상용 레퍼런스,<br>Zaemit은 낮은 단가·한국어 품질 확보<br><br>함께 : 국산 AI 모델 - 국산 스타트업 SaaS 상용화<br></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  window.irConfig={version:'260819_upstage_solar',theme:'dark',languages:['ko'],defaultLang:'ko'};
+
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.zoom='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.5,Math.min(1,z));if(z<1)inner.style.zoom=z}
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  function goTo(idx,src){
+    if(idx<0||idx>=total||idx===current)return;
+    slides[current].classList.remove('active');current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    document.body.classList.remove('en','ja','ko');
+    if(nl!=='ko')document.body.classList.add(nl);
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
+    total:total,mainTotal:total,appendixStart:total,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
+      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body></html>

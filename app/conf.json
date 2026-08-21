@@ -4,6 +4,76 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260820_gcontest_proposal",
+      "name": "Zaemit × G콘테스트 — 협업 제안서",
+      "nameEn": "Zaemit × G콘테스트 — Partnership Proposal",
+      "description": "지콘테스트(gcontest.co.kr)의 공모전 사이트 제작 구간에 재밋을 결합하고, 공공기관 담당자에게 상시 홈페이지를 이어서 제안하는 협업안 (Zaemit 컨셉)",
+      "descriptionEn": "Proposal to combine Zaemit with G콘테스트's contest-site production pipeline and cross-sell standing government-agency websites (Zaemit concept)",
+      "date": "2026-08-20",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260819_gov_kstack",
+      "name": "국산 AI 풀스택 표준화 제안 (중앙정부)",
+      "nameEn": "Domestic AI Full-Stack Standardization Proposal (Central Government)",
+      "description": "FuriosaAI RNGD · Upstage Solar Pro 4 · Kakao Kanana를 결합한 국산 AI 풀스택을 전국 소상공인 지원사업의 표준 도구로 채택할 것을 중앙정부 관계부처에 제안",
+      "descriptionEn": "Proposal to central government ministries to adopt the FuriosaAI + Upstage + Kakao domestic AI stack as the standard tool for nationwide small-business support programs",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_seoul_kstack",
+      "name": "국산 AI 풀스택 제안 (서울특별시)",
+      "nameEn": "Domestic AI Full-Stack Proposal (Seoul)",
+      "description": "FuriosaAI RNGD · Upstage Solar Pro 4 · Kakao Kanana를 결합한 국산 AI 풀스택으로 서울시 소상공인·청년·관광 지원사업에 Zaemit을 제안",
+      "descriptionEn": "Proposal to adopt Zaemit — backed by the FuriosaAI + Upstage + Kakao domestic AI stack — across Seoul's small-business, youth, and tourism support programs",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_sejong_kstack",
+      "name": "국산 AI 풀스택 제안 (세종특별자치시)",
+      "nameEn": "Domestic AI Full-Stack Proposal (Sejong)",
+      "description": "FuriosaAI RNGD · Upstage Solar Pro 4 · Kakao Kanana를 결합한 국산 AI 풀스택으로 세종시 유관부서 소상공인 지원사업에 Zaemit을 제안",
+      "descriptionEn": "Proposal to adopt Zaemit — backed by the FuriosaAI + Upstage + Kakao domestic AI stack — across Sejong City government departments",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_sejong_proposal",
+      "name": "세종시 유관부서 도입 제안서",
+      "nameEn": "Sejong City Government Proposal",
+      "description": "재밋(Zaemit)을 세종특별자치시 소상공인·일자리·관광·사회적경제·농업·청년 유관부서에 도입하는 제안서",
+      "descriptionEn": "Proposal for adopting Zaemit across Sejong City government departments",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_furiosa",
+      "name": "FuriosaAI RNGD 협력 제안",
+      "nameEn": "FuriosaAI RNGD Partnership Proposal",
+      "description": "Zaemit × FuriosaAI — Apollon 추론 워크로드를 RNGD로 옮기는 파일럿·구독·공동 레퍼런스 협력 제안",
+      "descriptionEn": "Zaemit × FuriosaAI — Proposal to pilot Apollon inference on RNGD NPUs, moving to subscription and joint reference case",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_upstage_solar",
+      "name": "Zaemit × Upstage — Solar 통합 제안 (3장 요약)",
+      "nameEn": "Zaemit × Upstage — Solar Integration Proposal (3-slide summary)",
+      "description": "업스테이지 Solar Pro 4를 Zaemit의 운영·카피·문서 영역에 결합하는 파트너십 제안 — 3장 요약",
+      "descriptionEn": "Proposal to integrate Upstage Solar Pro 4 into Zaemit's operations, copy, and document layer — 3-slide summary",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
       "id": "260815_invest_relations_guide",
       "name": "투자자 질의 대응 — 네 가지 질문 (Zaemit 컨셉)",
       "nameEn": "Investor Q&A — Four Questions (Zaemit Concept)",

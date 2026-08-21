@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>세종특별자치시 유관부서 재밋 도입 제안서 - WEVEN Zaemit IR</title>
+<meta name="description" content="재밋(Zaemit)을 세종특별자치시 소상공인·일자리·관광·사회적경제·농업·청년 유관부서에 도입하는 제안서">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#00D4AA;--accent2:#7C3AED;
+  --dark:#0A0E27;--dark2:#131A3A;--text:#E2E8F0;--text-muted:#94A3B8;
+  --red:#EF4444;--orange:#F97316;
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#7C3AED 50%,#00D4AA 100%);
+  --gradient2:linear-gradient(135deg,#00D4AA 0%,#0066FF 100%);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw)}
+
+/* ── MOTION TOGGLE ── */
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:3.125vw 7.8125vw;opacity:0;
+  transition:left .35s cubic-bezier(.16,1,.3,1);
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.slide .hero-badge,
+.slide h1,
+.slide .hero-sub,
+.slide .hero-meta,
+.slide .hero-right,
+.slide .section-label,
+.slide .section-title,
+.slide .section-desc,
+.slide .content{opacity:0}
+
+.slide.active .hero-badge{animation:aFadeUp .5s ease .15s both}
+.slide.active h1{animation:aFadeUp .6s ease .3s both}
+.slide.active .hero-sub{animation:aFadeUp .5s ease .55s both}
+.slide.active .hero-meta{animation:aFadeUp .5s ease .7s both}
+.slide.active .hero-right{animation:aFadeIn .6s ease .5s both}
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+.slide.active .content{animation:aFadeUp .5s ease .5s both}
+
+/* Force visible in no-motion mode */
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .hero-badge,
+body.no-motion .slide.active h1,
+body.no-motion .slide.active .hero-sub,
+body.no-motion .slide.active .hero-meta,
+body.no-motion .slide.active .hero-right,
+body.no-motion .slide.active .section-label,
+body.no-motion .slide.active .section-title,
+body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .content{opacity:1 !important;transform:none !important}
+
+/* ── PAGE INDICATOR ── */
+.page-indicator{position:fixed;bottom:2.1875vw;right:2.8125vw;z-index:100;display:flex;align-items:center;gap:1.09375vw}
+.page-progress{width:7.8125vw;height:0.234375vw;border-radius:0.15625vw;background:rgba(255,255,255,0.08);overflow:hidden}
+.page-progress-fill{height:100%;border-radius:0.15625vw;background:var(--gradient2);transition:width .5s cubic-bezier(.16,1,.3,1)}
+.page-num{font-family:'Plus Jakarta Sans';font-size:max(18px,1.09375vw);color:var(--text-muted)}
+.page-num .cur{font-size:2.03125vw;font-weight:700;color:#fff}
+
+/* ── POWERED BY ── */
+.powered-badge{position:fixed;bottom:2.1875vw;left:2.8125vw;z-index:100;font-size:max(18px,1.09375vw);color:rgba(255,255,255,0.2);font-weight:500;letter-spacing:.3px}
+.powered-badge span{font-weight:700;color:rgba(255,255,255,0.3)}
+
+/* ── HERO ── */
+.hero{background:radial-gradient(ellipse at 20% 30%,rgba(0,102,255,0.14) 0%,transparent 60%),radial-gradient(ellipse at 80% 70%,rgba(124,58,237,0.1) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(0,212,170,0.08) 0%,transparent 50%),var(--dark)}
+.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:4.6875vw 4.6875vw;pointer-events:none}
+.hero .slide-inner{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:4vw;position:relative;z-index:2}
+.hero-left{flex:1.3}
+.hero-badge{display:inline-flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.875vw;border-radius:3.125vw;background:rgba(0,212,170,0.1);color:var(--accent);font-size:max(18px,1.09375vw);font-weight:600;letter-spacing:0.078vw;margin-bottom:1.875vw}
+.hero-badge::before{content:'';width:0.625vw;height:0.625vw;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.hero h1{font-family:'Plus Jakarta Sans';font-size:4.0625vw;font-weight:800;line-height:1.25;color:#fff;margin-bottom:1.875vw;letter-spacing:-0.1vw}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.40625vw;color:var(--text-muted);line-height:1.7;margin-bottom:2.8125vw;max-width:38vw}
+.hero-meta{font-size:max(18px,1.015625vw);color:rgba(255,255,255,0.35);letter-spacing:0.03vw}
+.hero-right{flex:1;display:flex;flex-direction:column;gap:0.9375vw}
+.hero-dept-item{display:flex;align-items:center;gap:1.09375vw;padding:1.09375vw 1.5625vw;border-radius:0.9375vw;background:rgba(255,255,255,0.06)}
+.hero-dept-icon{width:2.5vw;height:2.5vw;border-radius:0.625vw;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(0,212,170,0.14)}
+.hero-dept-item span{font-size:max(18px,1.09375vw);font-weight:600;color:#fff}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:600;text-transform:uppercase;letter-spacing:0.15vw;color:var(--accent);margin-bottom:0.78125vw}
+.section-label::before{content:'';width:2.1875vw;height:0.15625vw;background:var(--accent)}
+.section-title{font-family:'Plus Jakarta Sans';font-size:2.6vw;font-weight:700;color:#fff;line-height:1.25;margin-bottom:1.5625vw;letter-spacing:-0.09vw}
+.section-desc{font-size:1.40625vw;color:var(--text-muted);line-height:1.7;max-width:100%;margin-bottom:1.875vw}
+.content{margin-top:0.9375vw}
+
+/* ── FOOTNOTE ── */
+.footnote{margin-top:1.40625vw;padding-top:0.9375vw;background:none;font-size:1.40625vw;color:rgba(255,255,255,0.22);line-height:1.6;position:relative}
+.footnote::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:rgba(255,255,255,0.08)}
+.footnote-sm{margin-top:1.09375vw;font-size:1.40625vw;color:rgba(255,255,255,0.3);line-height:1.6}
+
+/* ── BODY TEXT CARD (used for paragraph slides) ── */
+.body-card{background:rgba(255,255,255,0.05);border-radius:1.09375vw;padding:1.875vw 2.1875vw;margin-bottom:1.25vw}
+.body-card:last-child{margin-bottom:0}
+.body-card p{font-size:max(18px,1.25vw);color:var(--text);line-height:1.85}
+
+/* ── PROBLEM CHANNEL ROW (Slide 2) ── */
+.channel-row{display:flex;gap:1.09375vw;margin-bottom:1.5625vw}
+.channel-chip{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.625vw;padding:1.40625vw 0.9375vw;border-radius:0.9375vw;background:rgba(255,255,255,0.05);text-align:center}
+.channel-chip.missing{background:rgba(239,68,68,0.09)}
+.channel-chip-icon{width:2.8125vw;height:2.8125vw;border-radius:0.71875vw;display:flex;align-items:center;justify-content:center;background:rgba(0,212,170,0.14)}
+.channel-chip.missing .channel-chip-icon{background:rgba(239,68,68,0.16)}
+.channel-chip-label{font-size:max(18px,1.09375vw);font-weight:700;color:#fff}
+.channel-chip-status{font-size:max(18px,0.9375vw);font-weight:600;color:var(--accent)}
+.channel-chip.missing .channel-chip-status{color:var(--red)}
+
+/* ── CARD GRID (Slide 3) ── */
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw}
+.card{background:rgba(255,255,255,0.06);border-radius:1.09375vw;padding:2.1875vw 1.875vw}
+.card-icon{width:3.4375vw;height:3.4375vw;border-radius:0.9375vw;display:flex;align-items:center;justify-content:center;margin-bottom:1.40625vw}
+.card-icon.mint{background:rgba(0,212,170,0.14)}
+.card-icon.blue{background:rgba(0,102,255,0.14)}
+.card-icon.purple{background:rgba(124,58,237,0.14)}
+.card-text{font-size:max(18px,1.171875vw);color:var(--text);line-height:1.65;font-weight:500}
+
+/* ── TWO-BLOCK BODY (Slide 4) ── */
+.two-block{display:flex;flex-direction:column;gap:1.09375vw}
+.info-block{display:flex;gap:1.25vw;align-items:flex-start;background:rgba(255,255,255,0.05);border-radius:1.09375vw;padding:1.5625vw 1.875vw}
+.info-block-icon{width:3.125vw;height:3.125vw;border-radius:0.78125vw;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(0,102,255,0.14)}
+.info-block p{font-size:max(18px,1.171875vw);color:var(--text);line-height:1.8}
+
+/* ── DEPARTMENT CARDS (Slide 5,6,7) ── */
+.dept-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5625vw}
+.dept-card{background:rgba(255,255,255,0.06);border-radius:1.09375vw;padding:2.1875vw}
+.dept-tag{display:inline-flex;align-items:center;gap:0.625vw;padding:0.46875vw 1.171875vw;border-radius:3.125vw;background:rgba(0,212,170,0.14);color:var(--accent);font-size:max(18px,1.015625vw);font-weight:700;margin-bottom:1.25vw}
+.dept-card-icon{width:3.125vw;height:3.125vw;border-radius:0.78125vw;display:flex;align-items:center;justify-content:center;margin-bottom:1.09375vw;background:rgba(0,102,255,0.14)}
+.dept-card-title{font-size:1.5625vw;font-weight:700;color:#fff;margin-bottom:0.9375vw;line-height:1.35}
+.dept-card-text{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.7}
+
+/* ── COMPARE FLOW (Slide 8) ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.1875vw}
+.compare-col{background:rgba(255,255,255,0.05);border-radius:1.09375vw;padding:1.875vw}
+.compare-col.negative{background:rgba(239,68,68,0.06)}
+.compare-col.positive{background:rgba(0,212,170,0.08)}
+.compare-col-head{display:flex;align-items:center;gap:0.78125vw;margin-bottom:1.40625vw}
+.compare-col-title{font-size:1.40625vw;font-weight:700;color:#fff}
+.compare-steps{display:flex;flex-direction:column;align-items:center;gap:0.625vw}
+.compare-step{width:100%;padding:0.9375vw 1.25vw;border-radius:0.78125vw;background:rgba(255,255,255,0.07);text-align:center;font-size:max(18px,1.09375vw);color:var(--text);font-weight:600;line-height:1.5}
+.compare-col.negative .compare-step:last-child{color:var(--red)}
+.compare-col.positive .compare-step:last-child{color:var(--accent);font-weight:700}
+.compare-arrow{color:var(--text-muted)}
+.fee-highlight{margin-top:1.40625vw;padding:1.5625vw 1.875vw;border-radius:1.09375vw;background:rgba(0,212,170,0.1);text-align:center}
+.fee-highlight p{font-size:1.5625vw;font-weight:700;color:#fff;line-height:1.5}
+.fee-highlight b{color:var(--accent)}
+
+/* ── DEPT TABLE (Slide 9) ── */
+.dept-table-wrap{border-radius:1.09375vw;overflow:hidden;background:rgba(255,255,255,0.04)}
+.dept-table{width:100%;border-collapse:collapse}
+.dept-table th{padding:0.9375vw 1.5625vw;text-align:left;font-size:max(18px,1.09375vw);font-weight:700;color:var(--text-muted);background:rgba(255,255,255,0.05)}
+.dept-table td{padding:1.09375vw 1.5625vw;font-size:max(18px,1.09375vw);color:var(--text);border-bottom:1px solid rgba(255,255,255,0.06);vertical-align:middle;line-height:1.55}
+.dept-table tr:last-child td{border-bottom:none}
+.dept-table .dept-name{font-weight:700;color:#fff;white-space:nowrap;width:14vw}
+
+/* ── ROADMAP (Slide 10) ── */
+.roadmap-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw}
+.roadmap-phase{border-radius:1.09375vw;padding:1.875vw 1.5625vw}
+.roadmap-phase.p1{background:linear-gradient(160deg,rgba(0,102,255,0.16) 0%,rgba(0,102,255,0.04) 100%)}
+.roadmap-phase.p2{background:linear-gradient(160deg,rgba(0,212,170,0.16) 0%,rgba(0,212,170,0.04) 100%)}
+.roadmap-phase.p3{background:linear-gradient(160deg,rgba(124,58,237,0.16) 0%,rgba(124,58,237,0.04) 100%)}
+.roadmap-phase-icon{width:3.125vw;height:3.125vw;border-radius:0.78125vw;display:flex;align-items:center;justify-content:center;margin-bottom:1.09375vw}
+.p1 .roadmap-phase-icon{background:rgba(0,102,255,0.2)}
+.p2 .roadmap-phase-icon{background:rgba(0,212,170,0.2)}
+.p3 .roadmap-phase-icon{background:rgba(124,58,237,0.2)}
+.roadmap-phase-title{font-size:1.5625vw;font-weight:700;color:#fff;margin-bottom:0.78125vw}
+.roadmap-phase-text{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.65}
+
+/* ── STATS GRID (Slide 11) ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.40625vw}
+.stat-card{background:rgba(255,255,255,0.06);border-radius:1.09375vw;padding:1.875vw 1.40625vw;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.9375vw}
+.stat-card-icon{width:3.125vw;height:3.125vw;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.stat-card:nth-child(1) .stat-card-icon{background:rgba(0,212,170,0.16)}
+.stat-card:nth-child(2) .stat-card-icon{background:rgba(0,102,255,0.16)}
+.stat-card:nth-child(3) .stat-card-icon{background:rgba(124,58,237,0.16)}
+.stat-card:nth-child(4) .stat-card-icon{background:rgba(249,115,22,0.16)}
+.stat-card-text{font-size:max(18px,1.09375vw);color:#fff;font-weight:600;line-height:1.5}
+
+/* ── CTA (Slide 12) ── */
+.cta-contact{margin-top:1.875vw;padding:1.5625vw 1.875vw;border-radius:1.09375vw;background:rgba(255,255,255,0.05);display:flex;flex-direction:column;gap:0.46875vw}
+.cta-contact .who{font-size:max(18px,1.25vw);font-weight:700;color:#fff}
+.cta-contact .placeholder{font-size:max(18px,1.09375vw);color:rgba(255,255,255,0.35);font-style:italic}
+</style>
+</head>
+<body>
+
+<!-- ======================== SLIDE 1: HERO ======================== -->
+<div class="slide hero active" data-title-ko="표지">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge">WEVEN · Zaemit 제안서</div>
+      <h1>세종시 유관부서의&nbsp;<br>AX 파트너가 되겠습니다</h1>
+      <p class="hero-sub">소상공인 지원부터 청년창업, 관광·농업 판로까지 — 부서 성과와 지역경제를 함께 만드는 도구를 제안합니다</p>
+      <div class="hero-meta">2026년 8월 · 주식회사 위븐(WEVEN) · Zaemit.ai</div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-dept-item">
+        <div class="hero-dept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <span>소상공인과 · 일자리경제과</span>
+      </div>
+      <div class="hero-dept-item">
+        <div class="hero-dept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <span>관광진흥과 · 사회적경제과</span>
+      </div>
+      <div class="hero-dept-item">
+        <div class="hero-dept-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+        <span>농업정책과 · 청년정책과</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 2: 문제 제기 ======================== -->
+<div class="slide" data-title-ko="문제 제기" style="background:radial-gradient(ellipse at 70% 30%,rgba(239,68,68,0.06) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">문제 제기</div>
+    <div class="section-title">세종시 소상공인 대다수는,<br>자기 이름의 홈페이지가 없습니다</div>
+    <div class="content">
+      <div class="channel-row">
+        <div class="channel-chip">
+          <div class="channel-chip-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
+          <div class="channel-chip-label">카카오톡 채널</div>
+          <div class="channel-chip-status">있음</div>
+        </div>
+        <div class="channel-chip">
+          <div class="channel-chip-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+          <div class="channel-chip-label">배달앱 입점</div>
+          <div class="channel-chip-status">있음</div>
+        </div>
+        <div class="channel-chip">
+          <div class="channel-chip-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></div>
+          <div class="channel-chip-label">스마트스토어</div>
+          <div class="channel-chip-status">있음</div>
+        </div>
+        <div class="channel-chip missing">
+          <div class="channel-chip-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div>
+          <div class="channel-chip-label">자사 홈페이지</div>
+          <div class="channel-chip-status">없음</div>
+        </div>
+      </div>
+      <div class="body-card">
+        <p>카카오톡 채널, 배달앱 입점, 스마트스토어는 있어도 정작 검색 유입과 브랜드를 쌓을 자사 홈페이지는 없는 경우가 많습니다. <br>지원사업으로 홈페이지를 만들어도 제작비가 대행사 견적에 묶여, 예산 대비 지원 가능한 사업체 수가 적습니다.<br><br>홈페이지의 부재는 소비자에게 스토리텔링을 할 방법이 없고, 재방문을 위한 방문자 관리방안이 없으므로 지속 성장에 애로사항이 남게 됩니다.&nbsp;&nbsp;</p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 3: 재밋 소개 ======================== -->
+<div class="slide" data-title-ko="재밋 소개" style="background:radial-gradient(ellipse at 30% 30%,rgba(0,102,255,0.1) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">재밋 소개</div>
+    <div class="section-title">대화만으로 만드는 AI 웹빌더, 재밋</div>
+    <div class="content">
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon mint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
+          <div class="card-text">예약, 메뉴 관리, 온라인 결제 등으로 신개념 메뉴판 서비스를 제공할 수 있으며, 쇼핑몰, 온라인 강의, <br>게시판, 정기결제까지 대화만으로 <br>복잡한 서비스 개발이 모두&nbsp;가능합니다</div>
+        </div>
+        <div class="card">
+          <div class="card-icon blue"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+          <div class="card-text">제작과 동시에 SEO·AEO·GEO 최적화, <br>구글·네이버 검색엔진 등록까지,<br>온라인 마케팅을 자동으로 지원합니다</div>
+        </div>
+        <div class="card">
+          <div class="card-icon purple"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></div>
+          <div class="card-text">관리자 화면에서 회원·통계를 직접 운영하고 이벤트, 공지, 발송 등 CRM 서비스를 이용할 수 있습니다</div>
+        </div>
+      </div>
+      <div class="footnote-sm">Source: WEVEN Zaemit IR 자료(2026-08) 기준</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 4: 지자체 지원사업에 적합한 구조 ======================== -->
+<div class="slide" data-title-ko="지원사업 구조" style="background:radial-gradient(ellipse at 70% 40%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">지원사업 구조</div>
+    <div class="section-title">AI 모델 자체 개발 및 다양한 클라우드 크레딧으로 원가가 낮아졌으며, <br>무엇보다 정부지원 사업으로 운영비가 충당되고 있으므로,<br>대한민국 사업자에게 무상 지원이 가능합니다</div>
+    <div class="content">
+      <div class="two-block">
+        <div class="info-block">
+          <div class="info-block-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+          <p>Azure 크레딧과 AICA·NIPA GPU 서버 지원사업으로 서비스 원가를 낮췄고, 스타트업과 소상공인에게는 1년 무료 제작 후 유료 전환하는 트랙을 운영하고 있습니다. NIPA·중소벤처기업부 지원사업 수행 실적도 보유하고 있습니다.</p>
+        </div>
+        <div class="info-block">
+          <div class="info-block-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <p>카카오 소상공인 지원사업에도 같은 구조로 웹파트 협업을 제안한 바 있습니다. <br>누적 334억 원 규모의 톡채널 메시지 지원금이 검색·브랜드 자산으로 이어지도록 만드는 것이 목표입니다.</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 5: 부서별 도입 방안 (1) ======================== -->
+<div class="slide" data-title-ko="도입 방안 - 소상공인·일자리" style="background:radial-gradient(ellipse at 30% 60%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">부서별 도입 방안 (1)</div>
+    <div class="section-title">소상공인 · 일자리경제 부서에서</div>
+    <div class="content">
+      <div class="dept-grid">
+        <div class="dept-card">
+          <div class="dept-tag">소상공인과</div>
+          <div class="dept-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+          <div class="dept-card-title">소상공인 AX 지원사업의 실행 도구가 됩니다</div>
+          <div class="dept-card-text">지원 대상 사업체에 재밋으로 온라인몰·홈페이지를 무상 또는 저비용으로 제작해 드립니다. 통계 기능으로 방문자·매출을 바로 확인할 수 있어, 지원사업 집행 실적과 참여 사업체 수를 별도 조사 없이 부서 성과로 정리할 수 있습니다.</div>
+        </div>
+        <div class="dept-card">
+          <div class="dept-tag">일자리경제과</div>
+          <div class="dept-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.838l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></div>
+          <div class="dept-card-title">재취업·창업 교육의 결과물이 실제 운영 사이트가 됩니다</div>
+          <div class="dept-card-text">경력단절여성·중장년 대상 온라인 창업 교육에 재밋을 실습 도구로 활용합니다. 수료생은 수료증 대신, 그날부터 운영 가능한 자기 사이트를 갖고 나갑니다. 취업·창업 연계 실적에 바로 반영할 수 있습니다.</div>
+        </div>
+      </div>
+      <div class="footnote-sm">※ 부서명은 예시이며, 실제 소관 부서는 세종시 조직 현황에 따라 확인이 필요합니다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 6: 부서별 도입 방안 (2) ======================== -->
+<div class="slide" data-title-ko="도입 방안 - 관광·사회적경제" style="background:radial-gradient(ellipse at 70% 60%,rgba(0,102,255,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">부서별 도입 방안 (2)</div>
+    <div class="section-title">관광진흥 · 사회적경제 부서에서</div>
+    <div class="content">
+      <div class="dept-grid">
+        <div class="dept-card">
+          <div class="dept-tag">관광진흥과</div>
+          <div class="dept-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="dept-card-title">게스트하우스, 식당, 체험 프로그램에 예약 채널을 붙이고, <br>소상공인의 테이블오더, QR 오더를 대체합니다</div>
+          <div class="dept-card-text">재밋의 예약 플러그인으로 지역 관광 사업자가 전화 예약에 의존하거나 비싼 수수료를 내는 플랫폼에 의존하지 않는 채널을 갖습니다. <br>예약 데이터가 쌓이면 관광 소비 통계로도 활용할 수 있습니다.</div>
+        </div>
+        <div class="dept-card">
+          <div class="dept-tag">사회적경제과</div>
+          <div class="dept-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg></div>
+          <div class="dept-card-title">사회적기업·협동조합·마을기업의 판로를 <br>온라인으로 넓힙니다</div>
+          <div class="dept-card-text">제품 판매와 후원·회원 관리를 한 사이트에서 운영합니다. 매출 지표가 자동 집계되어, 사업 성과보고서 작성 부담을 줄입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 7: 부서별 도입 방안 (3) ======================== -->
+<div class="slide" data-title-ko="도입 방안 - 농업·청년" style="background:radial-gradient(ellipse at 30% 60%,rgba(124,58,237,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">부서별 도입 방안 (3)</div>
+    <div class="section-title">농업정책 · 청년정책 부서에서</div>
+    <div class="content">
+      <div class="dept-grid">
+        <div class="dept-card">
+          <div class="dept-tag">농업정책과 · 로컬푸드</div>
+          <div class="dept-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+          <div class="dept-card-title">농가 직거래몰과 꾸러미 정기구독 채널을 엽니다</div>
+          <div class="dept-card-text">다품종 소량 생산 농가가 재밋으로 직거래몰을 열고, <br>정기결제 기능으로 월 단위 꾸러미 구독 판매를 운영합니다.</div>
+        </div>
+        <div class="dept-card">
+          <div class="dept-tag">청년정책과</div>
+          <div class="dept-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+          <div class="dept-card-title">청년창업가의 첫 비용을, 제작비가 아니라 사업비로 씁니다</div>
+          <div class="dept-card-text">창업 인큐베이팅 프로그램의 표준 웹 도구로 재밋을 제공합니다. 초기 자본 대부분을 차지하던 홈페이지 제작비를 아껴, 재고·마케팅 등 실제 사업비로 돌릴 수 있습니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 8: 도입 구조 비교 ======================== -->
+<div class="slide" data-title-ko="도입 구조" style="background:radial-gradient(ellipse at 50% 30%,rgba(0,212,170,0.07) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">도입 구조</div>
+    <div class="section-title">대행사 견적서가 아니라,&nbsp;구독 모델로 AX를 지원합니다<br>제작비는 WEVEN이 그동안 받은 정부지원에 대한 보답으로 무상 지원하겠습니다</div>
+    <div class="content">
+      <div class="compare-grid">
+        <div class="compare-col negative">
+          <div class="compare-col-head">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            <div class="compare-col-title">기존 방식</div>
+          </div>
+          <div class="compare-steps">
+            <div class="compare-step">지원사업 예산</div>
+            <div class="compare-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+            <div class="compare-step">대행사 1회성 제작비</div>
+            <div class="compare-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+            <div class="compare-step">사업 종료 후 방치·유지보수 부재</div>
+          </div>
+        </div>
+        <div class="compare-col positive">
+          <div class="compare-col-head">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <div class="compare-col-title">재밋 방식</div>
+          </div>
+          <div class="compare-steps">
+            <div class="compare-step">지원사업 예산</div>
+            <div class="compare-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+            <div class="compare-step">재밋 라이선스·바우처</div>
+            <div class="compare-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+            <div class="compare-step">운영 지속, 통계·SEO 기능 포함, 유지보수 부담 없음</div>
+          </div>
+        </div>
+      </div>
+      <div class="fee-highlight">
+        <p>재밋 사이트 1곳의 연 기대 운영비는 약 <b>27만 원</b>(인프라 12만 원 + AI 크레딧 15만 원) 수준입니다.</p>
+      </div>
+      <div class="footnote-sm">Source: WEVEN 내부 추정치(2026-08 기준)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 9: 부서별 기대효과 표 ======================== -->
+<div class="slide" data-title-ko="부서별 기대효과" style="background:radial-gradient(ellipse at 70% 50%,rgba(0,102,255,0.07) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">기대 효과</div>
+    <div class="section-title">부서 성과지표에 바로 연결</div>
+    <div class="content">
+      <div class="dept-table-wrap">
+        <table class="dept-table">
+          <thead><tr><th>예상 부서</th><th>재밋 도입 시 예상 성과 지표</th></tr></thead>
+          <tbody>
+            <tr><td class="dept-name">소상공인과</td><td>지원사업 집행률, 참여 사업체 수, 온라인 매출 채널 확보 사업체 수</td></tr>
+            <tr><td class="dept-name">일자리경제과</td><td>교육 수료 후 창업·재취업 전환율, 실제 운영 중인 사이트 수</td></tr>
+            <tr><td class="dept-name">관광진흥과</td><td>예약 채널 확보 사업체 수, 온라인 예약 건수</td></tr>
+            <tr><td class="dept-name">사회적경제과</td><td>온라인 판로 확보 기업 수, 매출 보고 소요 시간 단축</td></tr>
+            <tr><td class="dept-name">농업정책과</td><td>직거래몰 개설 농가 수, 정기구독 판매액</td></tr>
+            <tr><td class="dept-name">청년정책과</td><td>창업가 1인당 초기 비용 절감액, 프로그램 참여 후 사이트 운영 지속률</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 10: 실행 로드맵 ======================== -->
+<div class="slide" data-title-ko="실행 로드맵" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,212,170,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">실행 로드맵</div>
+    <div class="section-title">한 부서에서 시작해, 검증한 뒤 넓힙니다</div>
+    <div class="content">
+      <div class="roadmap-phases">
+        <div class="roadmap-phase p1">
+          <div class="roadmap-phase-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <div class="roadmap-phase-title">파일럿 (1개월)</div>
+          <div class="roadmap-phase-text">소상공인과 또는 관광진흥과와 함께 대상 업체를 선발해 20~30개 사업체 대상으로 진행합니다</div>
+        </div>
+        <div class="roadmap-phase p2">
+          <div class="roadmap-phase-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div>
+          <div class="roadmap-phase-title">확산 (3~6개월)</div>
+          <div class="roadmap-phase-text">파일럿 결과를 바탕으로 <br>인접 부서 및 대상자를 크게 확대합니다</div>
+        </div>
+        <div class="roadmap-phase p3">
+          <div class="roadmap-phase-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <div class="roadmap-phase-title">표준화</div>
+          <div class="roadmap-phase-text">창업·지원사업 전반의 표준 웹 도구로 채택을 제안합니다</div>
+        </div>
+      </div>
+      <div class="footnote-sm">※ 일정은 협의 부서·예산 확정 이후 조정</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 11: 재밋 실적 요약 ======================== -->
+<div class="slide" data-title-ko="재밋 실적" style="background:radial-gradient(ellipse at 50% 30%,rgba(124,58,237,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">신뢰 근거</div>
+    <div class="section-title">숫자로 보는 재밋</div>
+    <div class="content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00D4AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div>
+          <div class="stat-card-text">전체 서비스 사용자 10,000명<br>지난 1년간 6.4배 성장</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></div>
+          <div class="stat-card-text">2026년 <br>매출 목표 30억 원 · 손익분기 돌파<br>특허 등록/출원 40개 돌파<br></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+          <div class="stat-card-text">NIPA R&amp;D 및 <br>중소벤처기업부 지원사업 <br>수행 우수 실적 보유</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <div class="stat-card-text">세종 본사 및 서울·광주 지사<br>미국 실리콘밸리 법인 운영<br>9월 중 국내/외 글로벌 서비스 론칭 예정</div>
+        </div>
+      </div>
+      <div class="footnote-sm">Source: WEVEN 2026 IR 자료(2026-08) 기준</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 12: Call to Action ======================== -->
+<div class="slide" data-title-ko="Call to Action" style="background:radial-gradient(ellipse at 30% 40%,rgba(0,212,170,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(0,102,255,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Next Step</div>
+    <div class="section-title">다음 단계로,&nbsp;<br>파일럿을 제안합니다</div>
+    <div class="content">
+      <div class="body-card">
+        <p>소상공인과 또는 관심 있는 부서로부터 20개 내외 사업체 대상 파일럿을 무상으로 진행할 수 있습니다. <br>결과를 함께 검토한 뒤 확산 여부를 결정한다면 실패 없이 AX 사업을 추진할 수 있습니다.&nbsp;</p>
+      </div>
+      <div class="cta-contact">
+        <div class="who">담당: 주식회사 위븐(WEVEN) Zaemit 사업팀</div>
+        <div class="placeholder">담당자 : 김정환, 010-8447-4567, kjh@weven.kr</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE INDICATOR -->
+<div class="page-indicator">
+  <div class="page-progress"><div class="page-progress-fill" id="progressFill"></div></div>
+  <div class="page-num"><span class="cur" id="curPage">1</span> / <span id="totalPage">12</span></div>
+</div>
+
+<div class="powered-badge">made by <span>zaemit</span></div>
+
+<script>
+// ── IR 설정 (viewer.html에서 참조) ──
+window.irConfig = {
+  version: '260819_sejong_proposal',
+  theme: 'dark',
+  languages: ['ko'],
+  defaultLang: 'ko'
+};
+
+// ── SLIDE NAVIGATION ──
+const urlParams = new URLSearchParams(window.location.search);
+const urlLang = urlParams.get('lang');
+
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+let lang = urlLang || 'ko';
+
+// Embed mode: hide IR's own UI when inside viewer iframe
+const isEmbed = urlParams.get('embed') === 'true';
+if (isEmbed) {
+  const pi = document.querySelector('.page-indicator');
+  const pb = document.querySelector('.powered-badge');
+  if (pi) pi.style.display = 'none';
+  if (pb) pb.style.display = 'none';
+}
+
+// Support initial page from URL
+const urlPage = parseInt(urlParams.get('page'), 10);
+if (urlPage > 1 && urlPage <= total) {
+  slides[0].classList.remove('active');
+  current = urlPage - 1;
+  slides[current].classList.add('active');
+}
+
+// Page indicator update
+function updateIndicator() {
+  document.getElementById('curPage').textContent = current + 1;
+  document.getElementById('totalPage').textContent = total;
+  document.getElementById('progressFill').style.width = ((current + 1) / total * 100) + '%';
+}
+updateIndicator();
+
+// 전역 함수 노출 (한국어 전용 덱이지만 viewer 연동을 위해 노출)
+window.setLang = function(newLang) {
+  lang = newLang;
+  requestAnimationFrame(fitAllSlides);
+};
+
+// Auto-zoom: scale slide-inner to fit within safe area (80px top, 50px bottom)
+function fitSlideContent(slide) {
+  var inner = slide.querySelector('.slide-inner');
+  if (!inner) return;
+  inner.style.zoom = '';
+  inner.style.overflow = 'visible';
+  inner.style.maxHeight = 'none';
+  void inner.offsetHeight;
+  var naturalH = inner.scrollHeight;
+  var availH = slide.clientHeight - 160;
+  if (naturalH > availH && naturalH > 0) {
+    inner.style.zoom = Math.max(0.5, availH / naturalH).toFixed(4);
+  }
+  inner.style.overflow = '';
+  inner.style.maxHeight = '';
+}
+
+function fitAllSlides() {
+  var hidden = [];
+  slides.forEach(function(s) {
+    if (!s.classList.contains('active')) {
+      s.style.display = 'flex';
+      s.style.visibility = 'hidden';
+      hidden.push(s);
+    }
+  });
+  void document.body.offsetHeight;
+  slides.forEach(function(s) { fitSlideContent(s); });
+  hidden.forEach(function(s) { s.style.display = ''; s.style.visibility = ''; });
+}
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(function() { requestAnimationFrame(fitAllSlides); });
+}
+window.addEventListener('load', function() { requestAnimationFrame(fitAllSlides); });
+window.addEventListener('resize', fitAllSlides);
+
+function goTo(idx, source) {
+  if (idx === current || idx < 0 || idx >= total) return;
+  slides[current].classList.remove('active');
+  current = idx;
+  var next = slides[current];
+  // Pre-fit zoom before activation so entrance animation plays correctly
+  next.style.display = 'flex';
+  next.style.visibility = 'hidden';
+  fitSlideContent(next);
+  next.style.display = '';
+  next.style.visibility = '';
+  next.classList.remove('active');
+  void next.offsetHeight;
+  next.classList.add('active');
+  updateIndicator();
+  if (window.parent !== window) {
+    try {
+      window.parent.postMessage({ type: 'slideChange', current: current, total: total }, '*');
+    } catch (e) {}
+  }
+}
+
+window.goToSlide = function(idx) {
+  goTo(idx, 'parent-viewer');
+};
+
+// Expose slide info for parent viewer
+var appendixStart = total;
+window.irSlideInfo = {
+  slides: Array.from(slides).map(function(slide, i) {
+    return {
+      index: i,
+      titleKo: slide.dataset.titleKo || '슬라이드 ' + (i + 1),
+      titleEn: slide.dataset.titleKo || 'Slide ' + (i + 1),
+      titleJa: slide.dataset.titleKo || 'スライド ' + (i + 1),
+      isAppendix: slide.hasAttribute('data-appendix')
+    };
+  }),
+  total: total,
+  mainTotal: appendixStart,
+  appendixStart: appendixStart,
+  get current() { return current; }
+};
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  switch(e.key) {
+    case 'ArrowDown': case 'ArrowRight': case 'PageDown': case ' ':
+      e.preventDefault(); goTo(current + 1, 'keyboard'); break;
+    case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+      e.preventDefault(); goTo(current - 1, 'keyboard'); break;
+    case 'Home': e.preventDefault(); goTo(0, 'keyboard'); break;
+    case 'End': e.preventDefault(); goTo(total - 1, 'keyboard'); break;
+  }
+});
+
+// Mouse wheel
+let wheelAcc = 0;
+let wheelTimer = null;
+const WHEEL_THRESHOLD = 80;
+const WHEEL_COOLDOWN = 400;
+let wheelLocked = false;
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  if (wheelLocked) return;
+  wheelAcc += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(function() { wheelAcc = 0; }, 150);
+  if (Math.abs(wheelAcc) >= WHEEL_THRESHOLD) {
+    if (wheelAcc > 0) goTo(current + 1, 'wheel');
+    else goTo(current - 1, 'wheel');
+    wheelAcc = 0;
+    wheelLocked = true;
+    setTimeout(function() { wheelLocked = false; }, WHEEL_COOLDOWN);
+  }
+}, { passive: false });
+
+// Touch
+let touchStartX = 0, touchStartY = 0, touchStartTime = 0, touchStartEl = null, hasMoved = false;
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now();
+  touchStartEl = e.target;
+  hasMoved = false;
+}, { passive: true });
+document.addEventListener('touchmove', function(e) {
+  const dx = Math.abs(e.touches[0].clientX - touchStartX);
+  const dy = Math.abs(e.touches[0].clientY - touchStartY);
+  if (dx > 10 || dy > 10) hasMoved = true;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  if (hasMoved) return;
+  if (touchStartEl && touchStartEl.closest('button, a, input')) return;
+  const dt = Date.now() - touchStartTime;
+  if (dt > 300) return;
+  const screenWidth = window.innerWidth;
+  if (touchStartX < 60) goTo(current - 1, 'touch');
+  else if (touchStartX > screenWidth - 60) goTo(current + 1, 'touch');
+});
+
+// Notify parent on slide change
+var originalGoTo = goTo;
+goTo = function(idx, source) {
+  originalGoTo(idx, source);
+  if (window.parent !== window) {
+    try {
+      window.parent.postMessage({ type: 'slideChange', current: current, total: total }, '*');
+    } catch (e) {}
+  }
+};
+</script>
+</body></html>

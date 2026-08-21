@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Zaemit × G콘테스트 — 협업 제안서</title>
+<meta name="description" content="지콘테스트(gcontest.co.kr)와 재밋(Zaemit)의 협업 제안 — 공모전 사이트 제작 엔진 결합과 공공기관 담당자 대상 후속 판매">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --z-ink:#111;
+  --z-note:#a6afc0;
+  --z-accent:#3B82F6;
+  --z-accent-light:#74ACFF;
+  --z-accent-deep:#2C63D9;
+  --z-bg:#FDFDFF;
+  --z-pa-lav:185,168,255;
+  --z-pa-sky:158,200,255;
+  --z-pa-pink:247,185,220;
+  --z-pa-mint:167,232,216;
+  --z-pa-peach:255,211,184;
+  --z-card-line:#DCE5F4;
+  --z-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 5px rgba(30,58,138,.05),0 1.171875vw 2.421875vw -0.78125vw rgba(59,130,246,.15);
+  --z-glow:0 0.9375vw 1.953125vw -0.703125vw rgba(59,130,246,.45);
+}
+html,body{height:100%;overflow:hidden;background:var(--z-bg)}
+body{font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;color:var(--z-ink);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased;word-break:keep-all}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:3.125vw 3.515625vw 7vw;opacity:0;
+  background:var(--z-bg);overflow:hidden;
+}
+.slide.active{display:flex;opacity:1;transition:opacity .4s cubic-bezier(0.4,0,0.2,1)}
+.slide .slide-inner{
+  position:relative;z-index:2;
+  max-width:100%;width:100%;overflow:visible;
+  display:flex;flex-direction:column;justify-content:center;
+  transform-origin:center center;
+}
+
+/* ── 파스텔 메쉬 (2층) — 슬라이드별 --mesh 변주 ── */
+.mesh{
+  position:absolute;inset:-6.25vw;
+  z-index:0;pointer-events:none;
+  filter:blur(2.734375vw);
+  background:var(--mesh);
+}
+.m01{--mesh:
+  radial-gradient(72.27vw 59.38vw at 4% 10%,rgba(var(--z-pa-lav),.53) 0%,rgba(var(--z-pa-lav),0) 68%),
+  radial-gradient(55.47vw 48.83vw at 13% 96%,rgba(var(--z-pa-lav),.35) 0%,rgba(var(--z-pa-lav),0) 66%),
+  radial-gradient(74.22vw 61.72vw at 96% 24%,rgba(var(--z-pa-sky),.52) 0%,rgba(var(--z-pa-sky),0) 68%),
+  radial-gradient(59.38vw 50.78vw at 89% 96%,rgba(var(--z-pa-sky),.40) 0%,rgba(var(--z-pa-sky),0) 68%),
+  #FDFDFF}
+.m02{--mesh:
+  radial-gradient(72.27vw 59.38vw at 4% 8%,rgba(var(--z-pa-mint),.52) 0%,rgba(var(--z-pa-mint),0) 68%),
+  radial-gradient(74.22vw 61.72vw at 96% 92%,rgba(var(--z-pa-sky),.53) 0%,rgba(var(--z-pa-sky),0) 68%),
+  radial-gradient(57.42vw 48.83vw at 96% 4%,rgba(var(--z-pa-lav),.40) 0%,rgba(var(--z-pa-lav),0) 66%),
+  #FDFDFF}
+.m03{--mesh:
+  radial-gradient(64.45vw 52.73vw at 2% 0%,rgba(var(--z-pa-peach),.58) 0%,rgba(var(--z-pa-peach),0) 64%),
+  radial-gradient(62.5vw 50.78vw at 100% 4%,rgba(var(--z-pa-pink),.58) 0%,rgba(var(--z-pa-pink),0) 64%),
+  radial-gradient(68.36vw 50.78vw at 50% 108%,rgba(var(--z-pa-lav),.54) 0%,rgba(var(--z-pa-lav),0) 66%),
+  #FDFDFF}
+.m04{--mesh:
+  radial-gradient(74.22vw 58.59vw at 8% 0%,rgba(var(--z-pa-sky),.55) 0%,rgba(var(--z-pa-sky),0) 66%),
+  radial-gradient(58.59vw 48.83vw at 50% 52%,rgba(var(--z-pa-lav),.30) 0%,rgba(var(--z-pa-lav),0) 62%),
+  radial-gradient(74.22vw 58.59vw at 94% 100%,rgba(var(--z-pa-peach),.55) 0%,rgba(var(--z-pa-peach),0) 66%),
+  #FDFDFF}
+.m08{--mesh:
+  radial-gradient(74.22vw 58.59vw at 92% -4%,rgba(var(--z-pa-pink),.73) 0%,rgba(var(--z-pa-pink),0) 66%),
+  radial-gradient(56.64vw 46.88vw at 50% 48%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 62%),
+  radial-gradient(74.22vw 58.59vw at 6% 102%,rgba(var(--z-pa-mint),.73) 0%,rgba(var(--z-pa-mint),0) 66%),
+  #FDFDFF}
+.m09{--mesh:
+  radial-gradient(68.36vw 54.69vw at -2% 104%,rgba(var(--z-pa-lav),.75) 0%,rgba(var(--z-pa-lav),0) 66%),
+  radial-gradient(68.36vw 54.69vw at 102% -4%,rgba(var(--z-pa-peach),.75) 0%,rgba(var(--z-pa-peach),0) 66%),
+  radial-gradient(54.69vw 42.97vw at 42% -10%,rgba(var(--z-pa-lav),.52) 0%,rgba(var(--z-pa-lav),0) 62%),
+  #FDFDFF}
+.m11{--mesh:
+  radial-gradient(66.41vw 41.02vw at 10% -12%,rgba(var(--z-pa-peach),.73) 0%,rgba(var(--z-pa-peach),0) 76%),
+  radial-gradient(58.59vw 37.11vw at 50% -16%,rgba(var(--z-pa-pink),.62) 0%,rgba(var(--z-pa-pink),0) 74%),
+  radial-gradient(66.41vw 42.97vw at 92% -10%,rgba(var(--z-pa-sky),.73) 0%,rgba(var(--z-pa-sky),0) 76%),
+  radial-gradient(50.78vw 35.16vw at 50% 118%,rgba(var(--z-pa-sky),.39) 0%,rgba(var(--z-pa-sky),0) 72%),
+  #FDFDFF}
+.m14{--mesh:
+  radial-gradient(60.55vw 55.47vw at 98% -8%,rgba(var(--z-pa-lav),.73) 0%,rgba(var(--z-pa-lav),0) 64%),
+  radial-gradient(54.69vw 60.55vw at 106% 50%,rgba(var(--z-pa-mint),.65) 0%,rgba(var(--z-pa-mint),0) 62%),
+  radial-gradient(60.55vw 55.47vw at 98% 108%,rgba(var(--z-pa-sky),.7) 0%,rgba(var(--z-pa-sky),0) 64%),
+  #FDFDFF}
+.m17{--mesh:
+  radial-gradient(58.59vw 48.83vw at 0% 0%,rgba(var(--z-pa-sky),.7) 0%,rgba(var(--z-pa-sky),0) 64%),
+  radial-gradient(50.78vw 42.97vw at 100% 0%,rgba(var(--z-pa-lav),.55) 0%,rgba(var(--z-pa-lav),0) 62%),
+  radial-gradient(50.78vw 42.97vw at 0% 100%,rgba(var(--z-pa-lav),.55) 0%,rgba(var(--z-pa-lav),0) 62%),
+  radial-gradient(58.59vw 48.83vw at 100% 100%,rgba(var(--z-pa-pink),.7) 0%,rgba(var(--z-pa-pink),0) 64%),
+  #FDFDFF}
+.m18{--mesh:
+  radial-gradient(68.36vw 48.83vw at 6% -12%,rgba(var(--z-pa-peach),.78) 0%,rgba(var(--z-pa-peach),0) 76%),
+  radial-gradient(64.45vw 44.92vw at 50% -16%,rgba(var(--z-pa-pink),.73) 0%,rgba(var(--z-pa-pink),0) 74%),
+  radial-gradient(68.36vw 48.83vw at 96% -10%,rgba(var(--z-pa-sky),.78) 0%,rgba(var(--z-pa-sky),0) 76%),
+  #FDFDFF}
+.m23{--mesh:
+  radial-gradient(78.13vw 62.5vw at 0% 0%,rgba(var(--z-pa-lav),.73) 0%,rgba(var(--z-pa-lav),0) 66%),
+  radial-gradient(48.83vw 54.69vw at -8% 40%,rgba(var(--z-pa-lav),.44) 0%,rgba(var(--z-pa-lav),0) 62%),
+  radial-gradient(58.59vw 48.83vw at 102% 106%,rgba(var(--z-pa-peach),.57) 0%,rgba(var(--z-pa-peach),0) 64%),
+  #FDFDFF}
+.m24{--mesh:
+  radial-gradient(74.22vw 56.64vw at 4% 110%,rgba(var(--z-pa-sky),.73) 0%,rgba(var(--z-pa-sky),0) 78%),
+  radial-gradient(64.45vw 46.88vw at 46% 124%,rgba(var(--z-pa-pink),.57) 0%,rgba(var(--z-pa-pink),0) 76%),
+  radial-gradient(74.22vw 56.64vw at 96% 108%,rgba(var(--z-pa-lav),.7) 0%,rgba(var(--z-pa-lav),0) 78%),
+  radial-gradient(60.55vw 44.92vw at 92% -12%,rgba(var(--z-pa-peach),.47) 0%,rgba(var(--z-pa-peach),0) 74%),
+  #FDFDFF}
+
+/* ── 모션 ── */
+.slide .m-rise,.slide .m-fade,.slide .m-draw,.slide .m-stagger>*{opacity:0}
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slide .m-draw,body.no-motion .slide .m-stagger>*{opacity:1 !important;transform:none !important}
+
+/* ── 타이포·브랜드 ── */
+.za{font-family:'Fugaz One','Pretendard Variable',sans-serif;font-weight:400;font-synthesis:none}
+.ov-plain{font-family:'Pretendard Variable',sans-serif;font-weight:700;color:var(--z-ink)}
+.pt-c{color:var(--z-accent)}
+.grad-text{background:linear-gradient(96deg,var(--z-accent-deep) 0%,var(--z-accent) 48%,var(--z-accent-light) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.t-over{font-size:max(18px,1.015625vw);font-weight:600;letter-spacing:0.2734375vw;line-height:1.3;color:var(--z-note)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ── 섹션 헤더 ── */
+.head{position:relative;flex:none;text-align:center}
+.head.head-left{text-align:left}
+.section-label{position:absolute;left:0;top:0.43vw;text-align:left;font-size:max(18px,0.9375vw);font-weight:700;line-height:1.18;color:var(--z-ink);letter-spacing:-0.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.section-title{font-size:3.4375vw;font-weight:800;letter-spacing:-0.03em;line-height:1.18;color:var(--z-ink)}
+.section-title.h1s{font-size:4.0625vw;line-height:1.14}
+.section-desc{margin-top:0.9375vw;font-size:1.40625vw;font-weight:500;letter-spacing:-0.01em;line-height:1.52;color:var(--z-ink)}
+.section-desc b,.section-desc strong{font-weight:700}
+.section-desc strong.pt-c{color:var(--z-accent)}
+
+/* ── 카드 ── */
+.card{
+  background:linear-gradient(180deg,#FFFFFF 0%,#FEFEFF 46%,#F9FBFE 100%);
+  border:1px solid var(--z-card-line);
+  border-top-color:#EAF0FA;
+  border-radius:1.09375vw;
+  box-shadow:var(--z-shadow);
+}
+.ablock{
+  border-radius:1.09375vw;
+  background:linear-gradient(120deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);
+  box-shadow:var(--z-glow);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+}
+
+/* ── 표지/클로징 ── */
+.cover-hero{min-height:44vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.cover-hero .t-over{font-size:1.7578125vw;margin-bottom:2.578125vw;letter-spacing:0;display:flex;align-items:center;justify-content:center;color:var(--z-ink)}
+.cover-hero .ov-x{margin:0 1.2890625vw;font-family:'Pretendard Variable',sans-serif;font-weight:100;font-size:1.35em;line-height:1;color:#111;opacity:.3;transform:translateY(-0.2vw)}
+.cover-hero .ov-zaemit{font-family:'Fugaz One',sans-serif;font-weight:400;color:var(--z-accent)}
+.cover-hero h1{font-size:4.0625vw;font-weight:800;letter-spacing:-0.03em;line-height:1.22;color:var(--z-ink)}
+.cover-hero .csub{font-weight:600;font-size:1.5625vw;margin-top:1.328125vw;letter-spacing:-0.02em;line-height:1.55;color:var(--z-ink)}
+.cover-hero .csub strong{font-weight:800;color:var(--z-accent)}
+.cover-contact{margin-top:3.90625vw;text-align:center;font-size:max(18px,1.171875vw);font-weight:500;color:var(--z-note)}
+
+/* ── 목차 ── */
+.toc-head .t-over{margin-bottom:0.859375vw}
+.toc-grid{width:100%;margin-top:5vw;display:grid;grid-template-columns:repeat(3,1fr)}
+.toc-grid .toc-col{display:flex;flex-direction:column;justify-content:space-between;min-height:14vw;padding:0.234375vw 2.34375vw;border-left:1px solid #dedee8}
+.toc-grid .toc-col:first-child{border-left:0;padding-left:0}
+.toc-grid .toc-col:last-child{padding-right:0}
+.toc-col .pn{font-size:max(18px,1.09375vw);font-weight:700;letter-spacing:-0.01em;color:var(--z-accent)}
+.toc-col .pt{margin-top:0.9375vw;font-size:2.1875vw;font-weight:800;letter-spacing:-0.02em;line-height:1.25;color:var(--z-ink)}
+.toc-col .ds{margin-top:0.9375vw;font-size:max(18px,1.015625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.toc-col .pg{font-size:max(18px,0.9375vw);font-weight:500;letter-spacing:.02em;color:var(--z-note);font-variant-numeric:tabular-nums}
+
+/* ── 간지 ── */
+.ganji{position:relative;min-height:44vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ganji .bignum{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(-1.3671875vw);font-size:35.15625vw;font-weight:800;line-height:1;color:rgba(59,130,246,.08);z-index:0;pointer-events:none}
+.ganji h1,.ganji .lead,.ganji .t-over{position:relative;z-index:1}
+.ganji h1{font-size:3.75vw;font-weight:800;letter-spacing:-0.03em;line-height:1.28;color:var(--z-ink)}
+.ganji .lead{margin-top:1.328125vw;font-size:1.40625vw;font-weight:600;letter-spacing:-0.02em;line-height:1.5;color:var(--z-ink)}
+.ganji .t-over{margin-bottom:1.171875vw}
+
+/* ── 2×2 카드 ── */
+.rgrid{height:31.25vw;margin-top:2.8125vw;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1.09375vw}
+.rcard{padding:0 3.28125vw;display:flex;align-items:center;gap:2.1875vw}
+.ric{flex:none;width:6.5625vw;height:6.5625vw;border-radius:1.09375vw;background:rgba(59,130,246,.06);display:flex;align-items:center;justify-content:center}
+.ric svg{width:3.4375vw;height:3.4375vw;color:var(--z-accent)}
+.rtxt .tit{font-size:1.5625vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
+.rtxt .desc{margin-top:0.625vw;font-size:max(18px,1.09375vw);font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+
+/* ── 3열 카드 ── */
+.tri{margin-top:2.8125vw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.09375vw}
+.tricard{padding:2.1875vw 1.875vw;display:flex;flex-direction:column;align-items:flex-start;gap:1.09375vw}
+.tricard .tile{width:3.125vw;height:3.125vw;border-radius:0.859375vw;background:rgba(59,130,246,.08);color:var(--z-accent);display:flex;align-items:center;justify-content:center}
+.tricard .tile svg{width:1.71875vw;height:1.71875vw}
+.tricard .ttit{font-size:1.40625vw;font-weight:800;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+.tricard .tdesc{font-size:max(18px,1.015625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.55;color:var(--z-ink)}
+
+/* ── 니즈 매핑 표 ── */
+.needtable-wrap{margin-top:2.5vw;overflow:hidden}
+.needtable{width:100%;border-collapse:collapse}
+.needtable th{padding:0.9375vw 1.5625vw;text-align:left;font-size:max(18px,1.09375vw);font-weight:800;color:var(--z-ink);background:rgba(59,130,246,.06)}
+.needtable td{padding:0.9375vw 1.5625vw;font-size:max(18px,1.09375vw);color:var(--z-ink);border-bottom:1px solid #EAF0FA;line-height:1.5}
+.needtable tr:last-child td{border-bottom:none}
+.needtable .nn{font-weight:700;color:var(--z-accent);width:19vw}
+
+/* ── 강조 텍스트 블록 ── */
+.ablock-text{margin-top:1.71875vw;border-radius:1.09375vw;background:linear-gradient(120deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);box-shadow:var(--z-glow);padding:1.5625vw 2.34375vw;display:flex;align-items:center;justify-content:center;text-align:center}
+.ablock-text p{font-size:max(18px,1.328125vw);font-weight:700;letter-spacing:-0.01em;line-height:1.5;color:#fff}
+
+/* ── 통계 행 ── */
+.statrow{margin-top:2.8125vw;display:grid;grid-template-columns:repeat(4,1fr);gap:1.09375vw}
+.statrow.c3{grid-template-columns:repeat(3,1fr)}
+.statitem{padding:2.1875vw 1.328125vw;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0.625vw}
+.statitem .snum{font-size:2.34375vw;font-weight:800;letter-spacing:-0.02em;line-height:1.15;color:var(--z-accent);font-variant-numeric:tabular-nums}
+.statitem .slabel{font-size:1.25vw;font-weight:700;letter-spacing:-0.02em;color:var(--z-ink)}
+.statitem .scap{font-size:max(18px,0.9375vw);font-weight:500;letter-spacing:-0.005em;line-height:1.4;color:var(--z-note)}
+.pill{display:inline-flex;padding:0.3125vw 0.9375vw;border-radius:999px;font-size:max(18px,0.859375vw);font-weight:700;letter-spacing:-0.01em}
+.pill-next{background:rgba(59,130,246,.09);color:var(--z-accent)}
+.pill-soon{background:#fff;border:1.5px dashed #AEBFD9;color:var(--z-note)}
+.source{margin-top:1.328125vw;text-align:center;font-size:max(18px,0.9765625vw);font-weight:500;letter-spacing:-0.005em;line-height:1.5;color:var(--z-note)}
+
+/* ── 4단 로드맵 ── */
+.steps4{margin-top:2.8125vw;display:grid;grid-template-columns:repeat(4,1fr);gap:1.09375vw}
+.stepcard{padding:1.71875vw 1.5625vw;display:flex;flex-direction:column;gap:0.703125vw}
+.stepcard .shead{display:flex;align-items:center;justify-content:space-between}
+.stepcard .sno{font-size:1.875vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-accent);font-variant-numeric:tabular-nums}
+.stepcard .stit{font-size:1.328125vw;font-weight:800;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+.stepcard .sdesc{font-size:max(18px,0.9375vw);font-weight:500;letter-spacing:-0.01em;line-height:1.45;color:var(--z-ink)}
+
+/* ── 클로징 ── */
+.closing{min-height:40vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.closing h1{font-size:3.75vw;font-weight:800;letter-spacing:-0.03em;color:var(--z-ink)}
+.closing .lead{margin-top:1.171875vw;font-size:1.40625vw;font-weight:600;letter-spacing:-0.01em;color:var(--z-ink)}
+.asklist{margin-top:2.5vw;display:flex;flex-direction:column;gap:1.171875vw;align-items:flex-start}
+.askitem{display:flex;align-items:center;gap:0.9375vw;font-size:max(18px,1.328125vw);font-weight:600;letter-spacing:-0.01em;color:var(--z-ink)}
+.askitem svg{flex:none;width:1.71875vw;height:1.71875vw;color:var(--z-accent)}
+</style>
+</head>
+<body>
+
+<!-- ===== 01 표지 ===== -->
+<div class="slide active" data-title-ko="표지">
+  <div class="mesh m01"></div>
+  <div class="slide-inner">
+    <div class="cover-hero">
+      <p class="t-over m-rise"><span class="ov-zaemit za">Zaemit</span><span class="ov-x">×</span><span class="ov-plain">G콘테스트</span></p>
+      <h1 class="m-rise" style="--d:.3s">공모전이 끝나도,<br><span class="grad-text">사이트</span>는 남기겠습니다</h1>
+      <p class="csub m-rise" style="--d:.45s">지콘테스트가 만드는 공모전 홈페이지 제작·운영 구간에 재밋 AI 웹빌더를 결합하고,<br>공모전을 마친 공공기관 담당자에게는 상시 운영 가능한 홈페이지를 이어서 제안하는 협업안입니다</p>
+      <p class="cover-contact m-rise" style="--d:.6s">WEVEN Inc. · CEO 김정환 · 010.8447.4567 · kjh@weven.kr · 2026.08.20</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 목차 ===== -->
+<div class="slide" data-title-ko="목차">
+  <div class="mesh m02"></div>
+  <div class="slide-inner">
+    <div class="head head-left toc-head">
+      <p class="t-over m-rise">CONTENTS</p>
+      <div class="section-title h1s m-rise" style="--d:.3s">목차</div>
+    </div>
+    <div class="toc-grid m-stagger">
+      <div class="toc-col">
+        <div class="top">
+          <div class="pn">Part 1</div>
+          <div class="pt">배경</div>
+          <div class="ds">지콘테스트가 만드는 것과, 공모전이 끝난 뒤 남는 문제</div>
+        </div>
+        <div class="pg">04-05</div>
+      </div>
+      <div class="toc-col">
+        <div class="top">
+          <div class="pn">Part 2</div>
+          <div class="pt">협업 제안</div>
+          <div class="ds">재밋이 채우는 세 지점과 공무원 고객 활용안</div>
+        </div>
+        <div class="pg">07-09</div>
+      </div>
+      <div class="toc-col">
+        <div class="top">
+          <div class="pn">Part 3</div>
+          <div class="pt">실행</div>
+          <div class="ds">로드맵과 요청사항</div>
+        </div>
+        <div class="pg">11-12</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 간지 Part 1 ===== -->
+<div class="slide" data-title-ko="Part 1 - 배경">
+  <div class="mesh m03"></div>
+  <div class="slide-inner">
+    <div class="ganji">
+      <p class="t-over m-fade">PART 1. 배경</p>
+      <div class="bignum m-fade">1</div>
+      <h1 class="m-rise" style="--d:.15s">지콘테스트는 <span class="pt-c">공모전 하나</span>를<br>완성하는 회사입니다</h1>
+      <p class="lead m-rise" style="--d:.4s">지콘테스트가 실제로 만드는 것과, 공모전이 끝난 뒤 남는 문제를 짚습니다</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 04 지콘테스트가 만드는 것 ===== -->
+<div class="slide" data-title-ko="배경 - 지콘테스트가 만드는 것">
+  <div class="mesh m04"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">1. 배경 - <span class="num">01</span></div>
+      <div class="section-title m-rise">지콘테스트는 공모전마다 <span class="pt-c">전용 사이트</span>를 만듭니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">접수부터 투표·심사·표절 검증까지, 공모전 운영에 필요한 기능을 템플릿 기반으로 제공합니다</div>
+    </div>
+    <div class="rgrid m-stagger">
+      <div class="rcard card">
+        <div class="ric">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="rtxt">
+          <div class="tit">공모전 홈페이지 무료 제작</div>
+          <div class="desc">템플릿을 고르면 도메인까지 무상 후원해 서브도메인 사이트를 만듭니다</div>
+        </div>
+      </div>
+      <div class="rcard card">
+        <div class="ric">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 18H3"/><path d="m15 18 2 2 4-4"/><path d="M16 12H3"/><path d="M16 6H3"/></svg>
+        </div>
+        <div class="rtxt">
+          <div class="tit">온라인 투표 · 심사</div>
+          <div class="desc">참가작 접수와 심사위원 채점을 한 화면에서 처리합니다</div>
+        </div>
+      </div>
+      <div class="rcard card">
+        <div class="ric">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="rtxt">
+          <div class="tit">AI 표절 검증</div>
+          <div class="desc">온라인 심사 과정에 AI 검증을 붙여 표절 작품을 걸러냅니다</div>
+        </div>
+      </div>
+      <div class="rcard card">
+        <div class="ric">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        </div>
+        <div class="rtxt">
+          <div class="tit">전체 대행</div>
+          <div class="desc">기획부터 홍보, 시상까지 공모전 운영 전체를 대신 맡습니다</div>
+        </div>
+      </div>
+    </div>
+    <p class="source m-rise" style="--d:.6s">Source: gcontest.co.kr 공개 정보 기준(2026.08). 실제 기능 구성은 지콘테스트 확인이 필요합니다.</p>
+  </div>
+</div>
+
+<!-- ===== 05 문제 지점 ===== -->
+<div class="slide" data-title-ko="배경 - 공모전이 끝난 뒤">
+  <div class="mesh m08"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">1. 배경 - <span class="num">02</span></div>
+      <div class="section-title m-rise">그런데 공모전이 끝나면 <span class="pt-c">사이트도 함께</span> 끝납니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">서브도메인 사이트는 시상식 이후 방치되고, 담당자의 다음 필요는 그대로 남습니다</div>
+    </div>
+    <div class="tri m-stagger">
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+        </div>
+        <div class="ttit">참가작 아카이브가 남을 곳이 없습니다</div>
+        <div class="tdesc">공모전용 서브도메인은 시상식 이후 갱신이 멈추고, 수상작과 참가 기록이 그대로 방치됩니다</div>
+      </div>
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+        </div>
+        <div class="ttit">담당자의 다음 필요는 홈페이지입니다</div>
+        <div class="tdesc">부서 홍보 사이트, 행사 랜딩페이지, 민원 게시판을 공모전이 끝난 뒤에도 매번 새로 발주합니다</div>
+      </div>
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+        </div>
+        <div class="ttit">지콘테스트는 이 지점에 상품이 없습니다</div>
+        <div class="tdesc">공모전이 끝나면 담당자와의 접점도 함께 끊깁니다</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 06 간지 Part 2 ===== -->
+<div class="slide" data-title-ko="Part 2 - 협업 제안">
+  <div class="mesh m11"></div>
+  <div class="slide-inner">
+    <div class="ganji">
+      <p class="t-over m-fade">PART 2. 협업 제안</p>
+      <div class="bignum m-fade">2</div>
+      <h1 class="m-rise" style="--d:.15s">그래서 <span class="pt-c">재밋</span>을<br>세 지점에 제안합니다</h1>
+      <p class="lead m-rise" style="--d:.4s">제작 엔진, 후속 판매 채널, 공무원 대상 상시 운영 도구로 결합하는 방안입니다</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 07 협업 모델 3가지 ===== -->
+<div class="slide" data-title-ko="협업 제안 - 세 가지 모델">
+  <div class="mesh m14"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">2. 협업 제안 - <span class="num">01</span></div>
+      <div class="section-title m-rise">제작 엔진부터 <span class="pt-c">영업 채널</span>까지 결합합니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">지콘테스트 브랜드는 유지한 채, 제작 속도와 후속 판매만 재밋이 더합니다</div>
+    </div>
+    <div class="tri m-stagger">
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+        </div>
+        <div class="ttit">화이트라벨 제작 엔진</div>
+        <div class="tdesc">공모전명·주제·기간을 입력하면 접수 폼과 투표·심사 화면이 포함된 사이트가 몇 분 안에 나옵니다. 지콘테스트 브랜드로 노출하고, 재밋은 레브셰어로 정산합니다</div>
+      </div>
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="ttit">리퍼럴 제휴</div>
+        <div class="tdesc">공모전을 마친 담당자에게 부서 홈페이지 제작을 교차 제안합니다. 전환이 발생하면 지콘테스트에 수수료를 지급합니다</div>
+      </div>
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="M3.29 7 12 12l8.71-5"/><path d="M12 22V12"/></svg>
+        </div>
+        <div class="ttit">번들 상품화</div>
+        <div class="tdesc">지콘테스트의 전체 대행 패키지에 재밋 홈페이지 제작을 옵션으로 얹어 객단가를 높입니다</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 08 공무원 고객 활용안 ===== -->
+<div class="slide" data-title-ko="협업 제안 - 공무원 고객 활용안">
+  <div class="mesh m17"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">2. 협업 제안 - <span class="num">02</span></div>
+      <div class="section-title m-rise">공모전이 끝난 담당자에게, <span class="pt-c">쓸 곳</span>을 이어서 제안합니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">공모전 사이트에 쓰인 기능을, 부서의 상시 운영 사이트로 그대로 옮겨 씁니다</div>
+    </div>
+    <div class="needtable-wrap card m-rise" style="--d:.4s">
+      <table class="needtable">
+        <thead><tr><th>담당자의 다음 필요</th><th>재밋 기능</th></tr></thead>
+        <tbody>
+          <tr><td class="nn">부서·사업단 홍보 사이트</td><td>AI 웹빌더 — 대화만으로 몇 분 안에 제작</td></tr>
+          <tr><td class="nn">정책 홍보, 주민 참여 이벤트 랜딩페이지</td><td>페이지 빌더 + 통계·SEO</td></tr>
+          <tr><td class="nn">외국인 주민 안내, 국제교류 사업</td><td>다국어 자동 번역</td></tr>
+          <tr><td class="nn">시설 예약, 설명회·상담 신청</td><td>예약 플러그인</td></tr>
+          <tr><td class="nn">공지·민원 게시판</td><td>게시판 플러그인</td></tr>
+          <tr><td class="nn">유료 강좌, 시설 이용료, 후원금</td><td>결제(정기결제 포함)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="source m-rise" style="--d:.6s">※ 기능 목록은 재밋 플러그인 카탈로그 기준이며, 공공기관 도입 시 나라장터 등록 여부는 별도 확인이 필요합니다.</p>
+  </div>
+</div>
+
+<!-- ===== 09 진입장벽 ===== -->
+<div class="slide" data-title-ko="협업 제안 - 공공기관 진입장벽">
+  <div class="mesh m18"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">2. 협업 제안 - <span class="num">03</span></div>
+      <div class="section-title m-rise">공공기관 판매의 진입장벽은, <span class="pt-c">지콘테스트가</span> 이미 다뤄봤습니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">재밋이 단독으로 뚫기 어려운 지점을, 지콘테스트의 기존 거래 관계로 줄입니다</div>
+    </div>
+    <div class="tri m-stagger">
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg>
+        </div>
+        <div class="ttit">나라장터 조달 등록</div>
+        <div class="tdesc">지콘테스트는 이미 지자체·공공기관과 정식 계약, 세금계산서 처리 이력을 갖고 있습니다</div>
+      </div>
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="ttit">보안 · 개인정보 인증</div>
+        <div class="tdesc">CSAP 등 정부 클라우드 인증 여부는 재밋 쪽에서 사전에 확인해야 합니다</div>
+      </div>
+      <div class="tricard card">
+        <div class="tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+        </div>
+        <div class="ttit">담당자 교체 대응</div>
+        <div class="tdesc">공공기관은 담당자가 자주 바뀌므로, 인수인계 문서와 관리자 가이드를 표준화합니다</div>
+      </div>
+    </div>
+    <p class="source m-rise" style="--d:.6s">※ CSAP 인증 여부, 나라장터 등록 상태는 협의 단계에서 확인이 필요합니다.</p>
+  </div>
+</div>
+
+<!-- ===== 10 간지 Part 3 ===== -->
+<div class="slide" data-title-ko="Part 3 - 실행">
+  <div class="mesh m09"></div>
+  <div class="slide-inner">
+    <div class="ganji">
+      <p class="t-over m-fade">PART 3. 실행</p>
+      <div class="bignum m-fade">3</div>
+      <h1 class="m-rise" style="--d:.15s">그래서, <span class="pt-c">이렇게</span><br>시작합니다</h1>
+      <p class="lead m-rise" style="--d:.4s">작은 파일럿으로 검증한 뒤, 단계적으로 넓힙니다</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 11 로드맵 ===== -->
+<div class="slide" data-title-ko="실행 - 로드맵">
+  <div class="mesh m24"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">3. 실행 - <span class="num">01</span></div>
+      <div class="section-title m-rise"><span class="pt-c">4단계</span>로 실행합니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">PoC로 지표를 확인한 뒤, 적용 범위를 단계적으로 넓힙니다</div>
+    </div>
+    <div class="steps4 m-stagger">
+      <div class="stepcard card">
+        <div class="shead"><span class="sno">01</span><span class="pill pill-next">다음 단계</span></div>
+        <div class="stit">PoC (1개월)</div>
+        <div class="sdesc">진행 중인 공모전 1건을 선정해 재밋 제작 엔진을 시범 연동합니다</div>
+      </div>
+      <div class="stepcard card">
+        <div class="shead"><span class="sno">02</span><span class="pill pill-soon">예정</span></div>
+        <div class="stit">파일럿</div>
+        <div class="sdesc">화이트라벨 임베드를 관리자 화면에 반영하고, 리퍼럴 링크를 테스트합니다</div>
+      </div>
+      <div class="stepcard card">
+        <div class="shead"><span class="sno">03</span><span class="pill pill-soon">예정</span></div>
+        <div class="stit">정식 전환</div>
+        <div class="sdesc">검증된 지표를 기준으로 전체 공모전 사이트에 적용합니다</div>
+      </div>
+      <div class="stepcard card">
+        <div class="shead"><span class="sno">04</span><span class="pill pill-soon">예정</span></div>
+        <div class="stit">공동 세일즈</div>
+        <div class="sdesc">공공기관 담당자 대상 부서 홈페이지 교차 판매를 함께 진행합니다</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 12 클로징 ===== -->
+<div class="slide" data-title-ko="클로징 - 요청">
+  <div class="mesh m23"></div>
+  <div class="slide-inner">
+    <div class="closing">
+      <p class="t-over m-fade">CLOSING</p>
+      <h1 class="m-rise" style="--d:.15s">요청 드립니다</h1>
+      <p class="lead m-rise" style="--d:.3s">PoC 1개월을 기준으로, 아래를 요청합니다</p>
+      <ul class="asklist m-stagger" style="--sd:.5s">
+        <li class="askitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          진행 중인 공모전 1건 연동 테스트 허용
+        </li>
+        <li class="askitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          공공기관 담당자 소개 또는 리퍼럴 채널 개설 (개인정보 범위는 별도 협의)
+        </li>
+        <li class="askitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          1개월 후 PoC 결과 공동 검토 미팅
+        </li>
+      </ul>
+      <p class="cover-contact m-rise" style="--d:.7s">WEVEN Inc. · CEO 김정환 · 010.8447.4567 · kjh@weven.kr</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  var appendixStart=total;
+  slides.forEach(function(s,i){if(s.hasAttribute('data-appendix')&&i<appendixStart)appendixStart=i});
+  var mainTotal=appendixStart;
+
+  window.irConfig={version:'260820_gcontest_proposal',theme:'zaemit',languages:['ko'],defaultLang:'ko'};
+
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.transform='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.4,Math.min(1,z));if(z<1)inner.style.transform='scale('+z+')'}
+  }
+
+  var EASE_OUT='cubic-bezier(0, 0, 0.2, 1)',STEP_MS=80;
+  var countRafs=new Map();
+  function noMotion(){return document.body.classList.contains('no-motion')}
+  function seqOf(sec){
+    var seen=new Set(),steps=[];
+    sec.querySelectorAll('.m-rise, .m-fade, .m-stagger, .m-count, .m-draw').forEach(function(el){
+      var items=el.classList.contains('m-stagger')?Array.prototype.slice.call(el.children):[el];
+      items.forEach(function(it){if(!seen.has(it)){seen.add(it);steps.push(it)}});
+    });
+    return steps;
+  }
+  function inlineDelay(el){
+    var d=el.style&&el.style.getPropertyValue('--d');
+    if(d){d=parseFloat(d);if(!isNaN(d))return d*1000}
+    return null;
+  }
+  function riseAnim(el,delay){
+    el.animate([{opacity:0,transform:'translateY(0.9375vw)'},{opacity:1,transform:'none'}],
+      {duration:700,delay:delay,easing:EASE_OUT,fill:'both'});
+  }
+  function fadeAnim(el,delay){
+    var dur=parseFloat(el.dataset&&el.dataset.mdur)||1100;
+    el.animate([{opacity:0},{opacity:1}],{duration:dur,delay:delay,easing:EASE_OUT,fill:'both'});
+  }
+  function countUp(el,delay,sec){
+    if(el.dataset.mcOrig===undefined)el.dataset.mcOrig=el.textContent;
+    var orig=el.dataset.mcOrig;
+    var m=orig.match(/-?\d[\d,]*(?:\.\d+)?/);
+    if(!m)return;
+    var raw=m[0],target=parseFloat(raw.replace(/,/g,'')),dec=(raw.split('.')[1]||'').length,grouped=raw.indexOf(',')>=0;
+    var pre=orig.slice(0,m.index),post=orig.slice(m.index+raw.length);
+    var fmt=function(v){return grouped?v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}):v.toFixed(dec)};
+    var DUR=1200,start;
+    el.textContent=pre+fmt(0)+post;
+    var tick=function(now){
+      if(start===undefined)start=now+delay;
+      var t=(now-start)/DUR;
+      if(t>=1){el.textContent=orig;return}
+      var eased=t<=0?0:1-Math.pow(1-t,3);
+      el.textContent=pre+fmt(target*eased)+post;
+      countRafs.get(sec).push(requestAnimationFrame(tick));
+    };
+    countRafs.get(sec).push(requestAnimationFrame(tick));
+  }
+  var DRAW_SHAPES='path, line, polyline, circle, ellipse, rect';
+  function drawAnim(el,delay){
+    var dur=parseFloat(el.dataset&&el.dataset.mdur)||700;
+    if(el.style)el.style.opacity='1';
+    var shapes=el.matches&&el.matches(DRAW_SHAPES)?[el]:el.querySelectorAll(DRAW_SHAPES);
+    shapes.forEach(function(p){
+      if(typeof p.getTotalLength!=='function')return;
+      var len;try{len=p.getTotalLength()}catch(e){return}
+      if(!len)return;
+      p.style.strokeDasharray=len;
+      p.animate([{strokeDashoffset:len},{strokeDashoffset:0}],
+        {duration:dur,delay:delay,easing:'ease-out',fill:'both'});
+    });
+  }
+  function resetMotion(sec){
+    (countRafs.get(sec)||[]).forEach(cancelAnimationFrame);
+    countRafs.set(sec,[]);
+    sec.querySelectorAll('.m-rise, .m-fade, .m-stagger > *, .m-count, .m-draw, .m-draw path, .m-draw line, .m-draw polyline, .m-draw circle, .m-draw ellipse, .m-draw rect').forEach(function(el){
+      if(el.getAnimations)el.getAnimations().forEach(function(a){a.cancel()});
+      if(el.dataset&&el.dataset.mcOrig!==undefined)el.textContent=el.dataset.mcOrig;
+      if(el.style){el.style.strokeDasharray='';el.style.strokeDashoffset=''}
+      if(el.classList&&el.classList.contains('m-draw')&&el.style)el.style.opacity=''
+    });
+  }
+  function playMotion(sec){
+    if(noMotion())return;
+    resetMotion(sec);
+    requestAnimationFrame(function(){
+      seqOf(sec).forEach(function(el,i){
+        var d=inlineDelay(el);
+        var delay=(d!==null)?d:i*STEP_MS;
+        var inStagger=el.parentElement&&el.parentElement.classList.contains('m-stagger');
+        if(el.classList.contains('m-fade'))fadeAnim(el,delay);
+        else if(el.classList.contains('m-rise')||inStagger)riseAnim(el,delay);
+        if(el.classList.contains('m-count'))countUp(el,delay,sec);
+        if(el.classList.contains('m-draw'))drawAnim(el,delay);
+      });
+    });
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  var playTimer=null;
+  function goTo(idx,src){
+    if(idx<0||idx>=total||idx===current)return;
+    var os=slides[current];
+    os.classList.remove('active');resetMotion(os);current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    resetMotion(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(playTimer)clearTimeout(playTimer);
+    playTimer=setTimeout(function(){playMotion(ns)},400);
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:mainTotal,appendixStart:appendixStart},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    document.body.classList.remove('en','ja','ko');
+    if(nl!=='ko')document.body.classList.add(nl);
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
+    total:total,mainTotal:mainTotal,appendixStart:appendixStart,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
+      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();playMotion(slides[current]);try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:mainTotal,appendixStart:appendixStart},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body></html>
