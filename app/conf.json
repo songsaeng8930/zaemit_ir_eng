@@ -4,6 +4,16 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260826_zaemit_growth_kpi",
+      "name": "무료 웹사이트 성장 KPI 플랜",
+      "nameEn": "Free Website Growth KPI Plan",
+      "description": "무료 제작·1년 무료 호스팅을 유관기관 연계·공모전·SNS 프로모션 채널로 구체화하고, 8-9월 방문자·가입자·사이트 개설자·연장가능군 KPI(안)을 세운 실행 플랜 (Zaemit 컨셉)",
+      "descriptionEn": "Concretizes free-build + 1-year free hosting into institution partnerships, contests, and SNS promotion, with draft Aug-Sep KPIs for visitors, sign-ups, site launches, and likely-to-renew cohort (Zaemit concept)",
+      "date": "2026-08-26",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
       "id": "260820_gcontest_proposal",
       "name": "Zaemit × G콘테스트 — 협업 제안서",
       "nameEn": "Zaemit × G콘테스트 — Partnership Proposal",
@@ -65,11 +75,21 @@
     },
     {
       "id": "260819_upstage_solar",
-      "name": "Zaemit × Upstage — Solar 통합 제안 (3장 요약)",
-      "nameEn": "Zaemit × Upstage — Solar Integration Proposal (3-slide summary)",
-      "description": "업스테이지 Solar Pro 4를 Zaemit의 운영·카피·문서 영역에 결합하는 파트너십 제안 — 3장 요약",
-      "descriptionEn": "Proposal to integrate Upstage Solar Pro 4 into Zaemit's operations, copy, and document layer — 3-slide summary",
+      "name": "Zaemit × Upstage — 문서-투-웹 파트너십 제안",
+      "nameEn": "Zaemit × Upstage — Document-to-Web Partnership Proposal",
+      "description": "Document Parse가 읽고 Solar가 쓰고 Zaemit이 웹으로 만드는 공동 상품 제안 — 3장 요약",
+      "descriptionEn": "Joint product proposal: Document Parse reads, Solar writes, Zaemit builds the website — 3-slide summary",
       "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_upstage_solar2",
+      "name": "Zaemit × Upstage — 문서-투-웹 파트너십 제안 v2 (비주얼)",
+      "nameEn": "Zaemit × Upstage — Document-to-Web Partnership Proposal v2 (Visual)",
+      "description": "v1 텍스트에 예시 목업(문서→웹·카피·챗봇)과 Living DB 순환 구조도를 더한 비주얼 보강판 — 5장",
+      "descriptionEn": "Visual edition of v1: adds example mockups (doc-to-web, copy, chatbot) and a Living DB loop diagram — 5 slides",
+      "date": "2026-08-26",
       "theme": "dark",
       "default": false
     },

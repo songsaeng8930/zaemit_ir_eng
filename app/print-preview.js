@@ -289,7 +289,8 @@ function fixGradientTextForPDF() {
                             clone.classList.contains('ir-260202');
         const is260304 = clone.classList.contains('ir-260304');
         const isZaemit = clone.classList.contains('ir-260814_introduce') || clone.classList.contains('ir-260820_gcontest_proposal');
-        const fallbackColor = isZaemit ? '#3B82F6' : isLightTheme ? '#6366F1' : is260304 ? '#3B82F6' : '#00D4AA';
+        const isBlueAccent = is260304 || clone.classList.contains('ir-260819_upstage_solar');
+        const fallbackColor = isZaemit ? '#3B82F6' : isLightTheme ? '#6366F1' : isBlueAccent ? '#3B82F6' : '#00D4AA';
 
         // Remove gradient background and apply solid color
         el.style.setProperty('background', 'none', 'important');

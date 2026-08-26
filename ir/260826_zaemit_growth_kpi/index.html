@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Zaemit 무료 웹사이트 성장 KPI 플랜</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --z-ink:#111;
+  --z-note:#a6afc0;
+  --z-accent:#3B82F6;
+  --z-accent-light:#74ACFF;
+  --z-accent-deep:#2C63D9;
+  --z-bg:#FDFDFF;
+  --z-pa-lav:185,168,255;
+  --z-pa-sky:158,200,255;
+  --z-pa-pink:247,185,220;
+  --z-pa-mint:167,232,216;
+  --z-pa-peach:255,211,184;
+  --z-card-line:#DCE5F4;
+  --z-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 5px rgba(30,58,138,.05),0 1.171875vw 2.421875vw -0.78125vw rgba(59,130,246,.15);
+  --z-glow:0 0.9375vw 1.953125vw -0.703125vw rgba(59,130,246,.45);
+}
+html,body{height:100%;overflow:hidden;background:var(--z-bg)}
+body{font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;color:var(--z-ink);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased;word-break:keep-all}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:3.125vw 3.515625vw 7vw;opacity:0;
+  background:var(--z-bg);overflow:hidden;
+}
+.slide.active{display:flex;opacity:1;transition:opacity .4s cubic-bezier(0.4,0,0.2,1)}
+.slide .slide-inner{
+  position:relative;z-index:2;
+  max-width:100%;width:100%;overflow:visible;
+  display:flex;flex-direction:column;justify-content:center;
+  transform-origin:center center;
+}
+
+/* ── 파스텔 메쉬 (슬라이드별 변주, 7종) ── */
+.mesh{position:absolute;inset:-6.25vw;z-index:0;pointer-events:none;filter:blur(2.734375vw);background:var(--mesh)}
+.m01{--mesh:
+  radial-gradient(72.27vw 59.38vw at 4% 10%,rgba(var(--z-pa-lav),.53) 0%,rgba(var(--z-pa-lav),0) 68%),
+  radial-gradient(55.47vw 48.83vw at 13% 96%,rgba(var(--z-pa-lav),.35) 0%,rgba(var(--z-pa-lav),0) 66%),
+  radial-gradient(74.22vw 61.72vw at 96% 24%,rgba(var(--z-pa-sky),.52) 0%,rgba(var(--z-pa-sky),0) 68%),
+  radial-gradient(59.38vw 50.78vw at 89% 96%,rgba(var(--z-pa-sky),.40) 0%,rgba(var(--z-pa-sky),0) 68%),
+  #FDFDFF}
+.m08{--mesh:
+  radial-gradient(74.22vw 58.59vw at 92% -4%,rgba(var(--z-pa-pink),.73) 0%,rgba(var(--z-pa-pink),0) 66%),
+  radial-gradient(56.64vw 46.88vw at 50% 48%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 62%),
+  radial-gradient(74.22vw 58.59vw at 6% 102%,rgba(var(--z-pa-mint),.73) 0%,rgba(var(--z-pa-mint),0) 66%),
+  #FDFDFF}
+.m11{--mesh:
+  radial-gradient(66.41vw 41.02vw at 10% -12%,rgba(var(--z-pa-peach),.73) 0%,rgba(var(--z-pa-peach),0) 76%),
+  radial-gradient(58.59vw 37.11vw at 50% -16%,rgba(var(--z-pa-pink),.62) 0%,rgba(var(--z-pa-pink),0) 74%),
+  radial-gradient(66.41vw 42.97vw at 92% -10%,rgba(var(--z-pa-sky),.73) 0%,rgba(var(--z-pa-sky),0) 76%),
+  radial-gradient(50.78vw 35.16vw at 50% 118%,rgba(var(--z-pa-sky),.39) 0%,rgba(var(--z-pa-sky),0) 72%),
+  #FDFDFF}
+.m21{--mesh:
+  radial-gradient(62.5vw 44.92vw at 10% -10%,rgba(var(--z-pa-peach),.78) 0%,rgba(var(--z-pa-peach),0) 76%),
+  radial-gradient(66.41vw 46.88vw at 50% -14%,rgba(var(--z-pa-pink),.75) 0%,rgba(var(--z-pa-pink),0) 76%),
+  radial-gradient(64.45vw 46.88vw at 90% -8%,rgba(var(--z-pa-sky),.78) 0%,rgba(var(--z-pa-sky),0) 76%),
+  radial-gradient(62.5vw 42.97vw at 50% 118%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 74%),
+  #FDFDFF}
+.m26{--mesh:
+  radial-gradient(64.45vw 52.73vw at -2% -6%,rgba(var(--z-pa-lav),.65) 0%,rgba(var(--z-pa-lav),0) 64%),
+  radial-gradient(66.41vw 54.69vw at 102% 106%,rgba(var(--z-pa-peach),.68) 0%,rgba(var(--z-pa-peach),0) 64%),
+  #FDFDFF}
+
+/* ── 모션 (진입 페이드+상승만) ── */
+.slide .m-rise,.slide .m-fade,.slide .m-stagger>*{opacity:0}
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slide .m-stagger>*{opacity:1 !important;transform:none !important}
+
+/* ── 타이포·브랜드 ── */
+.za{font-family:'Fugaz One','Pretendard Variable',sans-serif;font-weight:400;font-synthesis:none}
+.pt-c{color:var(--z-accent)}
+.t-over{font-size:max(18px,1.015625vw);font-weight:600;letter-spacing:0.2734375vw;line-height:1.3;color:var(--z-note)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ── 섹션 헤더 ── */
+.head{position:relative;flex:none;text-align:center}
+.section-label{position:absolute;left:0;top:0.43vw;text-align:left;font-size:max(18px,0.9375vw);font-weight:700;line-height:1.18;color:var(--z-ink);letter-spacing:-0.02em;white-space:nowrap}
+.section-title{font-size:3.4375vw;font-weight:800;letter-spacing:-0.03em;line-height:1.2;color:var(--z-ink)}
+.section-desc{margin-top:0.9375vw;font-size:1.5625vw;font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.section-desc strong.pt-c{color:var(--z-accent)}
+
+/* ── 카드 (Zaemit 시그니처) ── */
+.card{
+  background:linear-gradient(180deg,#FFFFFF 0%,#FEFEFF 46%,#F9FBFE 100%);
+  border:1px solid var(--z-card-line);
+  border-top-color:#EAF0FA;
+  border-radius:1.09375vw;
+  box-shadow:var(--z-shadow);
+}
+.ablock{
+  border-radius:1.09375vw;
+  background:linear-gradient(120deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);
+  box-shadow:var(--z-glow);
+  color:#fff;
+}
+
+/* ── 표지 ── */
+.cover-hero{min-height:44vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.cover-hero h1{font-size:4.0625vw;font-weight:800;letter-spacing:-0.03em;line-height:1.25;color:var(--z-ink);margin-top:2.578125vw}
+.cover-hero .csub{font-weight:500;font-size:1.5625vw;margin-top:1.328125vw;letter-spacing:-0.02em;line-height:1.55;color:var(--z-ink);max-width:52vw}
+.cover-hero .csub strong{font-weight:700;color:var(--z-accent)}
+.cover-contact{margin-top:3.75vw;text-align:center;font-size:max(18px,1.09375vw);font-weight:600;color:var(--z-note);letter-spacing:.02em}
+
+/* ── 뱃지 ── */
+.badge{display:inline-flex;align-items:center;gap:0.390625vw;padding:0.3515625vw 0.9375vw;border-radius:999px;font-size:max(18px,0.859375vw);font-weight:700;letter-spacing:-0.005em;white-space:nowrap}
+.badge-draft{background:#FFFFFF;border:1.5px dashed #AEBFD9;color:var(--z-note)}
+.badge-priority{background:rgba(59,130,246,.09);color:var(--z-accent)}
+
+/* ── 02 3채널 카드 ── */
+.chgrid3{margin-top:2.34375vw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.171875vw}
+.ch-card{padding:1.484375vw 1.484375vw 1.640625vw;display:flex;flex-direction:column;gap:0.78125vw}
+.ch-ic{width:3.046875vw;height:3.046875vw;border-radius:0.859375vw;background:rgba(59,130,246,.08);color:var(--z-accent);display:flex;align-items:center;justify-content:center}
+.ch-ic svg{width:1.71875vw;height:1.71875vw}
+.ch-tit{font-size:1.40625vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
+.ch-desc{font-size:max(18px,0.9765625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.55;color:var(--z-ink)}
+
+/* ── 그 밖의 확장 채널 6가지 (컴팩트 칩) ── */
+.idea-label{margin-top:1.875vw;font-size:max(18px,0.9375vw);font-weight:700;letter-spacing:-0.005em;color:var(--z-note)}
+.chipgrid6{margin-top:0.859375vw;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:0.78125vw}
+.idea-chip{padding:0.9375vw 1.09375vw;display:flex;align-items:center;gap:0.78125vw}
+.idea-chip .idea-ic{flex:none;width:2.34375vw;height:2.34375vw;border-radius:0.625vw;display:flex;align-items:center;justify-content:center}
+.idea-chip .idea-ic svg{width:1.25vw;height:1.25vw}
+.idea-chip span{font-size:max(18px,0.9375vw);font-weight:600;letter-spacing:-0.005em;color:var(--z-ink)}
+.c-lav .idea-ic{background:rgba(185,168,255,.22);color:#7A5AF8}
+.c-sky .idea-ic{background:rgba(158,200,255,.26);color:#3B82F6}
+.c-mint .idea-ic{background:rgba(167,232,216,.32);color:#14A085}
+.c-peach .idea-ic{background:rgba(255,211,184,.36);color:#E8813A}
+.c-pink .idea-ic{background:rgba(247,185,220,.30);color:#E0559C}
+.c-deep .idea-ic{background:rgba(59,130,246,.10);color:#2C63D9}
+
+/* ── 04 KPI 퍼널 ── */
+.funnel{margin-top:2.890625vw;display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch;gap:0}
+.fstep{padding:1.875vw 1.328125vw;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.859375vw}
+.farrow{display:flex;align-items:center;justify-content:center;color:var(--z-note);padding:0 0.546875vw}
+.farrow svg{width:1.5625vw;height:1.5625vw}
+.fstep .fic{width:3.28125vw;height:3.28125vw;border-radius:50%;background:rgba(59,130,246,.08);color:var(--z-accent);display:flex;align-items:center;justify-content:center}
+.fstep .fic svg{width:1.71875vw;height:1.71875vw}
+.fstep .flabel{font-size:max(18px,1.328125vw);font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
+.fstep .fdesc{font-size:max(18px,0.90625vw);font-weight:500;letter-spacing:-0.005em;line-height:1.5;color:var(--z-note)}
+.funnel-note{margin-top:1.328125vw;text-align:center;font-size:max(18px,0.859375vw);font-weight:500;color:var(--z-note)}
+
+/* ── 05 월별 목표 표 ── */
+.kpi-wrap{margin-top:1.875vw;padding:1.5625vw 2.03125vw 1.71875vw}
+.kpi-wrap .badge{margin-bottom:0.9375vw}
+.kpi-table{width:100%;border-collapse:collapse}
+.kpi-table thead th{padding:0 1.09375vw 0.9375vw;text-align:left;font-size:max(18px,0.9375vw);font-weight:700;letter-spacing:-0.005em;color:var(--z-note);border-bottom:1px solid #E6ECF6}
+.kpi-table thead th:not(:first-child){text-align:center}
+.kpi-table tbody td{padding:1.171875vw 1.09375vw;border-bottom:1px solid #EDF1F8;font-size:max(18px,1.25vw);font-weight:700;color:var(--z-ink)}
+.kpi-table tbody tr:last-child td{border-bottom:0}
+.kpi-table tbody td:not(:first-child){text-align:center}
+.kpi-table .klabel{display:flex;align-items:center;gap:0.703125vw}
+.kpi-table .kdot{width:0.625vw;height:0.625vw;border-radius:50%;flex:none}
+.kpi-table .kmul{color:var(--z-accent);font-variant-numeric:tabular-nums}
+.kpi-note{margin-top:0.859375vw;font-size:max(18px,0.859375vw);font-weight:500;line-height:1.5;color:var(--z-note)}
+.kpi-total{margin-top:1.5625vw;padding:1.328125vw 1.796875vw;display:flex;align-items:center;justify-content:space-between}
+.kpi-total .k{font-size:max(18px,1.09375vw);font-weight:700;color:rgba(255,255,255,.88)}
+.kpi-total .num{display:flex;align-items:baseline;gap:0.3125vw}
+.kpi-total .n{font-size:2.734375vw;font-weight:800;letter-spacing:-0.02em;line-height:1;color:#fff}
+.kpi-total .u{font-size:1.40625vw;font-weight:700;color:#fff}
+
+/* ── 05 타겟 세그먼트 + 실행 체크리스트 (한 슬라이드) ── */
+.seg-primary{margin-top:2.03125vw;display:grid;grid-template-columns:1fr 1fr;gap:1.171875vw}
+.seg-card{padding:1.328125vw 1.5625vw 1.484375vw;display:flex;flex-direction:column;gap:0.703125vw}
+.seg-top{display:flex;align-items:center;justify-content:space-between}
+.seg-ic{width:2.734375vw;height:2.734375vw;border-radius:0.78125vw;background:rgba(59,130,246,.08);color:var(--z-accent);display:flex;align-items:center;justify-content:center}
+.seg-ic svg{width:1.5625vw;height:1.5625vw}
+.seg-tit{font-size:1.40625vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
+.seg-desc{font-size:max(18px,0.9375vw);font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.seg-expand-inline{margin-top:0.9375vw;text-align:center;font-size:max(18px,0.90625vw);font-weight:600;letter-spacing:-0.005em;color:var(--z-note)}
+
+.checklist2{margin-top:1.5625vw;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0.703125vw}
+.chk-row{padding:0.859375vw 1.328125vw;display:flex;align-items:center;gap:0.9375vw}
+.chk-num{flex:none;width:1.875vw;height:1.875vw;border-radius:50%;background:rgba(59,130,246,.09);color:var(--z-accent);display:flex;align-items:center;justify-content:center;font-size:max(18px,0.9375vw);font-weight:800}
+.chk-text{flex:1;font-size:max(18px,0.9765625vw);font-weight:600;letter-spacing:-0.005em;color:var(--z-ink)}
+.chk-due{flex:none;padding:0.3125vw 0.78125vw;border-radius:999px;background:#FFFFFF;border:1.5px dashed #AEBFD9;color:var(--z-note);font-size:max(18px,0.78125vw);font-weight:700;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- ===== 01 표지 ===== -->
+<div class="slide active" data-title-ko="표지">
+  <div class="mesh m01"></div>
+  <div class="slide-inner">
+    <div class="cover-hero">
+      <p class="t-over m-rise"><span class="za pt-c">Zaemit</span> GROWTH KPI PLAN</p>
+      <h1 class="m-rise" style="--d:.3s">대한민국 스타트업과 소상공인을 지원합니다.<br>내가 쓰던 AI로 홈페이지를 쉽게 만들고 운영하세요.<br>지금하시면 <span class="pt-c">1년 호스팅까지 완전무료</span>입니다.&nbsp;<br></h1>
+      <p class="csub m-rise" style="--d:.45s">실행방안으로 유관기관 연계, 공모전, SNS 프로모션 등을 적극적으로 실시합니다.<br>사용자는&nbsp;<strong>스타트업 대표</strong>와 <strong>소상공인</strong>이지만,<br>우리의 진짜 타겟은 이들의 연결고리 기관/투자사/마케팅에이전시들 입니다.&nbsp;&nbsp;</p>
+      <p class="cover-contact m-rise" style="--d:.6s">2026.08.26 작성 · 8월-9월 실행 KPI(안)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 핵심 3채널 ===== -->
+<div class="slide" data-title-ko="목표 구체화 - 실행 채널">
+  <div class="mesh m08"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">1. 목표 구체화</div>
+      <div class="section-title m-rise">전국 보육기관 200+ 부터<br>첫 실행 <span class="pt-c">채널로 설정하고, 계획을 구체화</span>합니다</div>
+      <div class="section-desc m-rise" style="--d:.3s">무료 제작과 1년 무료 호스팅을 아래 "채널"에 집중 투하합니다.</div>
+    </div>
+    <div class="chgrid3 m-stagger">
+      <div class="ch-card card">
+        <div class="ch-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v18"/><path d="M14 9h4a1 1 0 0 1 1 1v12"/><path d="M10 6h.01M10 10h.01M10 14h.01M6 6h.01M6 10h.01M6 14h.01M6 18h.01M18 14h.01M18 18h.01"/></svg></div>
+        <div class="ch-tit">보육기업 유관기관 연계</div>
+        <div class="ch-desc">전국 창업보육센터·소상공인시장진흥공단과 협약해 보육기업 홈페이지를 신규 제작할 수 있도록 지원하며 교육까지 실시합니다 (대상 200곳+).</div>
+      </div>
+      <div class="ch-card card">
+        <div class="ch-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9 13.5 7 22l5-3 5 3-2-8.5"/></svg></div>
+        <div class="ch-tit">공모전·소상공인 이벤트</div>
+        <div class="ch-desc">공모전 수상팀과 소상공인 지원사업 참가자에게 무료 제작을 참가 특전으로 제공합니다.</div>
+      </div>
+      <div class="ch-card card">
+        <div class="ch-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5 15.4 17.5M15.4 6.5 8.6 10.5"/></svg></div>
+        <div class="ch-tit">쓰레드·인스타그램 프로모션</div>
+        <div class="ch-desc">지금 인스타 팔로우/댓글로 "재밋화이팅" 이라고 적으면 1년 무료 쿠폰과 함께 AI 크레딧을 제공하는 이벤트를 실시합니다.&nbsp;</div>
+      </div>
+    </div>
+    <p class="idea-label m-rise" style="--d:.4s">그 밖에 검토할 채널</p>
+    <div class="chipgrid6 m-stagger" style="--sd:.5s">
+      <div class="idea-chip card c-lav">
+        <div class="idea-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div>
+        <span>교육 학원/진흥원 연계,&nbsp;무료 AI 웹제작 세미나, 강사 커뮤니티</span>
+      </div>
+      <div class="idea-chip card c-sky">
+        <div class="idea-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <span>카카오 tools 연계 마케팅&nbsp;</span>
+      </div>
+      <div class="idea-chip card c-mint">
+        <div class="idea-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 4 3h16l1 6"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M4 9v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9"/></svg></div>
+        <span>소진공·스마트상점 사업 담당자 미팅</span>
+      </div>
+      <div class="idea-chip card c-peach">
+        <div class="idea-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></div>
+        <span>친구추천, 쿠폰 할인 등 리퍼럴 프로그램</span>
+      </div>
+      <div class="idea-chip card c-pink">
+        <div class="idea-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <span>세무·법무 등 기업 DB 보유 대상과 서비스 제휴</span>
+      </div>
+      <div class="idea-chip card c-deep">
+        <div class="idea-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <span>창업 박람회 부스 시연 + 보육기관 등 직접 미팅 판로 확보&nbsp;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 KPI 퍼널 정의 ===== -->
+<div class="slide" data-title-ko="KPI 프레임워크 - 네 단계 퍼널">
+  <div class="mesh m11"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">2. KPI 프레임워크 - <span class="tnum">01</span></div>
+      <div class="section-title m-rise">방문자 → 가입자 → 개설자 → 연장가능군,<br>네 단계 퍼널로 <span class="pt-c">추적/관리</span>하고 단계별 수치를 높이는 전략</div>
+      <div class="section-desc m-rise" style="--d:.3s">각 단계를 명확한 기준으로 정의하고, 8월부터 매주 집계합니다.<br>퍼널 외에 우리의 Key Index 는 전문가 레퍼럴 / 재방문율의 증가 2개 입니다.&nbsp;</div>
+    </div>
+    <div class="funnel m-stagger">
+      <div class="fstep card">
+        <div class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="flabel">방문자</div>
+        <div class="fdesc">서비스 소개 페이지·SNS 링크로 도달한 순 방문자수</div>
+      </div>
+      <div class="farrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div>
+      <div class="fstep card">
+        <div class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div>
+        <div class="flabel">가입자</div>
+        <div class="fdesc">재밋 계정을 새로 만든 사람수</div>
+      </div>
+      <div class="farrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div>
+      <div class="fstep card">
+        <div class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg></div>
+        <div class="flabel">사이트 개설자</div>
+        <div class="fdesc">웹사이트를 1개 이상 발행한 사람수 (무료·유료 무관)</div>
+      </div>
+      <div class="farrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div>
+      <div class="fstep card">
+        <div class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg></div>
+        <div class="flabel">연장가능군</div>
+        <div class="fdesc">실사용 중이고 내년 유료 전환 가능성이 높은 사람수</div>
+      </div>
+    </div>
+    <p class="funnel-note m-rise" style="--d:.6s">※ 연장가능군은 로그인 빈도·콘텐츠 업데이트·방문자 유입 여부로 판별합니다.</p>
+  </div>
+</div>
+
+<!-- ===== 05 8월·9월 목표 ===== -->
+<div class="slide" data-title-ko="KPI 프레임워크 - 8월·9월 목표(안)">
+  <div class="mesh m21"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">2. KPI 프레임워크 - <span class="tnum">02</span></div>
+      <div class="section-title m-rise">8월 450개, 9월 <span class="pt-c">2,800개</span>,<br>사이트 개설 스트레치 목표(안)</div>
+      <div class="section-desc m-rise" style="--d:.3s">유관기관 다수의 자체 공지, SNS·언론 바이럴, 유료 광고를 동시에 가동하고 전원이 총력으로 뛴다는 전제입니다.</div>
+    </div>
+    <div class="kpi-wrap card m-rise" style="--d:.35s">
+      <span class="badge badge-draft">스트레치 목표(안) · 전 채널 동시 가동 전제</span>
+      <table class="kpi-table">
+        <thead>
+          <tr><th>구분</th><th>8월 목표</th><th>9월 목표</th><th>증가 배수</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="klabel"><span class="kdot" style="background:#9EC8FF"></span>방문자</span></td>
+            <td class="tnum">8,000명</td><td class="tnum">50,000명</td><td class="kmul tnum">×6.3</td>
+          </tr>
+          <tr>
+            <td><span class="klabel"><span class="kdot" style="background:#B9A8FF"></span>가입자</span></td>
+            <td class="tnum">1,200명</td><td class="tnum">7,500명</td><td class="kmul tnum">×6.3</td>
+          </tr>
+          <tr>
+            <td><span class="klabel"><span class="kdot" style="background:#3B82F6"></span>사이트 개설자</span></td>
+            <td class="tnum">450개</td><td class="tnum">2,800개</td><td class="kmul tnum">×6.2</td>
+          </tr>
+          <tr>
+            <td><span class="klabel"><span class="kdot" style="background:#A7E8D8"></span>연장가능군(추정)</span></td>
+            <td class="tnum">130명</td><td class="tnum">810명</td><td class="kmul tnum">×6.2</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="kpi-note">※ 전환율은 방문자→가입자 15%, 가입자→개설자 37%, 개설자→연장가능군 29% 가정치입니다. 8월 실측값으로 9월 중순 재조정합니다.</p>
+      <p class="kpi-note">※ 방문자 규모는 네 가지가 동시에 성공해야 나옵니다 — 유관기관 다수(200곳+)의 자체 채널 공지, SNS·언론 바이럴, 유료 광고 집행, 팀 전원의 총력 실행. 하나라도 빠지면 목표는 비례해 낮아집니다.</p>
+      <div class="kpi-total ablock m-rise" style="--d:.55s">
+        <span class="k">8-9월 누적 사이트 개설 스트레치 목표(안)</span>
+        <span class="num"><span class="n tnum">3,250</span><span class="u">개</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 05 실행 계획: 타겟 + 체크리스트 ===== -->
+<div class="slide" data-title-ko="실행 계획 - 타겟과 체크리스트">
+  <div class="mesh m26"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">3. 실행 계획</div>
+      <div class="section-title m-rise"><span class="pt-c">스타트업 대표·소상공인</span>부터,<br>이번 주 실행까지</div>
+      <div class="section-desc m-rise" style="--d:.3s">우선순위 두 그룹부터 채우고, 아래 네 가지를 이번 주 안에 마칩니다.</div>
+    </div>
+    <div class="seg-primary m-stagger">
+      <div class="seg-card card">
+        <div class="seg-top">
+          <div class="seg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+          <span class="badge badge-priority">우선순위 1</span>
+        </div>
+        <div class="seg-tit">스타트업 대표</div>
+        <div class="seg-desc">투자 유치와 고객 신뢰 확보를 위해 홈페이지가 즉시 필요한 초기 창업자입니다.</div>
+      </div>
+      <div class="seg-card card">
+        <div class="seg-top">
+          <div class="seg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 4 3h16l1 6"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M4 9v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9"/><path d="M9 21v-6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6"/></svg></div>
+          <span class="badge badge-priority">우선순위 1</span>
+        </div>
+        <div class="seg-tit">소상공인</div>
+        <div class="seg-desc">오프라인 매장을 온라인 판로로 넓히려는 지역 소상공인입니다.</div>
+      </div>
+    </div>
+    <p class="seg-expand-inline m-rise" style="--d:.4s">추가로 넓힐 사업자군 — 프리랜서·1인 기업 · 비영리단체·소셜벤처 · 창작자·인플루언서</p>
+    <div class="checklist2 m-stagger" style="--sd:.5s">
+      <div class="chk-row card">
+        <span class="chk-num">1</span>
+        <span class="chk-text">유관기관 컨택리스트 작성 (대학 BI센터·소진공 등)</span>
+        <span class="chk-due">8월 말</span>
+      </div>
+      <div class="chk-row card">
+        <span class="chk-num">2</span>
+        <span class="chk-text">공모전·소상공인 이벤트 후보 조사</span>
+        <span class="chk-due">9월 초</span>
+      </div>
+      <div class="chk-row card">
+        <span class="chk-num">3</span>
+        <span class="chk-text">쓰레드·인스타그램 콘텐츠 캘린더 수립</span>
+        <span class="chk-due">8월 말</span>
+      </div>
+      <div class="chk-row card">
+        <span class="chk-num">4</span>
+        <span class="chk-text">KPI 추적 시트 구축 (방문자·가입자·개설자·연장가능군)</span>
+        <span class="chk-due">8월 말</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  window.irConfig={version:'260826_zaemit_growth_kpi',theme:'zaemit',languages:['ko'],defaultLang:'ko'};
+
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.transform='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.4,Math.min(1,z));if(z<1)inner.style.transform='scale('+z+')'}
+  }
+
+  var EASE_OUT='cubic-bezier(0, 0, 0.2, 1)',STEP_MS=80;
+  function noMotion(){return document.body.classList.contains('no-motion')}
+  function seqOf(sec){
+    var seen=new Set(),steps=[];
+    sec.querySelectorAll('.m-rise, .m-fade, .m-stagger').forEach(function(el){
+      var items=el.classList.contains('m-stagger')?Array.prototype.slice.call(el.children):[el];
+      items.forEach(function(it){if(!seen.has(it)){seen.add(it);steps.push(it)}});
+    });
+    return steps;
+  }
+  function inlineDelay(el){
+    var d=el.style&&el.style.getPropertyValue('--d');
+    if(d){d=parseFloat(d);if(!isNaN(d))return d*1000}
+    return null;
+  }
+  function riseAnim(el,delay){
+    el.animate([{opacity:0,transform:'translateY(0.9375vw)'},{opacity:1,transform:'none'}],
+      {duration:700,delay:delay,easing:EASE_OUT,fill:'both'});
+  }
+  function fadeAnim(el,delay){
+    el.animate([{opacity:0},{opacity:1}],{duration:1100,delay:delay,easing:EASE_OUT,fill:'both'});
+  }
+  function resetMotion(sec){
+    sec.querySelectorAll('.m-rise, .m-fade, .m-stagger > *').forEach(function(el){
+      if(el.getAnimations)el.getAnimations().forEach(function(a){a.cancel()});
+    });
+  }
+  function playMotion(sec){
+    if(noMotion())return;
+    resetMotion(sec);
+    requestAnimationFrame(function(){
+      seqOf(sec).forEach(function(el,i){
+        var d=inlineDelay(el);
+        var delay=(d!==null)?d:i*STEP_MS;
+        var inStagger=el.parentElement&&el.parentElement.classList.contains('m-stagger');
+        if(el.classList.contains('m-fade'))fadeAnim(el,delay);
+        else if(el.classList.contains('m-rise')||inStagger)riseAnim(el,delay);
+      });
+    });
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  var playTimer=null;
+  function goTo(idx,src){
+    if(idx<0||idx>=total||idx===current)return;
+    var os=slides[current];
+    os.classList.remove('active');resetMotion(os);current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    resetMotion(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(playTimer)clearTimeout(playTimer);
+    playTimer=setTimeout(function(){playMotion(ns)},400);
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleKo||'スライド '+(i+1),isAppendix:false}}),
+    total:total,mainTotal:total,appendixStart:total,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
+      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();playMotion(slides[current]);try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body></html>

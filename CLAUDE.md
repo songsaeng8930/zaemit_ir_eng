@@ -9,6 +9,8 @@
 5. **[docs/ir-style-guide-zaemit.md](docs/ir-style-guide-zaemit.md)** - **Zaemit 컨셉** 스타일 가이드 (제3의 디자인 — 파스텔 메쉬 · 미니멀 에디토리얼)
 6. **[docs/ir-i18n-guide.md](docs/ir-i18n-guide.md)** - 다국어(KO/EN/JA) 대응 가이드
 7. **[docs/ir-copy-style-guide.md](docs/ir-copy-style-guide.md)** - **IR 카피 말투 지침** (모든 슬라이드 텍스트 작성·수정 시 필수! AI 슬롭 금지 패턴 + 대표 화법 기준)
+8. **[docs/ir-sentence-style-guide.md](docs/ir-sentence-style-guide.md)** - **IR 문장체 표준** (⚠️ 최우선 — 대표 지시: 모든 문서의 문장체는 WEVEN_Zaemit_IR_2026-02-02.pdf 기준. 헤드라인·서브·카드·불릿·숫자·이력 표기 구조)
+9. **[docs/blog-copy-style-guide.md](docs/blog-copy-style-guide.md)** - 블로그 카피 말투 지침 (blog/ 롱폼 글 필수 — 격식 존댓말 + 블로그 전용 슬롭 패턴)
 
 ---
 
