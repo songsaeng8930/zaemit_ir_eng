@@ -5,6 +5,7 @@ let slides = [];
 let total = 0;
 let lang = 'ko';
 let irVersion = '2601';  // IR 버전 (기본값)
+let irTheme = '';        // conf.json 의 versions[].theme ('zaemit' | 'light' | 'dark')
 let pageZooms = [];
 let pageAlignments = [];  // [{titleH: 'left', contentV: 'top', contentH: 'center'}, ...]
 let pageLayouts = [];  // 'auto' | 'row' | 'column' per slide
@@ -24,6 +25,25 @@ let sourceHtml = '';      // 미리보기가 로드한 시점의 원본 HTML 문
 let editsDirty = false;   // 저장되지 않은 편집 존재 여부
 let fileHandle = null;    // File System Access API 파일 핸들 캐시
 
+// 테마 판별 — conf.json 의 theme 값을 우선 쓰고, 없으면 기존 버전 ID 목록으로 폴백.
+// (새 Zaemit 덱을 만들 때마다 여기에 ID를 손으로 추가해야 했던 문제를 없앤다)
+function isZaemitTheme() {
+  return irTheme === 'zaemit'
+      || irVersion === '260814_introduce' || irVersion === '260820_gcontest_proposal';
+}
+function isLightThemeVer() {
+  return irTheme === 'light' || irVersion === '2602' || irVersion === '260202';
+}
+async function loadIrTheme() {
+  try {
+    const res = await fetch('conf.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const conf = await res.json();
+    const v = (conf.versions || []).find(x => x.id === irVersion);
+    if (v && v.theme) irTheme = v.theme;
+  } catch (e) { /* 실패 시 기존 ID 목록 폴백 */ }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
   // Get parameters from URL - check both query string and hash (hash survives redirects)
@@ -38,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load saved zooms
   loadZooms();
 
-  // Fetch and parse slides from main page
-  fetchSlides();
+  // Fetch and parse slides from main page (테마 먼저 확정)
+  loadIrTheme().then(fetchSlides);
 
   // Setup event listeners
   setupEventListeners();
@@ -175,7 +195,7 @@ async function fetchSlides() {
     document.body.classList.add(lang);
 
     // Apply theme class based on IR version (zaemit 컨셉은 라이트 계열로 처리)
-    const isLightTheme = irVersion === '2602' || irVersion === '260202' || irVersion === '260814_introduce' || irVersion === '260820_gcontest_proposal';
+    const isLightTheme = isLightThemeVer() || isZaemitTheme();
     if (isLightTheme) {
       document.body.classList.add('light-theme');
     }
@@ -270,8 +290,63 @@ function renderSlides() {
     updateGlobalTitleAlignButtons();
     // Fix gradient text for PDF compatibility
     fixGradientTextForPDF();
+
+    // 넘치는 페이지 자동 맞춤.
+    // 클론 높이는 720px 인데 vw 기반 덱은 960px 기준으로 제작돼 있어,
+    // IR 쪽 fitSlideContent() 가 돌지 않는 클론에서는 아래가 잘린다.
+    // 저장된 줌이 없는(=100%) 페이지에 한해, 실제로 넘칠 때만 자동 축소한다.
+    setTimeout(autoFitOverflowingPages, 250);
   }, 100);
 }
+
+// 저장값이 없고 실제로 넘치는 페이지만 자동 축소한다 (사용자가 조정한 페이지는 건드리지 않음).
+// autoFitPage() 의 높이 계산은 구버전 덱 기준 상수(30/30 패딩 등)를 써서 vw 기반 덱에서는
+// 축소량이 모자란다. 여기서는 실측값으로 직접 계산하고, 남으면 한 번 더 보정한다.
+//   inner = 타이틀(T, 줌 영향 없음) + 콘텐츠(C, 줌 적용)  →  T + C*z <= avail
+function autoFitOverflowingPages() {
+  let fitted = 0;
+  for (let idx = 0; idx < total; idx++) {
+    if (pageZooms[idx] !== 100) continue;              // 사용자가 이미 조정함
+    const frame = document.getElementById('previewFrame' + idx);
+    if (!frame) continue;
+    const clone = frame.querySelector('.slide-clone');
+    const inner = clone && clone.querySelector('.slide-inner');
+    if (!inner) continue;
+
+    const availOf = () => {
+      const cs = window.getComputedStyle(clone);
+      return clone.clientHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0);
+    };
+    const titleH = () => {
+      let t = 0;
+      inner.querySelectorAll(':scope > .head, :scope > .section-label, :scope > .section-title, :scope > .section-desc')
+        .forEach(el => { t += el.getBoundingClientRect().height; });
+      return t;
+    };
+
+    let avail = availOf();
+    if (inner.scrollHeight <= avail + 1) continue;
+
+    let zoom = 100;
+    for (let pass = 0; pass < 3; pass++) {
+      const T = titleH();
+      const C = Math.max(1, inner.scrollHeight - T);    // 현재 줌 기준 콘텐츠 높이
+      const next = Math.floor(zoom * Math.min(1, (avail - T) / C));
+      zoom = Math.max(50, Math.min(100, next));
+      pageZooms[idx] = zoom;
+      applyContentZoom(idx, zoom);
+      const slider = document.querySelector(`input[data-idx="${idx}"]`);
+      if (slider) slider.value = zoom;
+      const valEl = document.getElementById('zoomVal' + idx);
+      if (valEl) valEl.textContent = zoom + '%';
+      avail = availOf();
+      if (inner.scrollHeight <= avail + 1 || zoom <= 50) break;
+    }
+    fitted++;
+  }
+  if (fitted) { saveZooms(); console.log('[auto-fit] ' + fitted + ' page(s) scaled down to fit'); }
+}
+
 
 // Fix gradient text for PDF - auto-detect and fix background-clip: text
 function fixGradientTextForPDF() {
@@ -435,11 +510,11 @@ function createSlideWrapper(slide, idx) {
   clone.classList.add('ir-' + irVersion);
 
   // 테마 배경색 직접 적용 (CSS 규칙보다 확실하게)
-  const isZaemitTheme = irVersion === '260814_introduce' || irVersion === '260820_gcontest_proposal';
-  const isLightTheme = irVersion === '2602' || irVersion === '260202';
+  const isZaemit = isZaemitTheme();
+  const isLightTheme = isLightThemeVer();
   const isCover = clone.classList.contains('cover');
 
-  if (isZaemitTheme) {
+  if (isZaemit) {
     // Zaemit 컨셉 (260814_introduce) — 화이트 베이스 #FDFDFF + 잉크 #111
     clone.style.background = '#FDFDFF';
     clone.style.color = '#111111';
@@ -1230,6 +1305,17 @@ function setupEventListeners() {
         }
         return;
       }
+      // Ctrl+Shift+> / Ctrl+Shift+< : 글자 크기 1px 키우기/줄이기.
+      // 대상은 요소 선택 중이면 그 요소, 아니면 텍스트 캐럿/드래그 선택이 놓인 요소.
+      // e.code(Period/Comma)로 판별해 키보드 레이아웃과 무관하게 동작한다.
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.code === 'Period' || e.code === 'Comma')) {
+        const ae = document.activeElement;
+        if (!(ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA'))) {
+          e.preventDefault();
+          inspNudgeFontSize(e.code === 'Period' ? 1 : -1);
+        }
+        return;
+      }
       // 요소 복사는 단축키 없이 선택 툴바의 복사 버튼으로만 제공 —
       // Ctrl+C는 항상 브라우저 텍스트 복사로 동작한다 (단축키 충돌 방지)
       // Ctrl+V: 복사한 요소를 "선택한 요소의 자식"으로 붙여넣기 (커서 아래 자식 다음).
@@ -1432,6 +1518,27 @@ function autoFitPage(idx) {
       }
     }
 
+    // 폴백: 위 하드코딩 셀렉터 목록은 구버전 덱(2601/260203 계열) 전용이라
+    // vw 기반 신규 덱(260814_introduce, 260902_* 등)에서는 하나도 걸리지 않아
+    // 자동맞춤이 아무 일도 하지 않았다. 그런 경우 .slide-inner 의 실제 콘텐츠를 직접 잰다.
+    let usedFallback = false;
+    if (contentWidth === 0 || contentHeight === 0) {
+      const inner = clone.querySelector('.slide-inner');
+      if (inner) {
+        const titleSel = '.head, .section-label, .section-title, .section-desc';
+        Array.from(inner.children).forEach(ch => {
+          if (ch.matches && ch.matches(titleSel)) return;
+          const r = ch.getBoundingClientRect();
+          if (!r.height) return;
+          const st = window.getComputedStyle(ch);
+          contentHeight += (r.height / scale)
+            + (parseFloat(st.marginTop) || 0) + (parseFloat(st.marginBottom) || 0);
+          contentWidth = Math.max(contentWidth, r.width / scale);
+        });
+        usedFallback = contentHeight > 0;
+      }
+    }
+
     if (contentWidth === 0 || contentHeight === 0) return;
 
     // 프레임 가용 공간
@@ -1447,8 +1554,11 @@ function autoFitPage(idx) {
     const heightRatio = availableHeight / contentHeight;
     let optimalZoom = Math.min(widthRatio, heightRatio) * 100;
 
-    // 50% ~ 150% 범위로 제한
-    optimalZoom = Math.max(50, Math.min(150, Math.round(optimalZoom)));
+    // 50% ~ 150% 범위로 제한.
+    // 단, vw 기반 덱(폴백 경로)은 원본이 이미 1280 기준으로 짜여 있어 확대하면 넘친다.
+    // IR 쪽 fitSlideContent()와 동일하게 축소만 허용한다(최대 100%).
+    const maxZoom = usedFallback ? 100 : 150;
+    optimalZoom = Math.max(50, Math.min(maxZoom, Math.round(optimalZoom)));
 
     // 줌 적용
     pageZooms[idx] = optimalZoom;
@@ -1774,8 +1884,8 @@ function toggleEditMode() {
     inspEnsureUI();
     if (!inspRaf) inspRaf = requestAnimationFrame(inspLoop);
     showToast(lang === 'ko'
-      ? '텍스트는 클릭해 바로 수정, 요소는 클릭 선택 후 삭제·복제·크기/여백 조절. Ctrl+Shift+C 스타일 복사 · Ctrl+Shift+V 붙여넣기. "저장"으로 파일에 반영됩니다.'
-      : 'Click text to edit. Click an element to select it — delete, duplicate, resize. Ctrl+Shift+C copies a style, Ctrl+Shift+V applies it. Save writes to file.');
+      ? '텍스트는 클릭해 바로 수정, 요소는 클릭 선택 후 삭제·복제·크기/여백 조절. Ctrl+Shift+C 스타일 복사 · Ctrl+Shift+V 붙여넣기 · Ctrl+Shift+>/< 글자 크기 1px 조절. "저장"으로 파일에 반영됩니다.'
+      : 'Click text to edit. Click an element to select it — delete, duplicate, resize. Ctrl+Shift+C copies a style, Ctrl+Shift+V applies it, Ctrl+Shift+>/< nudges font size by 1px. Save writes to file.');
   } else {
     inspClearSel();
     inspHover = null;
@@ -2452,6 +2562,38 @@ function inspApplyStyleStr(prop, value) {
   };
   set(inspSel); set(sEl); set(srcEl);
   markEditsDirty();
+}
+
+// ── 글자 크기 미세 조절 (Ctrl+Shift+> / Ctrl+Shift+<) ──
+// 텍스트 편집 중 드래그 선택(또는 캐럿)이 놓인 요소의 font-size를 1px씩 조절한다.
+// 선택 범위가 스타일 스팬(.pt-c 등) 안이면 그 스팬만, 일반 문단이면 문단 전체가
+// 대상이 된다. inspApplyStyle을 경유하므로 display(px)/saveDoc(vw)/src(px) 3벌에
+// 동시 반영되고, 패널 "초기화"용 원본 값(inspOrig)도 기록된다.
+function inspNudgeFontSize(delta) {
+  let el = (inspSel && !inspSel.classList.contains('slide-clone')) ? inspSel : null;
+  if (!el) {
+    const ts = window.getSelection();
+    const n = ts && ts.anchorNode;
+    const cand = n ? (n.nodeType === Node.TEXT_NODE ? n.parentElement : n) : null;
+    if (cand && cand.closest && cand.closest('.slide-clone')) el = inspPick(cand);
+  }
+  if (!el || el.classList.contains('slide-clone')) {
+    showToast(lang === 'ko'
+      ? '크기를 바꿀 텍스트에 커서를 두거나(드래그 선택 가능) 요소를 선택하세요.'
+      : 'Place the caret in text (or select text/an element) first.', true);
+    return;
+  }
+  const cur = parseFloat(getComputedStyle(el).fontSize) || 0;
+  const next = Math.max(1, cur + delta);
+  const undoFn = inspSnapshotStyle(el, ['font-size']);
+  const prevSel = inspSel;
+  inspSel = el; // inspApplyStyle는 inspSel을 대상으로 하므로 잠시 대여
+  inspApplyStyle('font-size', next);
+  inspSel = prevSel;
+  if (undoFn) inspPushUndo(undoFn);
+  if (inspSel) inspPanelUpdate();
+  showToast((lang === 'ko' ? '글자 크기 ' : 'Font size ') + Math.round(next * 10) / 10 + 'px'
+    + (lang === 'ko' ? ' (Ctrl+Z로 취소)' : ' (Ctrl+Z to undo)'));
 }
 
 // 'rgb(a)(...)' → '#rrggbb'. 완전 투명이면 '' 반환 (배경 없음 표시용)
@@ -3527,9 +3669,43 @@ function closePreview() {
   }
 }
 
-// Browser print
+// 인쇄 페이지 선택 — "3, 24, 30-32" 형식. 비었거나 해석 불가면 null(전체).
+function parsePrintRange() {
+  const el = document.getElementById('printRange');
+  const raw = (el && el.value || '').trim();
+  if (!raw) return null;
+  const set = new Set();
+  raw.split(',').forEach(part => {
+    const m = part.trim().match(/^(\d+)\s*(?:[-~]\s*(\d+))?$/);
+    if (!m) return;
+    const a = parseInt(m[1], 10);
+    const b = m[2] ? parseInt(m[2], 10) : a;
+    for (let n = Math.min(a, b); n <= Math.max(a, b); n++) {
+      if (n >= 1 && n <= total) set.add(n - 1);   // 화면 표기는 1-based
+    }
+  });
+  return set.size ? set : null;
+}
+
+// Browser print — 선택한 페이지만 남기고 나머지는 인쇄에서 제외
 function browserPrint() {
+  const sel = parsePrintRange();
+  const marked = [];
+  if (sel) {
+    document.querySelectorAll('.preview-slide-wrapper').forEach((w, i) => {
+      if (!sel.has(i)) { w.classList.add('pp-noprint'); marked.push(w); }
+    });
+    showToast(lang === 'ko'
+      ? `${sel.size}개 페이지만 인쇄합니다.`
+      : `Printing ${sel.size} page(s).`);
+  }
+  const cleanup = () => {
+    marked.forEach(w => w.classList.remove('pp-noprint'));
+    window.removeEventListener('afterprint', cleanup);
+  };
+  window.addEventListener('afterprint', cleanup);
   window.print();
+  setTimeout(cleanup, 3000);   // afterprint 미지원 브라우저 대비
 }
 
 // Load external script
@@ -3573,6 +3749,37 @@ async function loadHtml2canvasPatched() {
 }
 
 // Export to PDF
+
+// html2canvas 는 CSS object-fit 을 지원하지 않는다. object-fit:cover/contain 인 <img> 를
+// 그냥 캡처하면 박스 크기에 맞춰 '늘려서' 그린다(사진이 좌우로 쭉 당겨지는 원인).
+// 캡처 직전에 같은 크기의 div + background-size 로 바꿔치기하고, 끝나면 되돌린다.
+function prepObjectFitForCapture(root) {
+  const restores = [];
+  root.querySelectorAll('img').forEach(img => {
+    const cs = window.getComputedStyle(img);
+    const fit = cs.objectFit;
+    if (!fit || fit === 'fill' || fit === 'none') return;
+    const w = img.offsetWidth, h = img.offsetHeight;
+    if (!w || !h) return;
+    const src = img.currentSrc || img.src;
+    if (!src) return;
+    const holder = document.createElement('div');
+    holder.setAttribute('data-of-shim', '1');
+    holder.style.cssText =
+      'background-image:url("' + src + '");' +
+      'background-size:' + (fit === 'contain' ? 'contain' : 'cover') + ';' +
+      'background-position:' + (cs.objectPosition || '50% 50%') + ';' +
+      'background-repeat:no-repeat;display:block;flex:none;' +
+      'width:' + w + 'px;height:' + h + 'px;' +
+      'border-radius:' + cs.borderRadius + ';';
+    img.parentNode.insertBefore(holder, img);
+    const prev = img.style.display;
+    img.style.display = 'none';
+    restores.push(() => { holder.remove(); img.style.display = prev; });
+  });
+  return () => restores.forEach(fn => fn());
+}
+
 async function exportPDF() {
   showLoading(lang === 'ko' ? '라이브러리 로딩 중...' : 'Loading libraries...');
 
@@ -3600,10 +3807,16 @@ async function exportPDF() {
   });
   const pW = 338.67, pH = 190.5;
 
+  const pdfSel = parsePrintRange();
+  const pdfTotal = pdfSel ? pdfSel.size : total;
+  let pdfDone = 0, pdfFirst = true;
+
   for (let i = 0; i < total; i++) {
+    if (pdfSel && !pdfSel.has(i)) continue;
+    pdfDone++;
     setLoadingProgress(
-      ((i + 1) / total * 100),
-      (lang === 'ko' ? 'PDF 생성 중' : 'Generating PDF') + `... (${i + 1}/${total})`
+      (pdfDone / pdfTotal * 100),
+      (lang === 'ko' ? 'PDF 생성 중' : 'Generating PDF') + `... (${pdfDone}/${pdfTotal})`
     );
 
     const frame = document.getElementById('previewFrame' + i);
@@ -3619,8 +3832,10 @@ async function exportPDF() {
       clone.style.position = 'relative';
 
       // Determine background color based on IR version (light vs dark theme)
-      const isLightTheme = irVersion === '2602' || irVersion === '260202';
-      const bgColor = (irVersion === '260814_introduce' || irVersion === '260820_gcontest_proposal') ? '#FDFDFF' : isLightTheme ? '#FFFFFF' : '#0A0E27';
+      const isLightTheme = isLightThemeVer();
+      const bgColor = isZaemitTheme() ? '#FDFDFF' : isLightTheme ? '#FFFFFF' : '#0A0E27';
+
+      const restoreFit = prepObjectFitForCapture(clone);
 
       const canvas = await html2canvas(clone, {
         scale: 2,
@@ -3632,16 +3847,20 @@ async function exportPDF() {
         logging: false
       });
 
+      restoreFit();
+
       // Restore transform
       clone.style.transform = originalTransform;
       clone.style.position = '';
 
       const imgData = canvas.toDataURL('image/jpeg', 0.92);
-      if (i > 0) pdf.addPage();
+      if (!pdfFirst) pdf.addPage();
+      pdfFirst = false;
       pdf.addImage(imgData, 'JPEG', 0, 0, pW, pH);
     } catch (e) {
       console.error('Slide ' + (i + 1) + ' capture failed:', e);
-      if (i > 0) pdf.addPage();
+      if (!pdfFirst) pdf.addPage();
+      pdfFirst = false;
     }
   }
 

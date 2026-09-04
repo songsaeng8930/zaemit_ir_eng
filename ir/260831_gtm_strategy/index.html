@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Zaemit × WEVEN · 명함 한 장에서 시작하는 GTM</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&amp;family=Russo+One&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --z-ink:#111;
+  --z-note:#a6afc0;
+  --z-accent:#3B82F6;
+  --z-accent-light:#74ACFF;
+  --z-accent-deep:#2C63D9;
+  --z-bg:#FDFDFF;
+  --z-risk:#E03131;
+  --z-pa-lav:185,168,255;
+  --z-pa-sky:158,200,255;
+  --z-pa-pink:247,185,220;
+  --z-pa-mint:167,232,216;
+  --z-pa-peach:255,211,184;
+  --z-card-line:#DCE5F4;
+  --z-line:#EDF1F8;
+  --z-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 5px rgba(30,58,138,.05),0 1.171875vw 2.421875vw -0.78125vw rgba(59,130,246,.15);
+  --z-glow:0 0.9375vw 1.953125vw -0.703125vw rgba(59,130,246,.45);
+}
+html,body{height:100%;overflow:hidden;background:var(--z-bg)}
+body{font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;color:var(--z-ink);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased;word-break:keep-all}
+
+/* ── SLIDES ── */
+.slide{position:fixed;top:0;left:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;padding:3.125vw 3.515625vw 7vw;opacity:0;background:var(--z-bg);overflow:hidden}
+.slide.active{display:flex;opacity:1;transition:opacity .4s cubic-bezier(0.4,0,0.2,1)}
+.slide .slide-inner{position:relative;z-index:2;max-width:100%;width:100%;overflow:visible;display:flex;flex-direction:column;justify-content:center;transform-origin:center center}
+
+/* ── 파스텔 메쉬 ── */
+.mesh{position:absolute;inset:-6.25vw;z-index:0;pointer-events:none;filter:blur(2.734375vw);background:var(--mesh)}
+.m01{--mesh:
+  radial-gradient(72.27vw 59.38vw at 4% 8%,rgba(var(--z-pa-lav),.62) 0%,rgba(var(--z-pa-lav),0) 68%),
+  radial-gradient(74.22vw 61.72vw at 98% 20%,rgba(var(--z-pa-sky),.60) 0%,rgba(var(--z-pa-sky),0) 68%),
+  radial-gradient(59.38vw 50.78vw at 86% 100%,rgba(var(--z-pa-pink),.46) 0%,rgba(var(--z-pa-pink),0) 68%),
+  #FDFDFF}
+.m02{--mesh:
+  radial-gradient(66.41vw 41.02vw at 10% -12%,rgba(var(--z-pa-peach),.48) 0%,rgba(var(--z-pa-peach),0) 74%),
+  radial-gradient(58.59vw 37.11vw at 52% -16%,rgba(var(--z-pa-pink),.38) 0%,rgba(var(--z-pa-pink),0) 72%),
+  radial-gradient(66.41vw 42.97vw at 94% -10%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 74%),
+  #FDFDFF}
+.m03{--mesh:
+  radial-gradient(68.36vw 54.69vw at -2% 104%,rgba(var(--z-pa-lav),.62) 0%,rgba(var(--z-pa-lav),0) 66%),
+  radial-gradient(68.36vw 54.69vw at 102% -4%,rgba(var(--z-pa-peach),.60) 0%,rgba(var(--z-pa-peach),0) 66%),
+  radial-gradient(54.69vw 42.97vw at 44% -10%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 62%),
+  #FDFDFF}
+.m04{--mesh:
+  radial-gradient(58.59vw 54.69vw at 0% -6%,rgba(var(--z-pa-mint),.50) 0%,rgba(var(--z-pa-mint),0) 64%),
+  radial-gradient(52.73vw 58.59vw at -6% 54%,rgba(var(--z-pa-sky),.42) 0%,rgba(var(--z-pa-sky),0) 62%),
+  radial-gradient(58.59vw 54.69vw at 104% 96%,rgba(var(--z-pa-lav),.44) 0%,rgba(var(--z-pa-lav),0) 64%),
+  #FDFDFF}
+.m05{--mesh:
+  radial-gradient(74.22vw 58.59vw at 8% 0%,rgba(var(--z-pa-sky),.52) 0%,rgba(var(--z-pa-sky),0) 66%),
+  radial-gradient(58.59vw 48.83vw at 50% 54%,rgba(var(--z-pa-lav),.24) 0%,rgba(var(--z-pa-lav),0) 62%),
+  radial-gradient(74.22vw 58.59vw at 94% 102%,rgba(var(--z-pa-peach),.50) 0%,rgba(var(--z-pa-peach),0) 66%),
+  #FDFDFF}
+.m06{--mesh:
+  radial-gradient(52.73vw 42.97vw at -4% -6%,rgba(var(--z-pa-lav),.48) 0%,rgba(var(--z-pa-lav),0) 62%),
+  radial-gradient(52.73vw 42.97vw at 104% -6%,rgba(var(--z-pa-mint),.44) 0%,rgba(var(--z-pa-mint),0) 62%),
+  radial-gradient(68.36vw 50.78vw at 50% 110%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 66%),
+  #FDFDFF}
+.m07{--mesh:
+  radial-gradient(64.45vw 52.73vw at 100% 6%,rgba(var(--z-pa-mint),.50) 0%,rgba(var(--z-pa-mint),0) 64%),
+  radial-gradient(68.36vw 50.78vw at 4% 104%,rgba(var(--z-pa-pink),.44) 0%,rgba(var(--z-pa-pink),0) 66%),
+  #FDFDFF}
+.m08{--mesh:
+  radial-gradient(60.55vw 55.47vw at 98% -8%,rgba(var(--z-pa-lav),.50) 0%,rgba(var(--z-pa-lav),0) 64%),
+  radial-gradient(54.69vw 60.55vw at 106% 50%,rgba(var(--z-pa-sky),.42) 0%,rgba(var(--z-pa-sky),0) 62%),
+  radial-gradient(60.55vw 55.47vw at 98% 108%,rgba(var(--z-pa-peach),.46) 0%,rgba(var(--z-pa-peach),0) 64%),
+  #FDFDFF}
+.m09{--mesh:
+  radial-gradient(66.41vw 41.02vw at 8% 112%,rgba(var(--z-pa-mint),.52) 0%,rgba(var(--z-pa-mint),0) 74%),
+  radial-gradient(62.5vw 39.06vw at 56% 116%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 72%),
+  radial-gradient(50.78vw 37.11vw at 100% -8%,rgba(var(--z-pa-lav),.38) 0%,rgba(var(--z-pa-lav),0) 72%),
+  #FDFDFF}
+.m10{--mesh:
+  radial-gradient(72.27vw 59.38vw at 6% 96%,rgba(var(--z-pa-sky),.66) 0%,rgba(var(--z-pa-sky),0) 68%),
+  radial-gradient(74.22vw 61.72vw at 96% 8%,rgba(var(--z-pa-lav),.66) 0%,rgba(var(--z-pa-lav),0) 68%),
+  radial-gradient(54.69vw 42.97vw at 46% 112%,rgba(var(--z-pa-mint),.50) 0%,rgba(var(--z-pa-mint),0) 64%),
+  #FDFDFF}
+
+/* ── 모션 ── */
+.slide .m-rise,.slide .m-fade,.slide .m-draw,.slide .m-stagger>*{opacity:0}
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slide .m-draw,body.no-motion .slide .m-stagger>*{opacity:1 !important;transform:none !important}
+
+/* ── 타이포·브랜드 ── */
+.za{font-family:'Fugaz One','Pretendard Variable',sans-serif;font-weight:400;font-synthesis:none}
+.pt-c{color:var(--z-accent)}
+.pt-r{color:var(--z-risk)}
+.grad-text{background:linear-gradient(96deg,var(--z-accent-deep) 0%,var(--z-accent) 48%,var(--z-accent-light) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.t-over{font-size:max(18px,1.015625vw);font-weight:600;letter-spacing:0.2734375vw;line-height:1.3;color:var(--z-note)}
+
+/* ── 섹션 헤더 ── */
+.head{position:relative;flex:none;text-align:center}
+.section-label{position:absolute;left:0;top:0.43vw;text-align:left;font-size:max(18px,0.9375vw);font-weight:700;line-height:1.18;color:var(--z-ink);letter-spacing:-0.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.section-title{font-size:3.4375vw;font-weight:800;letter-spacing:-0.03em;line-height:1.18;color:var(--z-ink)}
+.section-title.h3s{font-size:3.125vw}
+.section-desc{margin-top:0.9375vw;font-size:1.5625vw;font-weight:500;letter-spacing:-0.01em;line-height:1.52;color:var(--z-ink)}
+.section-desc b{font-weight:700}
+.fnote{margin-top:1.40625vw;text-align:center;font-size:max(18px,0.9375vw);font-weight:500;line-height:1.5;color:var(--z-note)}
+.fnote b{font-weight:800;color:var(--z-ink)}
+.punch{margin-top:1.875vw;align-self:center;padding:1.09375vw 2.1875vw;border-radius:0.859375vw;background:rgba(59,130,246,.07);text-align:center;font-size:max(18px,1.25vw);font-weight:700;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.punch b{font-weight:800;color:var(--z-accent-deep)}
+.punch .sm{display:block;margin-top:0.3125vw;font-size:max(18px,0.9765625vw);font-weight:500;color:var(--z-note)}
+
+/* ── 표지 ── */
+.cover-hero{min-height:44vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.cover-hero .t-over{font-size:1.7578125vw;margin-bottom:2.578125vw;letter-spacing:0;display:flex;align-items:center;justify-content:center;color:var(--z-ink)}
+.cover-hero .ov-x{margin:0 1.2890625vw;font-family:'Pretendard Variable',sans-serif;font-weight:100;font-size:1.35em;line-height:1;color:#111;opacity:.3;transform:translateY(-0.2vw)}
+.cover-hero .ov-zaemit{font-family:'Fugaz One',sans-serif;font-weight:400;color:var(--z-accent)}
+.cover-hero .ov-weven{font-family:'Russo One',sans-serif;font-weight:400;font-size:.95em;font-synthesis:none;color:#111}
+.cover-hero h1{font-size:4.296875vw;font-weight:800;letter-spacing:-0.03em;line-height:1.15;color:var(--z-ink)}
+.cover-hero .csub{font-weight:600;font-size:1.640625vw;margin-top:1.25vw;letter-spacing:-0.03em;color:var(--z-ink)}
+.cover-hero .csub strong{font-weight:700;color:var(--z-accent)}
+.cover-contact{margin-top:4.6875vw;text-align:center;font-size:max(18px,1.25vw);font-weight:500;line-height:1.6;color:var(--z-note)}
+
+/* ── 퍼널 게이트 (02) ── */
+.fun{margin-top:2.8125vw;display:flex;align-items:stretch;justify-content:center;gap:0.78125vw}
+.fun .st{flex:1;padding:1.5625vw 1.09375vw;border-radius:0.9375vw;background:rgba(255,255,255,.72);display:flex;flex-direction:column;align-items:center;gap:0.546875vw;text-align:center}
+.fun .st .sn{font-size:max(18px,0.9375vw);font-weight:700;letter-spacing:.08em;color:var(--z-note)}
+.fun .st .sl{font-size:max(18px,1.25vw);font-weight:800;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+.fun .st.block{background:linear-gradient(160deg,rgba(224,49,49,.12) 0%,rgba(224,49,49,.05) 100%)}
+.fun .st.block .sn,.fun .st.block .sl{color:var(--z-risk)}
+.fun .st.dim{opacity:.4}
+.fun .ar{display:flex;align-items:center;justify-content:center;font-size:1.5625vw;font-weight:300;color:var(--z-note)}
+.fun .ar.dim{opacity:.4}
+
+/* ── 4수 스트립 (03) ── */
+.moves{margin-top:2.65625vw;display:grid;grid-template-columns:repeat(4,1fr);gap:1.09375vw}
+.mv{padding:1.875vw 1.5625vw;border-radius:1.09375vw;background:rgba(255,255,255,.7);display:flex;flex-direction:column;gap:0.703125vw}
+.mv.hot{background:linear-gradient(150deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);box-shadow:var(--z-glow)}
+.mv .mn{font-size:max(18px,0.9375vw);font-weight:800;letter-spacing:.1em;color:var(--z-accent)}
+.mv.hot .mn{color:rgba(255,255,255,.8)}
+.mv .mt{font-size:1.5625vw;font-weight:800;letter-spacing:-0.02em;line-height:1.25;color:var(--z-ink)}
+.mv.hot .mt{color:#fff}
+.mv .md{font-size:max(18px,1.015625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.mv.hot .md{color:rgba(255,255,255,.92)}
+.mv .mp{margin-top:auto;padding-top:0.78125vw;font-size:max(18px,0.9375vw);font-weight:700;color:var(--z-note)}
+.mv.hot .mp{color:rgba(255,255,255,.7)}
+
+/* ── 파이프라인 (04) ── */
+.pipe{margin-top:2.5vw;display:flex;align-items:flex-start;justify-content:center;gap:0.625vw}
+.pipe .pn{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.78125vw;text-align:center}
+.pipe .ico{width:5vw;height:5vw;border-radius:1.25vw;background:rgba(59,130,246,.08);display:flex;align-items:center;justify-content:center;color:var(--z-accent);flex:none}
+.pipe .pn.last .ico{background:linear-gradient(140deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);color:#fff;box-shadow:var(--z-glow)}
+.pipe .ico svg{width:2.5vw;height:2.5vw;display:block}
+.pipe .pt{font-size:max(18px,1.171875vw);font-weight:800;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+.pipe .pd{font-size:max(18px,0.9765625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.45;color:var(--z-note)}
+.pipe .par{display:flex;align-items:center;height:5vw;font-size:1.5625vw;font-weight:300;color:var(--z-note);flex:none}
+.stats{margin-top:2.34375vw;display:flex;justify-content:center;gap:3.90625vw}
+.stats .sv{display:flex;flex-direction:column;align-items:center;gap:0.234375vw}
+.stats .n{font-size:2.578125vw;font-weight:800;letter-spacing:-0.03em;line-height:1;color:var(--z-accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stats .k{font-size:max(18px,0.9765625vw);font-weight:600;color:var(--z-note);white-space:nowrap}
+.stats .ssep{width:1px;background:#dedee8}
+
+/* ── 좌우 대비 (05) ── */
+.vs{margin-top:2.5vw;display:grid;grid-template-columns:1fr 5.46875vw 1fr;align-items:stretch}
+.vpanel{padding:2.03125vw 2.1875vw;display:flex;flex-direction:column;gap:0.859375vw;border-radius:1.09375vw}
+.vpanel .vh{font-size:max(18px,1.015625vw);font-weight:700;letter-spacing:0.078125vw;color:var(--z-risk)}
+.vpanel .big{font-size:1.875vw;font-weight:800;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+.vpanel ul{list-style:none;display:flex;flex-direction:column;gap:0.546875vw;margin-top:0.15625vw}
+.vpanel li{position:relative;padding-left:1.171875vw;font-size:max(18px,1.0546875vw);font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.vpanel li::before{content:"";position:absolute;left:0;top:0.703125vw;width:0.390625vw;height:0.390625vw;border-radius:50%;background:var(--z-risk)}
+.vpanel.now{background:linear-gradient(150deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);box-shadow:var(--z-glow)}
+.vpanel.now .vh{color:rgba(255,255,255,.8)}
+.vpanel.now .big{color:#fff}
+.vpanel.now li{color:rgba(255,255,255,.94)}
+.vpanel.now li::before{background:#fff}
+.varrow{display:flex;align-items:center;justify-content:center}
+.varrow svg{width:3.125vw;height:3.125vw;display:block}
+
+/* ── 피라미드 (06) ── */
+.pyr{margin-top:2.34375vw;display:grid;grid-template-columns:1fr 30.46875vw;gap:3.125vw;align-items:center}
+.tiers{display:flex;flex-direction:column;gap:0.703125vw;align-items:center}
+.tier{border-radius:0.859375vw;padding:1.25vw 1.875vw;display:flex;align-items:center;justify-content:space-between;gap:1.5625vw}
+.tier .tk{font-size:1.40625vw;font-weight:800;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+.tier .tv{font-size:max(18px,1.0546875vw);font-weight:700;color:var(--z-accent);white-space:nowrap}
+.tier.t1{width:58%;background:linear-gradient(120deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);box-shadow:var(--z-glow)}
+.tier.t1 .tk{color:#fff}
+.tier.t1 .tv{color:rgba(255,255,255,.86)}
+.tier.t2{width:78%;background:rgba(59,130,246,.10)}
+.tier.t3{width:96%;background:rgba(255,255,255,.72)}
+.tier.t3 .tv{color:var(--z-note)}
+.why{display:flex;flex-direction:column}
+.wrow{padding:1.171875vw 0;border-top:1px solid var(--z-line)}
+.wrow:first-child{border-top:0}
+.wrow .wk{font-size:1.40625vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
+.wrow .wv{margin-top:0.3125vw;font-size:max(18px,1.015625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.55;color:var(--z-ink)}
+
+/* ── 표 (07) ── */
+.tbl{margin-top:2.03125vw;display:flex;flex-direction:column}
+.trow{display:grid;grid-template-columns:23.4375vw 13.28125vw 1fr;gap:1.875vw;padding:1.015625vw 0.46875vw;border-top:1px solid var(--z-line);align-items:baseline}
+.trow.hd{border-top:0;padding-bottom:0.46875vw}
+.trow.hd div{font-size:max(18px,0.9375vw);font-weight:700;letter-spacing:.08em;color:var(--z-note)}
+.trow .tk{font-size:max(18px,1.25vw);font-weight:800;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+.trow .tn{font-size:max(18px,1.09375vw);font-weight:800;letter-spacing:-0.01em;color:var(--z-accent);font-variant-numeric:tabular-nums}
+.trow .tv{font-size:max(18px,1.0546875vw);font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.nogo{margin-top:1.5625vw;display:flex;align-items:center;gap:1.09375vw;padding:1.09375vw 1.5625vw;border-radius:0.859375vw;background:rgba(224,49,49,.06)}
+.nogo svg{flex:none}
+.nogo p{font-size:max(18px,1.09375vw);font-weight:600;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+.nogo b{font-weight:800;color:var(--z-risk)}
+
+/* ── 4항목 그리드 (08) ── */
+.quad{margin-top:2.5vw;display:grid;grid-template-columns:repeat(2,1fr);gap:1.25vw}
+.qi{padding:1.5625vw 1.875vw;border-radius:0.9375vw;background:rgba(255,255,255,.72);display:flex;flex-direction:column;gap:0.390625vw}
+.qi .qk{font-size:max(18px,1.25vw);font-weight:800;letter-spacing:-0.02em;color:var(--z-accent)}
+.qi .qv{font-size:max(18px,1.0546875vw);font-weight:500;letter-spacing:-0.01em;line-height:1.5;color:var(--z-ink)}
+
+/* ── 계단 (09) ── */
+.roadmap{position:relative;height:26vw;margin-top:3.28125vw;display:grid;grid-template-columns:repeat(3,1fr);gap:1.09375vw;align-items:end}
+.lv{position:relative;padding:1.484375vw 1.5625vw 0;display:flex;flex-direction:column}
+.lv .wm{position:absolute;right:1.015625vw;bottom:0.390625vw;font-size:5.46875vw;font-weight:800;line-height:1;color:rgba(17,22,38,.05);pointer-events:none}
+.lv-3 .wm{color:rgba(255,255,255,.14)}
+.lv-1{height:21vw}
+.lv-2{height:23.5vw}
+.lv-3{height:26vw}
+.lv .lab{font-size:max(18px,0.9375vw);font-weight:700;letter-spacing:.06em;color:var(--z-note)}
+.lv .tit{margin-top:0.625vw;font-size:1.640625vw;font-weight:800;letter-spacing:-0.02em;line-height:1.25;color:var(--z-ink)}
+.lv ul{list-style:none;margin-top:0.9375vw;padding-top:0.9375vw;border-top:1px solid #E7EDF8;display:flex;flex-direction:column;gap:0.46875vw}
+.lv li{position:relative;padding-left:1.015625vw;font-size:max(18px,1.015625vw);font-weight:500;letter-spacing:-0.01em;line-height:1.45;color:var(--z-ink)}
+.lv li::before{content:"";position:absolute;left:0;top:0.65vw;width:0.3125vw;height:0.3125vw;border-radius:50%;background:var(--z-accent)}
+.lv-3{background:linear-gradient(168deg,#3B82F6 0%,#2C63D9 100%);border-radius:0.859375vw;box-shadow:0 1.328125vw 2.890625vw -0.78125vw rgba(44,99,217,.42)}
+.lv-3 .lab{color:rgba(255,255,255,.85)}
+.lv-3 .tit{color:#FFFFFF}
+.lv-3 ul{border-top-color:rgba(255,255,255,.28)}
+.lv-3 li{color:#FFFFFF}
+.lv-3 li::before{background:#FFFFFF}
+.goal{position:absolute;top:-1.171875vw;left:50%;transform:translateX(-50%);padding:0.46875vw 1.171875vw;border-radius:999px;background:#FFFFFF;border:1.5px solid #C7DAFB;box-shadow:0 0.46875vw 1.171875vw -0.3125vw rgba(44,99,217,.30);font-size:max(18px,1.015625vw);font-weight:800;letter-spacing:-0.01em;color:var(--z-accent);white-space:nowrap}
+
+/* ── 클로징 ── */
+.close{min-height:44vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.close h1{font-size:4.0625vw;font-weight:800;letter-spacing:-0.03em;line-height:1.2;color:var(--z-ink)}
+.close .bq{margin-top:1.875vw;font-size:2.421875vw;font-weight:800;letter-spacing:-0.025em;line-height:1.42;color:var(--z-ink)}
+.closelines{margin-top:3.125vw;display:flex;justify-content:center;gap:2.34375vw}
+.closelines .cl{display:flex;flex-direction:column;align-items:center;gap:0.390625vw}
+.closelines .cn{font-size:max(18px,0.9375vw);font-weight:800;letter-spacing:.1em;color:var(--z-accent)}
+.closelines .ct{font-size:1.25vw;font-weight:700;letter-spacing:-0.02em;color:var(--z-ink);white-space:nowrap}
+.closelines .csep{width:1px;background:#dedee8;align-self:stretch}
+</style>
+</head>
+<body class="ko">
+
+<!-- ===== 01 표지 ===== -->
+<div class="slide active" data-title-ko="표지">
+  <div class="mesh m01"></div>
+  <div class="slide-inner">
+    <div class="cover-hero">
+      <p class="t-over m-rise"><span class="ov-zaemit">Zaemit</span><span class="ov-x">×</span><span class="ov-weven">WEVEN</span></p>
+      <h1 class="m-rise" style="--d:.3s">명함 한 장을 받으면<br><span class="grad-text">AI가 찾는 홈페이지</span>가 된다</h1>
+      <p class="csub m-rise" style="--d:.45s">사장님이 아무것도 하지 않아도 되는 <strong>네 가지 수</strong></p>
+      <p class="cover-contact m-rise" style="--d:.6s">주식회사 위븐 마케팅 전략<br>2026. 8. 31.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 진단 ===== -->
+<div class="slide" data-title-ko="진단 - 두 번째 칸에서 끊긴다">
+  <div class="mesh m02"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">01 진단</div>
+      <div class="section-title m-rise">홍보가 약한 게 아니라 <span class="pt-r">두 번째 칸</span>에서 끊긴다</div>
+    </div>
+    <div class="fun m-stagger" style="--sd:.35s">
+      <div class="st"><span class="sn">STEP 1</span><span class="sl">광고를 본다</span></div>
+      <div class="ar">→</div>
+      <div class="st block"><span class="sn">STEP 2</span><span class="sl">접속한다</span></div>
+      <div class="ar dim">→</div>
+      <div class="st dim"><span class="sn">STEP 3</span><span class="sl">가입한다</span></div>
+      <div class="ar dim">→</div>
+      <div class="st dim"><span class="sn">STEP 4</span><span class="sl">직접 만든다</span></div>
+      <div class="ar dim">→</div>
+      <div class="st dim"><span class="sn">STEP 5</span><span class="sl">결제한다</span></div>
+    </div>
+    <div class="punch m-rise" style="--d:1.05s">
+      1년 무료 호스팅은 <b>미래에 받을 약속</b>이고, 받으려면 지금 시간을 써야 한다
+      <span class="sm">고객이 아끼려는 자원이 정확히 그 시간이다. 혜택을 키워도 지불할 시간은 그대로다</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 네 가지 수 ===== -->
+<div class="slide" data-title-ko="전략 - 네 가지 수">
+  <div class="mesh m03"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">02 전략</div>
+      <div class="section-title m-rise">사장님이 <span class="pt-c">아무것도 하지 않게</span> 만든다</div>
+      <div class="section-desc m-rise" style="--d:.3s">입력을 없애고, 팔 물건을 바꾸고, 위에서 뿌리고, 이미 모여 있는 곳으로 간다</div>
+    </div>
+    <div class="moves m-stagger" style="--sd:.5s">
+      <div class="mv hot">
+        <span class="mn">MOVE 1</span>
+        <span class="mt">명함 한 장</span>
+        <span class="md">명함만 찍으면 사이트가 만들어진다. 입력 항목 없음, 가입 없음</span>
+        <span class="mp">진입 비용을 0으로</span>
+      </div>
+      <div class="mv">
+        <span class="mn">MOVE 2</span>
+        <span class="mt">AEO 상세페이지</span>
+        <span class="md">이미지로 된 상세페이지를 AI가 읽는 랜딩으로 다시 만든다</span>
+        <span class="mp">팔 물건을 바꾼다</span>
+      </div>
+      <div class="mv">
+        <span class="mn">MOVE 3</span>
+        <span class="mt">기관 위에서부터</span>
+        <span class="md">중진공·창경센터 본부를 먼저 뚫고 지역으로 내려보낸다</span>
+        <span class="mp">전국 유통망</span>
+      </div>
+      <div class="mv">
+        <span class="mn">MOVE 4</span>
+        <span class="mt">모인 곳으로</span>
+        <span class="md">사장님 커뮤니티 유료 채널과 LLM 안쪽을 동시에 연다</span>
+        <span class="mp">도달</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 04 명함 파이프라인 ===== -->
+<div class="slide" data-title-ko="Move 1 - 명함 한 장">
+  <div class="mesh m04"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">03 MOVE 1</div>
+      <div class="section-title m-rise">입력 항목을 <span class="pt-c">하나로</span> 줄인다</div>
+      <div class="section-desc m-rise" style="--d:.3s">사장님이 하는 일은 명함을 찍는 것 하나뿐이다</div>
+    </div>
+    <div class="pipe m-stagger" style="--sd:.55s">
+      <div class="pn">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="3"/></svg></span>
+        <span class="pt">명함 촬영</span>
+        <span class="pd">사장님이 하는 유일한 행동</span>
+      </div>
+      <div class="par">→</div>
+      <div class="pn">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></span>
+        <span class="pt">정보 추출</span>
+        <span class="pd">상호·업종·연락처·주소</span>
+      </div>
+      <div class="par">→</div>
+      <div class="pn">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M2 7h20"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></span>
+        <span class="pt">사이트 생성</span>
+        <span class="pd">살아 있는 주소 즉시 발급</span>
+      </div>
+      <div class="par">→</div>
+      <div class="pn">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><path d="m17 16 2 2 4-4"/></svg></span>
+        <span class="pt">구조화 데이터</span>
+        <span class="pd">스키마·llms.txt 자동 생성</span>
+      </div>
+      <div class="par">→</div>
+      <div class="pn last">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11h5"/><path d="M11 8.5v5"/></svg></span>
+        <span class="pt">AI 답변에 노출</span>
+        <span class="pd">ChatGPT·Perplexity 인용</span>
+      </div>
+    </div>
+    <div class="stats m-stagger" style="--sd:1.35s">
+      <div class="sv"><span class="n">1개</span><span class="k">사장님 입력 항목</span></div>
+      <div class="ssep"></div>
+      <div class="sv"><span class="n">0회</span><span class="k">가입 · 로그인</span></div>
+      <div class="ssep"></div>
+      <div class="sv"><span class="n">60초</span><span class="k">주소 발급까지</span></div>
+    </div>
+    <p class="fnote m-rise" style="--d:1.7s">가입은 <b>이미 만들어진 사이트를 가져갈 때</b> 받는다. 판단이 "받을까 말까"에서 "버릴까 말까"로 바뀐다</p>
+  </div>
+</div>
+
+<!-- ===== 05 AEO 상세페이지 ===== -->
+<div class="slide" data-title-ko="Move 2 - AI가 못 읽는 상세페이지">
+  <div class="mesh m05"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">04 MOVE 2</div>
+      <div class="section-title h3s m-rise">국내 상세페이지는 <span class="pt-r">거의 다 이미지</span>다<br>AI는 이미지를 읽지 못한다</div>
+    </div>
+    <div class="vs">
+      <div class="vpanel m-rise" style="--d:.5s">
+        <div class="vh">지금 상세페이지</div>
+        <div class="big">세로로 긴 JPG 한 장</div>
+        <ul>
+          <li>가격·규격·재료·영업시간이 전부 그림 안에 있다</li>
+          <li>크롤러가 읽는 텍스트는 사실상 0</li>
+          <li>사람에게는 팔리지만 AI 답변에는 등장하지 않는다</li>
+        </ul>
+      </div>
+      <div class="varrow m-fade" style="--d:.65s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </div>
+      <div class="vpanel now m-rise" style="--d:.8s">
+        <div class="vh">재밋이 다시 만드는 랜딩</div>
+        <div class="big">같은 내용, AI가 읽는 형태</div>
+        <ul>
+          <li>사양은 HTML 표로, 질문은 FAQ 절로</li>
+          <li>Product 스키마와 llms.txt 자동 부착</li>
+          <li>이미지는 그대로 두고 텍스트 층을 얹는다</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fnote m-rise" style="--d:1.05s">AI가 인용한 페이지의 <b>65%가 구조화 데이터를 쓴다</b>. 사양을 이미지에 넣으면 크롤러는 읽지 못한다<br>사장님이 직접 할 수 없고 대행사도 건당 단가가 맞지 않는 작업이라, 자동 생성만 답이 된다</p>
+  </div>
+</div>
+
+<!-- ===== 06 기관 하향 전개 ===== -->
+<div class="slide" data-title-ko="Move 3 - 기관 위에서부터">
+  <div class="mesh m06"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">05 MOVE 3</div>
+      <div class="section-title m-rise">지역센터가 아니라 <span class="pt-c">본부부터</span> 뚫는다</div>
+    </div>
+    <div class="pyr">
+      <div class="tiers m-stagger" style="--sd:.45s">
+        <div class="tier t1"><span class="tk">중기부 · 중진공 · 소진공 · 창업진흥원 본부</span><span class="tv">표준 도구 채택</span></div>
+        <div class="tier t2"><span class="tk">중진공 지역 본·지부 · 창조경제혁신센터</span><span class="tv">31 + 19곳</span></div>
+        <div class="tier t3"><span class="tk">지역 지원센터 · 수행기관 · 참여 사업장</span><span class="tv">전국</span></div>
+      </div>
+      <div class="why m-stagger" style="--sd:.85s">
+        <div class="wrow"><div class="wk">한 번의 채택이 전국이 된다</div><div class="wv">지역센터를 하나씩 설득하면 수십 곳을 따로 뚫어야 한다. 본부에서 정해지면 지역은 따라 내려온다</div></div>
+        <div class="wrow"><div class="wk">기관은 실적이 필요하다</div><div class="wv">사업장 수와 완료율이 곧 성과 지표다. 자동 생성은 수행 실적을 가장 빠르게 채운다</div></div>
+        <div class="wrow"><div class="wk">사장님의 귀찮음이 사라진다</div><div class="wv">기관이 대신 신청하고 대신 만들어 준다. 우리가 못 넘던 두 번째 칸을 기관이 넘어 준다</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 07 유료·제휴 채널 ===== -->
+<div class="slide" data-title-ko="Move 4 - 유료 채널과 제휴">
+  <div class="mesh m07"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">06 MOVE 4</div>
+      <div class="section-title m-rise">사장님이 <span class="pt-c">이미 모여 있는 곳</span>을 산다</div>
+    </div>
+    <div class="tbl m-stagger" style="--sd:.45s">
+      <div class="trow hd"><div>채널</div><div>규모</div><div>형태</div></div>
+      <div class="trow"><div class="tk">아프니까 사장이다</div><div class="tn">회원 170만+</div><div class="tv">유료 배너, 공식 제휴 콘텐츠, 카페 단독 이벤트</div></div>
+      <div class="trow"><div class="tk">자영업나라 · 사장님 커뮤니티</div><div class="tn">회원 150만+</div><div class="tv">배너, 실사용 후기 기반 제휴 콘텐츠</div></div>
+      <div class="trow"><div class="tk">업종별 협회 · 조합 · 상인회</div><div class="tn">회원 명부</div><div class="tv">회원 대상 공동 안내, 단체 요금제</div></div>
+      <div class="trow"><div class="tk">프랜차이즈 본부</div><div class="tn">가맹점 수백</div><div class="tv">가맹점 사이트 일괄 배포, 계정 수 기반 계약</div></div>
+      <div class="trow"><div class="tk">웹 대행사 · 프리랜서</div><div class="tn">건당 물량</div><div class="tv">리셀러 단가, 다계정 관리와 정산</div></div>
+      <div class="trow"><div class="tk">세무 · 노무 · 창업 컨설팅</div><div class="tn">고객 기반</div><div class="tv">기존 고객에게 부가 서비스로 얹기, 추천 수수료</div></div>
+    </div>
+    <div class="nogo m-rise" style="--d:1.15s">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E03131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
+      <p>하지 않는 것: <b>수요가 있는 것처럼 꾸민 글과 후기 조작</b>. 표시광고법상 기만적 표시광고이고, 적발되면 브랜드 신뢰는 회수되지 않는다</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 08 LLM 안쪽 ===== -->
+<div class="slide" data-title-ko="Move 4 - LLM 안쪽 유통">
+  <div class="mesh m08"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">07 MOVE 4</div>
+      <div class="section-title h3s m-rise">두 번째 칸은 <span class="pt-c">OpenAI가 이미 받아 놓았다</span></div>
+      <div class="section-desc m-rise" style="--d:.3s">ChatGPT 주간 사용자 8~9억 명은 이미 계정이 있고 이미 로그인 상태다</div>
+    </div>
+    <div class="quad m-stagger" style="--sd:.55s">
+      <div class="qi"><span class="qk">무계정 생성</span><span class="qv">대화 안에서 계정 없이 만들고 주소를 받는다. 만료·색인 제외·생성 수 제한을 먼저 넣는다</span></div>
+      <div class="qi"><span class="qk">레지스트리 등재</span><span class="qv">공식 MCP 레지스트리, Claude 커넥터, ChatGPT 플러그인 디렉터리. 심사 기간이 있어 1일차에 신청한다</span></div>
+      <div class="qi"><span class="qk">도구 설명문</span><span class="qv">모델은 이름과 설명문만 읽고 어떤 도구를 부를지 고른다. 그 문장이 곧 광고 카피다</span></div>
+      <div class="qi"><span class="qk">서버 카드 · llms.txt</span><span class="qv">/.well-known/mcp.json으로 수동 설정 단계를 없앤다. 그 지점에서 다시 "귀찮아요"가 나온다</span></div>
+    </div>
+    <p class="fnote m-rise" style="--d:1.05s">Claude 커넥터 디렉터리는 2026년 6월 기준 <b>369개</b>다. 앱스토어로 치면 아직 초기이고 경쟁이 거의 없다</p>
+  </div>
+</div>
+
+<!-- ===== 09 90일 ===== -->
+<div class="slide" data-title-ko="실행 - 90일">
+  <div class="mesh m09"></div>
+  <div class="slide-inner">
+    <div class="head">
+      <div class="section-label">08 실행</div>
+      <div class="section-title m-rise">90일, <span class="pt-c">막힌 곳부터</span> 연다</div>
+    </div>
+    <div class="roadmap m-stagger" style="--sd:.5s">
+      <div class="lv lv-1">
+        <span class="wm">30</span>
+        <span class="lab">1~30일</span>
+        <span class="tit">만들어 놓는다</span>
+        <ul>
+          <li>명함 촬영 진입점 개발</li>
+          <li>상세페이지 AEO 변환 엔진</li>
+          <li>레지스트리 3곳 등재 신청</li>
+          <li>서버 카드 · llms.txt 게시</li>
+        </ul>
+      </div>
+      <div class="lv lv-2">
+        <span class="wm">60</span>
+        <span class="lab">31~60일</span>
+        <span class="tit">증명한다</span>
+        <ul>
+          <li>기관 본부 3곳 제안 미팅</li>
+          <li>커뮤니티 배너 1차 집행</li>
+          <li>AEO 전후 인용률 실측 3건</li>
+          <li>협회·프랜차이즈 각 1곳 파일럿</li>
+        </ul>
+      </div>
+      <div class="lv lv-3">
+        <span class="goal">기관 채택 1건</span>
+        <span class="wm">90</span>
+        <span class="lab">61~90일</span>
+        <span class="tit">넓힌다</span>
+        <ul>
+          <li>채택 기관 기준 지역 확산</li>
+          <li>채널별 획득 단가 비교</li>
+          <li>유료 전환 지점 재배치</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fnote m-rise" style="--d:1.15s">세는 지표는 방문수·가입수가 아니라 <b>생성된 사이트 중 소유권을 가져간 비율</b> 하나다</p>
+  </div>
+</div>
+
+<!-- ===== 10 클로징 ===== -->
+<div class="slide" data-title-ko="클로징">
+  <div class="mesh m10"></div>
+  <div class="slide-inner">
+    <div class="close">
+      <p class="t-over m-rise">CLOSING</p>
+      <h1 class="m-rise" style="--d:.2s">고객을 <span class="grad-text">데려오지 않는다</span></h1>
+      <p class="bq m-rise" style="--d:.4s">사장님이 아무것도 하지 않아도<br>사이트가 생기고 AI가 그것을 찾는다</p>
+      <div class="closelines m-stagger" style="--sd:.75s">
+        <div class="cl"><span class="cn">입력</span><span class="ct">명함 한 장</span></div>
+        <div class="csep"></div>
+        <div class="cl"><span class="cn">상품</span><span class="ct">AI가 읽는 랜딩</span></div>
+        <div class="csep"></div>
+        <div class="cl"><span class="cn">유통</span><span class="ct">기관 · 커뮤니티 · LLM</span></div>
+      </div>
+      <p class="fnote m-rise" style="--d:1.2s">주식회사 위븐 · 2026. 8. 31.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  var appendixStart=total;
+  slides.forEach(function(s,i){if(s.hasAttribute('data-appendix')&&i<appendixStart)appendixStart=i});
+  var mainTotal=appendixStart;
+
+  window.irConfig={version:'260831_gtm_strategy',theme:'zaemit',languages:['ko'],defaultLang:'ko'};
+
+  /* scale-to-fit — zoom 대신 transform:scale (zoom 은 vw 와 % 를 다르게 재계산해 절대배치가 어긋난다) */
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.transform='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.4,Math.min(1,z));if(z<1)inner.style.transform='scale('+z+')'}
+  }
+
+  /* 모션 엔진 — WAAPI */
+  var EASE_OUT='cubic-bezier(0, 0, 0.2, 1)',STEP_MS=80;
+  function noMotion(){return document.body.classList.contains('no-motion')}
+  function seqOf(sec){
+    var seen=new Set(),steps=[];
+    sec.querySelectorAll('.m-rise, .m-fade, .m-stagger, .m-draw').forEach(function(el){
+      var items=el.classList.contains('m-stagger')?Array.prototype.slice.call(el.children):[el];
+      items.forEach(function(it){if(!seen.has(it)){seen.add(it);steps.push(it)}});
+    });
+    return steps;
+  }
+  function inlineDelay(el){
+    var d=el.style&&el.style.getPropertyValue('--d');
+    if(d){d=parseFloat(d);if(!isNaN(d))return d*1000}
+    var p=el.parentElement;
+    if(p&&p.classList.contains('m-stagger')){
+      var sd=p.style.getPropertyValue('--sd');
+      if(sd){sd=parseFloat(sd);if(!isNaN(sd))return sd*1000+Array.prototype.indexOf.call(p.children,el)*STEP_MS}
+    }
+    return null;
+  }
+  function riseAnim(el,delay){
+    el.animate([{opacity:0,transform:'translateY(0.9375vw)'},{opacity:1,transform:'none'}],
+      {duration:700,delay:delay,easing:EASE_OUT,fill:'both'});
+  }
+  function fadeAnim(el,delay){
+    el.animate([{opacity:0},{opacity:1}],{duration:1100,delay:delay,easing:EASE_OUT,fill:'both'});
+  }
+  var DRAW_SHAPES='path, line, polyline, circle, ellipse, rect';
+  function drawAnim(el,delay){
+    if(el.style)el.style.opacity='1';
+    var shapes=el.matches&&el.matches(DRAW_SHAPES)?[el]:el.querySelectorAll(DRAW_SHAPES);
+    shapes.forEach(function(p){
+      if(typeof p.getTotalLength!=='function')return;
+      var len;try{len=p.getTotalLength()}catch(e){return}
+      if(!len)return;
+      p.style.strokeDasharray=len;
+      p.animate([{strokeDashoffset:len},{strokeDashoffset:0}],{duration:700,delay:delay,easing:'ease-out',fill:'both'});
+    });
+  }
+  function resetMotion(sec){
+    sec.querySelectorAll('.m-rise, .m-fade, .m-stagger > *, .m-draw, .m-draw path, .m-draw line, .m-draw polyline, .m-draw circle, .m-draw ellipse, .m-draw rect').forEach(function(el){
+      if(el.getAnimations)el.getAnimations().forEach(function(a){a.cancel()});
+      if(el.style){el.style.strokeDasharray='';el.style.strokeDashoffset=''}
+      if(el.classList&&el.classList.contains('m-draw')&&el.style)el.style.opacity='';
+    });
+  }
+  function playMotion(sec){
+    if(noMotion())return;
+    resetMotion(sec);
+    requestAnimationFrame(function(){
+      seqOf(sec).forEach(function(el,i){
+        var d=inlineDelay(el);
+        var delay=(d!==null)?d:i*STEP_MS;
+        var inStagger=el.parentElement&&el.parentElement.classList.contains('m-stagger');
+        if(el.classList.contains('m-fade'))fadeAnim(el,delay);
+        else if(el.classList.contains('m-rise')||inStagger)riseAnim(el,delay);
+        if(el.classList.contains('m-draw'))drawAnim(el,delay);
+      });
+    });
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  var playTimer=null;
+  function goTo(idx){
+    if(idx<0||idx>=total||idx===current)return;
+    var os=slides[current];
+    os.classList.remove('active');resetMotion(os);current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    resetMotion(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(playTimer)clearTimeout(playTimer);
+    playTimer=setTimeout(function(){playMotion(ns)},400);
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:mainTotal,appendixStart:appendixStart},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    document.body.classList.remove('en','ja','ko');
+    document.body.classList.add(nl==='ko'?'ko':nl);
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx)};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
+    total:total,mainTotal:mainTotal,appendixStart:appendixStart,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1);break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1);break;
+      case'Home':e.preventDefault();goTo(0);break;case'End':e.preventDefault();goTo(total-1);break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1));wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1);else if(tX>w*.85)goTo(current+1)},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();playMotion(slides[current]);try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:mainTotal,appendixStart:appendixStart},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body></html>

@@ -42,7 +42,11 @@ function sendJson(res, status, obj) {
 }
 
 function handleSaveIr(req, res) {
-  let body = '';
+  // 주의: 청크를 문자열로 이어붙이면 안 된다. chunk 는 Buffer 이고 `body += chunk` 는
+  // 청크마다 독립적으로 UTF-8 디코딩하므로, 3바이트 한글이 TCP 청크 경계에 걸치면
+  // 쪼개진 바이트가 각각 U+FFFD 로 바뀌어 글자가 깨진다(120KB 파일에서 1~2회 발생).
+  // Buffer 로 모아 두고 마지막에 한 번만 디코딩한다.
+  const chunks = [];
   let size = 0;
   req.on('data', chunk => {
     size += chunk.length;
@@ -51,9 +55,10 @@ function handleSaveIr(req, res) {
       req.destroy();
       return;
     }
-    body += chunk;
+    chunks.push(chunk);
   });
   req.on('end', () => {
+    const body = Buffer.concat(chunks).toString('utf8');
     let data;
     try {
       data = JSON.parse(body);

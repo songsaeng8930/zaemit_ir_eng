@@ -1768,3 +1768,39 @@ body.light-theme .slide-clone.slide.cover,
   color: #F87171;
   border-color: rgba(239,68,68,0.5);
 }
+
+/* ── 인쇄 페이지 기하 ──
+   미리보기 화면은 클론을 1280x720 으로 깔고 transform:scale() 로 축소해 보여준다.
+   반면 기존 인쇄 규칙은 transform 을 끄고 width/height 를 100% 로 바꿔, 지면 폭에 따라
+   폭만 변하고 높이는 px 로 굳어 사진(object-fit)의 크롭 비율이 화면과 달라졌다.
+   화면과 같은 1280x720 으로 고정하면 브라우저가 용지에 맞춰 축소해도 균일 배율이라 비율이 보존된다. */
+@page { size: 1280px 720px; margin: 0; }
+
+/* ── 인쇄 페이지 선택 ── */
+.pp-range{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--pp-text-dim,#94A3B8);white-space:nowrap}
+.pp-range input{width:92px;padding:5px 8px;border-radius:6px;border:1px solid var(--pp-border,#334155);
+  background:rgba(255,255,255,0.06);color:inherit;font-size:12px;font-family:inherit}
+.pp-range input::placeholder{color:rgba(148,163,184,.7)}
+
+/* ── 인쇄 색 재현 (레이아웃은 절대 건드리지 않음) ── */
+@media print {
+  /* 페이지 범위에서 제외된 슬라이드는 인쇄하지 않는다 */
+  .pp-noprint { display: none !important; }
+
+  .preview-slide-wrapper { width: 1280px !important; max-width: 1280px !important; }
+  .preview-slide-frame { width: 1280px !important; height: 720px !important; padding-top: 0 !important; }
+  .slide-clone.slide { width: 1280px !important; height: 720px !important; }
+
+  /* 브라우저가 인쇄에서 배경·연한 색을 임의로 떨어뜨리지 않도록 강제 */
+  .slide-clone,
+  .slide-clone * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* 배경 워터마크 아이콘(.wmk)은 원본이 9% 알파라 인쇄에서 사라진다.
+     화면 값은 그대로 두고 인쇄에서만 진하게 올린다. */
+  .slide-clone .wmk {
+    color: rgba(59, 130, 246, 0.22) !important;
+    opacity: 1 !important;
+  }
+}

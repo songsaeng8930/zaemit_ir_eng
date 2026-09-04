@@ -492,7 +492,7 @@
 
     // Determine theme based on version
     const versionConfig = config?.versions?.find(v => v.id === irVersion);
-    const isLightTheme = irVersion === '2602' || irVersion === '260202' || versionConfig?.theme === 'light';
+    const isLightTheme = irVersion === '2602' || irVersion === '260202' || versionConfig?.theme === 'light' || versionConfig?.theme === 'zaemit';
 
     if (isLightTheme) {
       document.body.classList.add('light-theme');
