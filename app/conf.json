@@ -4,6 +4,236 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260904_marketing_strategy",
+      "name": "마케팅 실행 전략 · 1년 무료 쿠폰 여섯 채널",
+      "nameEn": "Marketing Execution Strategy · Six Channels for the 1-Year Free Coupon",
+      "description": "광고 대신 기관 제휴로 1년 무료 쿠폰 1만 장을 배포하는 실행 계획: 창업지원기관 250곳 · 카카오 플레이 MCP 랜딩 페이지 · 디모아 전문가 채널 · 모두의창업 선정자 · 인플루언서 제휴(10% 할인·30% 수익) · 공유오피스 입주 혜택. 완성된 사이트를 먼저 보여주는 보완 장치, 추가 제안 채널 6개, 공통 시스템 4가지, 결제 시점 설계와 90일 실행 일정까지 (Zaemit 컨셉, 16장)",
+      "descriptionEn": "Give distribution rights to organizations instead of selling direct: 250+ startup support agencies, Kakao Play MCP landings, the DMOA professional channel, Modu-eui-Changup awardees, influencer affiliates (10% off / 30% commission), and coworking-space member benefits. Adds a pre-built-site booster, six extra channels, shared coupon infrastructure, usage-moment paywalls, and a 90-day roadmap (Zaemit concept, 16 slides)",
+      "date": "2026-09-04",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260904_dmoa_lecture",
+      "name": "디모아 AI 특강 1차시 · AX가 왜 이렇게 어려운가",
+      "nameEn": "DMOA AI Lecture, Session 1 · Why AX Is So Hard",
+      "description": "기업 실무자·경영진 대상 60분 특강(13:40~14:40). MIT 95%/90% 두 숫자로 열고, AX가 어려운 세 가지 이유(업무 미분해·판정자 부재·비용 구조) → 대표의 25년 U자 궁적 → 바이브코딩과 병목의 이동 → 복제되지 않는 세 가지 → 월요일에 할 세 가지로 닫는 24장 (Zaemit 컨셉 · 파스텔 메쉬)",
+      "descriptionEn": "60-minute lecture for corporate practitioners and executives. Opens with the MIT 95%/90% pair, diagnoses three reasons AX fails (undivided work, no verifier, unknown cost structure), then the founder’s 25-year U-curve, vibe coding and the shift of the bottleneck to verification, the three things that cannot be copied, and three actions for Monday. 24 slides.",
+      "date": "2026-09-04",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260831_gtm_strategy",
+      "name": "마케팅 전략 · 명함 한 장에서 시작하는 GTM",
+      "nameEn": "GTM Strategy · From a Single Business Card",
+      "description": "사장님이 아무것도 하지 않게 만드는 네 가지 수: 명함 촬영 진입점, 이미지 상세페이지를 AI가 읽는 AEO 랜딩으로 재생성, 중진공·창조경제혁신센터 본부 선공략 후 전국 확산, 사장님 커뮤니티 유료 채널과 LLM 안쪽 유통 (Zaemit 컨셉, 10장)",
+      "descriptionEn": "Four moves that require nothing from the shop owner: a business-card entry point, regenerating image-only product pages as AI-readable AEO landings, winning agency headquarters first and cascading nationwide, and buying reach in owner communities plus distribution inside LLMs (Zaemit concept, 10 slides)",
+      "date": "2026-08-31",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260902_daejeon_lecture_v3",
+      "name": "대전 창업 특강 v3 — 사업가의 피, 7장 구성",
+      "nameEn": "Daejeon Startup Lecture v3 — Entrepreneur's Blood, in 7 Chapters",
+      "description": "대전 하나 스타트업 파크 특강(2026.09.02) v3 — 대표 구술 전면 개정판: 사업가의 피(MBTI·첫 실패) → 투자 여정 → CEO 성장기(대표 놀이) → 아이템과 MVP(피벗) → 인사·마케팅(기여) → 소통(1+1≠2) → AI를 대하는 자세(6단계), 7장 스토리텔링 (Zaemit 컨셉)",
+      "descriptionEn": "v3 of the Daejeon lecture (Sep 2, 2026) — fully rebuilt from the founder's narrative in 7 chapters: entrepreneur's blood, the investment journey, growing as a CEO, product & MVP, people & marketing, communication, and the right attitude toward AI (Zaemit concept)",
+      "date": "2026-09-02",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260902_daejeon_lecture_v2",
+      "name": "대전 창업 특강 v2 — 대표 구술 기반 스토리텔링",
+      "nameEn": "Daejeon Startup Lecture v2 — Founder's Own Narrative",
+      "description": "대전 하나 스타트업 파크 특강(2026.09.02) v2 — '오늘의 세 문장'으로 열고 프롤로그·4막(긍정의 피 → 공룡을 만나다 → 힘의 이동 → AX의 진실)·에필로그로 흐르는 대표 구술 기반 스토리텔링 덱. 실습 자료는 별도 분리 (Zaemit 컨셉)",
+      "descriptionEn": "v2 of the Daejeon lecture deck (Sep 2, 2026) — opens with three thesis statements, then flows as prologue, four acts (optimism, meeting the dinosaurs, power shifts, the truth of AX), and epilogue; hands-on materials split out (Zaemit concept)",
+      "date": "2026-09-02",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260902_daejeon_lecture",
+      "name": "대전 창업 특강 — 창업 스토리 & 바이브코딩 실습",
+      "nameEn": "Daejeon Startup Lecture — Founder Story & Vibe Coding Hands-on",
+      "description": "대전 하나 스타트업 파크 H3 특강(2026.09.02) — 창업기업의 투자유치 성공사례·성장 경험(둘러보기)과 ChatGPT 실전 바이브코딩 실습(함께하기) (Zaemit 컨셉)",
+      "descriptionEn": "Lecture at Hana Startup Park H3, Daejeon (Sep 2, 2026) — founder story with fundraising track record, plus hands-on vibe coding in ChatGPT (Zaemit concept)",
+      "date": "2026-09-02",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260826_zaemit_growth_kpi",
+      "name": "무료 웹사이트 성장 KPI 플랜",
+      "nameEn": "Free Website Growth KPI Plan",
+      "description": "무료 제작·1년 무료 호스팅을 유관기관 연계·공모전·SNS 프로모션 채널로 구체화하고, 8-9월 방문자·가입자·사이트 개설자·연장가능군 KPI(안)을 세운 실행 플랜 (Zaemit 컨셉)",
+      "descriptionEn": "Concretizes free-build + 1-year free hosting into institution partnerships, contests, and SNS promotion, with draft Aug-Sep KPIs for visitors, sign-ups, site launches, and likely-to-renew cohort (Zaemit concept)",
+      "date": "2026-08-26",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260820_gcontest_proposal",
+      "name": "Zaemit × G콘테스트 — 협업 제안서",
+      "nameEn": "Zaemit × G콘테스트 — Partnership Proposal",
+      "description": "지콘테스트(gcontest.co.kr)의 공모전 사이트 제작 구간에 재밋을 결합하고, 공공기관 담당자에게 상시 홈페이지를 이어서 제안하는 협업안 (Zaemit 컨셉)",
+      "descriptionEn": "Proposal to combine Zaemit with G콘테스트's contest-site production pipeline and cross-sell standing government-agency websites (Zaemit concept)",
+      "date": "2026-08-20",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260819_gov_kstack",
+      "name": "국산 AI 풀스택 표준화 제안 (중앙정부)",
+      "nameEn": "Domestic AI Full-Stack Standardization Proposal (Central Government)",
+      "description": "FuriosaAI RNGD · Upstage Solar Pro 4 · Kakao Kanana를 결합한 국산 AI 풀스택을 전국 소상공인 지원사업의 표준 도구로 채택할 것을 중앙정부 관계부처에 제안",
+      "descriptionEn": "Proposal to central government ministries to adopt the FuriosaAI + Upstage + Kakao domestic AI stack as the standard tool for nationwide small-business support programs",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_seoul_kstack",
+      "name": "국산 AI 풀스택 제안 (서울특별시)",
+      "nameEn": "Domestic AI Full-Stack Proposal (Seoul)",
+      "description": "FuriosaAI RNGD · Upstage Solar Pro 4 · Kakao Kanana를 결합한 국산 AI 풀스택으로 서울시 소상공인·청년·관광 지원사업에 Zaemit을 제안",
+      "descriptionEn": "Proposal to adopt Zaemit — backed by the FuriosaAI + Upstage + Kakao domestic AI stack — across Seoul's small-business, youth, and tourism support programs",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_sejong_kstack",
+      "name": "국산 AI 풀스택 제안 (세종특별자치시)",
+      "nameEn": "Domestic AI Full-Stack Proposal (Sejong)",
+      "description": "FuriosaAI RNGD · Upstage Solar Pro 4 · Kakao Kanana를 결합한 국산 AI 풀스택으로 세종시 유관부서 소상공인 지원사업에 Zaemit을 제안",
+      "descriptionEn": "Proposal to adopt Zaemit — backed by the FuriosaAI + Upstage + Kakao domestic AI stack — across Sejong City government departments",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_sejong_proposal",
+      "name": "세종시 유관부서 도입 제안서",
+      "nameEn": "Sejong City Government Proposal",
+      "description": "재밋(Zaemit)을 세종특별자치시 소상공인·일자리·관광·사회적경제·농업·청년 유관부서에 도입하는 제안서",
+      "descriptionEn": "Proposal for adopting Zaemit across Sejong City government departments",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_furiosa",
+      "name": "FuriosaAI RNGD 협력 제안",
+      "nameEn": "FuriosaAI RNGD Partnership Proposal",
+      "description": "Zaemit × FuriosaAI — Apollon 추론 워크로드를 RNGD로 옮기는 파일럿·구독·공동 레퍼런스 협력 제안",
+      "descriptionEn": "Zaemit × FuriosaAI — Proposal to pilot Apollon inference on RNGD NPUs, moving to subscription and joint reference case",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_upstage_solar",
+      "name": "Zaemit × Upstage — 문서-투-웹 파트너십 제안",
+      "nameEn": "Zaemit × Upstage — Document-to-Web Partnership Proposal",
+      "description": "Document Parse가 읽고 Solar가 쓰고 Zaemit이 웹으로 만드는 공동 상품 제안 — 3장 요약",
+      "descriptionEn": "Joint product proposal: Document Parse reads, Solar writes, Zaemit builds the website — 3-slide summary",
+      "date": "2026-08-19",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260819_upstage_solar2",
+      "name": "Zaemit × Upstage — 문서-투-웹 파트너십 제안 v2 (비주얼)",
+      "nameEn": "Zaemit × Upstage — Document-to-Web Partnership Proposal v2 (Visual)",
+      "description": "v1 텍스트에 예시 목업(문서→웹·카피·챗봇)과 Living DB 순환 구조도를 더한 비주얼 보강판 — 5장",
+      "descriptionEn": "Visual edition of v1: adds example mockups (doc-to-web, copy, chatbot) and a Living DB loop diagram — 5 slides",
+      "date": "2026-08-26",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260815_invest_relations_guide",
+      "name": "투자자 질의 대응 — 네 가지 질문 (Zaemit 컨셉)",
+      "nameEn": "Investor Q&A — Four Questions (Zaemit Concept)",
+      "description": "인력·리텐션·기술 로드맵·GTM 네 가지 질의에 압축 답변하는 Zaemit 컨셉 덱",
+      "descriptionEn": "Compact Zaemit-concept deck answering four investor questions: talent, retention, roadmap, GTM",
+      "date": "2026-08-15",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260814_introduce",
+      "name": "Zaemit × WEVEN 소개자료 (Zaemit 컨셉)",
+      "nameEn": "Zaemit × WEVEN Introduction (Zaemit Concept)",
+      "description": "Zaemit 컨셉 디자인 시스템 적용 — 파스텔 메쉬 · 미니멀 에디토리얼 소개자료",
+      "descriptionEn": "Zaemit concept design system — pastel mesh, minimal editorial deck",
+      "date": "2026-08-14",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260814_invest_relations",
+      "name": "투자자 질의 대응 확장판 (Deep-Dive Q&A)",
+      "nameEn": "Investor Deep-Dive Q&A (Extended)",
+      "description": "주식회사 위븐 투자자 질의 대응 — 매출·구독, 재무·계획, GTM, 기술·인력 전 영역",
+      "descriptionEn": "WEVEN Inc. Investor Q&A Deck — Revenue, Financials, GTM, Technology & Talent",
+      "date": "2026-08-14",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260811_zaemit_26_st",
+      "name": "투자자 질의 대응 (Deep-Dive Q&A)",
+      "nameEn": "Investor Deep-Dive Q&A",
+      "description": "주식회사 위븐 투자자 질의 대응 발표 자료 — 기술·인력 & GTM",
+      "descriptionEn": "WEVEN Inc. Investor Q&A Deck — Technology, Talent & GTM",
+      "date": "2026-08-11",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260806_kakao",
+      "name": "카카오 오픈이노베이션 제안",
+      "nameEn": "Kakao Open Innovation Proposal",
+      "description": "Zaemit × 카카오 그룹 오픈이노베이션 협력 제안 PT",
+      "descriptionEn": "Zaemit × Kakao Group — Open Innovation Partnership Proposal",
+      "date": "2026-08-06",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260304",
+      "name": "IR Deck",
+      "nameEn": "IR Deck",
+      "description": "마이크로소프트 마중 프로그램 사업계획서 IR",
+      "descriptionEn": "Microsoft Majung Program — WEVEN Business Plan IR",
+      "date": "2026-03-15",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "2603_startup_japan",
+      "name": "Startup Japan 성과 보고",
+      "nameEn": "Startup Japan Report & Insights",
+      "description": "WEVEN의 Startup Japan 참가 성과 및 일본 시장 진출 인사이트",
+      "descriptionEn": "WEVEN at Startup Japan — Achievements & Market Insights",
+      "date": "2026-03-09",
+      "theme": "dark",
+      "default": false
+    },
+    {
+      "id": "260303",
+      "name": "2026 주주간담회",
+      "nameEn": "2026 Shareholder Meeting",
+      "description": "주식회사 위븐 2026년 제1회 주주간담회 — 회사의 현재와 미래",
+      "descriptionEn": "WEVEN Inc. 2026 1st Shareholder Meeting — Our Present & Future",
+      "date": "2026-03-07",
+      "theme": "dark",
+      "default": false
+    },
+    {
       "id": "260302",
       "name": "DMOA Azure 공동사업 제안",
       "nameEn": "DMOA Azure Joint Business Proposal",

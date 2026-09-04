@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Zaemit × Upstage — 문서-투-웹 파트너십 제안</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0066FF;--accent:#3B82F6;
+  --up:#A78BFA;--up-deep:#7C3AED;--up-dim:rgba(139,92,246,0.14);
+  --dark:#0A0E27;--dark2:#111633;
+  --text:#E2E8F0;--text-muted:#94A3B8;
+  --green:#22C55E;--amber:#F59E0B;
+  --card:rgba(17,22,51,0.72);--card2:rgba(255,255,255,0.045);
+  --shadow:0 0.9375vw 2.5vw rgba(0,0,0,0.35);
+  --gradient1:linear-gradient(135deg,#0066FF 0%,#3B82F6 100%);
+  --gradientU:linear-gradient(135deg,#7C3AED 0%,#A78BFA 100%);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased;word-break:keep-all}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:4.6875vw 7.03125vw 7vw;opacity:0;
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(2.5vw)}to{opacity:1;transform:translateX(0)}}
+
+.slide .section-label,.slide .section-title,.slide .section-desc,
+.slide .hero-left,.slide .hero-right,
+.slide .content-area,.slide .fit-card,
+.slide .launch-highlight,.slide .offer-ask,.slide .footnote,
+.slide .insight-bar{opacity:0}
+
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+.slide.active .content-area{animation:aFadeUp .5s ease .55s both}
+.slide.active .hero-left{animation:aSlideR .6s ease .2s both}
+.slide.active .hero-right{animation:aSlideL .6s ease .45s both}
+.slide.active .fit-card:nth-child(1){animation:aFadeUp .45s ease .55s both}
+.slide.active .fit-card:nth-child(2){animation:aFadeUp .45s ease .67s both}
+.slide.active .fit-card:nth-child(3){animation:aFadeUp .45s ease .79s both}
+.slide.active .insight-bar{animation:aFadeUp .5s ease .95s both}
+.slide.active .launch-highlight{animation:aScaleIn .6s ease .5s both}
+.slide.active .offer-ask{animation:aFadeUp .5s ease .7s both}
+.slide.active .footnote{animation:aFadeUp .5s ease .9s both}
+
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+body.no-motion .slide.active .slide-inner,
+body.no-motion .slide.active .section-label,body.no-motion .slide.active .section-title,body.no-motion .slide.active .section-desc,
+body.no-motion .slide.active .hero-left,body.no-motion .slide.active .hero-right,
+body.no-motion .slide.active .content-area,body.no-motion .slide.active .fit-card,
+body.no-motion .slide.active .launch-highlight,body.no-motion .slide.active .offer-ask,body.no-motion .slide.active .footnote,
+body.no-motion .slide.active .insight-bar{opacity:1 !important;transform:none !important}
+
+/* ── HERO (표지) ── */
+.hero{background:radial-gradient(ellipse at 18% 45%,rgba(0,102,255,0.14) 0%,transparent 58%),radial-gradient(ellipse at 85% 30%,rgba(139,92,246,0.13) 0%,transparent 52%),var(--dark)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:4.6875vw 4.6875vw}
+.hero .slide-inner{flex-direction:row;align-items:center;gap:4.6875vw}
+.hero-left{flex:1.15}
+.hero-badge{display:inline-flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.875vw;border-radius:3.125vw;background:var(--up-dim);color:var(--up);font-size:max(18px,1.09375vw);font-weight:600;text-transform:uppercase;letter-spacing:0.117vw;margin-bottom:2.03125vw}
+.hero-badge::before{content:'';width:0.625vw;height:0.625vw;border-radius:50%;background:var(--up);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Plus Jakarta Sans','Pretendard Variable',sans-serif;font-size:4.21875vw;font-weight:800;line-height:1.14;color:#fff;margin-bottom:1.5625vw;letter-spacing:-0.156vw}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.up-text{color:var(--up)}
+.hero-sub{font-size:1.484375vw;color:var(--text-muted);line-height:1.7;margin-bottom:2.65625vw;max-width:47vw}
+.hero-sub b{color:var(--text);font-weight:700}
+.hero-contact{font-size:max(18px,1.015625vw);color:var(--text-muted)}
+
+/* 표지 우측 — 문서→웹 변환 플로우 */
+.hero-right{flex:.85;display:flex;flex-direction:column;align-items:stretch;gap:0}
+.flowcard{background:var(--card);border-radius:1.09375vw;box-shadow:var(--shadow);padding:1.328125vw 1.71875vw;display:flex;align-items:center;gap:1.25vw}
+.flowcard .fic{flex:none;width:3.4375vw;height:3.4375vw;border-radius:0.9375vw;background:var(--up-dim);display:flex;align-items:center;justify-content:center}
+.flowcard .fic svg{width:1.875vw;height:1.875vw;stroke:var(--up)}
+.flowcard.zaemit .fic{background:rgba(59,130,246,0.12)}
+.flowcard.zaemit .fic svg{stroke:var(--accent)}
+.flowcard .ft{font-size:max(18px,1.171875vw);font-weight:700;color:#fff;line-height:1.35}
+.flowcard .fs{font-size:max(18px,0.9765625vw);font-weight:500;color:var(--text-muted);margin-top:0.234375vw;line-height:1.4}
+.flow-arrow{align-self:center;padding:0.46875vw 0;display:flex;align-items:center;gap:0.625vw}
+.flow-arrow svg{width:1.40625vw;height:1.40625vw;stroke:var(--up)}
+.flow-arrow span{font-size:max(18px,0.9375vw);font-weight:600;color:var(--up)}
+
+/* ── SECTION HEADERS ── */
+.section-label{display:inline-flex;align-items:center;gap:0.78125vw;font-size:max(18px,1.171875vw);font-weight:600;text-transform:uppercase;letter-spacing:0.195vw;color:var(--up);margin-bottom:0.46875vw}
+.section-label::before{content:'';width:2.1875vw;height:0.15625vw;background:var(--up)}
+.section-title{font-family:'Plus Jakarta Sans','Pretendard Variable',sans-serif;font-size:2.8125vw;font-weight:700;color:#fff;line-height:1.18;margin-bottom:0.78125vw;letter-spacing:-0.117vw}
+.section-desc{font-size:1.40625vw;color:var(--text-muted);line-height:1.6;margin-bottom:1.5625vw}
+.section-desc b{color:var(--text);font-weight:700}
+
+/* ── 결합 지점 3카드 ── */
+.fit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25vw}
+.fit-card{background:var(--card);border-radius:1.25vw;box-shadow:var(--shadow);padding:1.875vw 1.875vw 2.03125vw;display:flex;flex-direction:column;gap:1.015625vw}
+.fit-pill{align-self:flex-start;display:inline-flex;align-items:center;gap:0.546875vw;padding:0.390625vw 1.09375vw;border-radius:3.125vw;background:var(--up-dim);color:var(--up);font-size:max(18px,0.9765625vw);font-weight:700}
+.fit-pill svg{width:1.09375vw;height:1.09375vw;stroke:var(--up)}
+.fit-card h4{font-size:1.5625vw;font-weight:800;color:#fff;letter-spacing:-0.039vw;line-height:1.3}
+.fit-card p{font-size:max(18px,1.0546875vw);font-weight:500;color:var(--text-muted);line-height:1.55}
+.fit-card p b{color:var(--text);font-weight:700}
+.fit-new{display:inline-flex;padding:0.234375vw 0.859375vw;border-radius:3.125vw;background:rgba(34,197,94,0.13);color:var(--green);font-size:max(18px,0.9375vw);font-weight:700;margin-left:0.46875vw;vertical-align:0.15625vw}
+
+/* ── INSIGHT BAR ── */
+.insight-bar{margin-top:1.5625vw;background:linear-gradient(135deg,rgba(139,92,246,0.13),rgba(0,102,255,0.07));border-radius:1.09375vw;padding:1.40625vw 2.1875vw;display:flex;align-items:center;gap:1.25vw;box-shadow:var(--shadow)}
+.insight-bar svg{flex-shrink:0;width:2.34375vw;height:2.34375vw;stroke:var(--up)}
+.insight-bar p{font-size:max(18px,1.328125vw);color:#fff;line-height:1.55;font-weight:600}
+.insight-bar p b{color:var(--up)}
+
+/* ── 공동 출시 (결론) ── */
+.launch-highlight{background:linear-gradient(135deg,rgba(139,92,246,0.14),rgba(0,102,255,0.07));border-radius:1.40625vw;padding:2.1875vw 3.125vw;text-align:center;margin-bottom:1.71875vw;box-shadow:var(--shadow)}
+.launch-highlight p{font-size:1.484375vw;color:var(--text);line-height:1.65;max-width:64vw;margin:0 auto}
+.launch-highlight p b{color:var(--up);font-weight:800}
+.offer-ask{display:grid;grid-template-columns:1fr 1fr;gap:1.40625vw}
+.oa-card{background:var(--card);border-radius:1.25vw;box-shadow:var(--shadow);padding:1.875vw 2.1875vw;display:flex;flex-direction:column;gap:1.09375vw}
+.oa-card.ask{background:linear-gradient(150deg,rgba(124,58,237,0.32),rgba(17,22,51,0.75));box-shadow:0 0.9375vw 2.5vw rgba(124,58,237,0.22)}
+.oa-card .oa-head{display:flex;align-items:center;gap:0.78125vw;font-size:1.40625vw;font-weight:800;color:#fff;letter-spacing:-0.039vw}
+.oa-card .oa-head svg{width:1.5625vw;height:1.5625vw;stroke:var(--accent)}
+.oa-card.ask .oa-head svg{stroke:var(--up)}
+.oa-list{list-style:none;display:flex;flex-direction:column;gap:0.859375vw}
+.oa-list li{display:flex;align-items:flex-start;gap:0.703125vw;font-size:max(18px,1.09375vw);font-weight:500;line-height:1.5;color:var(--text-muted)}
+.oa-list li b{color:var(--text);font-weight:700}
+.oa-list li svg{flex:none;width:1.25vw;height:1.25vw;margin-top:0.15625vw;stroke:var(--green)}
+.oa-card.ask .oa-list li svg{stroke:var(--up)}
+
+/* ── FOOTNOTE ── */
+.footnote{margin-top:1.5625vw;text-align:center;font-size:max(18px,0.9765625vw);color:rgba(148,163,184,0.8);line-height:1.5}
+</style>
+</head>
+<body>
+
+<!-- ===== 01 표지 ===== -->
+<div class="slide hero active" data-title-ko="표지">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-left">
+      <div class="hero-badge">Zaemit × Upstage 제안 2026</div>
+      <h1 style="margin-right: 0.1719vw; font-size: 3.75vw;"><span class="up-text">Solar</span>가 읽고 쓰면,<br><span class="gradient-text">Zaemit</span>이 웹으로 만들겠습니다.</h1>
+      <div class="hero-sub">소비자가 가진 메뉴판·브로슈어·소개서 같은 <b>문서</b>를 한국어 1위 AI가 읽고,<br>Solar Pro 4가 콘텐츠를 생성하며, Zaemit이 웹사이트까지 완성하는<br>
+        <b>공동 상품</b>을 만들겠습니다. 스타트업을 지원하는 홈페이지와 소상공인을 위한 랜딩페이지부터 웹메뉴판 및 온라인 예약 및 결제시스템까지 다양한 상품으로 상용화에 성공하겠습니다.&nbsp; &nbsp;</div>
+      <p class="hero-contact">WEVEN Inc. · CEO 김정환 · 010.8447.4567 · kjh@weven.kr&nbsp;</p>
+    </div>
+    <div class="hero-right">
+      <div class="flowcard">
+        <div class="fic">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div>
+          <div class="ft">고객의 문서</div>
+          <div class="fs">메뉴판 · 브로슈어 · 회사소개서 · PDF</div>
+        </div>
+      </div>
+      <div class="flow-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+        <span>Document Parse가 읽습니다</span>
+      </div>
+      <div class="flowcard">
+        <div class="fic">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M17 21H7a2 2 0 0 1-2-2v-5h14v5a2 2 0 0 1-2 2z"/></svg>
+        </div>
+        <div>
+          <div class="ft">Solar Pro 4</div>
+          <div class="fs">구조를 이해하고 한국어 콘텐츠를 생성합니다</div>
+        </div>
+      </div>
+      <div class="flow-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+        <span>Zaemit이 웹으로 만듭니다</span>
+      </div>
+      <div class="flowcard zaemit">
+        <div class="fic">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="2" y1="7" x2="22" y2="7"/><circle cx="5" cy="5" r="0.5"/><circle cx="7.5" cy="5" r="0.5"/></svg>
+        </div>
+        <div>
+          <div class="ft">완성된 웹사이트</div>
+          <div class="fs">스타트업 홈페이지 · 문의폼 · 예약 · 쇼핑까지 운영되는 SaaS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 결합 지점 ===== -->
+<div class="slide" data-title-ko="Solar가 맡을 세 자리" style="background:radial-gradient(ellipse at 50% 25%,rgba(139,92,246,0.08) 0%,transparent 55%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">결합 구조</div>
+    <div class="section-title">Zaemit의 웹생성 오케스트레이터 중 세 곳에서&nbsp;<span class="up-text">Solar를 필요로</span>&nbsp;합니다</div>
+    <div class="section-desc">챗GPT·Claude·Gemini의 MCP 기반 웹 생성 구조는 그대로,&nbsp;<b>문서·한국어·챗봇</b> 구간에서는 국내에서 강력한 Solar가 완벽히 처리합니다.</div>
+    <div class="content-area">
+      <div class="fit-grid">
+        <div class="fit-card">
+          <span class="fit-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg>
+            강점 · Document Parse
+          </span>
+          <h4>문서 → 웹 <span class="fit-new">신기능</span></h4>
+          <p>메뉴판·브로슈어·PDF를 읽어 <b>사이트 초안까지 자동 생성</b>하는 기능입니다. 경쟁 웹빌더에 없는, Document AI를 가진 업스테이지와만 만들 수 있는 기능입니다.</p>
+        </div>
+        <div class="fit-card">
+          <span class="fit-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            강점 · 한국어 특화
+          </span>
+          <h4>한국어 콘텐츠 생성</h4>
+          <p>글로벌 모델의 한국어 카피는 지금 <b>대표가 직접 다듬는 구간</b>입니다. 존댓말과 업종 용어를 Solar가 바로 쓰게 해, 모든 사이트의 문구 품질을 끌어올립니다.</p>
+        </div>
+        <div class="fit-card">
+          <span class="fit-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            강점 · $0.03 / 1M 토큰
+          </span>
+          <h4>RAG 연동 지능형 챗봇</h4>
+          <p>예약·주문·게시글 같은 <b>운영 데이터를 읽고 방문자의 실시간 요청에 답하는</b> RAG 챗봇입니다. 응답이 잦은 구간이기 때문에, Solar의 단가가 그대로 원가 경쟁력이 됩니다.</p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        <p>세 곳 모두 <b>지금의 Solar Pro 4로 구현하거나 대체 가능한 범위</b>입니다. 국내 사업자를 위한 서비스는 국산 재료로 마감하고 싶습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 확장 로드맵 ===== -->
+<div class="slide" data-title-ko="확장 로드맵" style="background:radial-gradient(ellipse at 70% 40%,rgba(139,92,246,0.08) 0%,transparent 55%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">확장 로드맵</div>
+    <div class="section-title">세 곳이 검증되면, <span class="up-text">검수·생성·운영</span>으로 넓힐 예정입니다</div>
+    <div class="section-desc">앞 장의 세 자리에서 실측 품질이 확인되는 순서대로 진행하는 개발 계획입니다.</div>
+    <div class="content-area">
+      <div class="fit-grid">
+        <div class="fit-card">
+          <span class="fit-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            1단계 · 검수
+          </span>
+          <h4>생성 HTML 전수 검수</h4>
+          <p>생성된 사이트의 HTML 전체를 Solar가 읽고 문구·구조·누락을 검수하는 기능을 개발할 예정입니다. <b>524K 컨텍스트로 사이트 전체를 한 번에</b> 읽을 수 있기 때문에 가능한 기능입니다.</p>
+        </div>
+        <div class="fit-card">
+          <span class="fit-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.2 4.2M15.5 15.5l4.2 4.2M1 12h6M17 12h6M4.2 19.8l4.2-4.2M15.5 8.5l4.2-4.2"/></svg>
+            2단계 · 생성
+          </span>
+          <h4>에이전트 결합, 생성까지 확대</h4>
+          <p>Zaemit의 디자인시스템은 지침뿐만 아니라 샘플 코드를 전송하는 방식으로 스킬 이상의 높은 품질을 만들어 낼 수 있습니다. 웹 제작을 대행하는 Zaemit의 <b>5개 에이전트에 Solar를 결합</b>해 보겠습니다.&nbsp;</p>
+        </div>
+        <div class="fit-card">
+          <span class="fit-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            3단계 · 데이터 축적 후
+          </span>
+          <h4>Living DB 운영 자동화</h4>
+          <p>예약·주문·방문 통계가 쌓이면, 그 데이터를 근거로 <b>운영 개선을 먼저 제안하고 사용자 요청을 처리하는</b> 시스템까지 Solar에 맡길 수 있다고 봅니다. RAG 데이터가 축적된 뒤의 단계입니다.</p>
+        </div>
+      </div>
+      <div class="insight-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+        <p>스타트업과 소상공인에 그치지 않고, G-Cloud 기반 공공 SI 까지 위의 서비스를 모두 필요로 합니다. WEVEN은 관련 R&amp;D를 성공/추가 수행 중입니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 공동 출시 제안 ===== -->
+<div class="slide" data-title-ko="공동 출시 제안" style="background:radial-gradient(ellipse at 22% 50%,rgba(139,92,246,0.09) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(0,102,255,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">공동 출시 제안</div>
+    <div class="section-title">Solar가 가진 한국어 능력이 강력한 진입장벽이 되도록, 상용화 사례로!&nbsp;</div>
+    <div class="launch-highlight">
+      <p>Solar가 기본 탑재된 첫 상용 AI 웹빌더를 만들겠습니다. <br>신규 사이트가 만들어질 때마다 Solar가 쓰이기 때문에,<br>자영업 사이트 하나하나가 <b>상시 토큰 소비처이자 상용 레퍼런스</b>가 됩니다.</p>
+    </div>
+    <div class="offer-ask">
+      <div class="oa-card">
+        <div class="oa-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+          Zaemit이 이미 갖춘 것
+        </div>
+        <ul class="oa-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><b>프로덕션 SaaS</b> — 자체 모델 Apollon이 실서비스에서 운영 중</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><b>MCP 생성 파이프라인</b> — 챗GPT·Claude·Gemini 연동 완료, 모델 추가 결합 구조</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><b>모델 활용 결과 데이터 도출</b>&nbsp;— PoC 결과를 바로 비용·품질 비교 자료로 전환</span>
+          </li>
+        </ul>
+      </div>
+      <div class="oa-card ask">
+        <div class="oa-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M17 21H7a2 2 0 0 1-2-2v-5h14v5a2 2 0 0 1-2 2z"/></svg>
+          Upstage에 요청하는 것
+        </div>
+        <ul class="oa-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><b>PoC API 크레딧</b> — Solar Pro 4 + Document Parse 연동 개발 및 테스트용</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><b>기술 담당자 연결</b> — 문서 파싱 · 카피 생성 파이프라인 설계 협의</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><b>공동 연구</b>&nbsp;— 콘텐츠 생성 등 필요한 영역에서 컨소시엄 구성</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p class="footnote">WEVEN Inc. · CEO 김정환 · 010.8447.4567 · kjh@weven.kr</p>
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
+  var urlParams=new URLSearchParams(window.location.search);
+  var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
+  if(urlPage>0&&urlPage<=total)current=urlPage-1;
+
+  window.irConfig={version:'260819_upstage_solar',theme:'dark',languages:['ko'],defaultLang:'ko'};
+
+  function fitSlideContent(s){
+    var inner=s.querySelector('.slide-inner');if(!inner)return;
+    inner.style.zoom='';
+    var cs=getComputedStyle(s),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0,
+        pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
+    var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
+    var natH=inner.scrollHeight,natW=inner.scrollWidth;
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.5,Math.min(1,z));if(z<1)inner.style.zoom=z}
+  }
+  function fitAllSlides(){
+    slides.forEach(function(s){
+      var h=!s.classList.contains('active');
+      if(h){s.style.display='flex';s.style.visibility='hidden'}
+      fitSlideContent(s);
+      if(h){s.style.display='';s.style.visibility=''}
+    });
+  }
+  function goTo(idx,src){
+    if(idx<0||idx>=total||idx===current)return;
+    slides[current].classList.remove('active');current=idx;
+    var ns=slides[current];
+    ns.style.display='flex';ns.style.visibility='hidden';
+    fitSlideContent(ns);
+    ns.style.display='';ns.style.visibility='';
+    ns.classList.add('active');
+    if(window.irSlideInfo)window.irSlideInfo.current=current;
+    try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}
+  }
+  window.setLang=function(nl){
+    document.body.classList.remove('en','ja','ko');
+    if(nl!=='ko')document.body.classList.add(nl);
+    requestAnimationFrame(fitAllSlides);
+  };
+  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
+  window.irSlideInfo={
+    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
+    total:total,mainTotal:total,appendixStart:total,current:current
+  };
+  document.addEventListener('keydown',function(e){
+    switch(e.key){
+      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
+      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
+      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
+    }
+  });
+  var wAcc=0,wCool=false;
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  var tX,tY,tT;
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
+
+  if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
+  document.fonts.ready.then(function(){fitAllSlides();try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:total,appendixStart:total},'*')}catch(e){}});
+  window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
+})();
+</script>
+</body></html>

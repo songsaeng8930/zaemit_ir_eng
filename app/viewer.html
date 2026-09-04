@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1280">
   <title>WEVEN Zaemit IR</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230066FF'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='%23fff' text-anchor='middle'%3EZ%3C/text%3E%3C/svg%3E">
   <meta name="description" content="AI 노코드 웹 빌더 Zaemit - Investor Relations">
 
   <!-- Open Graph -->
@@ -413,9 +414,9 @@
         <line x1="16" y1="13" x2="8" y2="13"/>
         <line x1="16" y1="17" x2="8" y2="17"/>
       </svg>
-      <span data-lang="ko">인쇄 미리보기</span>
-      <span data-lang="en" style="display:none">Print Preview</span>
-      <span data-lang="ja" style="display:none">印刷プレビュー</span>
+      <span data-lang="ko">상세편집/인쇄</span>
+      <span data-lang="en" style="display:none">Edit / Print</span>
+      <span data-lang="ja" style="display:none">詳細編集/印刷</span>
     </button>
     <div class="sidebar-footer-text">
       Zaemit © 2026
@@ -491,7 +492,7 @@
 
     // Determine theme based on version
     const versionConfig = config?.versions?.find(v => v.id === irVersion);
-    const isLightTheme = irVersion === '2602' || irVersion === '260202' || versionConfig?.theme === 'light';
+    const isLightTheme = irVersion === '2602' || irVersion === '260202' || versionConfig?.theme === 'light' || versionConfig?.theme === 'zaemit';
 
     if (isLightTheme) {
       document.body.classList.add('light-theme');

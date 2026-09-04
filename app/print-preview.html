@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Print Preview - Zaemit</title>
+  <title>상세편집/인쇄 - Zaemit</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -57,33 +57,10 @@
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     }
 
-    /* Section styles */
-    .section-label {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: 40px;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .section-desc {
-      font-size: 16px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 800px;
-      margin-bottom: 32px;
-    }
+    /* Section styles: 범용 .section-label/.section-title/.section-desc 규칙 제거됨.
+       미리보기 UI에서는 안 쓰이는 클래스인데, IR CSS가 정의하지 않는 속성
+       (display:flex, max-width:800px 등)이 슬라이드 클론에 누수되어
+       뷰어와 다르게 렌더링되는 원인이었음 — 슬라이드 스타일은 IR 자체 CSS만 사용 */
 
     /* Hide elements based on language - 2601용 (lang-visible 시스템) */
     /* 260202/2602는 body.ko/body.en 시스템 사용 - 제외 */
@@ -195,8 +172,8 @@
       <line x1="16" y1="17" x2="8" y2="17"/>
       <polyline points="10 9 9 9 8 9"/>
     </svg>
-    <span data-lang="ko">인쇄 미리보기</span>
-    <span data-lang="en">Print Preview</span>
+    <span data-lang="ko">상세편집/인쇄</span>
+    <span data-lang="en">Edit / Print</span>
   </div>
 
   <div class="toolbar-group">
@@ -221,7 +198,7 @@
     <span class="align-label" data-lang="ko">제목:</span>
     <span class="align-label" data-lang="en">Title:</span>
     <div class="title-align-buttons">
-      <button class="title-align-btn active" data-h="left" onclick="setTitleAlignment('left')" title="Left">◀</button>
+      <button class="title-align-btn" data-h="left" onclick="setTitleAlignment('left')" title="Left">◀</button>
       <button class="title-align-btn" data-h="center" onclick="setTitleAlignment('center')" title="Center">●</button>
       <button class="title-align-btn" data-h="right" onclick="setTitleAlignment('right')" title="Right">▶</button>
     </div>
@@ -231,6 +208,26 @@
     <button class="reset-btn" onclick="resetToFit()">
       <span data-lang="ko">맞춤</span>
       <span data-lang="en">Fit</span>
+    </button>
+  </div>
+
+  <div class="toolbar-group">
+    <button class="toolbar-btn btn-edit" id="editModeBtn" onclick="toggleEditMode()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+        <path d="m15 5 4 4"/>
+      </svg>
+      <span data-lang="ko">편집</span>
+      <span data-lang="en">Edit</span>
+    </button>
+    <button class="toolbar-btn btn-save" id="saveEditsBtn" onclick="saveEdits()" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+        <polyline points="17 21 17 13 7 13 7 21"/>
+        <polyline points="7 3 7 8 15 8"/>
+      </svg>
+      <span data-lang="ko">저장</span>
+      <span data-lang="en">Save</span>
     </button>
   </div>
 
@@ -245,6 +242,11 @@
       <span data-lang="ko">PDF 다운로드</span>
       <span data-lang="en">Download PDF</span>
     </button>
+
+    <label class="pp-range">
+      <span data-lang="ko">페이지</span><span data-lang="en">Pages</span>
+      <input type="text" id="printRange" placeholder="전체" title="예: 3, 24, 30-32 · 비우면 전체">
+    </label>
 
     <button class="toolbar-btn btn-print" onclick="browserPrint()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

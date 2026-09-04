@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>WEVEN at Startup Japan — 성과 보고 & 인사이트</title>
+<meta name="description" content="WEVEN이 Startup Japan에서 일군 성과와 일본 시장 진출 인사이트">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WEVEN Zaemit">
+<meta property="og:title" content="WEVEN at Startup Japan — 성과 보고 & 인사이트">
+<meta property="og:description" content="WEVEN이 Startup Japan에서 일군 성과와 일본 시장 진출 인사이트">
+<meta property="og:url" content="http://ir.zaemit.com/app/viewer.html?ir=2603_startup_japan">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WEVEN at Startup Japan — 성과 보고 & 인사이트">
+<meta name="twitter:description" content="WEVEN이 Startup Japan에서 일군 성과와 일본 시장 진출 인사이트">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#6366F1;--accent:#2E7CF6;--accent2:#7C3AED;
+  --dark:#0C0A1A;--dark2:#15122B;--text:#E2E8F0;--text-muted:#94A3B8;
+  --gradient1:linear-gradient(135deg,#6366F1 0%,#8B5CF6 50%,#2E7CF6 100%);
+  --gradient2:linear-gradient(135deg,#2E7CF6 0%,#6366F1 100%);
+  --gradient3:linear-gradient(135deg,#7C3AED 0%,#EC4899 100%);
+  --japan-red:#DC2626;--japan-pink:#F43F5E;
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);font-size:max(18px,1.25vw)}
+
+/* ── MOTION TOGGLE ── */
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:0.001s !important;animation-delay:0s !important;transition-duration:0.001s !important;transition-delay:0s !important}
+
+/* ── SLIDES ── */
+.slide{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;align-items:center;justify-content:center;
+  padding:3.125vw 7.8125vw;opacity:0;
+  transition:left .35s cubic-bezier(.16,1,.3,1);
+}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide .slide-inner{
+  max-width:100%;width:100%;overflow:hidden;
+  opacity:0;transform:translateY(1.5625vw);
+  transition:opacity .45s ease .1s,transform .45s ease .1s;
+}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── ENTRANCE ANIMATIONS ── */
+@keyframes aFadeUp{from{opacity:0;transform:translateY(2.1875vw)}to{opacity:1;transform:translateY(0)}}
+@keyframes aFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes aScaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes aSlideR{from{opacity:0;transform:translateX(-2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes aSlideL{from{opacity:0;transform:translateX(2.5vw)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes glowPulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+
+/* All animatable children start hidden */
+.slide .hero-badge,
+.slide h1,
+.slide .hero-sub,
+.slide .hero-right,
+.slide .hero-stats,
+.slide .section-label,
+.slide .section-title,
+.slide .section-desc,
+.slide .card-grid,
+.slide .stats-grid,
+.slide .stat-card,
+.slide .toc-grid,
+.slide .intro-layout,
+.slide .intro-left,
+.slide .intro-right,
+.slide .slide-bottom{opacity:0}
+
+/* Hero (page 1) */
+.slide.active .hero-badge{animation:aFadeUp .5s ease .15s both}
+.slide.active h1{animation:aFadeUp .6s ease .3s both}
+.slide.active .hero-sub{animation:aFadeUp .5s ease .55s both}
+.slide.active .hero-right{animation:aScaleIn .6s ease .4s both}
+.slide.active .hero-stats{animation:aFadeUp .5s ease .5s both}
+/* Common */
+.slide.active .section-label{animation:aFadeUp .5s ease .15s both}
+.slide.active .section-title{animation:aFadeUp .55s ease .3s both}
+.slide.active .section-desc{animation:aFadeUp .5s ease .45s both}
+.slide.active .card-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .stats-grid{animation:aFadeIn .3s ease .5s both}
+.slide.active .stat-card:nth-child(1){animation:aFadeUp .4s ease .55s both}
+.slide.active .stat-card:nth-child(2){animation:aFadeUp .4s ease .65s both}
+.slide.active .stat-card:nth-child(3){animation:aFadeUp .4s ease .75s both}
+.slide.active .stat-card:nth-child(4){animation:aFadeUp .4s ease .85s both}
+.slide.active .stat-card:nth-child(5){animation:aFadeUp .4s ease .95s both}
+.slide.active .stat-card:nth-child(6){animation:aFadeUp .4s ease 1.05s both}
+.slide.active .toc-grid{animation:aFadeUp .55s ease .5s both}
+.slide.active .intro-layout{animation:aFadeIn .3s ease .45s both}
+.slide.active .intro-left{animation:aSlideR .55s ease .5s both}
+.slide.active .intro-right{animation:aSlideL .55s ease .65s both}
+.slide.active .slide-bottom{animation:aFadeUp .5s ease .8s both}
+
+/* ── HERO ── */
+.hero-grid{position:absolute;inset:0;background-image:
+  linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+  background-size:4.6875vw 4.6875vw;pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:0.46875vw;padding:0.46875vw 1.25vw;border-radius:6.25vw;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);font-size:max(18px,1.09375vw);font-weight:600;color:var(--primary);margin-bottom:1.5625vw}
+h1{font-size:3.75vw;font-weight:800;line-height:1.15;letter-spacing:-0.03em;margin-bottom:1.25vw}
+.hero-sub{font-size:max(18px,1.40625vw);color:var(--text-muted);line-height:1.5;max-width:46.875vw}
+.gradient-text{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stats{display:flex;gap:2.5vw;margin-top:2.5vw}
+.hero-stat-value{font-family:'Plus Jakarta Sans','Pretendard Variable',sans-serif;font-size:2.5vw;font-weight:800;color:#fff}
+.hero-stat-label{font-size:max(18px,1.09375vw);color:var(--text-muted);margin-top:0.3125vw}
+
+/* ── SECTION HEADERS ── */
+.section-label{font-size:max(18px,1.09375vw);font-weight:600;color:var(--primary);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.625vw}
+.section-title{font-size:2.5vw;font-weight:800;line-height:1.2;color:#fff;margin-bottom:0.78125vw}
+.section-desc{font-size:max(18px,1.25vw);color:var(--text-muted);line-height:1.5}
+
+/* ── STAT CARDS ── */
+.stats-grid{display:grid;gap:1.25vw}
+.stat-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:1.09375vw;padding:1.5625vw;transition:border-color .2s}
+.stat-card:hover{border-color:rgba(99,102,241,0.3)}
+
+/* ── TOC ── */
+.toc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25vw;margin-top:2.5vw}
+.toc-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:1.09375vw;padding:1.5625vw;display:flex;flex-direction:column;gap:0.625vw;transition:border-color .2s}
+.toc-item:hover{border-color:rgba(99,102,241,0.3)}
+.toc-num{font-family:'Plus Jakarta Sans';font-size:2.1875vw;font-weight:800;color:var(--primary);opacity:0.5}
+.toc-label{font-size:max(18px,1.25vw);font-weight:700;color:#fff}
+.toc-desc{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.4}
+
+/* ── INTRO LAYOUT ── */
+.intro-layout{display:grid;grid-template-columns:1fr 1fr;gap:3.125vw;margin-top:1.875vw;align-items:start}
+.intro-feature{display:flex;align-items:flex-start;gap:0.9375vw;margin-bottom:1.5625vw}
+.intro-icon{flex-shrink:0;width:3.125vw;height:3.125vw;border-radius:0.78125vw;display:flex;align-items:center;justify-content:center}
+.intro-feature-title{font-size:max(18px,1.25vw);font-weight:700;color:#fff;margin-bottom:0.3125vw}
+.intro-feature-desc{font-size:max(18px,1.09375vw);color:var(--text-muted);line-height:1.4}
+
+/* ── DEMO VIDEO ── */
+.demo-video{background:#000;padding:3.125vw 4.6875vw;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.demo-video video{max-width:95%;max-height:90%;object-fit:contain;border-radius:0.9375vw}
+
+/* ── MISC ── */
+.blue{color:var(--accent);font-weight:700}
+.jp-red{color:var(--japan-red);font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- ======================== SLIDE 1: 표지 ======================== -->
+<div class="slide hero active" data-title-ko="표지">
+  <div class="hero-grid"></div>
+  <div class="slide-inner">
+    <div class="hero-badge">
+      <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      Startup Japan 성과 보고
+    </div>
+    <h1><span class="gradient-text">WEVEN</span> at <span style="color:var(--japan-red)">Startup Japan</span></h1>
+    <p class="hero-sub">AI 바이브코딩 플랫폼 Zaemit의 일본 시장 도전기<br>— 현장 성과와 진출 인사이트</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-value">10,000+</div>
+        <div class="hero-stat-label">주간 접속자</div>
+      </div>
+      <div>
+        <div class="hero-stat-value">9,000+</div>
+        <div class="hero-stat-label">생성 사이트</div>
+      </div>
+      <div>
+        <div class="hero-stat-value">$145K</div>
+        <div class="hero-stat-label">일본 수출 실적</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 2: 회사 소개 ======================== -->
+<div class="slide" data-title-ko="회사 소개" style="background:radial-gradient(ellipse at 40% 50%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 80%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Company Overview</div>
+    <div class="section-title"><span class="gradient-text">WEVEN</span> — AI 바이브코딩 웹 빌더</div>
+    <div class="section-desc">누구나 대화만으로 프로급 웹사이트·웹앱을 만드는 올인원 플랫폼</div>
+    <div class="intro-layout">
+      <!-- 좌: 핵심 서비스 -->
+      <div class="intro-left">
+        <div class="intro-feature">
+          <div class="intro-icon" style="background:rgba(99,102,241,0.15)">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+          </div>
+          <div>
+            <div class="intro-feature-title">Zaemit (재밋)</div>
+            <div class="intro-feature-desc">AI 대화형 바이브코딩으로 웹사이트·웹앱을 자동 생성하고 원클릭 배포하는 SaaS 플랫폼</div>
+          </div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-icon" style="background:rgba(46,124,246,0.15)">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#2E7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h10"/></svg>
+          </div>
+          <div>
+            <div class="intro-feature-title">탈AI급 디자인 엔진</div>
+            <div class="intro-feature-desc">AI가 만들었다고 느껴지지 않는 프리미엄 디자인 품질 — 독자 특허 기술 기반</div>
+          </div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-icon" style="background:rgba(124,58,237,0.15)">
+            <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          </div>
+          <div>
+            <div class="intro-feature-title">글로벌 확장</div>
+            <div class="intro-feature-desc">CES 2026 참가, 일본·미국·동남아 파트너십 — MOU 9건, LOI 4건, NDA 2건 체결</div>
+          </div>
+        </div>
+      </div>
+      <!-- 우: 핵심 지표 -->
+      <div class="intro-right">
+        <div class="stats-grid" style="grid-template-columns:repeat(2,1fr);gap:1.09375vw">
+          <div class="stat-card" style="text-align:center;padding:1.25vw">
+            <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">10,000<span style="font-size:1.25vw;color:var(--text-muted)">+</span></div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">주간 접속자</div>
+          </div>
+          <div class="stat-card" style="text-align:center;padding:1.25vw">
+            <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#fff">9,000<span style="font-size:1.25vw;color:var(--text-muted)">+</span></div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">생성 사이트</div>
+          </div>
+          <div class="stat-card" style="text-align:center;padding:1.25vw">
+            <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:var(--accent)">10<span style="font-size:1.25vw;color:var(--text-muted)">%</span></div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">유료 전환율</div>
+          </div>
+          <div class="stat-card" style="text-align:center;padding:1.25vw">
+            <div style="font-family:'Plus Jakarta Sans';font-size:2.34375vw;font-weight:800;color:#34D399">$145K</div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">일본 수출 실적</div>
+          </div>
+          <div class="stat-card" style="text-align:center;padding:1.25vw">
+            <div style="display:flex;align-items:center;justify-content:center;gap:0.46875vw">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 17 7 17 7"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+              <span style="font-size:max(18px,1.25vw);font-weight:700;color:#FBBF24">장관상</span>
+            </div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">중기부 장관상 수상</div>
+          </div>
+          <div class="stat-card" style="text-align:center;padding:1.25vw">
+            <div style="display:flex;align-items:center;justify-content:center;gap:0.46875vw">
+              <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <span style="font-size:max(18px,1.25vw);font-weight:700;color:#EC4899">특허</span>
+            </div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">다수 특허 출원</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-bottom" style="text-align:center;margin-top:1.5625vw">
+      <div style="font-size:max(18px,1.40625vw);color:var(--text-muted)">
+        <span style="color:var(--accent);font-weight:700">정부가 인정</span>하고, <span style="color:#34D399;font-weight:700">글로벌이 검증</span>한 AI 웹 빌더
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 3: 서비스 데모 ======================== -->
+<div class="slide demo-video" data-title-ko="서비스 데모">
+  <video id="demoVideo" muted playsinline loop>
+    <source src="zaemit_AI_jp.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- ======================== SLIDE 4: 바이브코딩 데모 ======================== -->
+<div class="slide demo-video" data-title-ko="바이브코딩 데모">
+  <video id="vibeDemoVideo" playsinline loop>
+    <source src="../260203/zaemit2.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- ======================== SLIDE 5: Startup Japan 개요 ======================== -->
+<div class="slide" data-title-ko="Startup Japan 개요" style="background:radial-gradient(ellipse at 50% 30%,rgba(220,38,38,0.08) 0%,transparent 60%),radial-gradient(ellipse at 30% 80%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark);padding:3.125vw 4.6875vw">
+  <div class="slide-inner">
+    <div class="section-label">Event Overview</div>
+    <div class="section-title"><span style="color:var(--japan-red)">Startup JAPAN EXPO 2026</span> — 일본 최대급 스타트업 전시회</div>
+    <div class="section-desc">스타트업 · 투자자 · 사업회사가 한자리에 모여 협업과 투자를 연결하는 일본 최대 규모 스타트업 행사</div>
+
+    <!-- 핵심 지표 4개 -->
+    <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);gap:1.09375vw;margin-top:1.875vw">
+      <div class="stat-card" style="text-align:center;padding:1.25vw">
+        <div style="margin-bottom:0.46875vw">
+          <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--japan-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:1.875vw;font-weight:800;color:#fff">4/15 — 16</div>
+        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">2026년 개최일</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:1.25vw">
+        <div style="margin-bottom:0.46875vw">
+          <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:1.875vw;font-weight:800;color:#fff">幕張メッセ</div>
+        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">마쿠하리 메세</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:1.25vw">
+        <div style="margin-bottom:0.46875vw">
+          <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:1.875vw;font-weight:800;color:#fff">450<span style="font-size:1.25vw;color:var(--text-muted)">+</span></div>
+        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">출전 기업</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:1.25vw">
+        <div style="margin-bottom:0.46875vw">
+          <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans';font-size:1.875vw;font-weight:800;color:#fff">11,200<span style="font-size:1.25vw;color:var(--text-muted)">명</span></div>
+        <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">방문객 (2025 실적)</div>
+      </div>
+    </div>
+
+    <!-- 행사 구성 & 동시 개최 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;margin-top:1.5625vw">
+      <!-- 좌: 주요 프로그램 -->
+      <div>
+        <div style="font-size:max(18px,1.40625vw);font-weight:700;color:#fff;margin-bottom:0.9375vw;display:flex;align-items:center;gap:0.46875vw">
+          <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          주요 프로그램
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.78125vw">
+          <div style="display:flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:0.625vw">
+            <svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#F43F5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)"><b style="color:#fff">Dream Pitch</b> — 스타트업 피칭 대회</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:0.625vw">
+            <svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)"><b style="color:#fff">Conference</b> — 업계 리더 강연 & 패널</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:0.625vw">
+            <svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)"><b style="color:#fff">Networking</b> — 테마별 매칭 세션</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.625vw;padding:0.78125vw 1.09375vw;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:0.625vw">
+            <svg width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)"><b style="color:#fff">Exhibition</b> — 450+ 부스 전시 & 데모</span>
+          </div>
+        </div>
+      </div>
+      <!-- 우: 동시 개최 & 대상 분야 -->
+      <div>
+        <div style="font-size:max(18px,1.40625vw);font-weight:700;color:#fff;margin-bottom:0.9375vw;display:flex;align-items:center;gap:0.46875vw">
+          <svg width="1.25vw" height="1.25vw" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          대상 분야 & 동시 개최
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.46875vw;margin-bottom:1.25vw">
+          <span style="padding:0.3125vw 0.78125vw;background:rgba(99,102,241,0.15);border-radius:0.46875vw;font-size:max(18px,1.09375vw);color:#818CF8;font-weight:600">SaaS</span>
+          <span style="padding:0.3125vw 0.78125vw;background:rgba(46,124,246,0.15);border-radius:0.46875vw;font-size:max(18px,1.09375vw);color:var(--accent);font-weight:600">생성AI</span>
+          <span style="padding:0.3125vw 0.78125vw;background:rgba(124,58,237,0.15);border-radius:0.46875vw;font-size:max(18px,1.09375vw);color:#A78BFA;font-weight:600">Web3.0</span>
+          <span style="padding:0.3125vw 0.78125vw;background:rgba(52,211,153,0.15);border-radius:0.46875vw;font-size:max(18px,1.09375vw);color:#34D399;font-weight:600">스마트시티</span>
+          <span style="padding:0.3125vw 0.78125vw;background:rgba(251,191,36,0.15);border-radius:0.46875vw;font-size:max(18px,1.09375vw);color:#FBBF24;font-weight:600">바이오테크</span>
+          <span style="padding:0.3125vw 0.78125vw;background:rgba(244,63,94,0.15);border-radius:0.46875vw;font-size:max(18px,1.09375vw);color:#F43F5E;font-weight:600">헬스케어</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.625vw">
+          <div style="padding:0.625vw 1.09375vw;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:0.625vw;font-size:max(18px,1.09375vw);color:var(--text)">
+            <b style="color:var(--japan-red)">FUNDeal 2026</b> — 협업·출자 특화 매칭
+          </div>
+          <div style="padding:0.625vw 1.09375vw;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:0.625vw;font-size:max(18px,1.09375vw);color:var(--text)">
+            <b style="color:var(--japan-red)">新規事業 大会議</b> — 신규사업 실무 워크숍
+          </div>
+          <div style="padding:0.625vw 1.09375vw;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:0.625vw;font-size:max(18px,1.09375vw);color:var(--text)">
+            <b style="color:var(--japan-red)">MDX / LGX</b> — 제조AI · 물류SCM 전시
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-bottom" style="margin-top:1.25vw;text-align:center">
+      <div style="font-size:max(18px,1.09375vw);color:rgba(255,255,255,0.3)">주최: Sansan주식회사 (Eight) · 전시면적 13,500㎡ · 연 2회 개최</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 6: 참가 준비 과정 ======================== -->
+<div class="slide" data-title-ko="참가 준비 과정" style="background:radial-gradient(ellipse at 30% 40%,rgba(99,102,241,0.1) 0%,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(46,124,246,0.08) 0%,transparent 50%),var(--dark);padding:3.125vw 4.6875vw">
+  <div class="slide-inner">
+    <div class="section-label">Preparation</div>
+    <div class="section-title"><span class="gradient-text">Startup Japan</span> + <span style="color:var(--japan-red)">FUNDeal</span> 참가 준비</div>
+    <div class="section-desc">전시(Expo) + 투자 매칭(FUNDeal) 동시 참가를 위한 체계적 준비 과정</div>
+
+    <!-- 타임라인 3단계 -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5625vw;margin-top:1.875vw">
+
+      <!-- Phase 1: 사전 준비 -->
+      <div class="stat-card" style="padding:1.5625vw">
+        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.09375vw">
+          <div style="width:2.5vw;height:2.5vw;border-radius:50%;background:var(--gradient2);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:max(18px,1.25vw);font-weight:800;color:#fff">1</div>
+          <div>
+            <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">사전 준비</div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">D-60 ~ D-30</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.78125vw">
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">Startup Japan Expo 부스 출전 신청</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">FUNDeal 투자 매칭 별도 등록</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">일본어 IR 자료 · 피칭덱 제작</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">일본어 서비스 데모 영상 제작</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">타겟 투자자 · 파트너사 리서치</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2: 자료 & 부스 세팅 -->
+      <div class="stat-card" style="padding:1.5625vw">
+        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.09375vw">
+          <div style="width:2.5vw;height:2.5vw;border-radius:50%;background:var(--gradient3);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:max(18px,1.25vw);font-weight:800;color:#fff">2</div>
+          <div>
+            <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">자료 & 부스</div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">D-30 ~ D-7</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.78125vw">
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">부스 디자인 · 배너 · 노벨티 제작</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">일본어 리플렛 · 명함 인쇄</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">FUNDeal용 1:1 미팅 자료 준비</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">라이브 데모 환경 세팅 & 리허설</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">사전 미팅 스케줄 확정 (Eight 앱)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3: 현장 전략 -->
+      <div class="stat-card" style="padding:1.5625vw">
+        <div style="display:flex;align-items:center;gap:0.625vw;margin-bottom:1.09375vw">
+          <div style="width:2.5vw;height:2.5vw;border-radius:50%;background:linear-gradient(135deg,var(--japan-red) 0%,#F97316 100%);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:max(18px,1.25vw);font-weight:800;color:#fff">3</div>
+          <div>
+            <div style="font-size:max(18px,1.25vw);font-weight:700;color:#fff">현장 전략</div>
+            <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">D-Day</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.78125vw">
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">부스에서 라이브 AI 데모 시연</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">FUNDeal 1:1 투자자 미팅 진행</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">Dream Pitch 피칭 세션 참여</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">파트너 후보 명함 교환 & 팔로업</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:0.46875vw">
+            <svg style="flex-shrink:0;margin-top:0.15625vw" width="1.09375vw" height="1.09375vw" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:max(18px,1.09375vw);color:var(--text)">현장 피드백 수집 & 즉시 반영</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 핵심 포인트 -->
+    <div class="slide-bottom" style="display:flex;gap:1.5625vw;margin-top:1.5625vw">
+      <div style="flex:1;padding:1.09375vw 1.5625vw;background:rgba(46,124,246,0.08);border:1px solid rgba(46,124,246,0.2);border-radius:0.78125vw;display:flex;align-items:center;gap:0.78125vw">
+        <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <div>
+          <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff">Expo (전시) — 불특정 다수에게 브랜드 노출</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">부스 방문자 대상 라이브 데모 + 리드 확보</div>
+        </div>
+      </div>
+      <div style="flex:1;padding:1.09375vw 1.5625vw;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:0.78125vw;display:flex;align-items:center;gap:0.78125vw">
+        <svg width="1.5625vw" height="1.5625vw" viewBox="0 0 24 24" fill="none" stroke="var(--japan-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+        <div>
+          <div style="font-size:max(18px,1.09375vw);font-weight:700;color:#fff">FUNDeal (매칭) — 사전 큐레이팅된 1:1 미팅</div>
+          <div style="font-size:max(18px,1.09375vw);color:var(--text-muted)">투자자 · 사업회사와 딜 중심 협상</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 5: 현장 활동 (placeholder) ======================== -->
+<div class="slide" data-title-ko="현장 활동" style="background:radial-gradient(ellipse at 40% 50%,rgba(46,124,246,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 80%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">On-site Activities</div>
+    <div class="section-title"><span class="gradient-text">현장 활동</span> — 부스 · 미팅 · 피칭</div>
+    <div class="section-desc">상세 내용 추가 예정</div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 6: 핵심 성과 (placeholder) ======================== -->
+<div class="slide" data-title-ko="핵심 성과" style="background:radial-gradient(ellipse at 60% 40%,rgba(46,124,246,0.08) 0%,transparent 60%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Key Achievements</div>
+    <div class="section-title"><span style="color:#34D399">핵심 성과</span></div>
+    <div class="section-desc">상세 내용 추가 예정</div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 7: 일본 시장 인사이트 (placeholder) ======================== -->
+<div class="slide" data-title-ko="일본 시장 인사이트" style="background:radial-gradient(ellipse at 25% 35%,rgba(220,38,38,0.08) 0%,transparent 60%),radial-gradient(ellipse at 75% 75%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Market Insights</div>
+    <div class="section-title"><span style="color:var(--japan-red)">일본 시장</span> 인사이트</div>
+    <div class="section-desc">상세 내용 추가 예정</div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 8: 한국 스타트업 진출 전략 (placeholder) ======================== -->
+<div class="slide" data-title-ko="진출 전략" style="background:radial-gradient(ellipse at 40% 30%,rgba(124,58,237,0.1) 0%,transparent 60%),radial-gradient(ellipse at 60% 70%,rgba(99,102,241,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Strategy</div>
+    <div class="section-title">한국 스타트업의 <span class="gradient-text">일본 진출 전략</span></div>
+    <div class="section-desc">상세 내용 추가 예정</div>
+  </div>
+</div>
+
+<!-- ======================== SLIDE 9: Next Step (placeholder) ======================== -->
+<div class="slide" data-title-ko="Next Step" style="background:radial-gradient(ellipse at 50% 50%,rgba(46,124,246,0.12) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(124,58,237,0.08) 0%,transparent 50%),var(--dark)">
+  <div class="slide-inner">
+    <div class="section-label">Next Step</div>
+    <div class="section-title">함께 <span class="gradient-text">일본</span>으로 갑시다</div>
+    <div class="section-desc">상세 내용 추가 예정</div>
+  </div>
+</div>
+
+<script>
+// ── SLIDE ENGINE ──
+var slides = document.querySelectorAll('.slide');
+var total = slides.length;
+var current = 0;
+
+function pauseAllVideos() {
+  document.querySelectorAll('video').forEach(function(v) { v.pause(); });
+}
+
+function handleSlideMedia(slide) {
+  var vid = slide.querySelector('video');
+  if (vid) vid.play().catch(function(){});
+}
+
+// Auto-zoom: scale slide-inner to fit within safe area
+function fitSlideContent(slide) {
+  var inner = slide.querySelector('.slide-inner');
+  if (!inner) return;
+  inner.style.zoom = '';
+  inner.style.overflow = 'visible';
+  inner.style.maxHeight = 'none';
+  void inner.offsetHeight;
+  var naturalH = inner.scrollHeight;
+  var availH = slide.clientHeight - 160;
+  if (naturalH > availH && naturalH > 0) {
+    inner.style.zoom = Math.max(0.3, availH / naturalH).toFixed(4);
+  }
+  inner.style.overflow = '';
+  inner.style.maxHeight = '';
+}
+
+function fitAllSlides() {
+  var hidden = [];
+  slides.forEach(function(s) {
+    if (!s.classList.contains('active')) {
+      s.style.display = 'flex';
+      s.style.visibility = 'hidden';
+      hidden.push(s);
+    }
+  });
+  void document.body.offsetHeight;
+  slides.forEach(function(s) { fitSlideContent(s); });
+  hidden.forEach(function(s) { s.style.display = ''; s.style.visibility = ''; });
+}
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(function() { requestAnimationFrame(fitAllSlides); });
+}
+window.addEventListener('load', function() { requestAnimationFrame(fitAllSlides); });
+window.addEventListener('resize', fitAllSlides);
+
+function goTo(idx, source) {
+  if (idx === current || idx < 0 || idx >= total) return;
+  pauseAllVideos();
+  slides[current].classList.remove('active');
+  current = idx;
+  var next = slides[current];
+  next.style.display = 'flex';
+  next.style.visibility = 'hidden';
+  fitSlideContent(next);
+  next.style.display = '';
+  next.style.visibility = '';
+  next.classList.remove('active');
+  void next.offsetHeight;
+  next.classList.add('active');
+  handleSlideMedia(next);
+  if (window.parent !== window) {
+    try {
+      window.parent.postMessage({ type: 'slideChange', current: current, total: total }, '*');
+    } catch (e) {}
+  }
+}
+
+window.goToSlide = function(idx) {
+  goTo(idx, 'parent-viewer');
+};
+
+window.setLang = function(lang) {
+  // Korean only — no-op but exposed for viewer compatibility
+};
+
+// Expose slide info for parent viewer
+var appendixStart = total;
+window.irSlideInfo = {
+  slides: Array.from(slides).map(function(slide, i) {
+    return {
+      index: i,
+      titleKo: slide.dataset.titleKo || '슬라이드 ' + (i + 1),
+      titleEn: slide.dataset.titleEn || 'Slide ' + (i + 1),
+      titleJa: slide.dataset.titleJa || 'スライド ' + (i + 1),
+      isAppendix: slide.hasAttribute('data-appendix')
+    };
+  }),
+  total: total,
+  mainTotal: appendixStart,
+  appendixStart: appendixStart,
+  get current() { return current; }
+};
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  switch(e.key) {
+    case 'ArrowDown': case 'ArrowRight': case 'PageDown': case ' ':
+      e.preventDefault(); goTo(current + 1, 'keyboard'); break;
+    case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+      e.preventDefault(); goTo(current - 1, 'keyboard'); break;
+    case 'Home': e.preventDefault(); goTo(0, 'keyboard'); break;
+    case 'End': e.preventDefault(); goTo(total - 1, 'keyboard'); break;
+  }
+});
+
+// Mouse wheel
+let wheelAcc = 0;
+let wheelTimer = null;
+const WHEEL_THRESHOLD = 80;
+const WHEEL_COOLDOWN = 400;
+let wheelLocked = false;
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  if (wheelLocked) return;
+  wheelAcc += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(function() { wheelAcc = 0; }, 150);
+  if (Math.abs(wheelAcc) >= WHEEL_THRESHOLD) {
+    if (wheelAcc > 0) goTo(current + 1, 'wheel');
+    else goTo(current - 1, 'wheel');
+    wheelAcc = 0;
+    wheelLocked = true;
+    setTimeout(function() { wheelLocked = false; }, WHEEL_COOLDOWN);
+  }
+}, { passive: false });
+
+// Touch
+let touchStartX = 0, touchStartY = 0, touchStartTime = 0, touchStartEl = null, hasMoved = false;
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now();
+  touchStartEl = e.target;
+  hasMoved = false;
+}, { passive: true });
+document.addEventListener('touchmove', function(e) {
+  const dx = Math.abs(e.touches[0].clientX - touchStartX);
+  const dy = Math.abs(e.touches[0].clientY - touchStartY);
+  if (dx > 10 || dy > 10) hasMoved = true;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  if (hasMoved) return;
+  if (touchStartEl && touchStartEl.closest('button, a, input')) return;
+  const dt = Date.now() - touchStartTime;
+  if (dt > 300) return;
+  const screenWidth = window.innerWidth;
+  if (touchStartX < 60) goTo(current - 1, 'touch');
+  else if (touchStartX > screenWidth - 60) goTo(current + 1, 'touch');
+});
+</script>
+</body>
+</html>
