@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>창업보육기관 교육 사업 기획안 — 대표 보고용</title>
+<meta name="description" content="정부지원 창업보육기관에 1일 웹사이트 제작 실습 교육을 판매하고, 참여 창업자를 재밋 계정으로 락인하는 사업 기획">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0E27;--bg2:#141A38;--card:#151B3C;--card2:#1B2350;
+  --line:rgba(255,255,255,0.09);--line2:rgba(124,92,246,0.28);
+  --primary:#0066FF;
+  --amber:#9B7BF7;--amber-d:#B9A3FB;--amber-soft:rgba(124,58,237,0.18);
+  --teal:#00D4AA;--purple:#7C3AED;--green:#34D399;--red:#F87171;
+  --grad:linear-gradient(135deg,#0066FF 0%,#7C3AED 52%,#00D4AA 100%);
+  --text:#E7ECF6;--muted:#98A2C0;--dim:#6B7396;
+}
+html,body{height:100%;overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 55% at 82% 12%,rgba(124,58,237,0.20) 0%,transparent 60%),
+    radial-gradient(ellipse 55% 50% at 12% 88%,rgba(0,102,255,0.16) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 70% 90%,rgba(0,212,170,0.10) 0%,transparent 60%),
+    var(--bg);
+}
+body{font-family:'Pretendard Variable','Plus Jakarta Sans',-apple-system,sans-serif;color:var(--text);font-size:19px;line-height:1.5;word-break:keep-all}
+.num{font-family:'Plus Jakarta Sans','Pretendard Variable',sans-serif}
+
+/* ── SLIDES ── */
+.slide{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:52px 84px;opacity:0}
+.slide.active{display:flex;opacity:1;transition:opacity .5s ease}
+.slide-inner{max-width:1280px;width:100%;opacity:0;transform:translateY(18px);transition:opacity .45s ease .08s,transform .45s ease .08s}
+.slide.active .slide-inner{opacity:1;transform:translateY(0)}
+
+/* ── HEADER (title trio) ── */
+.section-label{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+.section-label .idx{font-family:'Plus Jakarta Sans';font-size:40px;font-weight:800;color:var(--amber);line-height:1}
+.section-label .kick{font-size:18px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.section-title{font-size:36px;font-weight:800;letter-spacing:-0.6px;color:#fff;margin-left:56px}
+.section-desc{font-size:19px;color:var(--muted);margin:6px 0 0 56px}
+.divider{height:1px;background:var(--line);margin:20px 0 0 0}
+
+/* ── LAYOUT HELPERS ── */
+.content{margin-top:28px}
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:rgba(21,27,60,0.55);border:1px solid var(--line);border-radius:16px;padding:26px 28px;backdrop-filter:blur(6px)}
+.card.ink{background:linear-gradient(160deg,rgba(124,58,237,0.16),rgba(13,19,48,0.6));border-color:var(--line2)}
+.card.soft{background:var(--amber-soft);border-color:rgba(124,92,246,0.34)}
+.card-accent{height:5px;border-radius:5px 5px 0 0;margin:-26px -28px 20px;display:block}
+
+/* ── TEXT BITS ── */
+.eyebrow{font-size:18px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.h-lg{font-size:23px;font-weight:800;color:#fff;line-height:1.25}
+.h-md{font-size:20px;font-weight:700;color:#fff}
+.body{font-size:19px;color:var(--muted);line-height:1.55}
+.body b,.body strong{color:var(--text)}
+.note{font-size:19px;font-style:italic;color:var(--amber);margin-top:22px;line-height:1.5}
+.note.dim{color:var(--muted)}
+.big{font-family:'Plus Jakarta Sans';font-weight:800;line-height:1;letter-spacing:-1px}
+.chip{display:inline-block;font-size:18px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--amber-soft);color:var(--amber);border:1px solid rgba(124,92,246,0.34)}
+.numbadge{width:52px;height:52px;border-radius:13px;background:var(--bg2);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans';font-size:26px;font-weight:800}
+
+/* ── TABLE ── */
+table.tbl{width:100%;border-collapse:collapse;font-size:19px}
+table.tbl th{background:#0e1428;color:#fff;font-weight:700;text-align:left;padding:14px 18px;border:1px solid var(--line)}
+table.tbl td{padding:13px 18px;border:1px solid var(--line);color:var(--text)}
+table.tbl tr.hi td{background:var(--amber-soft);color:var(--amber);font-weight:700}
+.tr-mut{color:var(--muted)}
+.ok{color:var(--green);font-weight:700}
+.bad{color:var(--red);font-weight:700}
+.warn{color:var(--amber);font-weight:700}
+
+/* ── FLOW ── */
+.flow-row{display:flex;align-items:center;gap:20px;margin-bottom:14px}
+.flow-bar{height:62px;border-radius:12px;display:flex;align-items:center;padding:0 26px;font-size:19px;font-weight:700;color:#fff}
+.flow-arrow{font-size:22px;color:var(--amber);font-weight:800}
+
+/* ── TIMELINE ── */
+.tl-row{display:flex;gap:20px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--line)}
+.tl-row:first-child{border-top:none;padding-top:0}
+.tl-when{flex-shrink:0;width:168px}
+.tl-when .w{font-family:'Plus Jakarta Sans';font-size:22px;font-weight:800;color:var(--amber);line-height:1.1}
+.tl-when .d{font-size:18px;color:var(--dim);margin-top:2px}
+.tl-what{font-size:18px;color:var(--muted);line-height:1.5;padding-top:2px}
+.tl-what b{color:#fff}
+
+/* small print-preview safety: keep flex bits */
+.slide-clone.slide{opacity:1!important;visibility:visible!important}
+</style>
+</head>
+<body>
+
+<!-- 1. 표지 -->
+<div class="slide hero active" data-title-ko="표지">
+  <div class="slide-inner" style="text-align:center">
+    <div style="font-size:22px;font-weight:700;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:34px">실행 계획 · 대표 보고 · 2026-08-25</div>
+    <div style="font-size:66px;font-weight:800;letter-spacing:-1.8px;color:#fff;line-height:1.18">창업보육기관 대상<br><span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">웹사이트 제작 교육 사업</span></div>
+  </div>
+</div>
+
+<!-- 2. 한 장 요약 -->
+<div class="slide" data-title-ko="한 장 요약">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">01</span><span class="kick">한 장 요약</span></div>
+    <div class="section-title">이 사업을 네 문장으로</div>
+    <div class="divider"></div>
+    <div class="content grid g2">
+      <div class="card"><span class="card-accent" style="background:var(--amber)"></span>
+        <div class="h-lg" style="margin-bottom:12px">What</div>
+        <div class="body">스타트업을 보육하는 기관에 <b>1일 웹사이트 제작 교육</b>을 판다. 창업자는 하루 만에 <b>24시간 일하는 AI 홈페이지</b>를 만들어 배포한다.</div>
+        <div class="body" style="margin-top:14px;font-size:18px"><b style="color:var(--amber)">회당 300만원</b> · 기관은 강의료만, 창업자 계정 1년은 위븐이 부담</div>
+      </div>
+      <div class="card"><span class="card-accent" style="background:var(--teal)"></span>
+        <div class="h-lg" style="margin-bottom:12px">How</div>
+        <div class="body">정부지원사업 기관 <b>4개 유형</b>에 콜드메일과 지인 영업을 병행한다.</div>
+        <div class="body" style="margin-top:14px;font-size:18px"><b style="color:var(--amber)">3개월 400통</b> 발송 · 목표 계약 <b style="color:var(--amber)">10건</b></div>
+      </div>
+      <div class="card"><span class="card-accent" style="background:var(--green)"></span>
+        <div class="h-lg" style="margin-bottom:12px">Why</div>
+        <div class="body">그 홈페이지가 <b>창업자를 Zaemit에 락인</b>시킨다. 매출이 아니라 계정 확보가 목적이다.</div>
+        <div class="body" style="margin-top:14px;font-size:18px">계약 10건 = 창업자 <b style="color:var(--amber)">100~150명</b> · 1년 후 전환 기대 <b style="color:var(--amber)">15%</b></div>
+      </div>
+      <div class="card"><span class="card-accent" style="background:var(--primary)"></span>
+        <div class="h-lg" style="margin-bottom:12px">When</div>
+        <div class="body"><b style="color:#fff">즉시 착수한다.</b> 9~11월이 공공기관 잔여예산 집행 시즌이다.</div>
+        <div class="body" style="margin-top:14px;font-size:18px"><b style="color:var(--amber)">11/30</b> 성공 기준 대조 후 계속·중단 결정</div>
+      </div>
+    </div>
+    <div class="note dim">8/14 쿠폰 기획안이 <b style="font-style:normal;color:var(--text)">배포 채널</b>을 설계한 것이라면, 이번 안은 그 채널에 실제로 들고 갈 <b style="font-style:normal;color:var(--text)">상품(교육)</b>을 붙인 것이다. 별개 사업이 아니라 후속이다.</div>
+  </div>
+</div>
+
+<!-- 3. 왜 지금인가 -->
+<div class="slide" data-title-ko="왜 지금인가">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">02</span><span class="kick">왜 지금인가</span></div>
+    <div class="section-title">네 가지가 동시에 맞아떨어진다</div>
+    <div class="divider"></div>
+    <div class="content grid g4">
+      <div class="card">
+        <div class="numbadge" style="color:var(--amber);margin-bottom:16px">1</div>
+        <div class="h-md" style="line-height:1.3;min-height:56px">공공기관 잔여예산 집행 시즌</div>
+        <div class="body" style="font-size:18px;margin-top:12px">9~11월은 연말 불용 처리를 피하려 예산을 소진하는 시기. 대학·창경센터·TP 모두 해당. 1일 교육은 단건 발주라 이 예산에 붙기 쉽다.</div>
+      </div>
+      <div class="card">
+        <div class="numbadge" style="color:var(--amber);margin-bottom:16px">2</div>
+        <div class="h-md" style="line-height:1.3;min-height:56px">홈페이지 외주는 여전히 비싸다</div>
+        <div class="body" style="font-size:18px;margin-top:12px">제작 외주는 <b>300만원대</b>부터 시작. 초기팀 예산으로는 접근이 어려워 대부분 인스타 링크로 대체한다. 기관 담당자도 이 공백을 안다.</div>
+      </div>
+      <div class="card">
+        <div class="numbadge" style="color:var(--amber);margin-bottom:16px">3</div>
+        <div class="h-md" style="line-height:1.3;min-height:56px">재밋이 1일 배포 수준이 됐다</div>
+        <div class="body" style="font-size:18px;margin-top:12px">인턴 실습생이 3~15시간에 사이트를 만들었다. 단순 브랜드 사이트는 <b>3~8시간</b>. 강사가 붙은 8시간이면 초심자도 배포까지 도달한다.</div>
+      </div>
+      <div class="card">
+        <div class="numbadge" style="color:var(--amber);margin-bottom:16px">4</div>
+        <div class="h-md" style="line-height:1.3;min-height:56px">제작부터 운영까지 다 된다</div>
+        <div class="body" style="font-size:18px;margin-top:12px">Zaemit은 <b>만들고 끝이 아니다.</b> 홈페이지 제작부터 고객 응대·운영까지 AI가 이어서 돕는다. 창업자 혼자서도 <b>계속 굴러가는 홈페이지</b>를 갖는다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 타겟 4트랙 -->
+<div class="slide" data-title-ko="타겟 4트랙">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">03</span><span class="kick">타겟 정의</span></div>
+    <div class="section-title">상품은 하나, 문구만 4벌로 나눈다</div>
+    <div class="section-desc">"어느 유형이 사는가"를 지금은 모른다. 콜드메일 한계비용은 0에 가까우니 좁힐 이유가 없다.</div>
+    <div class="divider"></div>
+    <div class="content">
+      <table class="tbl" style="font-size:18px">
+        <tr><th style="width:56px">트랙</th><th style="width:230px">대상</th><th style="width:110px">모수</th><th>강점</th><th>약점</th></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800;font-size:20px">A</td><td>대학 창업지원단·BI</td><td>200곳+</td><td>모수가 압도적. 교육 예산 재량 큼. 보육 팀 수 많음</td><td class="tr-mut">건당 예산 작음. 학사 일정에 묶임</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800;font-size:20px">B</td><td>창조경제혁신센터</td><td>19곳</td><td>예산 안정. 센터 간 교류 활발해 확산 빠름. 레퍼런스 가치 최고</td><td class="tr-mut">모수 19곳뿐. 조달 절차 필요</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800;font-size:20px">C</td><td>민간 AC·보육 프로그램</td><td>다수</td><td>의사결정 가장 빠름. 데모데이 앞 시급성</td><td class="tr-mut">배치당 10~20팀. 교육 예산 없는 곳 많음</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800;font-size:20px">D</td><td>TP·지자체 창업지원기관</td><td>40곳+</td><td>예산 규모 큼. 지역 독점 가능. 세종TP 접점 있음</td><td class="tr-mut">기업지원 중심. 결재 단계 김</td></tr>
+      </table>
+      <div class="note">우선순위: 지인 영업 → A(모수) → B(레퍼런스) → C(속도) → D(규모). 트랙별 발송·회신율을 따로 집계해 3주 뒤 반응 좋은 트랙으로 자원을 옮긴다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. 상품 정의 -->
+<div class="slide" data-title-ko="상품 정의">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">04</span><span class="kick">상품 정의</span></div>
+    <div class="section-title">1일에 배포까지 가는 실습 교육</div>
+    <div class="divider"></div>
+    <div class="content grid g2" style="grid-template-columns:1.1fr 0.9fr;align-items:start">
+      <table class="tbl">
+        <tr><th style="width:120px">항목</th><th>내용</th></tr>
+        <tr><td class="tr-mut">시간</td><td>1일 7~8시간 (오전 4h + 오후 4h)</td></tr>
+        <tr><td class="tr-mut">인원</td><td>기관당 10~15명 권장 (강사 1명 실습 지도 상한)</td></tr>
+        <tr><td class="tr-mut">장소</td><td>기관 교육장. PC 또는 노트북 필수</td></tr>
+        <tr class="hi"><td>산출물</td><td>1인당 실제 배포된 웹사이트 1개 + 관리자 계정</td></tr>
+        <tr><td class="tr-mut">제공</td><td>1년 호스팅 + 도메인 무상</td></tr>
+      </table>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:16px">필요 준비물</div>
+        <div class="body" style="font-size:18px;line-height:2">· 교재 (PDF 30p 내외)<br>· 실습용 예제 3종 (제조·서비스·커머스)<br>· 사전 체크리스트 (로고·사진·소개글 미리 준비)<br>· 사후 안내문 (관리자 접속 경로·문의 채널·1년 후 안내)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. 커리큘럼 -->
+<div class="slide" data-title-ko="커리큘럼">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">04</span><span class="kick">상품 정의</span></div>
+    <div class="section-title">커리큘럼 — 2교시, MCP로 만든다</div>
+    <div class="divider"></div>
+    <div class="content">
+      <table class="tbl" style="font-size:18px">
+        <tr><th style="width:150px">교시</th><th>내용</th><th style="width:210px">산출물</th></tr>
+        <tr><td class="tr-mut">1 · 09:30~11:00</td><td>기획 &amp; 준비 — 왜 홈페이지가 필요한가 / 내 사업 한 줄 정의 / 재밋 계정 생성</td><td>사이트 기획 메모</td></tr>
+        <tr class="hi"><td>2 · 11:10~12:30</td><td><b>MCP 연동으로 홈페이지 제작</b> — MCP 연결 → AI가 프롬프트로 사이트 생성·구조 잡기</td><td>초안 사이트</td></tr>
+        <tr><td class="tr-mut">3 · 13:30~15:00</td><td>디자인 &amp; 기능 — 브랜드 색·글꼴 / 이미지 생성·카피 / 플러그인(문의폼·게시판·상품)</td><td>디자인·기능 완료</td></tr>
+        <tr><td class="tr-mut">4 · 15:10~17:00</td><td>배포 &amp; 운영 — 도메인 연결 → 배포 → 검색엔진 등록 / 앞으로 AI와 혼자서 운영하는 법</td><td>배포 완료</td></tr>
+      </table>
+      <div class="note"><b style="font-style:normal">MCP 연동이 이 교육의 핵심이다.</b> AI가 사이트를 만들고, 배포 뒤에도 운영을 잇는다 — 이게 락인 장치다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. 수익 구조 -->
+<div class="slide" data-title-ko="수익 구조">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">05</span><span class="kick">수익 구조</span></div>
+    <div class="section-title">단기 매출은 강의료, 장기 매출은 락인</div>
+    <div class="divider"></div>
+    <div class="content grid g2" style="grid-template-columns:1.15fr 0.85fr;align-items:center">
+      <div>
+        <div class="flow-row"><div class="flow-bar" style="width:78%;background:#1d2a55">기관 <span style="color:var(--amber-d)">──[강의료]──▶</span> 위븐</div></div>
+        <div class="flow-row"><div class="flow-bar" style="width:88%;background:#233468">위븐 <span style="color:var(--amber-d)">──[1년 호스팅·도메인 무상]──▶</span> 창업자</div></div>
+        <div class="flow-row"><div class="flow-bar" style="width:100%;background:var(--amber);color:#0b1020">창업자 <span style="color:#0b1020;font-weight:800">──[1년 후 유료 전환]──▶</span> 위븐</div></div>
+        <div class="note">맨 아랫줄이 이 사업의 진짜 목적이다. 성공 기준을 강의료가 아니라 <b style="font-style:normal">락인 창업자 수</b>로 잡는 이유.</div>
+      </div>
+      <div>
+        <table class="tbl" style="font-size:18px">
+          <tr><th>구분</th><th>지불 주체</th><th style="text-align:right">금액</th></tr>
+          <tr><td>강의료</td><td class="tr-mut">기관</td><td style="text-align:right">회당 300만원~</td></tr>
+          <tr><td>창업자 계정</td><td class="tr-mut">위븐 부담</td><td style="text-align:right">참여 인원 × 1년</td></tr>
+          <tr class="hi"><td>1년 후 전환</td><td>창업자 개인</td><td style="text-align:right">재밋 정기 구독</td></tr>
+        </table>
+        <div class="note dim" style="font-size:18px;margin-top:18px">견적 항목은 <b style="font-style:normal;color:var(--text)">"교육 프로그램 운영 용역"</b>으로 쓴다. 공공기관 강사비는 시간당 상한이 있어 8시간을 강사료로 잡으면 300만원이 안 나오는 기관이 많다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. 규모와 락인 -->
+<div class="slide" data-title-ko="규모와 락인">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">06</span><span class="kick">손익분기와 규모</span></div>
+    <div class="section-title">이 사업은 강의료로 버는 사업이 아니다</div>
+    <div class="divider"></div>
+    <div class="content grid g3">
+      <div class="card ink">
+        <div class="eyebrow" style="color:var(--amber)">목표 계약</div>
+        <div class="big" style="font-size:52px;color:var(--amber)">10<span style="font-size:24px">건</span></div>
+        <div class="body" style="margin-top:12px;font-size:18px">3개월~파일럿 이후 확산까지 목표 계약 건수.</div>
+      </div>
+      <div class="card ink">
+        <div class="eyebrow" style="color:var(--amber)">락인 모수</div>
+        <div class="big" style="font-size:44px;color:var(--amber)">100~150<span style="font-size:22px">명</span></div>
+        <div class="body" style="margin-top:12px;font-size:18px">계약 10건 × 회당 10~15명. 배포까지 한 <b>활성 계정</b>이 Zaemit에 남는다.</div>
+      </div>
+      <div class="card ink">
+        <div class="eyebrow" style="color:var(--amber)">1년 후 유료 전환 (기본)</div>
+        <div class="big" style="font-size:52px;color:var(--amber)">15<span style="font-size:24px">%</span></div>
+        <div class="body" style="margin-top:12px;font-size:18px">락인 모수 중 <b>15~22명</b>이 유료로 전환.</div>
+      </div>
+    </div>
+    <table class="tbl" style="font-size:18px;margin-top:22px">
+      <tr><th style="width:110px">시나리오</th><th style="width:100px">전환율</th><th>근거</th><th style="width:180px;text-align:right">전환 인원 (150명 기준)</th></tr>
+      <tr><td class="tr-mut">보수</td><td class="tr-mut">10%</td><td class="tr-mut">IR 실측 자연 전환 5.2%의 2배</td><td class="tr-mut" style="text-align:right">15명</td></tr>
+      <tr class="hi"><td>기본</td><td>15%</td><td>26.08.14 쿠폰 기획안에서 확정한 자사 기준선 — 카드 미요구·1년 무료라 관성이 약하다고 본 값</td><td style="text-align:right">22명</td></tr>
+      <tr><td class="tr-mut">공격</td><td class="tr-mut">25%</td><td class="tr-mut">배포 완료 + 만료 시 호스팅·도메인 회수 압력이 최대로 작동할 때</td><td class="tr-mut" style="text-align:right">38명</td></tr>
+    </table>
+    <div class="note">업계 리버스 트라이얼 중앙값은 24%, 카드 미요구 체험은 14%다. 우리 조건은 그 사이에 있다. <b style="font-style:normal">기본값 15%를 기준으로 보고하고, 파일럿에서 실측한다.</b></div>
+  </div>
+</div>
+
+<!-- 10. 실행 계획 -->
+<div class="slide" data-title-ko="실행 계획">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">07</span><span class="kick">실행 계획</span></div>
+    <div class="section-title">3개월, 다섯 구간 (기준일 8/25)</div>
+    <div class="divider"></div>
+    <div class="content">
+      <div class="tl-row"><div class="tl-when"><div class="w">W1</div><div class="d">8/25~8/31 · 준비</div></div><div class="tl-what">커리큘럼 확정·교재 초안, 실습 예제 3종, 콜드메일 4종 확정, <b>기관 리스트 수집</b>(대학 200·창경 19·AC 50·TP 40), 계정 원가 확인(개발팀), 강의료 구간제 대표 확인</div></div>
+      <div class="tl-row"><div class="tl-when"><div class="w">W2</div><div class="d">9/1~9/7 · 지인+1차</div></div><div class="tl-what"><b>지인 있는 기관 직접 연락</b>(가장 빠른 첫 계약 경로), 트랙 A 콜드메일 100통, 회신 대응 체계 준비(미팅 일정표·견적서·15분 통화 스크립트)</div></div>
+      <div class="tl-row"><div class="tl-when"><div class="w">W3</div><div class="d">9/8~9/14 · 전면 발송</div></div><div class="tl-what">트랙 B 19통(개별 맞춤), C 50통, D 40통, A 2차 100통, 트랙별 회신율 1차 집계</div></div>
+      <div class="tl-row"><div class="tl-when"><div class="w">W4~W6</div><div class="d">9/15~10/5 · 파일럿</div></div><div class="tl-what"><b>파일럿 1건 실행</b>(첫 계약 기관), 강의 녹화·만족도·배포 완료율 측정, 참여 창업자 후기 3건, 교재·커리큘럼 1차 개정</div></div>
+      <div class="tl-row"><div class="tl-when"><div class="w">W7~W12</div><div class="d">10/6~11/16 · 확산</div></div><div class="tl-what">파일럿 레퍼런스 넣은 2차 콜드메일(전 트랙), 반응 좋은 트랙 자원 집중, 계약 확대·일정 순차 편성, 내년 예산 편성 영업 준비</div></div>
+      <div class="note">11월 말 — 성공 기준 대조. 계속 / 방식 변경 / 중단 결정.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 11. 성공·중단 기준 -->
+<div class="slide" data-title-ko="성공·중단 기준">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">08</span><span class="kick">성공·중단 기준</span></div>
+    <div class="section-title">언제 접을지를 먼저 정한다</div>
+    <div class="section-desc">회수까지 1년이 걸리는 사업이다. 판단 시점을 박아두지 않으면 계속 미루게 된다.</div>
+    <div class="divider"></div>
+    <div class="content grid g2" style="align-items:start">
+      <div>
+        <div class="eyebrow" style="color:var(--amber);margin-bottom:14px">성공 기준</div>
+        <table class="tbl" style="font-size:18px">
+          <tr><th style="width:150px">시점</th><th>지표</th><th style="width:100px;text-align:right">목표</th></tr>
+          <tr><td class="tr-mut" rowspan="5">11/30<br><span style="font-size:18px;color:var(--dim)">3개월</span></td><td class="tr-mut">콜드메일 발송</td><td class="tr-mut" style="text-align:right">400통</td></tr>
+          <tr><td class="tr-mut">회신</td><td class="tr-mut" style="text-align:right">20건</td></tr>
+          <tr><td class="tr-mut">미팅</td><td class="tr-mut" style="text-align:right">10건</td></tr>
+          <tr class="hi"><td>유상 계약</td><td style="text-align:right">2건</td></tr>
+          <tr class="hi"><td>락인 창업자</td><td style="text-align:right">30명</td></tr>
+          <tr><td class="tr-mut" rowspan="3">27/02월말<br><span style="font-size:18px;color:var(--dim)">6개월</span></td><td class="tr-mut">유상 계약 누적</td><td class="tr-mut" style="text-align:right">8건</td></tr>
+          <tr><td class="tr-mut">락인 창업자 누적</td><td class="tr-mut" style="text-align:right">120명</td></tr>
+          <tr><td class="tr-mut">승자 트랙 확정</td><td class="tr-mut" style="text-align:right">1~2개</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:var(--red);margin-bottom:14px">중단 기준</div>
+        <table class="tbl" style="font-size:18px">
+          <tr><th>조건</th><th style="width:130px">시점</th><th style="width:190px">조치</th></tr>
+          <tr><td>미팅 3건 미달</td><td class="tr-mut">11/30</td><td class="bad">중단</td></tr>
+          <tr><td>유상 계약 0건</td><td class="tr-mut">11/30</td><td class="bad">중단 또는 무상 파일럿 전환</td></tr>
+          <tr><td>파일럿 배포 완료율 50% 미달</td><td class="tr-mut">파일럿 직후</td><td class="warn">영업 중단, 커리큘럼 재설계</td></tr>
+          <tr><td>회당 손익 마이너스 고착</td><td class="tr-mut">계약 3건 시점</td><td class="warn">가격 재설계</td></tr>
+        </table>
+        <div class="card" style="margin-top:22px">
+          <div class="eyebrow" style="margin-bottom:12px">투입 인력 — 단계별로 늘린다</div>
+          <div class="body" style="font-size:18px;line-height:1.9">
+            · 계약 0~1건 &nbsp;<b>1명</b> — 본인 겸임 (기획·영업·강의)<br>
+            · 계약 2건 이후 &nbsp;<b>+1명</b> — 운영 지원 (발송·일정·교재)<br>
+            · 월 3건 이상 &nbsp;<b>+1명</b> — 강사 (교재 표준화 후 투입)
+          </div>
+          <div class="body" style="font-size:18px;margin-top:14px;color:var(--amber)">신규 채용은 운영 지원 1명뿐. 표준화 전에 강사를 늘리면 품질이 갈린다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 13. 리스크 -->
+<div class="slide" data-title-ko="리스크">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">09</span><span class="kick">리스크</span></div>
+    <div class="section-title">일곱 가지 리스크와 대응</div>
+    <div class="divider"></div>
+    <div class="content">
+      <table class="tbl" style="font-size:18px">
+        <tr><th style="width:48px">#</th><th style="width:280px">리스크</th><th style="width:200px">영향</th><th>대응</th></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800">1</td><td>무료권 원가 무제한 노출</td><td class="tr-mut">손익 붕괴</td><td>강의료 인원 구간제</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800">2</td><td>강사 병목 — 1일 통째 가동</td><td class="tr-mut">계약 3건 동시 소화 불가</td><td>계약은 동시에, 일정은 순차. 파일럿 3건 후 교재 표준화·이관</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800">3</td><td>락인 실패 — 1년 후 전환 0</td><td class="tr-mut">사업 목적 무효</td><td>4교시 운영·관리 사용법 필수. 3·6·11개월 리마인드 발송</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800">4</td><td>기관 예산 시기 미스</td><td class="tr-mut">다음 기회는 3월</td><td>12~1월은 내년 예산 편성 영업으로 전환. 관계 유지</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800">5</td><td>창업자 이탈 — 교육만 받고 방치</td><td class="tr-mut">락인 수치 허수</td><td>배포 완료를 교육 종료 조건으로. 미완료자 사후 1:1 지원</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800">6</td><td>기관이 무상 요구</td><td class="tr-mut">매출 0</td><td>무상은 파일럿 1건까지. 이후 유상 원칙, 대신 인원 제한 없음</td></tr>
+        <tr><td class="num" style="color:var(--amber);font-weight:800">7</td><td>만료 정책 미고지 — 1년 뒤 사이트 내려감</td><td class="tr-mut">기관 신뢰 손상, 재계약 무산</td><td>제안서·교육 안내문·사후 메일 <b>3곳 모두</b>에 만료 후 정책 명시. 회수는 락인 장치이자 클레임 지점이다</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 14. 부록: 콜드메일 4종 -->
+<div class="slide" data-title-ko="부록 · 콜드메일 4종">
+  <div class="slide-inner">
+    <div class="section-label"><span class="idx">10</span><span class="kick">부록</span></div>
+    <div class="section-title">콜드메일 4종 — 트랙별 각(角)</div>
+    <div class="section-desc">공통 뼈대: 제목 → 발신자 신뢰 → 문제 제기 → 제안 → 조건(강의료만) → CTA 1개(15분 통화).</div>
+    <div class="divider"></div>
+    <div class="content grid g4">
+      <div class="card"><span class="card-accent" style="background:var(--amber)"></span>
+        <div class="chip" style="margin-bottom:12px">A · 대학·BI</div>
+        <div class="h-md" style="font-size:19px;line-height:1.3;margin-bottom:10px">하루 만에 배포까지</div>
+        <div class="body" style="font-size:18px">"IR 덱은 만드는데 회사 주소는 인스타 링크." 초기팀이 하루에 직접 배포. 대학 레퍼런스 없어 초기 몇 곳은 최상 조건.</div>
+      </div>
+      <div class="card"><span class="card-accent" style="background:var(--teal)"></span>
+        <div class="chip" style="margin-bottom:12px">B · 창경센터</div>
+        <div class="h-md" style="font-size:19px;line-height:1.3;margin-bottom:10px">성과지표를 그날 채운다</div>
+        <div class="body" style="font-size:18px">온라인 채널 구축 지표가 제일 채우기 어렵다. 교육 끝나는 시점에 참여 기업 수만큼 실제 사이트 생성. GS인증·ISO27001.</div>
+      </div>
+      <div class="card"><span class="card-accent" style="background:var(--green)"></span>
+        <div class="chip" style="margin-bottom:12px">C · 민간 AC</div>
+        <div class="h-md" style="font-size:19px;line-height:1.3;margin-bottom:10px">데모데이 전에 끝</div>
+        <div class="body" style="font-size:18px">후속 투자사가 검색해도 안 나오는 팀. 데모데이 2~3주 전 워크샵으로 실제 주소 확보. <b>기관 이력 문장은 뺀다.</b></div>
+      </div>
+      <div class="card"><span class="card-accent" style="background:var(--primary)"></span>
+        <div class="chip" style="margin-bottom:12px">D · TP·지자체</div>
+        <div class="h-md" style="font-size:19px;line-height:1.3;margin-bottom:10px">방치되지 않는 지원</div>
+        <div class="body" style="font-size:18px">지원금 사이트는 1년 뒤 방치. "대표가 직접 만들고 고치게" 가르친다. GS인증·ISO27001·MS Open Innovation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── IR 설정 (viewer.html 참조) ──
+window.irConfig = { version: '260824_incubator_edu', theme: 'dark', languages: ['ko'], defaultLang: 'ko' };
+
+var slides = document.querySelectorAll('.slide');
+var total = slides.length;
+var current = 0;
+var lang = 'ko';
+
+var urlParams = new URLSearchParams(window.location.search);
+var urlPage = parseInt(urlParams.get('page'), 10);
+if (urlPage > 1 && urlPage <= total) {
+  slides[0].classList.remove('active');
+  current = urlPage - 1;
+  slides[current].classList.add('active');
+}
+
+// KO 단독 — setLang은 viewer 호환용 (실제 언어 요소 없음)
+window.setLang = function(newLang) {
+  lang = newLang;
+  document.body.classList.remove('en', 'ja', 'ko');
+  if (newLang !== 'ko') document.body.classList.add(newLang);
+};
+
+function goTo(idx, source) {
+  if (idx === current || idx < 0 || idx >= total) return;
+  slides[current].classList.remove('active');
+  current = idx;
+  var next = slides[current];
+  next.classList.remove('active');
+  void next.offsetHeight;
+  next.classList.add('active');
+  if (window.irSlideInfo) window.irSlideInfo.current = current;
+  if (window.parent !== window) {
+    try { window.parent.postMessage({ type: 'slideChange', current: current, total: total }, '*'); } catch (e) {}
+  }
+}
+window.goToSlide = function(idx) { goTo(idx, 'parent-viewer'); };
+
+window.irSlideInfo = {
+  slides: Array.from(slides).map(function(s, i) {
+    return { index: i,
+      titleKo: s.dataset.titleKo || ('슬라이드 ' + (i + 1)),
+      titleEn: s.dataset.titleEn || s.dataset.titleKo || ('Slide ' + (i + 1)),
+      titleJa: s.dataset.titleJa || s.dataset.titleKo || ('スライド ' + (i + 1)) };
+  }),
+  total: total, mainTotal: total, appendixStart: total,
+  get current() { return current; }
+};
+
+document.addEventListener('keydown', function(e) {
+  switch (e.key) {
+    case 'ArrowDown': case 'ArrowRight': case 'PageDown': case ' ':
+      e.preventDefault(); goTo(current + 1); break;
+    case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+      e.preventDefault(); goTo(current - 1); break;
+    case 'Home': e.preventDefault(); goTo(0); break;
+    case 'End': e.preventDefault(); goTo(total - 1); break;
+  }
+});
+
+var wheelAcc = 0, wheelTimer = null, wheelLocked = false;
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  if (wheelLocked) return;
+  wheelAcc += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(function() { wheelAcc = 0; }, 150);
+  if (Math.abs(wheelAcc) >= 80) {
+    goTo(current + (wheelAcc > 0 ? 1 : -1));
+    wheelAcc = 0; wheelLocked = true;
+    setTimeout(function() { wheelLocked = false; }, 400);
+  }
+}, { passive: false });
+
+var touchStartX = 0, touchStartY = 0, touchStartTime = 0, touchStartEl = null, hasMoved = false;
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now(); touchStartEl = e.target; hasMoved = false;
+}, { passive: true });
+document.addEventListener('touchmove', function(e) {
+  if (Math.abs(e.touches[0].clientX - touchStartX) > 10 || Math.abs(e.touches[0].clientY - touchStartY) > 10) hasMoved = true;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  if (hasMoved) return;
+  if (touchStartEl && touchStartEl.closest('button, a, input')) return;
+  if (Date.now() - touchStartTime > 300) return;
+  var sw = window.innerWidth, zone = 60;
+  if (touchStartX < zone) goTo(current - 1);
+  else if (touchStartX > sw - zone) goTo(current + 1);
+});
+</script>
+</body>
+</html>
