@@ -4,16 +4,6 @@
   "defaultIR": "260203",
   "versions": [
     {
-      "id": "260824_incubator_edu",
-      "name": "창업보육기관 교육 사업 기획안",
-      "nameEn": "Incubator Website Education Business Plan",
-      "description": "창업보육기관 대상 1일 웹사이트 제작 교육 판매 및 창업자 락인 기획 (대표 보고용)",
-      "descriptionEn": "Internal plan to sell 1-day website building education to incubators and lock in founders",
-      "date": "2026-08-24",
-      "theme": "dark",
-      "default": false
-    },
-    {
       "id": "260904_marketing_strategy",
       "name": "마케팅 실행 전략 · 1년 무료 쿠폰 여섯 채널",
       "nameEn": "Marketing Execution Strategy · Six Channels for the 1-Year Free Coupon",
