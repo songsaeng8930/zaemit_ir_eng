@@ -348,6 +348,11 @@ body.edit-mode .slide-clone [contenteditable]:focus {
 }
 #ppInspStyleCopy { background: #06B6D4; }
 #ppInspStyleCopy:hover { background: #0891B2; }
+
+/* 박스 정렬 그룹 (부모 기준 왼쪽/가운데/오른쪽) — 현재 상태는 .on 으로 표시 */
+.pp-insp-toolbar button.pp-box-al { background: #64748B; }
+.pp-insp-toolbar button.pp-box-al:hover { background: #475569; }
+.pp-insp-toolbar button.pp-box-al.on { background: #14B8A6; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.85); }
 #ppInspStylePaste { background: #F59E0B; }
 #ppInspStylePaste:hover { background: #D97706; }
 #ppInspStyleClear { background: #64748B; }
@@ -681,6 +686,117 @@ body.edit-mode .slide-clone [contenteditable]:focus {
 #ppInspSel.pp-root-sel .pp-insp-toolbar,
 #ppInspSel.pp-root-sel .pp-h-size,
 #ppInspSel.pp-root-sel .pp-h-mar { display: none; }
+
+/* ── AI 수정 요청 말풍선 (data-ai-note) ──
+   슬라이드 클론 밖 body 오버레이에 그려 인쇄·PDF 캡처에 찍히지 않는다 */
+#ppInspNote { background: #F59E0B; }
+#ppInspNote:hover { background: #D97706; }
+
+#ppAiNotes {
+  position: fixed;
+  inset: 0;
+  z-index: 8990;
+  pointer-events: none;
+}
+.pp-ai-note {
+  position: fixed;
+  display: none;
+  align-items: flex-start;
+  gap: 6px;
+  transform: translateY(-100%);
+  max-width: 240px;
+  padding: 6px 9px 7px;
+  background: #FEF3C7;
+  color: #78350F;
+  border-radius: 8px 8px 8px 2px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+  font: 500 12px/1.4 'Pretendard', system-ui, sans-serif;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.pp-ai-note:hover { background: #FDE68A; }
+.pp-ai-note::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  bottom: -6px;
+  border: 6px solid transparent;
+  border-top-color: #FEF3C7;
+  border-bottom: 0;
+}
+.pp-ai-note:hover::after { border-top-color: #FDE68A; }
+.pp-ai-num {
+  flex: none;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #F59E0B;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+}
+.pp-ai-txt {
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#ppAiNoteEditor {
+  position: fixed;
+  display: none;
+  z-index: 9003;
+  width: 300px;
+  background: #151B2E;
+  border-radius: 10px;
+  padding: 10px 12px 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+}
+.pp-ain-head {
+  font-size: 11px;
+  font-weight: 700;
+  color: #FBBF24;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+#ppAiNoteText {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 88px;
+  background: #0F1424;
+  color: #E2E8F0;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 8px;
+  font: 13px/1.5 'Pretendard', system-ui, sans-serif;
+}
+#ppAiNoteText:focus { outline: none; border-color: #F59E0B; }
+.pp-ain-btns { display: flex; gap: 6px; margin-top: 8px; }
+.pp-ain-gap { flex: 1; }
+.pp-ain-btns button {
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: #334155;
+}
+.pp-ain-btns button:hover { background: #475569; }
+#ppAiNoteOk { background: #F59E0B; color: #111; }
+#ppAiNoteOk:hover { background: #D97706; }
+#ppAiNoteDel { background: #7F1D1D; }
+#ppAiNoteDel:hover { background: #991B1B; }
+
+@media print {
+  #ppAiNotes, #ppAiNoteEditor { display: none !important; }
+}
 
 .pp-toast {
   position: fixed;

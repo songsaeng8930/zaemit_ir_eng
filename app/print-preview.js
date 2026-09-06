@@ -296,6 +296,8 @@ function renderSlides() {
     // IR 쪽 fitSlideContent() 가 돌지 않는 클론에서는 아래가 잘린다.
     // 저장된 줌이 없는(=100%) 페이지에 한해, 실제로 넘칠 때만 자동 축소한다.
     setTimeout(autoFitOverflowingPages, 250);
+    // 원본에 남아 있는 AI 수정 요청 메모(data-ai-note) 말풍선 표시
+    aiNoteRefresh();
   }, 100);
 }
 
@@ -1274,9 +1276,29 @@ function setupEventListeners() {
         if (saveDoc) saveEdits();
         return;
       }
+      // Ctrl+Z: 페이지 구조 변경(삭제·이동·복제)은 편집 모드 밖에서도 되돌린다.
+      // 페이지 작업은 화면을 다시 그려 브라우저 텍스트 undo 기록이 이미 사라진 상태라,
+      // 스택 맨 위가 페이지 작업이면 텍스트 편집 시각과 비교하지 않고 항상 우리가 처리한다.
+      // (요소 단위 구조 변경의 Ctrl+Z 처리는 아래 편집 모드 블록에 그대로 있다)
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && (e.key === 'z' || e.key === 'Z')) {
+        const top = inspUndoStack[inspUndoStack.length - 1];
+        const inField = e.target && e.target.closest && e.target.closest('input, textarea, select');
+        if (top && top.page && !inField) {
+          e.preventDefault();
+          inspUndoStack.pop().undo();
+          return;
+        }
+      }
       if (!editMode) return;
       if (e.key === 'Escape') {
+        if (aiNoteTarget) { aiNoteCloseEditor(); return; }
         inspClearSel();
+        return;
+      }
+      // Ctrl+Shift+M: 선택 요소에 AI 수정 요청 메모 달기
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'm' || e.key === 'M')) {
+        e.preventDefault();
+        aiNoteOpenEditor(inspSel);
         return;
       }
       // Ctrl+Z: 마지막 구조 변경(드래그/삭제/복제/초기화)이 마지막 텍스트
@@ -1884,9 +1906,10 @@ function toggleEditMode() {
     inspEnsureUI();
     if (!inspRaf) inspRaf = requestAnimationFrame(inspLoop);
     showToast(lang === 'ko'
-      ? '텍스트는 클릭해 바로 수정, 요소는 클릭 선택 후 삭제·복제·크기/여백 조절. Ctrl+Shift+C 스타일 복사 · Ctrl+Shift+V 붙여넣기 · Ctrl+Shift+>/< 글자 크기 1px 조절. "저장"으로 파일에 반영됩니다.'
-      : 'Click text to edit. Click an element to select it — delete, duplicate, resize. Ctrl+Shift+C copies a style, Ctrl+Shift+V applies it, Ctrl+Shift+>/< nudges font size by 1px. Save writes to file.');
+      ? '텍스트는 클릭해 바로 수정, 요소는 클릭 선택 후 삭제·복제·크기/여백 조절. Ctrl+Shift+C 스타일 복사 · Ctrl+Shift+V 붙여넣기 · Ctrl+Shift+>/< 글자 크기 1px 조절. 툴바의 박스 정렬 버튼으로 너비를 줄인 요소를 부모 기준 왼쪽·가운데·오른쪽에 맞출 수 있고, 여백 핸들을 Ctrl 누른 채 드래그하면 양쪽이 같이 조절됩니다. 페이지 삭제·이동·복제는 Ctrl+Z로 되돌릴 수 있습니다. "저장"으로 파일에 반영됩니다.'
+      : 'Click text to edit. Click an element to select it — delete, duplicate, resize. Ctrl+Shift+C copies a style, Ctrl+Shift+V applies it, Ctrl+Shift+>/< nudges font size by 1px. Toolbar box-align buttons snap a narrowed element left/center/right within its parent; hold Ctrl while dragging a padding/margin handle to adjust both sides. Page delete/move/duplicate can be undone with Ctrl+Z. Save writes to file.');
   } else {
+    aiNoteCloseEditor();
     inspClearSel();
     inspHover = null;
     const hb = document.getElementById('ppInspHover');
@@ -1949,8 +1972,10 @@ const INSP_PROPS = [
 let inspUndoStack = [];
 let inspLastTextEdit = 0;
 
-function inspPushUndo(fn) {
-  inspUndoStack.push({ t: Date.now(), undo: fn });
+// isPage=true: 페이지 삭제·이동·복제 같은 페이지 구조 변경. 편집 모드 밖에서도
+// Ctrl+Z로 되돌릴 수 있고, 텍스트 편집 시각과 비교하지 않고 항상 우선 처리한다.
+function inspPushUndo(fn, isPage) {
+  inspUndoStack.push({ t: Date.now(), undo: fn, page: !!isPage });
   if (inspUndoStack.length > 100) inspUndoStack.shift();
 }
 
@@ -1986,15 +2011,23 @@ const INSP_HANDLES = [
   ['w',  null,             'x',  1, 'pp-h-size pp-h-e',  '너비'],
   ['h',  null,             'y',  1, 'pp-h-size pp-h-s',  '높이'],
   ['wh', null,             'xy', 1, 'pp-h-size pp-h-se', '너비+높이'],
-  ['pt', 'padding-top',    'y',  1, 'pp-h-pad pp-h-pt',  '안쪽 여백 (위)'],
-  ['pr', 'padding-right',  'x', -1, 'pp-h-pad pp-h-pr',  '안쪽 여백 (오른쪽)'],
-  ['pb', 'padding-bottom', 'y', -1, 'pp-h-pad pp-h-pb',  '안쪽 여백 (아래)'],
-  ['pl', 'padding-left',   'x',  1, 'pp-h-pad pp-h-pl',  '안쪽 여백 (왼쪽)'],
-  ['mt', 'margin-top',     'y',  1, 'pp-h-mar pp-h-mt',  '바깥 여백 (위)'],
-  ['mr', 'margin-right',   'x',  1, 'pp-h-mar pp-h-mr',  '바깥 여백 (오른쪽)'],
-  ['mb', 'margin-bottom',  'y',  1, 'pp-h-mar pp-h-mb',  '바깥 여백 (아래)'],
-  ['ml', 'margin-left',    'x', -1, 'pp-h-mar pp-h-ml',  '바깥 여백 (왼쪽)']
+  ['pt', 'padding-top',    'y',  1, 'pp-h-pad pp-h-pt',  '안쪽 여백 (위) · Ctrl: 위아래 동시'],
+  ['pr', 'padding-right',  'x', -1, 'pp-h-pad pp-h-pr',  '안쪽 여백 (오른쪽) · Ctrl: 좌우 동시'],
+  ['pb', 'padding-bottom', 'y', -1, 'pp-h-pad pp-h-pb',  '안쪽 여백 (아래) · Ctrl: 위아래 동시'],
+  ['pl', 'padding-left',   'x',  1, 'pp-h-pad pp-h-pl',  '안쪽 여백 (왼쪽) · Ctrl: 좌우 동시'],
+  ['mt', 'margin-top',     'y',  1, 'pp-h-mar pp-h-mt',  '바깥 여백 (위) · Ctrl: 위아래 동시'],
+  ['mr', 'margin-right',   'x',  1, 'pp-h-mar pp-h-mr',  '바깥 여백 (오른쪽) · Ctrl: 좌우 동시'],
+  ['mb', 'margin-bottom',  'y',  1, 'pp-h-mar pp-h-mb',  '바깥 여백 (아래) · Ctrl: 위아래 동시'],
+  ['ml', 'margin-left',    'x', -1, 'pp-h-mar pp-h-ml',  '바깥 여백 (왼쪽) · Ctrl: 좌우 동시']
 ];
+
+// 여백 핸들의 맞은편 프로퍼티. Ctrl(⌘)을 누른 채 드래그하면 양쪽이 같은 양만큼 함께 움직인다.
+const INSP_OPPOSITE = {
+  'padding-top': 'padding-bottom', 'padding-bottom': 'padding-top',
+  'padding-left': 'padding-right', 'padding-right': 'padding-left',
+  'margin-top': 'margin-bottom', 'margin-bottom': 'margin-top',
+  'margin-left': 'margin-right', 'margin-right': 'margin-left'
+};
 
 function inspEnsureUI() {
   if (document.getElementById('ppInspSel')) return;
@@ -2046,6 +2079,20 @@ function inspEnsureUI() {
       <button type="button" id="ppInspStyleClear" title="${lang === 'ko' ? '인라인 스타일 삭제' : 'Clear inline style'}">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
       </button>
+      <span class="pp-tb-sep"></span>
+      <button type="button" id="ppInspBoxL" class="pp-box-al" data-box-align="left" title="${lang === 'ko' ? '박스 왼쪽 정렬 (부모 기준)' : 'Align box left (in parent)'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><rect x="6" y="5" width="16" height="6" rx="1.5"/><rect x="6" y="13" width="9" height="6" rx="1.5"/></svg>
+      </button>
+      <button type="button" id="ppInspBoxC" class="pp-box-al" data-box-align="center" title="${lang === 'ko' ? '박스 가운데 정렬 (부모 기준)' : 'Center box (in parent)'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><rect x="4" y="5" width="16" height="6" rx="1.5"/><rect x="7.5" y="13" width="9" height="6" rx="1.5"/></svg>
+      </button>
+      <button type="button" id="ppInspBoxR" class="pp-box-al" data-box-align="right" title="${lang === 'ko' ? '박스 오른쪽 정렬 (부모 기준)' : 'Align box right (in parent)'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4v16"/><rect x="2" y="5" width="16" height="6" rx="1.5"/><rect x="9" y="13" width="9" height="6" rx="1.5"/></svg>
+      </button>
+      <span class="pp-tb-sep"></span>
+      <button type="button" id="ppInspNote" title="${lang === 'ko' ? 'AI 수정 요청 메모 (Ctrl+Shift+M)' : 'Note for AI (Ctrl+Shift+M)'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6"/><path d="M9 9h6"/><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   ` + INSP_HANDLES.map(h =>
     `<div class="pp-insp-handle ${h[4]}" data-hkey="${h[0]}" title="${h[5]}"></div>`
@@ -2068,6 +2115,10 @@ function inspEnsureUI() {
   document.getElementById('ppInspStyleCopy').addEventListener('click', inspStyleCopy);
   document.getElementById('ppInspStylePaste').addEventListener('click', inspStylePaste);
   document.getElementById('ppInspStyleClear').addEventListener('click', inspStyleClear);
+  sel.querySelectorAll('button[data-box-align]').forEach(b => {
+    b.addEventListener('click', () => inspBoxAlign(b.getAttribute('data-box-align')));
+  });
+  document.getElementById('ppInspNote').addEventListener('click', () => aiNoteOpenEditor(inspSel));
   document.getElementById('ppInspMvPrev').addEventListener('click', () => inspMoveStep(-1));
   document.getElementById('ppInspMvNext').addEventListener('click', () => inspMoveStep(1));
   document.getElementById('ppInspMove').addEventListener('pointerdown', inspMoveDragStart);
@@ -2409,6 +2460,56 @@ function inspPick(target) {
 function inspSelect(el) {
   inspSel = el;
   inspPanelUpdate();
+  inspBoxAlignSync();
+}
+
+// ── 박스 정렬 (부모 기준 왼쪽/가운데/오른쪽) ──
+// 너비를 줄인 블록은 부모 안에서 왼쪽에 붙어 버려 가운데 정렬이 무너진다.
+// 좌우 마진을 auto/0 으로 세팅해 부모 기준 위치를 정한다. 블록·flex 자식·grid 자식
+// 모두에서 auto 마진이 남는 공간을 가져가므로 같은 방식이 통한다.
+// (text-align은 글자 정렬이라 별개. 우측 패널의 "정렬" 행이 그 역할)
+// 3벌(display/saveDoc/src) 반영과 Ctrl+Z 언두는 기존 스타일 헬퍼를 그대로 쓴다.
+function inspBoxAlign(where) {
+  if (!inspSel) return;
+  const ml = where === 'left' ? '0' : 'auto';
+  const mr = where === 'right' ? '0' : 'auto';
+  const undo = inspSnapshotStyle(inspSel, ['margin-left', 'margin-right']);
+  inspApplyStyleStr('margin-left', ml);
+  inspApplyStyleStr('margin-right', mr);
+  inspPushUndo(() => { undo(); inspBoxAlignSync(); if (typeof inspPanelUpdate === 'function') inspPanelUpdate(); });
+  inspBoxAlignSync();
+  if (typeof inspPanelUpdate === 'function') inspPanelUpdate();
+  // 명시 너비가 없는 블록은 부모 폭을 다 차지해 auto 마진이 효과가 없다. 그 경우만 안내.
+  const cs = getComputedStyle(inspSel);
+  const par = inspSel.parentElement;
+  const fills = par && Math.abs(inspSel.getBoundingClientRect().width - par.getBoundingClientRect().width) < 2
+    && !inspSel.style.getPropertyValue('width') && (cs.display === 'block' || cs.display === 'flex' || cs.display === 'grid');
+  const label = where === 'left' ? (lang === 'ko' ? '왼쪽' : 'left')
+    : where === 'right' ? (lang === 'ko' ? '오른쪽' : 'right') : (lang === 'ko' ? '가운데' : 'center');
+  if (fills) {
+    showToast(lang === 'ko'
+      ? '박스가 부모 너비를 꽉 채우고 있어 정렬이 보이지 않습니다. 너비를 먼저 줄이면 ' + label + ' 정렬이 적용됩니다. (Ctrl+Z로 취소)'
+      : 'The box already fills its parent, so alignment has no visible effect. Reduce the width first. (Ctrl+Z to undo)');
+  } else {
+    showToast(lang === 'ko'
+      ? '박스를 부모 기준 ' + label + '으로 정렬했습니다. (Ctrl+Z로 취소)'
+      : 'Box aligned ' + label + ' within its parent. (Ctrl+Z to undo)');
+  }
+}
+
+// 선택 요소의 인라인 좌우 마진을 읽어 툴바 정렬 버튼의 on 상태를 맞춘다
+function inspBoxAlignSync() {
+  const btns = document.querySelectorAll('button[data-box-align]');
+  if (!btns.length) return;
+  let cur = '';
+  if (inspSel) {
+    const ml = inspSel.style.getPropertyValue('margin-left').trim();
+    const mr = inspSel.style.getPropertyValue('margin-right').trim();
+    if (ml === 'auto' && mr === 'auto') cur = 'center';
+    else if (ml === 'auto' && mr === '0') cur = 'right';
+    else if (ml === '0' && mr === 'auto') cur = 'left';
+  }
+  btns.forEach(b => b.classList.toggle('on', b.getAttribute('data-box-align') === cur));
 }
 
 function inspClearSel() {
@@ -2616,16 +2717,20 @@ function inspDragStart(e) {
   const conf = INSP_HANDLES.find(h => h[0] === key);
   if (!conf) return;
   const cs = getComputedStyle(inspSel);
+  const opp = conf[1] ? (INSP_OPPOSITE[conf[1]] || null) : null;
+  // 맞은편 프로퍼티도 언두 스냅샷에 넣어 두면 Ctrl 사용 여부와 무관하게 한 번에 되돌아간다
   const undoProps = key === 'w' ? ['width'] : key === 'h' ? ['height']
-    : key === 'wh' ? ['width', 'height'] : [conf[1]];
+    : key === 'wh' ? ['width', 'height'] : (opp ? [conf[1], opp] : [conf[1]]);
   inspDragging = {
-    key, conf,
+    key, conf, opp,
     scale: inspScale(inspSel) || 1,
     startX: e.clientX,
     startY: e.clientY,
     startW: parseFloat(cs.width) || 0,
     startH: parseFloat(cs.height) || 0,
     start: conf[1] ? (parseFloat(cs.getPropertyValue(conf[1])) || 0) : 0,
+    startOpp: opp ? (parseFloat(cs.getPropertyValue(opp)) || 0) : 0,
+    oppTouched: false, // Ctrl로 맞은편을 한 번이라도 움직였는지 (Ctrl을 떼면 시작값으로 복귀)
     moved: false,
     undoFn: inspSnapshotStyle(inspSel, undoProps) // 드래그 한 번 = 언두 한 단위
   };
@@ -2652,6 +2757,19 @@ function inspDragMove(e) {
     let val = d.start + delta;
     if (d.conf[1].indexOf('padding') === 0) val = Math.max(0, val);
     inspApplyStyle(d.conf[1], val);
+    // Ctrl(⌘)을 누른 채면 맞은편 여백도 같은 양만큼 함께 조절 (좌↔우, 위↔아래).
+    // 드래그 중 Ctrl을 떼면 맞은편은 시작값으로 돌아가 한쪽만 조절한 상태가 된다.
+    if (d.opp) {
+      if (e.ctrlKey || e.metaKey) {
+        let oval = d.startOpp + delta;
+        if (d.opp.indexOf('padding') === 0) oval = Math.max(0, oval);
+        inspApplyStyle(d.opp, oval);
+        d.oppTouched = true;
+      } else if (d.oppTouched) {
+        inspApplyStyle(d.opp, d.startOpp);
+        d.oppTouched = false;
+      }
+    }
   }
   inspPanelUpdate(); // 우측 패널 값 실시간 갱신
 }
@@ -2663,6 +2781,174 @@ function inspDragEnd(e) {
     inspPushUndo(inspDragging.undoFn);
   }
   inspDragging = null;
+}
+
+// ═══════════════════════════════════════════════════════════
+// AI NOTES — "이건 AI에게 맡긴다" 말풍선.
+// 편집 모드에서 직접 고치기 어려운 요소에 메모를 달면 그 요소의 data-ai-note
+// 속성으로 기록되고, "저장" 시 원본 ir/<버전>/index.html에 그대로 남는다.
+// 뷰어는 이 속성을 무시하므로 화면에는 영향이 없다. VS Code의 Claude Code가
+// `node tools/ai-notes.js` 로 목록을 뽑아 수정한 뒤 속성을 지운다(CLAUDE.md §8).
+// 말풍선은 슬라이드 클론 밖(body 오버레이)에 그리므로 인쇄·PDF 캡처에 찍히지 않는다.
+// ═══════════════════════════════════════════════════════════
+const AI_NOTE_ATTR = 'data-ai-note';
+let aiNoteRaf = null;
+let aiNoteTarget = null;      // 편집기가 열려 있는 대상 요소 (display 클론)
+let aiNoteAnnounced = false;  // 로드 시 "메모 N개" 안내를 한 번만
+
+function aiNoteEnsureUI() {
+  if (document.getElementById('ppAiNotes')) return;
+  const layer = document.createElement('div');
+  layer.id = 'ppAiNotes';
+  document.body.appendChild(layer);
+
+  const ko = lang === 'ko';
+  const ed = document.createElement('div');
+  ed.id = 'ppAiNoteEditor';
+  ed.innerHTML = `
+    <div class="pp-ain-head">${ko ? 'AI 수정 요청' : 'Request for AI'}</div>
+    <textarea id="ppAiNoteText" rows="4" placeholder="${ko
+      ? '무엇을 어떻게 고쳐야 하는지 적어 주세요. 저장하면 원본 파일에 메모가 남고, Claude Code가 처리한 뒤 지웁니다.'
+      : 'Describe what to change. Saved into the source file; Claude Code removes it after fixing.'}"></textarea>
+    <div class="pp-ain-btns">
+      <button type="button" id="ppAiNoteDel">${ko ? '메모 삭제' : 'Remove'}</button>
+      <span class="pp-ain-gap"></span>
+      <button type="button" id="ppAiNoteCancel">${ko ? '취소' : 'Cancel'}</button>
+      <button type="button" id="ppAiNoteOk">${ko ? '확인' : 'OK'}</button>
+    </div>`;
+  document.body.appendChild(ed);
+  // 편집기 클릭이 슬라이드 텍스트 캐럿/선택을 뺏지 않게 (textarea 자체는 예외)
+  ed.addEventListener('mousedown', e => { if (e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
+  document.getElementById('ppAiNoteOk').addEventListener('click', () => {
+    if (!aiNoteTarget) return;
+    aiNoteSet(aiNoteTarget, document.getElementById('ppAiNoteText').value.trim());
+    aiNoteCloseEditor();
+  });
+  document.getElementById('ppAiNoteDel').addEventListener('click', () => {
+    if (aiNoteTarget) aiNoteSet(aiNoteTarget, '');
+    aiNoteCloseEditor();
+  });
+  document.getElementById('ppAiNoteCancel').addEventListener('click', aiNoteCloseEditor);
+  document.getElementById('ppAiNoteText').addEventListener('keydown', e => {
+    if (e.key === 'Escape') { e.preventDefault(); aiNoteCloseEditor(); }
+    else if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); document.getElementById('ppAiNoteOk').click(); }
+    // 편집기 안의 타이핑(Ctrl+Z 등)이 인스펙터 단축키로 새지 않게. Ctrl+S(저장)는 통과.
+    if (!((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S'))) e.stopPropagation();
+  });
+}
+
+function aiNoteOpenEditor(el) {
+  if (!el || el.classList.contains('slide-clone')) {
+    showToast(lang === 'ko'
+      ? '메모를 달 요소를 먼저 클릭해 선택하세요.'
+      : 'Click an element to select it first.', true);
+    return;
+  }
+  aiNoteEnsureUI();
+  aiNoteTarget = el;
+  const ed = document.getElementById('ppAiNoteEditor');
+  const ta = document.getElementById('ppAiNoteText');
+  ta.value = el.getAttribute(AI_NOTE_ATTR) || '';
+  document.getElementById('ppAiNoteDel').style.display = el.hasAttribute(AI_NOTE_ATTR) ? '' : 'none';
+  // 선택 요소 오른쪽에 붙이고, 화면을 벗어나면 왼쪽/안쪽으로 밀어 넣는다
+  const r = el.getBoundingClientRect();
+  const W = 300, H = 200, M = 12;
+  const limitR = aiNoteRightLimit();
+  let left = r.right + M, top = r.top;
+  if (left + W > limitR - M) left = r.left - W - M;
+  if (left < M) left = Math.max(M, limitR - W - M);
+  if (top + H > window.innerHeight - M) top = Math.max(M, window.innerHeight - H - M);
+  ed.style.left = left + 'px';
+  ed.style.top = top + 'px';
+  ed.style.display = 'block';
+  ta.focus();
+}
+
+function aiNoteCloseEditor() {
+  const ed = document.getElementById('ppAiNoteEditor');
+  if (ed) ed.style.display = 'none';
+  aiNoteTarget = null;
+}
+
+// 세 문서(display 클론·saveDoc·slides 소스)에 동시 기록. 빈 문자열이면 메모 삭제.
+function aiNoteSet(el, text) {
+  const { sEl, srcEl } = inspCounterparts(el);
+  const targets = [el, sEl, srcEl].filter(Boolean);
+  const prev = targets.map(t => t.getAttribute(AI_NOTE_ATTR));
+  const apply = (t, v) => { if (v == null || v === '') t.removeAttribute(AI_NOTE_ATTR); else t.setAttribute(AI_NOTE_ATTR, v); };
+  targets.forEach(t => apply(t, text));
+  markEditsDirty();
+  aiNoteRefresh();
+  inspPushUndo(() => {
+    targets.forEach((t, i) => apply(t, prev[i]));
+    markEditsDirty();
+    aiNoteRefresh();
+  });
+  showToast(text
+    ? (lang === 'ko' ? 'AI 수정 요청 메모를 달았습니다. "저장"하면 원본 파일에 기록됩니다.' : 'Note added. Save to write it into the source file.')
+    : (lang === 'ko' ? '메모를 지웠습니다.' : 'Note removed.'));
+}
+
+// 화면의 모든 data-ai-note 요소에 말풍선을 다시 그린다 (렌더·편집 후 호출)
+function aiNoteRefresh() {
+  aiNoteEnsureUI();
+  const layer = document.getElementById('ppAiNotes');
+  layer.innerHTML = '';
+  const els = document.querySelectorAll('#previewContent [' + AI_NOTE_ATTR + ']');
+  els.forEach((el, i) => {
+    const b = document.createElement('div');
+    b.className = 'pp-ai-note';
+    b._target = el;
+    const num = document.createElement('span');
+    num.className = 'pp-ai-num';
+    num.textContent = 'AI ' + (i + 1);
+    const txt = document.createElement('span');
+    txt.className = 'pp-ai-txt';
+    txt.textContent = el.getAttribute(AI_NOTE_ATTR);
+    b.appendChild(num);
+    b.appendChild(txt);
+    b.title = lang === 'ko' ? '클릭해서 메모 수정' : 'Click to edit the note';
+    b.addEventListener('mousedown', e => e.preventDefault());
+    b.addEventListener('click', () => {
+      if (!editMode) toggleEditMode();
+      inspSelect(el);
+      aiNoteOpenEditor(el);
+    });
+    layer.appendChild(b);
+  });
+  if (els.length && !aiNoteRaf) aiNoteRaf = requestAnimationFrame(aiNoteLoop);
+  if (els.length && !aiNoteAnnounced) {
+    aiNoteAnnounced = true;
+    showToast(lang === 'ko'
+      ? `AI 수정 요청 메모 ${els.length}개가 남아 있습니다. VS Code의 Claude Code에 "메모 처리해줘"라고 요청하세요.`
+      : `${els.length} note(s) for AI are pending. Ask Claude Code in VS Code to process them.`);
+  }
+}
+
+// rAF 루프: 스크롤/줌/리사이즈와 무관하게 말풍선을 요소의 우상단에 밀착
+function aiNoteLoop() {
+  const layer = document.getElementById('ppAiNotes');
+  const bubbles = layer ? layer.children : [];
+  if (!bubbles.length) { aiNoteRaf = null; return; }
+  for (const b of bubbles) {
+    const el = b._target;
+    if (!el || !document.contains(el)) { b.style.display = 'none'; continue; }
+    const r = el.getBoundingClientRect();
+    if (!r.width && !r.height) { b.style.display = 'none'; continue; }
+    b.style.display = 'flex';
+    // 우측 인스펙터 패널(열려 있을 때)과 화면 밖으로는 나가지 않게 왼쪽으로 밀어 넣는다
+    const limitR = aiNoteRightLimit();
+    b.style.left = Math.max(8, Math.min(r.right - 10, limitR - b.offsetWidth)) + 'px';
+    b.style.top = (r.top + 2) + 'px';
+  }
+  aiNoteRaf = requestAnimationFrame(aiNoteLoop);
+}
+
+// 말풍선·편집기가 넘어가면 안 되는 오른쪽 한계: 인스펙터 패널이 보이면 그 왼쪽 가장자리
+function aiNoteRightLimit() {
+  const pn = document.getElementById('ppInspPanel');
+  if (pn && getComputedStyle(pn).display !== 'none') return pn.getBoundingClientRect().left - 8;
+  return window.innerWidth - 8;
 }
 
 function inspDelete() {
@@ -3936,10 +4222,29 @@ function afterPageChange(focusIdx) {
   saveZooms();
 }
 
-function movePage(idx, dir) {
+// 페이지 구조 변경 언두 공통: 현재 slides 배열에서 요소 위치를 찾아 되돌린다.
+// (스택은 LIFO라 인덱스 대신 요소 참조로 찾는 편이 다른 작업이 섞여도 안전하다)
+function pageLabel(idx, el) {
+  const titleKey = 'title' + lang.charAt(0).toUpperCase() + lang.slice(1);
+  const title = (el && el.dataset && el.dataset[titleKey]) || '';
+  return (idx + 1) + (lang === 'ko' ? '페이지' : '') + (title ? ' (' + title + ')' : '');
+}
+
+function movePage(idx, dir, _fromUndo) {
   const j = idx + dir;
   if (j < 0 || j >= slides.length) return;
   beforePageChange();
+  if (!_fromUndo) {
+    const movedEl = slides[idx];
+    inspPushUndo(() => {
+      const k = slides.indexOf(movedEl);
+      if (k < 0) return;
+      movePage(k, -dir, true);
+      showToast(lang === 'ko'
+        ? '페이지 이동을 되돌렸습니다.'
+        : 'Page move undone.');
+    }, true);
+  }
   // saveDoc DOM 순서 변경 (직렬화 순서가 곧 저장 파일의 페이지 순서)
   const a = saveDocSlideOf(idx), b = saveDocSlideOf(j);
   if (a && b) (dir < 0 ? b.before(a) : b.after(a));
@@ -3960,17 +4265,60 @@ function deletePage(idx) {
   const titleKey = 'title' + lang.charAt(0).toUpperCase() + lang.slice(1);
   const title = slides[idx].dataset[titleKey] || String(idx + 1);
   const msg = lang === 'ko'
-    ? (idx + 1) + '페이지(' + title + ')를 삭제할까요?\n"저장"을 눌러야 파일에서도 삭제됩니다.'
-    : 'Delete page ' + (idx + 1) + ' (' + title + ')?\nUse "Save" to persist the change.';
+    ? (idx + 1) + '페이지(' + title + ')를 삭제할까요?\nCtrl+Z로 되돌릴 수 있고, "저장"을 눌러야 파일에서도 삭제됩니다.'
+    : 'Delete page ' + (idx + 1) + ' (' + title + ')?\nCtrl+Z undoes it. Use "Save" to persist the change.';
   if (!confirm(msg)) return;
+  removePageAt(idx, true);
+  showToast(lang === 'ko'
+    ? (idx + 1) + '페이지를 삭제했습니다. Ctrl+Z로 되돌릴 수 있습니다.'
+    : 'Page ' + (idx + 1) + ' deleted. Press Ctrl+Z to undo.');
+}
+
+// 실제 페이지 제거. pushUndo=true 면 되돌리기(재삽입)를 언두 스택에 올린다.
+// 복제 페이지 취소(addPageAfter 언두)에서는 pushUndo=false 로 호출한다.
+function removePageAt(idx, pushUndo) {
+  if (idx < 0 || idx >= slides.length) return;
   beforePageChange();
+  const srcEl = slides[idx];
   const sEl = saveDocSlideOf(idx);
+  const srcParent = srcEl.parentNode;
+  const sParent = sEl ? sEl.parentNode : null;
   if (sEl) sEl.remove();
-  if (slides[idx].parentNode) slides[idx].remove();
+  if (srcParent) srcEl.remove();
   slides.splice(idx, 1);
   total = slides.length;
-  forEachPageSetting(arr => arr.splice(idx, 1));
+  // 페이지별 설정(줌·정렬·레이아웃·글꼴 보정)도 같이 보관했다가 되돌릴 때 복원
+  const removedSettings = [];
+  forEachPageSetting(arr => removedSettings.push(arr.splice(idx, 1)[0]));
   afterPageChange(Math.min(idx, slides.length - 1));
+
+  if (!pushUndo) return;
+  inspPushUndo(() => {
+    beforePageChange();
+    // 되돌릴 위치: 삭제 당시 인덱스. 현재 페이지 수를 넘으면 맨 뒤에 붙인다.
+    const at = Math.min(idx, slides.length);
+    const refSrc = at < slides.length ? slides[at] : null;
+    const refS = at < slides.length ? saveDocSlideOf(at) : null;
+    const prevSrc = at > 0 ? slides[at - 1] : null;
+    const prevS = at > 0 ? saveDocSlideOf(at - 1) : null;
+    if (srcParent) {
+      if (refSrc && refSrc.parentNode === srcParent) srcParent.insertBefore(srcEl, refSrc);
+      else if (prevSrc && prevSrc.parentNode === srcParent) prevSrc.after(srcEl);
+      else srcParent.appendChild(srcEl);
+    }
+    if (sEl && sParent) {
+      if (refS && refS.parentNode === sParent) sParent.insertBefore(sEl, refS);
+      else if (prevS && prevS.parentNode === sParent) prevS.after(sEl);
+      else sParent.appendChild(sEl);
+    }
+    slides.splice(at, 0, srcEl);
+    total = slides.length;
+    forEachPageSetting((arr, i) => arr.splice(at, 0, removedSettings[i]));
+    afterPageChange(at);
+    showToast(lang === 'ko'
+      ? '삭제한 ' + pageLabel(at, srcEl) + '를 되돌렸습니다.'
+      : 'Restored deleted page ' + (at + 1) + '.');
+  }, true);
 }
 
 function addPageAfter(idx) {
@@ -4004,4 +4352,13 @@ function addPageAfter(idx) {
     arr.splice(idx + 1, 0, copy);
   });
   afterPageChange(idx + 1);
+  // 언두: 방금 추가한 복제 페이지를 제거 (복제본 위치를 요소 참조로 찾는다)
+  inspPushUndo(() => {
+    const k = slides.indexOf(srcNew);
+    if (k < 0 || slides.length <= 1) return;
+    removePageAt(k, false);
+    showToast(lang === 'ko'
+      ? '페이지 복제를 되돌렸습니다.'
+      : 'Page duplication undone.');
+  }, true);
 }

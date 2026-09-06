@@ -11,3 +11,6 @@
 # 인쇄 미리보기 원본 저장 시 자동 백업
 *.bak
 *.local-bak
+
+# 강의 원본 PPT (127MB, GitHub 100MB 제한 초과 · 커밋 금지)
+ir/260906_dmoa/asset/
