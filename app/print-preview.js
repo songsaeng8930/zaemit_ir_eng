@@ -1257,6 +1257,11 @@ function setupEventListeners() {
       if (!editMode || inspDragging) return;
       inspHover = inspPick(e.target);
     });
+    // 핸들·툴바 위에 있을 때도 좌표가 갱신되어야 여백 핸들 표시 판정이 끊기지 않는다
+    document.addEventListener('mousemove', (e) => {
+      inspMouseX = e.clientX;
+      inspMouseY = e.clientY;
+    }, true);
     previewContent.addEventListener('mouseleave', () => { inspHover = null; });
 
     // 엘리먼트 인스펙터: 클릭 선택 (텍스트 캐럿 배치와 공존 — preventDefault 안 함)
@@ -2586,6 +2591,45 @@ function inspUpdateAreas(sb) {
   // 콘텐츠 박스 점선 — 패딩이 전혀 없으면 선택 외곽선과 겹치므로 표시하지 않는다
   const hasPad = pt > 0.5 || pr > 0.5 || pb > 0.5 || pl > 0.5;
   set('content', { left: px(pl), top: px(pt), right: px(pr), bottom: px(pb), width: 'auto', height: 'auto' }, hasPad);
+  inspRevealHandles(sb, { pt, pr, pb, pl, mt, mr, mb, ml });
+}
+
+// 여백 핸들 표시 판정: 마우스가 어느 여백 띠 위에 있는지 보고 그 변의 핸들만 .pp-show.
+// 여백이 0이라 띠가 없어도 테두리 안쪽(패딩)·바깥쪽(마진) INSP_REVEAL_MIN px를 감지 영역으로
+// 써서 0에서도 늘릴 수 있다. 크기 핸들(너비·높이·모서리) 근처에서는 여백 핸들을 띄우지 않아
+// 크기 핸들 클릭이 막히지 않는다. 드래그 중에는 판정을 멈춘다(.pp-active가 표시를 맡는다).
+const INSP_REVEAL_MIN = 16;   // 띠 최소 감지 두께
+const INSP_SIZE_GUARD = 14;   // 크기 핸들 우선 반경
+function inspRevealHandles(sb, b) {
+  if (!sb || !inspSel) return;
+  const hs = sb.querySelectorAll('.pp-h-pad, .pp-h-mar');
+  if (!hs.length) return;
+  if (inspDragging) return;
+  const r = inspSel.getBoundingClientRect();
+  const x = inspMouseX, y = inspMouseY;
+  const show = {};
+  const near = (px, py) => Math.abs(x - px) <= INSP_SIZE_GUARD && Math.abs(y - py) <= INSP_SIZE_GUARD;
+  const rootSel = sb.classList.contains('pp-root-sel');
+  const sizeGuard = !rootSel && (near(r.right, r.top + r.height / 2) || near(r.left + r.width / 2, r.bottom) || near(r.right, r.bottom));
+  if (!sizeGuard && x != null && y != null) {
+    const m = Math.max;
+    const inX = x >= r.left && x <= r.right;
+    const inY = y >= r.top && y <= r.bottom;
+    // 패딩: 테두리 안쪽
+    if (inX && y >= r.top && y <= r.top + m(b.pt, INSP_REVEAL_MIN)) show.pt = true;
+    if (inX && y <= r.bottom && y >= r.bottom - m(b.pb, INSP_REVEAL_MIN)) show.pb = true;
+    if (inY && x >= r.left && x <= r.left + m(b.pl, INSP_REVEAL_MIN)) show.pl = true;
+    if (inY && x <= r.right && x >= r.right - m(b.pr, INSP_REVEAL_MIN)) show.pr = true;
+    // 마진: 테두리 바깥쪽 (상하 띠는 좌우 마진 폭까지 포함)
+    if (!rootSel) {
+      const mx = x >= r.left - b.ml && x <= r.right + b.mr;
+      if (mx && y < r.top && y >= r.top - m(b.mt, INSP_REVEAL_MIN)) show.mt = true;
+      if (mx && y > r.bottom && y <= r.bottom + m(b.mb, INSP_REVEAL_MIN)) show.mb = true;
+      if (inY && x < r.left && x >= r.left - m(b.ml, INSP_REVEAL_MIN)) show.ml = true;
+      if (inY && x > r.right && x <= r.right + m(b.mr, INSP_REVEAL_MIN)) show.mr = true;
+    }
+  }
+  hs.forEach(h => h.classList.toggle('pp-show', !!show[h.getAttribute('data-hkey')]));
 }
 
 // 화면 px → 요소 로컬 px 변환 배율 (transform scale 등 누적 스케일)
