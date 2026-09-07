@@ -168,6 +168,7 @@ PDF/인쇄용 미리보기 페이지.
 1. 원본 슬라이드를 복제(clone)
 2. CSS 오버라이드 최소화
 3. content-wrapper로 줌/정렬만 적용
+4. 편집 모드의 "AI 수정 요청" 말풍선은 요소의 `data-ai-note` 속성으로 원본에 저장 → `node tools/ai-notes.js`로 목록 확인, 처리 후 속성 제거 (CLAUDE.md §8)
 
 **자세한 내용**: [ir-print-compatibility.md](./ir-print-compatibility.md)
 

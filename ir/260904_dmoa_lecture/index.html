@@ -1,1014 +1,148 @@
 <!DOCTYPE html>
-<html lang="ko"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=1280">
-<title>디모아 AI 특강 1차시 · AX가 왜 이렇게 어려운가</title>
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&amp;family=Russo+One&amp;display=swap" rel="stylesheet">
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=1280"><title>디모아 AI 특강 · AX가 어려운 이유</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fugaz+One&amp;display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --z-ink:#111;
-  --z-note:#a6afc0;
-  --z-accent:#3B82F6;
-  --z-accent-light:#74ACFF;
-  --z-accent-deep:#2C63D9;
-  --z-bg:#FDFDFF;
-  --z-risk:#E03131;
-  --z-pa-lav:185,168,255;
-  --z-pa-sky:158,200,255;
-  --z-pa-pink:247,185,220;
-  --z-pa-mint:167,232,216;
-  --z-pa-peach:255,211,184;
-  --z-card-line:#DCE5F4;
-  --z-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 5px rgba(30,58,138,.05),0 1.171875vw 2.421875vw -0.78125vw rgba(59,130,246,.15);
-  --z-glow:0 0.9375vw 1.953125vw -0.703125vw rgba(59,130,246,.45);
-}
-html,body{height:100%;overflow:hidden;background:var(--z-bg)}
-body{font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;color:var(--z-ink);font-size:max(18px,1.25vw);-webkit-font-smoothing:antialiased;word-break:keep-all}
+.slide,.slide *,.slide *::before,.slide *::after{box-sizing:border-box;margin:0;padding:0}
+:root{--z-ink:#111;--z-note:#627087;--z-accent:#2563eb;--z-bg:#FDFDFF;--z-risk:#c52e35}
+html:has(> body.lecture-document),body.lecture-document{height:100%;overflow:hidden;background:var(--z-bg);margin:0}
+body.lecture-document,.slide{font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;color:var(--z-ink);font-size:max(18px,1.40625vw);-webkit-font-smoothing:antialiased;word-break:keep-all}
+.slide{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:3.125vw 5.46875vw 7vw;opacity:0;background:var(--z-bg);overflow:hidden}
+.slide.active{display:flex;opacity:1}
+.slide-inner{position:relative;z-index:2;width:100%;max-width:100%;display:flex;flex-direction:column;justify-content:center;transform-origin:center center}
+.mesh{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at var(--mx,0%) 0%,rgba(158,200,255,.3),rgba(158,200,255,0) 55%),radial-gradient(ellipse at var(--my,100%) 100%,rgba(var(--pastel,247,185,220),.28),rgba(var(--pastel,247,185,220),0) 55%)}
+.slide:nth-child(4n+2){--mx:100%;--my:0%;--pastel:167,232,216}.slide:nth-child(4n+3){--mx:20%;--my:90%;--pastel:255,211,184}.slide:nth-child(4n){--mx:90%;--my:10%;--pastel:185,168,255}
+.head{margin-bottom:2.34375vw}.section-label,.eyebrow{font-size:max(18px,1.40625vw);font-weight:650;line-height:1.4;color:var(--z-note)}
+.section-label{margin-bottom:1.09375vw}.section-title{font-size:3.28125vw;font-weight:800;line-height:1.2;letter-spacing:-.035em}.section-desc{font-size:1.5625vw;margin-top:1.09375vw;line-height:1.5}
+.slide h3{font-size:2.5vw;line-height:1.35;letter-spacing:-.025em;font-weight:750}.slide p{line-height:1.5}.slide em{font-style:normal;color:var(--z-accent)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:4.6875vw;align-items:center}.point .eyebrow{margin-bottom:1.09375vw}.point>p:last-child{font-size:1.71875vw;margin-top:1.40625vw;line-height:1.55}.point.accent{background:#eaf1ff;padding:2.34375vw;border-radius:1.5625vw}
+.stat>strong{display:block;font-size:7.5vw;line-height:1.05;letter-spacing:-.06em;color:var(--z-accent);font-variant-numeric:tabular-nums}.stat h3{font-size:2.03125vw;margin-top:1.09375vw}.stat p{font-size:1.5625vw;margin-top:.78125vw;color:var(--z-note)}
+.take{font-size:1.875vw;font-weight:650;line-height:1.45;margin-top:2.34375vw;max-width:86vw}.source{font-size:max(18px,1.40625vw);color:var(--z-note);margin-top:1.25vw;line-height:1.4}.source a{color:inherit;text-decoration:none}.source a:hover{text-decoration:underline}.bridge{margin-top:1.5625vw;padding-top:1.09375vw;border-top:1px solid #d6deea;display:flex;gap:1.09375vw;align-items:baseline;font-size:max(18px,1.40625vw);line-height:1.4}.bridge span{flex:none;color:var(--z-accent);font-weight:750}.bridge p{font-size:inherit}
+.flow{display:flex;gap:2.03125vw;align-items:stretch}.flow>div{flex:1;min-width:0;position:relative;padding-right:1.09375vw}.flow span{display:block;color:var(--z-accent);font-weight:800;font-size:3.75vw;line-height:1;margin-bottom:1.5625vw}.flow h3{font-size:2.03125vw}.flow p{font-size:1.71875vw;margin-top:1.09375vw}.flow>div:not(:last-child)::after{content:'→';position:absolute;right:-.9375vw;top:.3125vw;color:var(--z-note);font-size:2.34375vw}
+.rows>div{display:grid;grid-template-columns:15.625vw 1fr;gap:2.34375vw;padding:1.171875vw 0;border-bottom:1px solid #d6deea;align-items:baseline}.rows strong{font-size:1.953125vw;line-height:1.35}.rows p{font-size:1.71875vw}.layout-agenda .rows>div{padding:.78125vw 0}.layout-agenda .rows strong{font-size:1.71875vw}
+table{width:100%;border-collapse:collapse;table-layout:fixed;overflow-wrap:normal;font-size:1.5625vw;line-height:1.5}th{text-align:left;font-weight:700;color:var(--z-note);padding:.9375vw 1.09375vw}td{padding:1.171875vw 1.09375vw;border-bottom:1px solid #d6deea;vertical-align:middle}th:first-child,td:first-child{padding-left:0;font-weight:700}table th:first-child{width:30%}.layout-worksheet th:first-child{width:18%}.layout-worksheet td:first-child{white-space:nowrap}.layout-worksheet td{font-size:1.71875vw}
+.statement{padding:1.171875vw 0 1.5625vw}.statement h3{font-size:4.0625vw;line-height:1.35}.statement p{font-size:1.875vw;margin-top:1.5625vw;line-height:1.55}.layout-chapter .statement h3{font-size:4.53125vw}.layout-chapter .head{margin-bottom:1.25vw}.layout-chapter .section-title{font-size:2.03125vw;color:var(--z-note)}
+.bars{display:grid;gap:1.71875vw}.bar-row{display:grid;grid-template-columns:20.3125vw 1fr 10.15625vw;gap:1.5625vw;align-items:center}.bar-row>span{font-size:1.71875vw}.bar-row>strong{font-size:2.8125vw;font-variant-numeric:tabular-nums}.track{height:3.125vw;background:#e5eaf2;border-radius:.46875vw;overflow:hidden}.fill{height:100%;background:#8896aa}.fill.blue{background:var(--z-accent)}.fill.risk{background:var(--z-risk)}.equation{font-size:1.875vw;line-height:1.65;margin-top:1.5625vw}
+.scenario{display:grid;grid-template-columns:1fr 1fr;gap:4.6875vw;align-items:center}.scenario>div>p{font-size:1.71875vw;margin-top:1.40625vw}.scenario .eyebrow{font-size:max(18px,1.40625vw);margin:0 0 1.25vw}.ticket{background:#eaf1ff;padding:2.34375vw;border-radius:1.5625vw;transform:rotate(1deg)}.ticket>p{margin:0 0 1.25vw!important}.ticket h3{font-size:2.5vw}.case-scene{display:grid;grid-template-columns:1fr 1fr;gap:4.6875vw;align-items:center}.dialogue{background:#eaf1ff;padding:2.34375vw;border-radius:1.5625vw}.dialogue h3{font-size:1.71875vw;margin-top:1.25vw}.speech{font-size:2.34375vw;margin-top:1.09375vw;font-weight:650}.case-outcome h3{margin:1.25vw 0}.case-outcome>p:last-child{font-size:1.71875vw}
+.capacity{display:flex;align-items:center;justify-content:space-between;gap:1.5625vw;padding:2.34375vw 0}.capacity>div{flex:1;text-align:center}.capacity strong{font-size:6.25vw;letter-spacing:-.05em;color:var(--z-accent)}.capacity p{font-size:1.5625vw;margin-top:1.09375vw}.capacity>span{font-size:3.125vw;color:var(--z-note)}
+.profile{display:grid;grid-template-columns:20.3125vw 1fr;gap:4.6875vw;align-items:center}.profile img{width:20.3125vw;height:23.4375vw;object-fit:cover;border-radius:1.5625vw}.profile h3{margin:1.25vw 0}.profile p{font-size:1.71875vw}.profile .eyebrow{font-size:max(18px,1.40625vw)}
+.record{padding:2.34375vw;background:#eef4ff;border-radius:1.5625vw}.record h3{margin:1.09375vw 0 1.875vw}.record-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5625vw 3.125vw}.record-grid p{font-size:1.71875vw}.record-grid b{font-size:1.5625vw;color:var(--z-accent)}
+.cost{display:grid;grid-template-columns:1fr 1fr;gap:2.34375vw}.cost>div>p{font-size:1.71875vw;min-height:5.15625vw}.cost strong{font-size:4.375vw;font-weight:800;letter-spacing:-.035em}.cost-result{grid-column:1/-1;display:flex;gap:3.125vw;align-items:center;padding-top:1.5625vw;border-top:1px solid #d6deea}.cost-result span{font-size:1.875vw}.cost-result strong{font-size:3.125vw;color:var(--z-accent)}
+.product-name{font-family:'Fugaz One',sans-serif;color:var(--z-accent);font-size:4.6875vw;font-weight:400;font-synthesis:none;margin-bottom:1.875vw}.product .flow span{font-size:2.5vw}.event-preview{background:#eaf1ff;border-radius:1.5625vw;padding:2.34375vw}.event-preview>p{font-size:max(18px,1.40625vw)!important;color:var(--z-note);margin:0 0 1.5625vw!important}.event-lines{display:flex;flex-direction:column;gap:1.09375vw;margin-top:1.875vw}.event-lines span{font-size:1.71875vw;padding:.78125vw 0;border-top:1px solid #b6c8e7}.scenario .rows>div{grid-template-columns:4.6875vw 1fr;gap:1.5625vw;padding:.78125vw 0}.scenario .rows{margin-top:1.25vw}.scenario .rows p,.scenario .rows strong{font-size:1.5625vw}
+.closing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.34375vw}.closing-grid h3{font-size:2.03125vw}.closing-grid .point>p:last-child{font-size:1.5625vw}.closing-line{font-size:2.34375vw;line-height:1.5;font-weight:700;margin-top:2.34375vw}.sources{display:grid;gap:1.5625vw}.sources a{display:flex;flex-direction:column;gap:.625vw;color:var(--z-ink);text-decoration:none;border-bottom:1px solid #d6deea;padding-bottom:1.25vw}.sources strong{font-size:1.71875vw}.sources span{font-size:max(18px,1.40625vw);color:var(--z-accent)}.sources a:hover strong{text-decoration:underline}
+.cover-stage{display:grid;grid-template-columns:1.25fr 1fr;gap:4.6875vw;align-items:center}.layout-cover h1{font-size:5.625vw;line-height:1.15;letter-spacing:-.05em;margin:1.875vw 0}.layout-cover .lead{font-size:2.03125vw;line-height:1.5}.byline{font-size:max(18px,1.40625vw);color:var(--z-note);margin-top:2.8125vw}.cover-art{display:flex;flex-direction:column;gap:1.5625vw;transform:rotate(-5deg)}.cover-art>div{background:#fff;padding:2.34375vw;border-radius:1.25vw;box-shadow:0 1.25vw 3.125vw rgba(55,90,160,.12);font-weight:750;font-size:2.1875vw;display:flex;justify-content:space-between;gap:1.5625vw}.cover-art>div:nth-child(2){transform:translateX(-2.34375vw)}.cover-art>div:last-child{background:var(--z-accent);color:white}.cover-art span{font-size:1.5625vw;font-weight:500;align-self:center}
+a:focus-visible{outline:.234375vw solid var(--z-accent);outline-offset:.3125vw}
+</style></head><body class="lecture-document">
+<div class="slide layout-cover active" data-title-ko="AX가 어려운 이유" data-layout="cover"><div class="mesh"></div><div class="slide-inner"><div class="cover-stage"><div class="cover-copy"><p class="eyebrow">디모아 AI 특강 · 1차시</p><h1>AX가<br><em>어려운 이유</em></h1><p class="lead">AI를 업무 성과로 연결하려면<br>맡길 일과 검토 기준부터 정해야 합니다.</p><p class="byline">위븐 김정환 Ph.D · 13:40~14:40 · kjh@weven.kr</p></div><div class="cover-art" aria-label="AI 초안 작성부터 검토와 고객 전달까지의 업무 단계"><div>AI 초안 작성<span>생성</span></div><div>담당자 확인<span>검토</span></div><div>고객에게 전달<span>완료</span></div></div></div></div></div>
 
-/* ── SLIDES ── */
-.slide{position:fixed;top:0;left:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;padding:3.125vw 3.515625vw 7vw;opacity:0;background:var(--z-bg);overflow:hidden}
-.slide.active{display:flex;opacity:1;transition:opacity .4s cubic-bezier(0.4,0,0.2,1)}
-.slide .slide-inner{position:relative;z-index:2;max-width:100%;width:100%;overflow:visible;display:flex;flex-direction:column;justify-content:center;transform-origin:center center}
+<div class="slide layout-stat" data-title-ko="첫 달에 고객 대화 230만 건을 처리한 AI" data-layout="stat"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">01 · 고객센터에서 시작</p><h2 class="section-title">첫 달에 고객 대화 230만 건을 처리한 AI</h2></div><div class="lesson-content"><div class="duo"><div class="stat"><strong>230만</strong><h3>클라르나 AI가 첫 달에 처리한 대화</h3><p>2024년 2월 발표</p></div><div class="point "><p class="eyebrow">KLARNA · 결제 서비스</p><h3>전체 상담 채팅의<br><em>약 3분의 2</em></h3><p>클라르나는 이 처리량이 상담원 700명의 업무량에 해당한다고 발표했습니다.</p></div></div><p class="source">※ Source: <a href="https://www.prnewswire.com/news-releases/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month-302072744.html" target="_blank" rel="noopener">Klarna 보도자료 · 2024.02 · 회사 자체 집계 ↗</a></p><div class="bridge"><span>다음</span><p>이 보고를 받은 고객센터장이라면 어떤 결정을 내릴지 생각해 보겠습니다.</p></div></div></div></div>
 
-/* ── 파스텔 메쉬 ── */
-.mesh{position:absolute;inset:-6.25vw;z-index:0;pointer-events:none;filter:blur(2.734375vw);background:var(--mesh)}
-.m01{--mesh:radial-gradient(72.27vw 59.38vw at 4% 8%,rgba(var(--z-pa-lav),.62) 0%,rgba(var(--z-pa-lav),0) 68%),radial-gradient(74.22vw 61.72vw at 96% 22%,rgba(var(--z-pa-sky),.58) 0%,rgba(var(--z-pa-sky),0) 68%),radial-gradient(59.38vw 50.78vw at 88% 98%,rgba(var(--z-pa-pink),.46) 0%,rgba(var(--z-pa-pink),0) 68%),#FDFDFF}
-.m02{--mesh:radial-gradient(72.27vw 59.38vw at 2% 6%,rgba(var(--z-pa-mint),.42) 0%,rgba(var(--z-pa-mint),0) 68%),radial-gradient(74.22vw 61.72vw at 98% 94%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 68%),#FDFDFF}
-.m03{--mesh:radial-gradient(64.45vw 52.73vw at 100% 2%,rgba(var(--z-pa-peach),.40) 0%,rgba(var(--z-pa-peach),0) 64%),radial-gradient(68.36vw 50.78vw at 6% 104%,rgba(var(--z-pa-sky),.38) 0%,rgba(var(--z-pa-sky),0) 66%),#FDFDFF}
-.m04{--mesh:radial-gradient(74.22vw 58.59vw at 4% 0%,rgba(var(--z-pa-pink),.42) 0%,rgba(var(--z-pa-pink),0) 66%),radial-gradient(74.22vw 58.59vw at 96% 100%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 66%),#FDFDFF}
-.m05{--mesh:radial-gradient(58.59vw 54.69vw at -4% 50%,rgba(var(--z-pa-lav),.40) 0%,rgba(var(--z-pa-lav),0) 62%),radial-gradient(58.59vw 54.69vw at 104% 50%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 62%),#FDFDFF}
-.m06{--mesh:radial-gradient(66.41vw 41.02vw at 8% -12%,rgba(var(--z-pa-peach),.74) 0%,rgba(var(--z-pa-peach),0) 76%),radial-gradient(58.59vw 37.11vw at 50% -16%,rgba(var(--z-pa-pink),.66) 0%,rgba(var(--z-pa-pink),0) 74%),radial-gradient(66.41vw 42.97vw at 92% -10%,rgba(var(--z-pa-sky),.74) 0%,rgba(var(--z-pa-sky),0) 76%),radial-gradient(50.78vw 35.16vw at 50% 118%,rgba(var(--z-pa-lav),.40) 0%,rgba(var(--z-pa-lav),0) 72%),#FDFDFF}
-.m07{--mesh:radial-gradient(68.36vw 54.69vw at -2% 6%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 66%),radial-gradient(56.64vw 46.88vw at 102% 96%,rgba(var(--z-pa-mint),.40) 0%,rgba(var(--z-pa-mint),0) 62%),#FDFDFF}
-.m08{--mesh:radial-gradient(74.22vw 58.59vw at 94% -4%,rgba(var(--z-pa-peach),.44) 0%,rgba(var(--z-pa-peach),0) 66%),radial-gradient(74.22vw 58.59vw at 4% 102%,rgba(var(--z-pa-lav),.42) 0%,rgba(var(--z-pa-lav),0) 66%),#FDFDFF}
-.m09{--mesh:radial-gradient(58.59vw 48.83vw at 50% -10%,rgba(var(--z-pa-pink),.40) 0%,rgba(var(--z-pa-pink),0) 64%),radial-gradient(62.5vw 50.78vw at 96% 104%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 66%),#FDFDFF}
-.m10{--mesh:radial-gradient(70.31vw 58.59vw at 2% 100%,rgba(var(--z-pa-mint),.44) 0%,rgba(var(--z-pa-mint),0) 66%),radial-gradient(58.59vw 50.78vw at 98% -6%,rgba(var(--z-pa-lav),.42) 0%,rgba(var(--z-pa-lav),0) 62%),#FDFDFF}
-.m11{--mesh:radial-gradient(62.5vw 44.92vw at 6% -12%,rgba(var(--z-pa-lav),.76) 0%,rgba(var(--z-pa-lav),0) 76%),radial-gradient(66.41vw 46.88vw at 52% -14%,rgba(var(--z-pa-sky),.70) 0%,rgba(var(--z-pa-sky),0) 76%),radial-gradient(64.45vw 46.88vw at 94% -8%,rgba(var(--z-pa-mint),.72) 0%,rgba(var(--z-pa-mint),0) 76%),radial-gradient(62.5vw 42.97vw at 50% 118%,rgba(var(--z-pa-peach),.42) 0%,rgba(var(--z-pa-peach),0) 74%),#FDFDFF}
-.m12{--mesh:radial-gradient(76.17vw 60.55vw at 96% 0%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 66%),radial-gradient(76.17vw 60.55vw at 2% 100%,rgba(var(--z-pa-peach),.42) 0%,rgba(var(--z-pa-peach),0) 66%),#FDFDFF}
-.m13{--mesh:radial-gradient(52.73vw 42.97vw at -4% -6%,rgba(var(--z-pa-mint),.42) 0%,rgba(var(--z-pa-mint),0) 62%),radial-gradient(52.73vw 42.97vw at 104% 106%,rgba(var(--z-pa-lav),.44) 0%,rgba(var(--z-pa-lav),0) 62%),#FDFDFF}
-.m14{--mesh:radial-gradient(68.36vw 48.83vw at 4% -12%,rgba(var(--z-pa-sky),.76) 0%,rgba(var(--z-pa-sky),0) 76%),radial-gradient(64.45vw 44.92vw at 50% -16%,rgba(var(--z-pa-lav),.70) 0%,rgba(var(--z-pa-lav),0) 74%),radial-gradient(68.36vw 48.83vw at 96% -10%,rgba(var(--z-pa-pink),.74) 0%,rgba(var(--z-pa-pink),0) 76%),#FDFDFF}
-.m15{--mesh:radial-gradient(58.59vw 48.83vw at 0% 2%,rgba(var(--z-pa-lav),.42) 0%,rgba(var(--z-pa-lav),0) 64%),radial-gradient(58.59vw 48.83vw at 100% 2%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 64%),radial-gradient(50.78vw 42.97vw at 50% 108%,rgba(var(--z-pa-mint),.34) 0%,rgba(var(--z-pa-mint),0) 62%),#FDFDFF}
-.m16{--mesh:radial-gradient(62.5vw 50.78vw at -4% 46%,rgba(var(--z-pa-peach),.44) 0%,rgba(var(--z-pa-peach),0) 62%),radial-gradient(62.5vw 50.78vw at 104% 54%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 62%),#FDFDFF}
-.m17{--mesh:radial-gradient(68.36vw 48.83vw at 8% 110%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 74%),radial-gradient(64.45vw 44.92vw at 92% -12%,rgba(var(--z-pa-pink),.42) 0%,rgba(var(--z-pa-pink),0) 74%),#FDFDFF}
-.m18{--mesh:radial-gradient(74.22vw 56.64vw at 2% 6%,rgba(var(--z-pa-lav),.46) 0%,rgba(var(--z-pa-lav),0) 66%),radial-gradient(60.55vw 44.92vw at 98% 96%,rgba(var(--z-pa-peach),.42) 0%,rgba(var(--z-pa-peach),0) 64%),#FDFDFF}
-.m19{--mesh:radial-gradient(66.41vw 41.02vw at 10% -12%,rgba(var(--z-pa-mint),.74) 0%,rgba(var(--z-pa-mint),0) 76%),radial-gradient(58.59vw 37.11vw at 50% -16%,rgba(var(--z-pa-sky),.70) 0%,rgba(var(--z-pa-sky),0) 74%),radial-gradient(66.41vw 42.97vw at 90% -10%,rgba(var(--z-pa-lav),.74) 0%,rgba(var(--z-pa-lav),0) 76%),radial-gradient(50.78vw 35.16vw at 50% 118%,rgba(var(--z-pa-pink),.40) 0%,rgba(var(--z-pa-pink),0) 72%),#FDFDFF}
-.m20{--mesh:radial-gradient(58.59vw 54.69vw at -6% 50%,rgba(var(--z-pa-peach),.42) 0%,rgba(var(--z-pa-peach),0) 62%),radial-gradient(58.59vw 54.69vw at 106% 50%,rgba(var(--z-pa-sky),.48) 0%,rgba(var(--z-pa-sky),0) 62%),#FDFDFF}
-.m21{--mesh:radial-gradient(70.31vw 58.59vw at 4% -6%,rgba(var(--z-pa-sky),.44) 0%,rgba(var(--z-pa-sky),0) 66%),radial-gradient(70.31vw 58.59vw at 96% 106%,rgba(var(--z-pa-lav),.46) 0%,rgba(var(--z-pa-lav),0) 66%),#FDFDFF}
-.m22{--mesh:radial-gradient(64.45vw 52.73vw at -2% -6%,rgba(var(--z-pa-mint),.44) 0%,rgba(var(--z-pa-mint),0) 64%),radial-gradient(66.41vw 54.69vw at 102% 104%,rgba(var(--z-pa-peach),.44) 0%,rgba(var(--z-pa-peach),0) 64%),#FDFDFF}
-.m23{--mesh:radial-gradient(68.36vw 48.83vw at 6% 112%,rgba(var(--z-pa-lav),.50) 0%,rgba(var(--z-pa-lav),0) 76%),radial-gradient(64.45vw 44.92vw at 50% 116%,rgba(var(--z-pa-sky),.46) 0%,rgba(var(--z-pa-sky),0) 74%),radial-gradient(68.36vw 48.83vw at 94% 112%,rgba(var(--z-pa-pink),.48) 0%,rgba(var(--z-pa-pink),0) 76%),#FDFDFF}
-.m24{--mesh:radial-gradient(74.22vw 56.64vw at 4% 108%,rgba(var(--z-pa-sky),.74) 0%,rgba(var(--z-pa-sky),0) 78%),radial-gradient(64.45vw 46.88vw at 48% 122%,rgba(var(--z-pa-lav),.60) 0%,rgba(var(--z-pa-lav),0) 76%),radial-gradient(74.22vw 56.64vw at 96% 106%,rgba(var(--z-pa-pink),.70) 0%,rgba(var(--z-pa-pink),0) 78%),radial-gradient(60.55vw 44.92vw at 92% -12%,rgba(var(--z-pa-peach),.48) 0%,rgba(var(--z-pa-peach),0) 74%),#FDFDFF}
+<div class="slide layout-choice" data-title-ko="상담 성과 보고를 받은 고객센터장의 선택" data-layout="choice"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">청중 참여 · 20초</p><h2 class="section-title">상담 성과 보고를 받은 고객센터장의 선택</h2><p class="section-desc">여러분이 고객센터장이라고 가정하고, 두 선택지 중 하나를 골라 손을 들어 주십시오.</p></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">A</p><h3>상담 인력 축소</h3><p>AI가 처리한 업무량에 맞춰 상담 인력을 줄이겠습니다.</p></div><div class="point accent"><p class="eyebrow">B</p><h3>문의 종류별 추가 확인</h3><p>사람에게 넘어온 문의와 고객이 다시 물어본 내용을 확인하겠습니다.</p></div></div><div class="bridge"><span>다음</span><p>여러분의 선택과 클라르나의 후속 조치를 비교해 보겠습니다.</p></div></div></div></div>
 
-/* ── 모션 (WAAPI 엔진이 재생, CSS는 초기 숨김만) ── */
-.slide .m-rise,.slide .m-fade,.slide .m-draw,.slide .m-stagger>*{opacity:0}
-body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:.001s !important;animation-delay:0s !important;transition-duration:.001s !important;transition-delay:0s !important}
-body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slide .m-draw,body.no-motion .slide .m-stagger>*{opacity:1 !important;transform:none !important}
+<div class="slide layout-timeline" data-title-ko="AI 도입 후에도 강화한 사람 상담" data-layout="timeline"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">KLARNA · 이후의 선택</p><h2 class="section-title">AI 도입 후에도 강화한 사람 상담</h2></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>2024.02</h3><p>AI 상담 처리량과 소요 시간 단축 발표</p></div><div><span>02</span><h3>2025.05</h3><p>고객이 사람과 상담할 선택권 보장 방침</p></div><div><span>03</span><h3>확인할 항목</h3><p>AI가 해결하지 못한 문의의 처리 방법</p></div></div><p class="take">자동화 이후에도 해결되지 않은 문의를 사람이 처리할 수 있어야 합니다.</p><p class="source">※ Source: <a href="https://www.customerexperiencedive.com/news/klarna-reinvests-human-talent-customer-service-AI-chatbot/747586/" target="_blank" rel="noopener">CX Dive · 2025.05.09 · 회사 대변인 취재 ↗</a></p><div class="bridge"><span>다음</span><p>사람 상담을 강화한 뒤 AI를 얼마나 사용했는지도 확인하겠습니다.</p></div></div></div></div>
 
-/* ── 타이포·브랜드 ── */
-.za{font-family:'Fugaz One','Pretendard Variable',sans-serif;font-weight:400;font-synthesis:none}
-.zw{font-family:'Russo One','Pretendard Variable',sans-serif;font-weight:400;font-synthesis:none}
-.pt-c{color:var(--z-accent)}
-.pt-r{color:var(--z-risk)}
-.grad-text{background:linear-gradient(96deg,var(--z-accent-deep) 0%,var(--z-accent) 48%,var(--z-accent-light) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
-.t-over{font-size:max(18px,1.015625vw);font-weight:600;letter-spacing:0.2734375vw;line-height:1.3;color:var(--z-note)}
-.tnum{font-variant-numeric:tabular-nums}
-.note{margin-top:1.171875vw;font-size:max(18px,1.015625vw);font-weight:500;line-height:1.5;color:var(--z-note)}
-.note.ctr{text-align:center}
+<div class="slide layout-stat" data-title-ko="AI와 사람 상담을 함께 운영한 클라르나" data-layout="stat"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">KLARNA · 후속 공시</p><h2 class="section-title">AI와 사람 상담을 함께 운영한 클라르나</h2></div><div class="lesson-content"><div class="duo"><div class="stat"><strong>80%</strong><h3>2025년 전체 상담 채팅 중 AI 처리 비중</h3><p>Klarna 2025 Form 20-F</p></div><div class="point "><p class="eyebrow">도입 계획에 포함할 항목</p><h3>AI의 처리 범위와<br><em>사람에게 연결할 조건</em></h3><p>클라르나는 사람 상담을 강화한 뒤에도 AI가 연간 상담 채팅의 80%를 처리했다고 공시했습니다.</p></div></div><p class="take">AI가 처리할 문의와 담당자에게 넘길 문의를 함께 정해야 합니다.</p><p class="source">※ Source: <a href="https://s205.q4cdn.com/644747736/files/doc_financials/2025/q4/Klarna-Group-plc-20-F-2025.pdf" target="_blank" rel="noopener">Klarna 2025 Form 20-F · 회사 자체 집계 ↗</a></p><div class="bridge"><span>다음</span><p>우리 회사에서도 사용 여부와 실제 성과를 구분해 확인하겠습니다.</p></div></div></div></div>
 
-/* ── 섹션 헤더 ── */
-.head{position:relative;flex:none;text-align:center;padding:0 14.5vw}
-.head.head-left{text-align:left;padding:0}
-.section-label{position:absolute;left:0;top:0.43vw;text-align:left;font-size:max(18px,0.9375vw);font-weight:700;line-height:1.18;color:var(--z-ink);letter-spacing:-0.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
-.section-title{font-size:3.4375vw;font-weight:800;letter-spacing:-0.03em;line-height:1.18;color:var(--z-ink)}
-.section-title.h1s{font-size:4.0625vw;line-height:1.14}
-.section-title.h3s{font-size:3.125vw;line-height:1.22}
-.section-desc{margin-top:0.9375vw;font-size:1.5625vw;font-weight:500;letter-spacing:-0.01em;line-height:1.52;color:var(--z-ink)}
-.section-desc b{font-weight:700}
+<div class="slide layout-rows" data-title-ko="AI 사용부터 성과 확인까지의 점검" data-layout="rows"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">청중 참여 · 손들기</p><h2 class="section-title">AI 사용부터 성과 확인까지의 점검</h2><p class="section-desc">우리 회사에서는 어느 단계까지 확인했는지 생각해 보시고, 해당하는 단계에서 손을 들어 주십시오.</p></div><div class="lesson-content"><div class="rows"><div><strong>사용</strong><p>직원의 업무용 AI 사용 경험</p></div><div><strong>완료</strong><p>검토를 마친 AI 결과물의 실제 업무 사용 여부</p></div><div><strong>성과</strong><p>검토·수정 시간을 포함한 비용과 처리량의 변화</p></div></div><div class="bridge"><span>다음</span><p>오늘은 실제 성과까지 확인할 수 있도록 실행안을 작성하겠습니다.</p></div></div></div></div>
 
-/* ── 카드 · 강조 블록 ── */
-.card{background:linear-gradient(180deg,#FFFFFF 0%,#FEFEFF 46%,#F9FBFE 100%);border:1px solid var(--z-card-line);border-top-color:#EAF0FA;border-radius:1.09375vw;box-shadow:var(--z-shadow)}
-.ablock{border-radius:1.09375vw;background:linear-gradient(120deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);box-shadow:var(--z-glow);color:#fff}
+<div class="slide layout-flow" data-title-ko="오늘 작성할 AI 업무 실행안 한 장" data-layout="flow"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">오늘의 실습 결과물</p><h2 class="section-title">오늘 작성할 AI 업무 실행안 한 장</h2></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>업무</h3><p>AI에 맡길 작업과 입력 자료</p></div><div><span>02</span><h3>검토</h3><p>사용 가능한 결과의 기준과 검토자</p></div><div><span>03</span><h3>운영</h3><p>실행 권한·비용·중단 조건</p></div><div><span>04</span><h3>측정</h3><p>AI 사용 전후의 품질과 소요 시간</p></div></div><p class="take">사례를 살펴본 뒤 여러분의 업무로 이 네 칸을 채워 보겠습니다.</p><div class="bridge"><span>다음</span><p>실행안 작성에 필요한 내용을 다음 순서로 살펴보겠습니다.</p></div></div></div></div>
 
-/* ── 표지·클로징 ── */
-.cover-hero{min-height:42vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.cover-hero .t-over{font-size:1.7578125vw;margin-bottom:2.578125vw;letter-spacing:0;display:flex;align-items:center;justify-content:center;color:var(--z-ink)}
-.cover-hero h1{font-size:4.296875vw;font-weight:800;letter-spacing:-0.03em;line-height:1.15;color:var(--z-ink)}
-.cover-hero .csub{font-weight:600;font-size:1.640625vw;margin-top:1.09375vw;letter-spacing:-0.03em;line-height:1.5;color:var(--z-ink)}
-.cover-contact{margin-top:4.2vw;text-align:center;font-size:max(18px,1.25vw);font-weight:500;color:var(--z-note)}
+<div class="slide layout-agenda" data-title-ko="사례 검토와 실행안 작성 순서" data-layout="agenda"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">진행 순서 · 60분</p><h2 class="section-title">사례 검토와 실행안 작성 순서</h2></div><div class="lesson-content"><div class="rows"><div><strong>01 · 9분</strong><p>클라르나 사례로 도입 성과 확인</p></div><div><strong>02 · 12분</strong><p>BCG·에어캐나다 사례로 업무 범위와 검토 기준 정리</p></div><div><strong>03 · 12분</strong><p>개발 실험과 Replit 사례로 시간·권한 점검</p></div><div><strong>04 · 8분</strong><p>발표자 경험과 상담원 연구로 검토자 교육 방법 확인</p></div><div><strong>05 · 7분</strong><p>운영 비용과 재사용할 자료 정리</p></div><div><strong>06 · 12분</strong><p>업무 한 가지를 골라 2주 실행안 작성</p></div></div><div class="bridge"><span>다음</span><p>각 사례의 교훈은 세미나 신청 안내 업무에 적용해 보겠습니다.</p></div></div></div></div>
 
-/* ── 목차 ── */
-.toc-head .t-over{margin-bottom:0.859375vw}
-.toc-grid{width:100%;margin-top:4.6vw;height:15.625vw;display:grid;grid-template-columns:repeat(5,1fr)}
-.toc-col{display:flex;flex-direction:column;justify-content:space-between;padding:0.234375vw 2.1484375vw;border-left:1px solid #dedee8}
-.toc-col:first-child{border-left:0;padding-left:0}
-.toc-col:last-child{padding-right:0}
-.toc-col .pt{font-size:2.34375vw;font-weight:800;letter-spacing:-0.02em;line-height:1.2;color:var(--z-ink)}
-.toc-col .ds{margin-top:0.78125vw;max-width:12.5vw;font-size:max(18px,0.9375vw);font-weight:500;letter-spacing:-0.01em;line-height:1.35;color:var(--z-ink)}
-.toc-col .pg{font-size:max(18px,0.9375vw);font-weight:500;letter-spacing:.02em;color:var(--z-note);font-variant-numeric:tabular-nums}
+<div class="slide layout-scenario" data-title-ko="강의에서 함께 검토할 세미나 신청 업무" data-layout="scenario"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">강의 공통 예시 · 가상 업무</p><h2 class="section-title">강의에서 함께 검토할 세미나 신청 업무</h2></div><div class="lesson-content"><div class="scenario"><div><p class="eyebrow">교육용 가정 · 실제 디모아 업무와 무관</p><h3>세미나 신청 페이지와<br><em>고객 문의 답변</em></h3><p>다음 달 세미나를 준비하면서 담당자가 일정 안내, 신청 접수, 할인 문의, 취소 요청을 처리한다고 가정하겠습니다.</p></div><div class="ticket"><p>고객 문의 예시</p><h3>“신청했는데요.<br>단체 할인도 되나요?<br>취소하면 환불되나요?”</h3></div></div><div class="bridge"><span>다음</span><p>이 문의를 AI에 맡기기 전에, 과제에 따라 효과가 달랐던 실험을 보겠습니다.</p></div></div></div></div>
 
-/* ── 간지 ── */
-.ganji{position:relative;min-height:42vw;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.ganji .bignum{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(-1.3671875vw);font-size:35.15625vw;font-weight:800;line-height:1;color:rgba(59,130,246,.08);z-index:0;pointer-events:none}
-.ganji h1,.ganji .lead,.ganji .t-over{position:relative;z-index:1}
-.ganji h1{font-size:4.0625vw;font-weight:800;letter-spacing:-0.03em;line-height:1.2;color:var(--z-ink)}
-.ganji h1 .hl{display:inline-block}
-.ganji .lead{margin-top:1.171875vw;font-size:1.40625vw;font-weight:600;letter-spacing:-0.02em;line-height:1.5;color:var(--z-ink)}
-.ganji .t-over{margin-bottom:1.171875vw}
+<div class="slide layout-stat" data-title-ko="BCG 컨설턴트 758명이 참여한 AI 실험" data-layout="stat"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">02 · 맡길 업무와 검토 기준</p><h2 class="section-title">BCG 컨설턴트 758명이 참여한 AI 실험</h2></div><div class="lesson-content"><div class="duo"><div class="stat"><strong>758명</strong><h3>실험에 참여한 BCG 컨설턴트</h3><p>AI 미사용 / GPT-4 / GPT-4와 사용 안내</p></div><div class="point "><p class="eyebrow">실험 설계</p><h3>컨설팅 과제별<br><em>AI 사용 효과 비교</em></h3><p>연구진은 컨설팅 과제를 만들고 참가자를 AI 미사용, GPT-4 사용, 사용 안내 추가 집단에 무작위로 배정했습니다.</p></div></div><p class="source">※ Source: <a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">Dell’Acqua 외 · Organization Science · 2026 · BCG 실험 ↗</a></p><div class="bridge"><span>다음</span><p>먼저 AI가 잘 수행할 수 있었던 과제의 결과를 보겠습니다.</p></div></div></div></div>
 
-/* ── 03 손들기 도트 매트릭스 ── */
-.hands{margin-top:3.4vw;display:grid;grid-template-columns:1fr 1fr;gap:4.6875vw}
-.handq .qno{font-size:max(18px,1.015625vw);font-weight:600;letter-spacing:0.2vw;color:var(--z-note)}
-.handq h3{margin-top:0.9375vw;font-size:2.109375vw;font-weight:800;letter-spacing:-0.02em;line-height:1.34;color:var(--z-ink)}
-.dots{margin-top:1.875vw;display:grid;grid-template-columns:repeat(10,1fr);gap:0.703125vw;max-width:30vw}
-.dot{aspect-ratio:1;border-radius:50%;background:#E6EBF3}
-.dot.on{background:var(--z-accent)}
-.hand-cap{margin-top:1.5625vw;font-size:max(18px,1.328125vw);font-weight:500;line-height:1.5;color:var(--z-ink)}
-.hand-cap b{font-weight:800}
+<div class="slide layout-result" data-title-ko="AI가 잘하는 과제에서 25.1% 줄어든 시간" data-layout="result"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">BCG · 글쓰기와 아이디어 개발 등</p><h2 class="section-title">AI가 잘하는 과제에서 25.1% 줄어든 시간</h2></div><div class="lesson-content"><div class="duo"><div class="stat"><strong>25.1%</strong><h3>평균 과제 완료 시간 단축</h3><p>AI가 잘 수행할 수 있었던 과제</p></div><div class="point "><p class="eyebrow">BCG 실험 · 결과</p><h3>작업 시간 단축과<br><em>완료한 과제 수 증가</em></h3><p>AI 사용 집단은 평균 완료 시간이 짧았고, 완료한 과제 수도 12.2% 많았습니다.</p></div></div><p class="take">글쓰기와 아이디어 개발 등에서는 AI 사용 집단의 성과가 더 좋았습니다.</p><p class="source">※ Source: <a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">Dell’Acqua 외 · Organization Science · 2026 · BCG 실험 ↗</a></p><div class="bridge"><span>다음</span><p>하지만 같은 실험의 사업 판단 과제에서는 정답률이 낮아졌습니다.</p></div></div></div></div>
 
-/* ── 04 빅넘버 ── */
-.bignums{margin-top:3.2vw;display:grid;grid-template-columns:1fr auto 1fr;gap:3.125vw;align-items:center}
-.bn{text-align:center}
-.bn .n{font-size:8.203125vw;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--z-accent);font-variant-numeric:tabular-nums}
-.bn .cap{margin-top:0.9375vw;font-size:1.640625vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.bn .ds{margin-top:0.703125vw;font-size:max(18px,1.171875vw);font-weight:500;line-height:1.5;color:var(--z-ink)}
-.bn-mid{font-size:1.5625vw;font-weight:700;color:var(--z-note);writing-mode:vertical-rl;letter-spacing:.3vw}
+<div class="slide layout-chart" data-title-ko="사업 판단 과제에서 낮아진 AI 사용 집단의 정답률" data-layout="chart"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">BCG · 사업 판단 과제</p><h2 class="section-title">사업 판단 과제에서 낮아진 AI 사용 집단의 정답률</h2><p class="section-desc">인터뷰와 재무 자료를 읽고 성장 가능성이 높은 브랜드를 고르는 과제였습니다.</p></div><div class="lesson-content"><div class="bars"><div class="bar-row"><span>AI 미사용</span><div class="track"><div class="fill " style="width:84.5%"></div></div><strong>84.5%</strong></div><div class="bar-row"><span>GPT-4</span><div class="track"><div class="fill blue" style="width:70.6%"></div></div><strong>70.6%</strong></div><div class="bar-row"><span>GPT-4 + 사용 안내</span><div class="track"><div class="fill risk" style="width:60%"></div></div><strong>60.0%</strong></div></div><p class="take">AI 사용 안내를 받은 집단도 이 과제에서는 미사용 집단보다 정답률이 낮았습니다.</p><p class="source">※ Source: <a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">Dell’Acqua 외 · Organization Science · 2026 · BCG 실험 ↗</a></p><div class="bridge"><span>다음</span><p>따라서 도입 계획에는 부서 이름과 함께 AI가 할 작업을 구체적으로 적어야 합니다.</p></div></div></div></div>
 
-/* ── 05·20 좌우 스플릿 ── */
-.split{margin-top:3.125vw;display:grid;grid-template-columns:1fr auto 1fr;gap:2.34375vw;align-items:stretch}
-.sp{padding:2.34375vw 2.109375vw;display:flex;flex-direction:column}
-.sp .tag{font-size:max(18px,1.015625vw);font-weight:700;letter-spacing:.14vw;color:var(--z-note)}
-.sp.on .tag{color:rgba(255,255,255,.78)}
-.sp h4{margin-top:0.78125vw;font-size:2.109375vw;font-weight:800;letter-spacing:-0.02em;line-height:1.2;color:var(--z-ink)}
-.sp.on h4{color:#fff}
-.sp ul{list-style:none;margin-top:1.5625vw;display:flex;flex-direction:column;gap:0.9375vw}
-.sp li{position:relative;padding-left:1.328125vw;font-size:max(18px,1.25vw);font-weight:500;line-height:1.5;color:var(--z-ink)}
-.sp li::before{content:'';position:absolute;left:0;top:0.72vw;width:0.46875vw;height:0.46875vw;border-radius:50%;background:var(--z-accent)}
-.sp.on li{color:rgba(255,255,255,.94)}
-.sp.on li::before{background:rgba(255,255,255,.72)}
-.sp-mid{align-self:center;display:flex;flex-direction:column;align-items:center;gap:0.625vw;color:var(--z-note)}
-.sp-mid span{font-size:max(18px,1.015625vw);font-weight:700}
+<div class="slide layout-comparison" data-title-ko="부서 도입 계획을 실제 작업으로 구체화하는 방법" data-layout="comparison"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">업무를 좁히는 방법</p><h2 class="section-title">부서 도입 계획을 실제 작업으로 구체화하는 방법</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">범위가 넓은 계획</p><h3>마케팅팀에 AI 도입</h3><p>입력 자료와 결과물이 정해져 있지 않아 도입 효과를 같은 기준으로 판단하기 어렵습니다.</p></div><div class="point accent"><p class="eyebrow">작업을 정한 계획</p><h3>승인된 행사 안내로<br><em>문의 답변 초안 작성</em></h3><p>사용할 자료와 검토할 결과물이 분명해 업무 범위와 평가 기준을 정할 수 있습니다.</p></div></div><p class="take">Anthropic은 Claude 이용 기록에서 직업 전체보다 일부 개별 업무에 사용이 집중되는 경향을 관찰했습니다.</p><p class="source">※ Source: <a href="https://www.anthropic.com/news/the-anthropic-economic-index" target="_blank" rel="noopener">Anthropic Economic Index · 2025.02 · Claude 이용 기록 ↗</a></p><div class="bridge"><span>다음</span><p>세미나 안내 업무를 나눠 AI에 맡길 작업을 정해 보겠습니다.</p></div></div></div></div>
 
-/* ── 07 업무 분해 ── */
-.decomp{margin-top:2.8vw;position:relative;display:grid;grid-template-columns:20.3125vw 1fr;gap:6.25vw;align-items:center}
-.decomp svg.wires{position:absolute;left:20.3125vw;top:0;width:6.25vw;height:100%;z-index:0}
-.job{height:20.3125vw;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.625vw;text-align:center}
-.job .jt{font-size:1.875vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.job .js{font-size:max(18px,1.171875vw);font-weight:500;color:var(--z-note)}
-.tasks{display:grid;grid-template-columns:1fr 1fr;gap:0.859375vw;position:relative;z-index:1}
-.task{padding:1.09375vw 1.40625vw;border-radius:0.78125vw;display:flex;align-items:center;gap:0.9375vw;background:rgba(59,130,246,.07);font-size:max(18px,1.25vw);font-weight:600;letter-spacing:-0.01em;color:var(--z-ink)}
-.task .tk{flex:none;padding:0.234375vw 0.703125vw;border-radius:999px;background:rgba(59,130,246,.14);font-size:max(18px,0.9375vw);font-weight:700;color:var(--z-accent-deep)}
-.task.j{background:rgba(var(--z-pa-peach),.34)}
-.task.j .tk{background:rgba(214,124,42,.16);color:#B4691F}
+<div class="slide layout-flow" data-title-ko="세미나 안내에서 구분할 다섯 작업" data-layout="flow"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 실습 · 업무 분해</p><h2 class="section-title">세미나 안내에서 구분할 다섯 작업</h2><p class="section-desc">AI가 초안을 만들어도 할인 승인과 고객 전송은 별도의 단계입니다.</p></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>자료 확인</h3><p>승인된 일정·가격·약관</p></div><div><span>02</span><h3>초안 작성</h3><p>페이지와 답변 문구</p></div><div><span>03</span><h3>사실 대조</h3><p>날짜·금액·조건</p></div><div><span>04</span><h3>예외 판단</h3><p>할인·환불·특별 요청</p></div><div><span>05</span><h3>게시·전송</h3><p>승인 후 고객에게 전달</p></div></div><p class="take">반복되는 문의에도 할인 승인처럼 담당자의 결정이 필요한 작업이 포함될 수 있습니다.</p><div class="bridge"><span>다음</span><p>답변을 고객에게 전달하기 전에 확인해야 하는 이유를 에어캐나다 사례로 보겠습니다.</p></div></div></div></div>
 
-/* ── 08 판정 게이트 2레인 ── */
-.lanes{margin-top:2.8vw;display:flex;flex-direction:column;gap:1.5625vw}
-.lane{display:grid;grid-template-columns:14.0625vw 1fr;gap:2.109375vw;align-items:center}
-.lane-tag{font-size:max(18px,1.328125vw);font-weight:800;letter-spacing:-0.02em;line-height:1.35;color:var(--z-ink)}
-.lane-tag span{display:block;margin-top:0.3125vw;font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
-.lane-flow{display:flex;align-items:stretch;gap:1.015625vw}
-.fn{min-height:7.03125vw;padding:1.171875vw 1.40625vw;border-radius:0.859375vw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3125vw;text-align:center}
-.fn b{font-size:max(18px,1.25vw);font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.fn small{font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
-.fn.in{width:12.5vw;background:#F4F6FA}
-.fn.gate{width:13.28125vw;padding:1.5625vw 2.109375vw;background:rgba(59,130,246,.12);clip-path:polygon(0 0,100% 13%,100% 87%,0 100%)}
-.fn.gate.off{background:rgba(224,49,49,.08);clip-path:none}
-.fn.gate.off b{color:var(--z-risk)}
-.fn.out{flex:1;align-items:flex-start;text-align:left;background:#F4F6FA}
-.fn.out.bad{background:rgba(224,49,49,.07)}
-.fn.out.good{background:rgba(59,130,246,.1)}
-.fn-arrow{flex:none;align-self:center;color:#C3CEDF}
+<div class="slide layout-scene" data-title-ko="챗봇의 잘못된 환급 안내를 믿고 예매한 고객" data-layout="scene"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">AIR CANADA · 고객에게 전달된 답변</p><h2 class="section-title">챗봇의 잘못된 환급 안내를 믿고 예매한 고객</h2></div><div class="lesson-content"><div class="case-scene"><div class="dialogue"><p class="eyebrow">AIR CANADA · 사건 요약 재구성</p><h3>챗봇 안내</h3><p class="speech">여행 후에도 유족 할인<br>환급을 신청할 수 있습니다.</p></div><div class="case-outcome"><p class="eyebrow">실제 규정과 불일치</p><h3>예매 후 환급 신청<br><em>→ 항공사 거절</em></h3><p>고객은 챗봇의 안내를 믿고 예매했고, 분쟁이 발생했습니다.</p></div></div><p class="source">※ Source: <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2024-february/bc-tribunal-confirms-companies-remain-liable-information-provided-ai-chatbot/" target="_blank" rel="noopener">Moffatt v. Air Canada · 2024 BCCRT 149 · ABA 해설 ↗</a></p><div class="bridge"><span>다음</span><p>이 분쟁에서 회사의 책임을 어떻게 판단했는지 보겠습니다.</p></div></div></div></div>
 
-/* ── 09 가로 바 ── */
-.hbars{margin-top:3.4vw;display:flex;flex-direction:column;gap:2.34375vw}
-.hbar{display:grid;grid-template-columns:19.53125vw 1fr;gap:2.109375vw;align-items:center}
-.hbar .nm{font-size:max(18px,1.328125vw);font-weight:800;letter-spacing:-0.02em;line-height:1.35;color:var(--z-ink)}
-.hbar .nm span{display:block;margin-top:0.3125vw;font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
-.hbar .track{height:4.140625vw;border-radius:2.0703125vw;background:#F1F4F9;display:flex;align-items:center}
-.hbar .fill{height:100%;min-width:7vw;border-radius:2.0703125vw;display:flex;align-items:center;justify-content:flex-end;padding-right:1.5625vw;font-size:1.5625vw;font-weight:800;letter-spacing:-0.02em;color:#fff;font-variant-numeric:tabular-nums}
-.hbar .fill.base{background:rgba(59,130,246,.42)}
-.hbar .fill.heavy{background:linear-gradient(120deg,var(--z-accent-deep) 0%,var(--z-accent) 100%);box-shadow:var(--z-glow)}
+<div class="slide layout-statement" data-title-ko="잘못된 챗봇 안내에 대한 에어캐나다의 책임" data-layout="statement"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">AIR CANADA · 2024 BCCRT 149</p><h2 class="section-title">잘못된 챗봇 안내에 대한 에어캐나다의 책임</h2></div><div class="lesson-content"><div class="statement"><h3>다른 페이지의 정확한 규정과<br><em>별개로 인정된 안내 책임</em></h3><p>2024년 캐나다 BC 민사분쟁해결재판소는<br>이 사건에서 에어캐나다의 책임을 인정했습니다.</p></div><p class="take">환불·할인을 약속하는 답변은 승인된 규정과 대조한 뒤 전달해야 합니다.</p><p class="source">※ Source: <a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2024-february/bc-tribunal-confirms-companies-remain-liable-information-provided-ai-chatbot/" target="_blank" rel="noopener">Moffatt v. Air Canada · 2024 BCCRT 149 · ABA 해설 ↗</a></p><div class="bridge"><span>다음</span><p>세미나 업무에서도 담당자에게 넘길 문의를 구체적으로 정해 보겠습니다.</p></div></div></div></div>
 
-/* ── 10 대형 질문 ── */
-.qlines{margin-top:3.4vw;display:flex;flex-direction:column;gap:1.5625vw}
-.qline{padding:1.71875vw 2.34375vw;display:flex;align-items:center;gap:1.875vw}
-.qline .qn{flex:none;font-size:2.34375vw;font-weight:800;line-height:1;color:var(--z-accent);font-variant-numeric:tabular-nums}
-.qline .qt{font-size:2.109375vw;font-weight:700;letter-spacing:-0.02em;line-height:1.3;color:var(--z-ink)}
+<div class="slide layout-table" data-title-ko="담당자에게 넘길 문의의 구체적인 예시" data-layout="table"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 실습 · 예외 목록</p><h2 class="section-title">담당자에게 넘길 문의의 구체적인 예시</h2></div><div class="lesson-content"><table><thead><tr><th>고객이 한 말</th><th>처리 방법</th><th>확인할 자료</th></tr></thead><tbody><tr><td>“장소가 어디예요?”</td><td>AI 초안 + 사실 확인</td><td>승인된 행사 안내</td></tr><tr><td>“열 명이면 할인되나요?”</td><td>담당자에게 연결</td><td>할인 규정과 승인 담당자</td></tr><tr><td>“마감 후 환불해 주세요.”</td><td>담당자에게 연결</td><td>환불 규정과 예외 기준</td></tr></tbody></table><p class="take">할인이나 환불처럼 담당자 판단이 필요한 문의는 실제 문장과 처리 담당자를 함께 적어야 합니다.</p><div class="bridge"><span>다음</span><p>담당자가 답변을 승인할 때 사용할 통과 기준도 정하겠습니다.</p></div></div></div></div>
 
-/* ── 12 궤적 곡선 ── */
-.curve{margin-top:1.5vw}
-.curve svg{width:100%;height:auto;display:block}
+<div class="slide layout-checklist" data-title-ko="고객에게 보내도 되는 답변의 통과 기준" data-layout="checklist"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 실습 · 검토 기준</p><h2 class="section-title">고객에게 보내도 되는 답변의 통과 기준</h2><p class="section-desc">세미나 안내 답변을 고객에게 보내기 위한 기준 예시입니다.</p></div><div class="lesson-content"><div class="rows"><div><strong>날짜·장소</strong><p>승인된 행사 안내와 날짜·장소 일치 여부 확인</p></div><div><strong>가격·할인</strong><p>승인되지 않은 할인 약속이 없는지 확인</p></div><div><strong>신청·취소</strong><p>신청 링크 동작과 취소 규정 일치 여부 확인</p></div><div><strong>불명확한 정보</strong><p>추측한 답변 없이 담당자에게 연결</p></div></div><p class="take">보내도 되는 답변과 수정해야 하는 답변의 예시를 함께 준비해야 합니다.</p><div class="bridge"><span>다음</span><p>이 기준으로 답변을 만들 수 있도록 AI에 제공할 자료를 정리하겠습니다.</p></div></div></div></div>
 
-/* ── 13 비교 리스트 ── */
-.cmp{margin-top:3.125vw;display:grid;grid-template-columns:1fr 1fr;gap:3.90625vw}
-.cmp-col .ch{padding-bottom:0.9375vw;border-bottom:1px solid #dedee8;font-size:1.875vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.cmp-col.on .ch{color:var(--z-accent)}
-.cmp-col .cr{padding:1.09375vw 0;border-bottom:1px solid #EDF1F8;font-size:max(18px,1.328125vw);font-weight:500;line-height:1.45;color:var(--z-ink)}
-.cmp-col.off .cr{color:var(--z-note)}
-.cmp-col.on .cr{font-weight:600}
+<div class="slide layout-prompt" data-title-ko="답변 요청 전에 준비할 안내 자료와 처리 기준" data-layout="prompt"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">AI에 제공할 자료와 지시</p><h2 class="section-title">답변 요청 전에 준비할 안내 자료와 처리 기준</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">기준이 빠진 요청</p><h3>“친절하고 정확하게<br>답변해 줘”</h3><p>참고할 자료와 정보가 없을 때의 처리 방법이 빠져 있어, 이 지시만으로는 정확성을 판단하기 어렵습니다.</p></div><div class="point accent"><p class="eyebrow">자료와 기준을 담은 요청</p><h3>“첨부한 안내에 따라<br><em>답변 초안을 작성해 줘”</em></h3><p>일정·요금표를 주고, 답변에 근거 항목을 표시하며, 없는 정보는 담당자에게 넘기도록 요청할 수 있습니다.</p></div></div><p class="take">자료를 제공해도 오류가 생길 수 있으므로 최종 답변은 원문과 대조해야 합니다.</p><div class="bridge"><span>다음</span><p>이제 검토와 수정에 드는 시간까지 포함해 도입 효과를 계산하겠습니다.</p></div></div></div></div>
 
-/* ── 15 분기 ── */
-.fork svg{width:100%;display:block;margin-top:1.6vw}
-.fork-cols{display:grid;grid-template-columns:1fr 1fr;gap:3.90625vw}
-.fk{padding:2.109375vw;text-align:center}
-.fk .kind{font-size:max(18px,1.015625vw);font-weight:700;letter-spacing:.12vw;color:var(--z-note)}
-.fk h4{margin-top:0.625vw;font-size:2.109375vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.fk.on h4{color:var(--z-accent)}
-.fk .chips{margin:1.09375vw 0;display:flex;flex-wrap:wrap;justify-content:center;gap:0.546875vw}
-.fk .chip{padding:0.390625vw 1.015625vw;border-radius:999px;background:#F1F4F9;font-size:max(18px,0.9375vw);font-weight:600;color:var(--z-ink)}
-.fk.on .chip{background:rgba(59,130,246,.1);color:var(--z-accent-deep)}
-.fk p{font-size:max(18px,1.25vw);font-weight:500;line-height:1.5;color:var(--z-ink)}
+<div class="slide layout-chapter" data-title-ko="초안 작성부터 승인까지 걸리는 업무 시간" data-layout="chapter"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">03 · 실제 시간과 실행 권한</p><h2 class="section-title">초안 작성부터 승인까지 걸리는 업무 시간</h2></div><div class="lesson-content"><div class="statement"><h3>생성 → 검토 → 수정 → 승인<br><em>모든 단계에 걸린 시간</em></h3><p>AI로 초안을 빨리 만들어도<br>담당자의 검토와 수정에 시간이 더 들 수 있습니다.</p></div><div class="bridge"><span>다음</span><p>작업 조건이 달랐던 두 개발 실험에서 완료 시간을 어떻게 측정했는지 보겠습니다.</p></div></div></div></div>
 
-/* ── 16 양방향 바 ── */
-.duals{margin-top:3.4vw;display:flex;flex-direction:column;gap:2.8125vw}
-.dual{display:grid;grid-template-columns:23.4375vw 1fr;gap:2.109375vw;align-items:center}
-.dual .dm{font-size:max(18px,1.328125vw);font-weight:800;letter-spacing:-0.02em;line-height:1.35;color:var(--z-ink)}
-.dual .dm span{display:block;margin-top:0.3125vw;font-size:max(18px,0.9375vw);font-weight:500;line-height:1.4;color:var(--z-note)}
-.dual .dt{position:relative;height:3.90625vw}
-.dual .ax{position:absolute;left:50%;top:-1.09375vw;bottom:-1.09375vw;width:1px;background:#D8DFEA}
-.dual .zero{position:absolute;left:50%;transform:translateX(-50%);top:-2.65625vw;font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
-.dual .fill{position:absolute;top:0;height:3.90625vw;display:flex;align-items:center;font-size:1.40625vw;font-weight:800;letter-spacing:-0.02em;color:#fff;font-variant-numeric:tabular-nums}
-.dual .fill.pos{left:50%;border-radius:0 1.953125vw 1.953125vw 0;background:linear-gradient(90deg,var(--z-accent-light) 0%,var(--z-accent-deep) 100%);justify-content:flex-end;padding-right:1.40625vw}
-.dual .fill.neg{right:50%;border-radius:1.953125vw 0 0 1.953125vw;background:linear-gradient(270deg,#F08585 0%,var(--z-risk) 100%);justify-content:flex-start;padding-left:1.40625vw}
+<div class="slide layout-stat" data-title-ko="HTTP 서버 구현 실험에서 55.8% 줄어든 시간" data-layout="stat"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">개발 실험 A · 정해진 과제</p><h2 class="section-title">HTTP 서버 구현 실험에서 55.8% 줄어든 시간</h2></div><div class="lesson-content"><div class="duo"><div class="stat"><strong>55.8%</strong><h3>과제 완료 시간 단축</h3><p>GitHub Copilot 사용 집단</p></div><div class="point "><p class="eyebrow">PENG 외 · 2023</p><h3>JavaScript로<br><em>HTTP 서버 구현</em></h3><p>정해진 서버를 구현하는 실험에서 Copilot 사용 집단의 과제 완료 시간이 더 짧았습니다.</p></div></div><p class="source">※ Source: <a href="https://arxiv.org/abs/2302.06590" target="_blank" rel="noopener">Peng 외 · 2023 · 통제 실험 ↗</a></p><div class="bridge"><span>다음</span><p>이번에는 개발자가 오래 관리한 프로젝트의 작업을 맡은 실험을 보겠습니다.</p></div></div></div></div>
 
-/* ── 17 파이프라인 ── */
-.pipes{margin-top:2.8vw;display:flex;flex-direction:column;gap:2.578125vw}
-.prow{display:grid;grid-template-columns:9.375vw 1fr;gap:2.109375vw;align-items:center}
-.pwhen{font-size:1.875vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-note)}
-.prow.now .pwhen{color:var(--z-accent)}
-.pipe{display:flex;align-items:flex-start;gap:0.703125vw}
-.pseg{flex:1;display:flex;flex-direction:column;gap:0.703125vw}
-.pband{height:7.8125vw;display:flex;align-items:center}
-.pbar{width:100%;border-radius:1.09375vw;background:#E9EEF6}
-.pbar.wide{background:linear-gradient(120deg,var(--z-accent-deep) 0%,var(--z-accent) 100%)}
-.pbar.neck{background:var(--z-risk)}
-.plab{text-align:center}
-.plab b{display:block;font-size:max(18px,1.25vw);font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.plab small{display:block;margin-top:0.15625vw;font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
-.plab .nk{display:block;margin-top:0.15625vw;font-size:max(18px,0.9375vw);font-weight:800;color:var(--z-risk)}
-.parrow{flex:none;margin-top:3vw;color:#C3CEDF}
+<div class="slide layout-choice" data-title-ko="익숙한 프로젝트에서 실제 작업을 맡은 개발자" data-layout="choice"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">개발 실험 B · 청중 예상 15초</p><h2 class="section-title">익숙한 프로젝트에서 실제 작업을 맡은 개발자</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">METR · 2025년 초 도구</p><h3>숙련 개발자 16명<br>실제 개발 작업 246개</h3><p>연구진은 개발 작업마다 AI 사용을 허용할지 무작위로 배정했습니다.</p></div><div class="point accent"><p class="eyebrow">결과 확인 전 · 청중 참여</p><h3>작업 시간에 대한 예상</h3><p>AI를 쓰면 더 빨랐을지, 비슷했을지, 더 느렸을지 골라 주십시오.</p></div></div><p class="source">※ Source: <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR · 2025.07 · 숙련 개발자 무작위 실험 ↗</a></p><div class="bridge"><span>다음</span><p>참가자의 체감과 실제 측정 결과를 함께 확인하겠습니다.</p></div></div></div></div>
 
-/* ── 18 도미노 ── */
-.domino{margin-top:2.8vw;position:relative;display:flex;align-items:flex-end;gap:1.5625vw}
-.domino::after{content:'';position:absolute;left:0;right:0;top:14.0625vw;height:1px;background:#D8DFEA}
-.dcol{flex:1;text-align:center}
-.dstage{height:14.0625vw;display:flex;align-items:flex-end;justify-content:center}
-.dtile{width:3.125vw;height:11.71875vw;border-radius:0.546875vw;transform-origin:bottom center;box-shadow:0 0.46875vw 1.171875vw -0.3125vw rgba(30,58,138,.22)}
-.dtile.d1{transform:rotate(-26deg);background:linear-gradient(180deg,var(--z-accent-deep),var(--z-accent))}
-.dtile.d2{transform:rotate(-15deg);background:linear-gradient(180deg,var(--z-accent),var(--z-accent-light))}
-.dtile.d3{transform:rotate(-7deg);background:rgba(59,130,246,.42)}
-.dtile.d4{background:#E3E9F2}
-.dnm{margin-top:1.328125vw;font-size:1.640625vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.dwh{margin-top:0.46875vw;font-size:max(18px,1.015625vw);font-weight:500;line-height:1.45;color:var(--z-note)}
+<div class="slide layout-contrast" data-title-ko="빨라졌다는 체감과 달랐던 실제 작업 시간" data-layout="contrast"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">METR · 체감과 측정</p><h2 class="section-title">빨라졌다는 체감과 달랐던 실제 작업 시간</h2></div><div class="lesson-content"><div class="duo"><div class="stat"><strong>20%</strong><h3>작업 후 참가자가 추정한 시간 단축</h3><p>참가자의 체감 응답</p></div><div class="stat"><strong>19%</strong><h3>실제로 늘어난 과제 완료 시간</h3><p>AI 미사용 조건 대비</p></div></div><p class="take">만족도와 작업 시간은 다를 수 있으므로, 도입 효과를 판단하려면 실제 시간을 측정해야 합니다.</p><p class="source">※ Source: <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR · 2025.07 · 숙련 개발자 무작위 실험 ↗</a></p><div class="bridge"><span>다음</span><p>결과를 우리 회사에 적용하려면 두 실험의 조건부터 비교해야 합니다.</p></div></div></div></div>
 
-/* ── 21 계층 스택 ── */
-.stack{margin-top:3.125vw;display:flex;flex-direction:column;align-items:center;gap:1.015625vw}
-.slayer{padding:1.71875vw 2.5vw;border-radius:1.09375vw;display:flex;align-items:center;gap:1.875vw}
-.slayer:nth-child(1){width:66%;background:rgba(59,130,246,.09)}
-.slayer:nth-child(2){width:83%;background:rgba(59,130,246,.14)}
-.slayer .sn{flex:none;font-size:2.109375vw;font-weight:800;line-height:1;color:var(--z-accent);font-variant-numeric:tabular-nums}
-.slayer.on .sn{color:rgba(255,255,255,.72)}
-.slayer .st{flex:none;font-size:1.71875vw;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;color:var(--z-ink)}
-.slayer.on .st{color:#fff}
-.slayer .sd{font-size:max(18px,1.171875vw);font-weight:500;line-height:1.5;color:var(--z-ink)}
-.slayer.on .sd{color:rgba(255,255,255,.9)}
+<div class="slide layout-table" data-title-ko="우리 업무와 비교할 두 개발 실험의 조건" data-layout="table"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">실험 해석 · 조건부터 비교</p><h2 class="section-title">우리 업무와 비교할 두 개발 실험의 조건</h2><p class="section-desc">참가자·도구·시점·과제가 달라, 두 결과만으로 도구의 성능 순위를 정할 수는 없습니다.</p></div><div class="lesson-content"><table><thead><tr><th>비교 조건</th><th>Copilot 실험</th><th>METR 실험</th></tr></thead><tbody><tr><td>과제</td><td>정해진 서버 구현</td><td>기존 프로젝트의 실제 작업</td></tr><tr><td>작업 환경</td><td>독립된 구현 과제</td><td>기존 코드와 프로젝트 품질 기준</td></tr><tr><td>완료 시간</td><td>55.8% 단축</td><td>19% 증가</td></tr></tbody></table><p class="take">새 초안 작성과 기존 결과물 수정은 작업 조건이 다르므로 효과를 따로 측정해야 합니다.</p><p class="source">※ Source: <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR · 2025.07 · 숙련 개발자 무작위 실험 ↗</a></p><div class="bridge"><span>다음</span><p>세미나 안내문도 작성·검토·수정 시간을 나눠 계산해 보겠습니다.</p></div></div></div></div>
 
-/* ── 22 루프 ── */
-.loopwrap{margin-top:2.4vw;display:grid;grid-template-columns:auto 1fr;gap:4.6875vw;align-items:center}
-.loop{position:relative;width:32vw;height:32vw;flex-shrink:0}
-.loop > svg{position:absolute;inset:0;width:100%;height:100%}
-.hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12.5vw;height:12.5vw;border-radius:50%;background:linear-gradient(180deg,#FFFFFF 0%,#FEFEFF 46%,#F9FBFE 100%);border:1px solid var(--z-card-line);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 5px rgba(30,58,138,.05),0 1.328125vw 2.890625vw -0.78125vw rgba(59,130,246,.17);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3125vw;text-align:center;padding:1vw}
-.hub b{font-size:1.328125vw;font-weight:800;letter-spacing:-0.02em;line-height:1.25;color:var(--z-ink)}
-.hub small{font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-accent)}
-.lnode{position:absolute;width:9.375vw;transform:translate(-50%,-50%);text-align:center}
-.lnode .ld{width:2.8125vw;height:2.8125vw;margin:0 auto 0.703125vw;border-radius:0.859375vw;background:rgba(59,130,246,.09);display:flex;align-items:center;justify-content:center;color:var(--z-accent)}
-.lnode b{display:block;font-size:1.328125vw;font-weight:800;letter-spacing:-0.02em;color:var(--z-ink)}
-.lnode small{display:block;margin-top:0.234375vw;font-size:max(18px,0.9375vw);font-weight:500;color:var(--z-note)}
-.looptxt{display:flex;flex-direction:column;gap:1.5625vw}
-.looptxt p{font-size:1.484375vw;font-weight:500;line-height:1.6;color:var(--z-ink)}
-.looptxt p b{font-weight:800}
+<div class="slide layout-chart" data-title-ko="초안은 20분 단축, 전체 업무는 3분 절약" data-layout="chart"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 계산 · 실측 결과 아님</p><h2 class="section-title">초안은 20분 단축, 전체 업무는 3분 절약</h2><p class="section-desc">단위는 모두 분이며, 같은 품질의 안내문 한 건을 완료한다고 가정했습니다.</p></div><div class="lesson-content"><div class="bars"><div class="bar-row"><span>기존 업무</span><div class="track"><div class="fill " style="width:100%"></div></div><strong>40분</strong></div><div class="bar-row"><span>AI 사용</span><div class="track"><div class="fill blue" style="width:92.5%"></div></div><strong>37분</strong></div></div><div class="equation">기존: 작성 30 + 검토 10<br>AI: 작성 10 + 검토 20 + 수정 7</div><p class="take">작성·검토·수정을 모두 합쳐야 실제로 절약한 시간을 계산할 수 있습니다.</p><div class="bridge"><span>다음</span><p>같은 이유로 하루 처리량도 초안 생성 수만으로 판단할 수는 없습니다.</p></div></div></div></div>
 
-/* ── 23 상승 계단 ── */
-.stairs{margin-top:3.125vw;display:flex;align-items:flex-end;gap:1.5625vw}
-.stair{flex:1;padding:2.109375vw 1.875vw;border-radius:1.09375vw 1.09375vw 0 0;display:flex;flex-direction:column;gap:0.703125vw}
-.stair:nth-child(1){height:19.53125vw;background:rgba(59,130,246,.08)}
-.stair:nth-child(2){height:22.65625vw;background:rgba(59,130,246,.14)}
-.stair:nth-child(3){height:25.78125vw}
-.stair .sn{font-size:2.578125vw;font-weight:800;line-height:1;color:var(--z-accent);font-variant-numeric:tabular-nums}
-.stair.on .sn{color:rgba(255,255,255,.7)}
-.stair h4{font-size:1.875vw;font-weight:800;letter-spacing:-0.02em;line-height:1.25;color:var(--z-ink)}
-.stair.on h4{color:#fff}
-.stair p{margin-top:auto;font-size:max(18px,1.171875vw);font-weight:500;line-height:1.55;color:var(--z-ink)}
-.stair.on p{color:rgba(255,255,255,.92)}
-</style>
-</head>
-<body>
+<div class="slide layout-capacity" data-title-ko="검토 가능 건수에 제한받는 하루 처리량" data-layout="capacity"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 계산 · 검토에 따른 처리 한계</p><h2 class="section-title">검토 가능 건수에 제한받는 하루 처리량</h2><p class="section-desc">모든 초안을 검토해야 하고, 초안 한 건에서 결과물 한 건이 나온다는 가정입니다.</p></div><div class="lesson-content"><div class="capacity"><div><strong>100</strong><p>하루 생성 가능한 초안</p></div><span>→</span><div><strong>20</strong><p>하루 검토 가능한 초안</p></div><span>→</span><div><strong>≤20</strong><p>하루 승인 가능한 결과물</p></div></div><p class="take">검토할 수 있는 양에 맞춰 초안 생성 범위를 정하고, 반복되는 오류를 줄여야 합니다.</p><div class="bridge"><span>다음</span><p>검토 시간을 줄이려고 AI에 실행 권한을 줄 때는 작업 환경도 확인해야 합니다.</p></div></div></div></div>
 
-<!-- ===== 01 표지 ===== -->
-<div class="slide active" data-title-ko="표지">
-  <div class="mesh m01"></div>
-  <div class="slide-inner">
-    <div class="cover-hero">
-      <p class="t-over m-rise">디모아 AI 특강 · 1차시 둘러보기</p>
-      <h1 class="m-rise" style="--d:.3s">AX가 왜<br><span class="grad-text">이렇게 어려운가</span></h1>
-      <p class="csub m-rise" style="--d:.45s">도구는 이미 회사 안에 들어와 있습니다.<br>그런데 성과는 회사에 쌓이지 않습니다.</p>
-      <p class="cover-contact m-rise" style="--d:.6s">위븐 김정환 Ph.D · 13:40~14:40 · kjh@weven.kr</p>
-    </div>
-  </div>
-</div>
+<div class="slide layout-architecture" data-title-ko="개발용 데이터와 운영 데이터를 분리한 Replit" data-layout="architecture"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">REPLIT · 실행 환경의 변화</p><h2 class="section-title">개발용 데이터와 운영 데이터를 분리한 Replit</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">2025.07 이전 구조</p><h3>개발과 운영에서<br>같은 데이터베이스 사용</h3><p>Replit은 기존에 개발과 운영이 같은 데이터베이스를 사용했다고 밝혔습니다.</p></div><div class="point accent"><p class="eyebrow">2025.07.21 발표</p><h3>개발용 데이터베이스와<br><em>운영용 데이터베이스 분리</em></h3><p>변경 사항을 시험하고 확인한 뒤 운영 환경에 반영할 수 있도록 구조를 바꿨습니다.</p></div></div><p class="take">삭제를 금지하는 지시를 쓰더라도, 계정에 실제 삭제 권한이 있는지는 별도로 확인해야 합니다.</p><p class="source">※ Source: <a href="https://replit.com/blog/introducing-a-safer-way-to-vibe-code-with-replit-databases" target="_blank" rel="noopener">Replit · 2025.07.21 · 개발·운영 DB 분리 발표 ↗</a></p><div class="bridge"><span>다음</span><p>세미나 신청 페이지도 초안 작업과 실제 운영의 권한을 나눠 보겠습니다.</p></div></div></div></div>
 
-<!-- ===== 02 목차 ===== -->
-<div class="slide" data-title-ko="목차">
-  <div class="mesh m02"></div>
-  <div class="slide-inner">
-    <div class="head head-left toc-head">
-      <p class="t-over m-rise">CONTENTS · 60MIN</p>
-      <div class="section-title h1s m-rise" style="--d:.3s">오늘 60분을 관통하는 <span class="pt-c">하나의 질문</span></div>
-    </div>
-    <div class="toc-grid m-stagger">
-      <div class="toc-col">
-        <div class="top">
-          <div class="pt">MIT의 두 숫자</div>
-          <div class="ds">회사의 실패율과 직원의 사용률이 같은 조사에서 나왔습니다</div>
-        </div>
-        <div class="pg">03-05 · 5분</div>
-      </div>
-      <div class="toc-col">
-        <div class="top">
-          <div class="pt">어려운 이유</div>
-          <div class="ds">업무 미분해, 판정자 부재, 비용 구조를 차례로 봅니다</div>
-        </div>
-        <div class="pg">06-10 · 18분</div>
-      </div>
-      <div class="toc-col">
-        <div class="top">
-          <div class="pt">25년의 궤적</div>
-          <div class="ds">웹디자이너에서 대표를 거쳐 다시 풀스택으로</div>
-        </div>
-        <div class="pg">11-13 · 8분</div>
-      </div>
-      <div class="toc-col">
-        <div class="top">
-          <div class="pt">바이브코딩</div>
-          <div class="ds">개발직군에 먼저 일어난 일과 병목의 이동</div>
-        </div>
-        <div class="pg">14-18 · 12분</div>
-      </div>
-      <div class="toc-col">
-        <div class="top">
-          <div class="pt">남는 것</div>
-          <div class="ds">복제되지 않는 자산과 월요일에 시작할 일</div>
-        </div>
-        <div class="pg">19-24 · 17분</div>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="slide layout-flow" data-title-ko="세미나 페이지 제작과 게시의 권한 구분" data-layout="flow"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 실습 · 권한 설계</p><h2 class="section-title">세미나 페이지 제작과 게시의 권한 구분</h2><p class="section-desc">초안 작성 계정에서 실제 신청자 명단을 삭제할 수 없도록 권한을 제한해야 합니다.</p></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>초안 작성</h3><p>가상 신청자 정보로 제작</p></div><div><span>02</span><h3>검토</h3><p>테스트 신청과 취소 동작 확인</p></div><div><span>03</span><h3>승인</h3><p>담당자의 변경 사항 확인</p></div><div><span>04</span><h3>게시</h3><p>승인받은 변경 사항 반영</p></div></div><p class="take">가상 데이터로 검토를 마친 뒤, 권한이 있는 담당자가 운영 환경에 반영해야 합니다.</p><p class="source">※ Source: <a href="https://replit.com/blog/introducing-a-safer-way-to-vibe-code-with-replit-databases" target="_blank" rel="noopener">Replit · 2025.07.21 · 개발·운영 DB 분리 발표 ↗</a></p><div class="bridge"><span>다음</span><p>맡길 작업의 범위는 잘못 실행했을 때 복구할 수 있는지도 고려해 정하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 03 손들기 ===== -->
-<div class="slide" data-title-ko="시작 전 두 가지 질문">
-  <div class="mesh m03"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">0. 시작 - <span class="num">01</span></div>
-      <div class="section-title m-rise">시작 전에 드리는 <span class="pt-c">두 가지 질문</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">두 질문에 올라오는 <b>손 개수의 차이</b>가 오늘 다룰 문제의 크기입니다. 손을 들어 주십시오</div>
-    </div>
-    <div class="hands">
-      <div class="handq m-rise" style="--d:.5s">
-        <div class="qno">QUESTION 1</div>
-        <h3>ChatGPT를 일주일에<br>세 번 이상 쓰시는 분</h3>
-        <div class="dots">
-          <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div>
-          <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div>
-          <div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div>
-        </div>
-        <div class="hand-cap">거의 모든 손이 올라갑니다.</div>
-      </div>
-      <div class="handq m-rise" style="--d:.7s">
-        <div class="qno">QUESTION 2</div>
-        <h3>회사 업무 중에 AI가 맡아서<br>돌아가는 일이 있는 분</h3>
-        <div class="dots">
-          <div class="dot"></div><div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
-        <div class="hand-cap"><b>손이 확 줄어듭니다.</b> 오늘은 이 차이를 다룹니다.</div>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="slide layout-table" data-title-ko="오류의 영향에 따라 달라져야 할 검토 수준" data-layout="table"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">위험에 맞춘 검토 강도</p><h2 class="section-title">오류의 영향에 따라 달라져야 할 검토 수준</h2></div><div class="lesson-content"><table><thead><tr><th>행동</th><th>문제가 생기면</th><th>초기 운영 제안</th></tr></thead><tbody><tr><td>안내문 초안 생성</td><td>초안 폐기 가능</td><td>내부 검토 후 사용</td></tr><tr><td>승인된 안내 게시</td><td>이전 내용으로 복원</td><td>게시 전 승인·버전 보관</td></tr><tr><td>환불·데이터 삭제</td><td>금전 손실·기록 유실 가능</td><td>별도 권한·승인·복구 확인</td></tr></tbody></table><p class="take">환불이나 데이터 삭제처럼 복구가 어려운 작업에는 별도의 권한과 승인 절차가 필요합니다.</p><div class="bridge"><span>다음</span><p>이 절차가 작동하려면 검토자에게 필요한 자료와 시간을 제공해야 합니다.</p></div></div></div></div>
 
-<!-- ===== 04 두 숫자 ===== -->
-<div class="slide" data-title-ko="파일럿 95%, 직원 90%">
-  <div class="mesh m04"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">1. 두 숫자 - <span class="num">01</span></div>
-      <div class="section-title h3s m-rise">파일럿 <span class="pt-c">95%</span> 실패, 직원 <span class="pt-c">90%</span>는 이미 사용 중</div>
-    </div>
-    <div class="bignums">
-      <div class="bn m-rise" style="--d:.4s">
-        <div class="n tnum m-count">95%</div>
-        <div class="cap">손익 개선에 실패한 파일럿</div>
-        <div class="ds">기업이 생성형 AI에 300억~400억 달러를 쓰는 동안,<br>측정 가능한 손익 개선을 만든 파일럿은 20개 중 1개였습니다.</div>
-      </div>
-      <div class="bn-mid m-fade" style="--d:.6s">그런데</div>
-      <div class="bn m-rise" style="--d:.7s">
-        <div class="n tnum m-count">90%</div>
-        <div class="cap">개인 AI를 쓰고 있는 직원</div>
-        <div class="ds">같은 조사에서, 회사의 도입 여부와 무관하게<br>직원 10명 중 9명이 이미 AI를 업무에 쓰고 있었습니다.</div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:.95s">※ Source: MIT Project NANDA, 『The GenAI Divide: State of AI in Business 2025』 · 두 수치 모두 같은 보고서입니다</p>
-  </div>
-</div>
+<div class="slide layout-chapter" data-title-ko="검토 담당자에게 필요한 기준·자료·시간" data-layout="chapter"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">04 · 검토 담당자의 준비와 교육</p><h2 class="section-title">검토 담당자에게 필요한 기준·자료·시간</h2></div><div class="lesson-content"><div class="statement"><h3>담당자 지정과 함께 준비할<br><em>판단 기준·원문·검토 시간</em></h3><p>담당자를 정했어도 확인할 근거와 시간이 없으면<br>결과를 충분히 검토하기 어렵습니다.</p></div><div class="bridge"><span>다음</span><p>제가 AI로 코드를 다시 다루면서 어떤 경험이 판단에 도움이 됐는지 말씀드리겠습니다.</p></div></div></div></div>
 
-<!-- ===== 05 성과가 쌓이는 자리 ===== -->
-<div class="slide" data-title-ko="성과가 쌓이는 곳">
-  <div class="mesh m05"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">1. 두 숫자 - <span class="num">02</span></div>
-      <div class="section-title m-rise">성과가 쌓이는 곳은 회사가 아닌 <span class="pt-c">개인 계정</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">회사가 산 것은 라이선스이고, 직원이 쌓은 것은 역량입니다</div>
-    </div>
-    <div class="split m-stagger">
-      <div class="sp card">
-        <div class="tag">회사가 산 것</div>
-        <h4>라이선스</h4>
-        <ul>
-          <li>전사 계약과 좌석 수</li>
-          <li>보안 검토를 통과한 도구 목록</li>
-          <li>착수 보고서와 파일럿 결과</li>
-          <li>다음 분기로 넘어간 확산 계획</li>
-        </ul>
-      </div>
-      <div class="sp-mid">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        <span>만나지 않음</span>
-      </div>
-      <div class="sp ablock on">
-        <div class="tag">직원이 쌓은 것</div>
-        <h4>역량</h4>
-        <ul>
-          <li>잘 먹히는 프롬프트와 실패한 프롬프트</li>
-          <li>어떤 일에 쓰면 안 되는지에 대한 감각</li>
-          <li>결과물을 고쳐 쓰는 자기만의 절차</li>
-          <li>이 모든 것이 개인 계정 안에</li>
-        </ul>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1s">직원이 퇴사하면 노하우도 함께 나갑니다. 회사에 남는 자산이 되도록 일을 설계하는 것이 AX입니다.</p>
-  </div>
-</div>
+<div class="slide layout-profile" data-title-ko="AI로 설계와 배포를 다시 맡게 된 경험" data-layout="profile"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">발표자 경험</p><h2 class="section-title">AI로 설계와 배포를 다시 맡게 된 경험</h2></div><div class="lesson-content"><div class="profile"><img src="../260902_daejeon_lecture_v3/assets/profile.jpg" alt="발표자 김정환"><div><p class="eyebrow">김정환 · 위븐 대표 · 발표자 제공 이력</p><h3>웹디자인·개발·창업 이후<br><em>다시 맡은 설계와 배포</em></h3><p>AI 결과물이 실제 업무에 맞는지 판단할 때<br>고객 요구를 파악하고 팀을 운영한 경험이 도움이 됐습니다.</p></div></div><p class="source">※ Source: <a href="../260902_daejeon_lecture/founder_story.md" target="_blank" rel="noopener">발표자 제공 이력 · 기존 강의 자료 ↗</a></p><div class="bridge"><span>다음</span><p>그 판단에 참고했던 고객 업무와 회사 운영 경험을 소개하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 06 간지 1 ===== -->
-<div class="slide" data-title-ko="Part 1 - AX가 어려운 진짜 이유">
-  <div class="mesh m06"></div>
-  <div class="slide-inner">
-    <div class="ganji">
-      <div class="bignum m-fade">1</div>
-      <p class="t-over m-rise">PART 1</p>
-      <h1><span class="hl m-rise" style="--d:.2s">AX가 어려운</span><br><span class="hl m-rise" style="--d:.4s"><span class="pt-c">진짜 이유</span></span></h1>
-      <p class="lead m-rise" style="--d:.6s">기술 문제가 아닙니다. 일을 설계하는 문제입니다. 수백 개 기업의 웹 운영을 지켜보며 확인한 이유를 순서대로 말씀드리겠습니다</p>
-    </div>
-  </div>
-</div>
+<div class="slide layout-timeline" data-title-ko="고객 요구를 확인해 온 웹 제작과 회사 운영 경험" data-layout="timeline"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">발표자 제공 이력</p><h2 class="section-title">고객 요구를 확인해 온 웹 제작과 회사 운영 경험</h2></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>2001</h3><p>웹디자이너로 시작</p></div><div><span>02</span><h3>2007</h3><p>개발자로 전환</p></div><div><span>03</span><h3>2012~2021</h3><p>블루스트림 창업·운영·매각</p></div><div><span>04</span><h3>2022~</h3><p>위븐 창업, 웹 제작·운영</p></div></div><p class="take">고객의 요구와 실제 결과를 비교했던 경험은 AI 결과물의 검토 기준을 만드는 데 참고할 수 있습니다.</p><p class="source">※ Source: <a href="../260902_daejeon_lecture/founder_story.md" target="_blank" rel="noopener">발표자 제공 이력 · 기존 강의 자료 ↗</a></p><div class="bridge"><span>다음</span><p>이 경험을 세미나 신청 화면의 검토 항목으로 바꿔 보겠습니다.</p></div></div></div></div>
 
-<!-- ===== 07 이유 01 업무 분해 ===== -->
-<div class="slide" data-title-ko="이유 01 - 직무와 업무">
-  <div class="mesh m07"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">2. 어려운 이유 - <span class="num">01</span></div>
-      <div class="section-title m-rise">AI가 대체하는 단위는 직무가 아니라 <span class="pt-c">업무</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">"마케터를 AI로 대체한다"는 문장은 실행할 수 없습니다. 대체되는 단위는 <b>업무 하나하나</b>입니다</div>
-    </div>
-    <div class="decomp">
-      <svg class="wires m-draw" style="--d:.75s" viewBox="0 0 80 260" preserveAspectRatio="none">
-        <path d="M0,130 C40,130 40,22 80,22" fill="none" stroke="#3B82F6" stroke-width="1.4" opacity=".55"/>
-        <path d="M0,130 C40,130 40,94 80,94" fill="none" stroke="#3B82F6" stroke-width="1.4" opacity=".55"/>
-        <path d="M0,130 C40,130 40,166 80,166" fill="none" stroke="#3B82F6" stroke-width="1.4" opacity=".55"/>
-        <path d="M0,130 C40,130 40,238 80,238" fill="none" stroke="#3B82F6" stroke-width="1.4" opacity=".55"/>
-      </svg>
-      <div class="job card m-rise" style="--d:.5s">
-        <div class="jt">마케팅 담당자</div>
-        <div class="js">직무 1개</div>
-      </div>
-      <div class="tasks m-stagger">
-        <div class="task"><span class="tk">정형</span>경쟁사 소재 수집</div>
-        <div class="task"><span class="tk">정형</span>채널별 성과 집계</div>
-        <div class="task"><span class="tk">정형</span>카피 초안 작성</div>
-        <div class="task"><span class="tk">정형</span>이미지 규격 변환</div>
-        <div class="task j"><span class="tk">판단</span>예산 배분 결정</div>
-        <div class="task j"><span class="tk">판단</span>브랜드 톤 확정</div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1.2s">이 분해 없이 "AI 도입"부터 시작하면 어디에 붙일지부터 막힙니다. 도구 비교는 분해 다음의 일입니다.</p>
-  </div>
-</div>
+<div class="slide layout-comparison" data-title-ko="신청 화면의 디자인과 실제 처리 과정 검토" data-layout="comparison"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 실습 · 검토 관점</p><h2 class="section-title">신청 화면의 디자인과 실제 처리 과정 검토</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">디자인 검토</p><h3>제목·사진·색상·배치</h3><p>행사 정보가 잘 보이고 신청자가 내용을 읽기 쉬운지 확인해야 합니다.</p></div><div class="point accent"><p class="eyebrow">업무 처리 검토</p><h3>신청 접수부터<br><em>확인 안내와 취소 처리까지</em></h3><p>신청 정보가 담당자에게 전달되는지, 중복 신청과 취소가 제대로 처리되는지도 확인해야 합니다.</p></div></div><p class="take">경험자가 확인하던 오류 조건을 적어 두면 다른 담당자도 같은 기준으로 검토할 수 있습니다.</p><div class="bridge"><span>다음</span><p>담당자에게 업무 지식을 제공하는 방식은 상담원 연구에서도 살펴볼 수 있습니다.</p></div></div></div></div>
 
-<!-- ===== 08 이유 02 판정자 ===== -->
-<div class="slide" data-title-ko="이유 02 - 판정자 부재">
-  <div class="mesh m08"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">2. 어려운 이유 - <span class="num">02</span></div>
-      <div class="section-title m-rise">생성물은 100건, <span class="pt-c">판정하는 사람</span>은 0명</div>
-      <div class="section-desc m-rise" style="--d:.3s">AI 결과물의 품질은 그것을 <b>판정하는 사람의 눈높이</b>가 정합니다</div>
-    </div>
-    <div class="lanes m-stagger">
-      <div class="lane">
-        <div class="lane-tag">판정자 없음<span>지금 대부분의 조직</span></div>
-        <div class="lane-flow">
-          <div class="fn in"><b>생성 100건</b><small>속도는 확실히 빨라짐</small></div>
-          <div class="fn-arrow"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="fn gate off"><b>기준 없음</b><small>통과 조건이 정의되지 않음</small></div>
-          <div class="fn-arrow"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="fn out bad"><b>그럴듯하지만 쓸 수 없는 결과물이 쌓임</b><small>업계에서 "AI 슬롭"이라 부르는 상태</small></div>
-        </div>
-      </div>
-      <div class="lane">
-        <div class="lane-tag">판정자 있음<span>성과를 낸 소수</span></div>
-        <div class="lane-flow">
-          <div class="fn in"><b>생성 100건</b><small>속도는 동일</small></div>
-          <div class="fn-arrow"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="fn gate"><b>판정 게이트</b><small>사람 이름이 붙어 있음</small></div>
-          <div class="fn-arrow"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="fn out good"><b>쓸 수 있는 결과물, 그리고 다음에 쓸 판정 기준</b><small>기준이 회사에 남는 자산이 됨</small></div>
-        </div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1.1s">도입을 결정하기 전에 정할 것은 도구 이름이 아닙니다. 결과물을 판정할 사람의 이름입니다.</p>
-  </div>
-</div>
+<div class="slide layout-stat" data-title-ko="AI 답변 제안 후 15% 늘어난 시간당 해결 건수" data-layout="stat"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">현장 연구 · AI가 사람을 돕는 방식</p><h2 class="section-title">AI 답변 제안 후 15% 늘어난 시간당 해결 건수</h2></div><div class="lesson-content"><div class="duo"><div class="stat"><strong>+15%</strong><h3>상담원이 시간당 해결한 문의 수</h3><p>상담원 5,172명의 현장 데이터</p></div><div class="point "><p class="eyebrow">GENERATIVE AI AT WORK</p><h3>경험이 적은 상담원에게서<br><em>더 크게 나타난 개선 효과</em></h3><p>연구진은 경험이 적은 상담원에게서 속도와 품질의 개선을 관찰했으며, 숙련자의 효과는 작거나 달랐습니다.</p></div></div><p class="source">※ Source: <a href="https://arxiv.org/abs/2304.11771v2" target="_blank" rel="noopener">Brynjolfsson·Li·Raymond · 2024 개정본 · 상담원 현장 연구 ↗</a></p><div class="bridge"><span>다음</span><p>이 연구를 참고해 우리 팀에서 판단 근거를 공유하는 연습을 제안하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 09 이유 03 비용 ===== -->
-<div class="slide" data-title-ko="이유 03 - 수정 비용 20~50배">
-  <div class="mesh m09"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">2. 어려운 이유 - <span class="num">03</span></div>
-      <div class="section-title m-rise">같은 수정 1건에 드는 토큰 <span class="pt-c">20~50배</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">생성형 도구는 고칠 때마다 코드를 다시 읽고 다시 씁니다. 만드는 날에는 보이지 않고 <b>운영하는 날부터</b> 벌어집니다</div>
-    </div>
-    <div class="hbars m-stagger">
-      <div class="hbar">
-        <div class="nm">AI 웹빌더<span>수정 1건 기준</span></div>
-        <div class="track"><div class="fill base" style="width:7%">1×</div></div>
-      </div>
-      <div class="hbar">
-        <div class="nm">바이브코딩 도구<span>동일한 수정 1건</span></div>
-        <div class="track"><div class="fill heavy" style="width:100%">20~50×</div></div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1s">※ Source: Site.pro 업계 조사(2026), 동일 수정 작업의 토큰 소비량 비교 · 검토서에는 제작비 대신 1년치 수정 비용을 적으십시오</p>
-  </div>
-</div>
+<div class="slide layout-flow" data-title-ko="잘못된 초안으로 연습하는 검토 방법" data-layout="flow"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">교육 설계 제안</p><h2 class="section-title">잘못된 초안으로 연습하는 검토 방법</h2><p class="section-desc">상담원 연구를 참고해, 초안을 고친 근거를 팀에서 공유하는 교육 방식을 제안합니다.</p></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>각자 검토</h3><p>초안에서 잘못된 부분 표시</p></div><div><span>02</span><h3>근거 확인</h3><p>판단에 사용한 규정 항목 확인</p></div><div><span>03</span><h3>판단 비교</h3><p>경험자의 검토 결과와 차이 확인</p></div><div><span>04</span><h3>기록</h3><p>다음 검토에 참고할 예시로 보관</p></div></div><p class="take">각자 판단한 근거를 비교하고, 의견이 다른 부분은 원문과 대조해 확인할 수 있습니다.</p><p class="source">※ Source: <a href="https://arxiv.org/abs/2304.11771v2" target="_blank" rel="noopener">Brynjolfsson·Li·Raymond · 2024 개정본 · 상담원 현장 연구 ↗</a></p><div class="bridge"><span>다음</span><p>연습 자료에는 판단하기 어려운 문의와 오류도 포함하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 10 즉석 참여 ===== -->
-<div class="slide" data-title-ko="2분 - 직접 해보기">
-  <div class="mesh m10"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">2. 어려운 이유 - <span class="num">04</span></div>
-      <div class="section-title h3s m-rise">이번 주에 <span class="pt-c">세 번 이상 반복한 일</span> 하나</div>
-    </div>
-    <div class="qlines m-stagger">
-      <div class="qline card"><div class="qn tnum">01</div><div class="qt">그 일을 단계로 쪼개면 몇 개입니까</div></div>
-      <div class="qline card"><div class="qn tnum">02</div><div class="qt">그중 사람의 판단이 꼭 필요한 단계는 몇 개입니까</div></div>
-      <div class="qline card"><div class="qn tnum">03</div><div class="qt">나머지 단계의 결과물은 누가 판정합니까</div></div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1s">방금 답하신 세 줄이, 어떤 AI 도구를 고르는가보다 회사의 성과를 크게 좌우합니다.</p>
-  </div>
-</div>
+<div class="slide layout-rows" data-title-ko="검토 연습에 포함할 누락·충돌·오류 사례" data-layout="rows"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 실습 · 검토 연습 문제</p><h2 class="section-title">검토 연습에 포함할 누락·충돌·오류 사례</h2></div><div class="lesson-content"><div class="rows"><div><strong>정보 누락</strong><p>시간은 있지만 날짜가 없는 행사 안내</p></div><div><strong>자료 불일치</strong><p>페이지와 첨부 요금표의 참가비가 다른 경우</p></div><div><strong>승인 없는 약속</strong><p>규정에 없는 단체 할인을 약속한 답변</p></div><div><strong>지난 정보 사용</strong><p>마감일이 지났는데 신청할 수 있다고 안내한 답변</p></div></div><p class="take">수정한 이유와 확인한 원문을 함께 적어야 다음 담당자도 판단 근거를 확인할 수 있습니다.</p><div class="bridge"><span>다음</span><p>이 검토 결과를 다음 업무에 재사용할 수 있도록 기록해 보겠습니다.</p></div></div></div></div>
 
-<!-- ===== 11 간지 2 ===== -->
-<div class="slide" data-title-ko="Part 2 - 25년의 궤적">
-  <div class="mesh m11"></div>
-  <div class="slide-inner">
-    <div class="ganji">
-      <div class="bignum m-fade">2</div>
-      <p class="t-over m-rise">PART 2</p>
-      <h1><span class="hl m-rise" style="--d:.2s"><span class="pt-c">판정할 사람</span>은</span><br><span class="hl m-rise" style="--d:.4s">어떻게 만들어지는가</span></h1>
-      <p class="lead m-rise" style="--d:.6s">제 25년으로 답을 드리겠습니다</p>
-    </div>
-  </div>
-</div>
+<div class="slide layout-record" data-title-ko="다음 담당자가 참고할 수정 이유와 확인 근거" data-layout="record"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">회사에 남길 검토 기록</p><h2 class="section-title">다음 담당자가 참고할 수정 이유와 확인 근거</h2></div><div class="lesson-content"><div class="record"><p class="eyebrow">검토 기록 예시 · 가상 세미나 업무</p><h3>“단체 할인 가능” 문구 삭제</h3><div class="record-grid"><p><b>확인 근거</b><br>요금표에 단체 할인 항목 없음</p><p><b>수정 이유</b><br>담당자 승인 없이 가격 약속 불가</p><p><b>처리 방법</b><br>할인 문의는 담당자에게 연결</p><p><b>관리</b><br>행사 담당자가 규정 변경 시 갱신</p></div></div><p class="take">프롬프트와 결과물뿐 아니라 수정 이유·확인 근거·변경일도 함께 보관해야 합니다.</p><div class="bridge"><span>다음</span><p>검토 기록을 만들고 관리하는 시간까지 운영 비용에 포함해 보겠습니다.</p></div></div></div></div>
 
-<!-- ===== 12 궤적 곡선 ===== -->
-<div class="slide" data-title-ko="25년의 궤적">
-  <div class="mesh m12"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">3. 25년의 궤적 - <span class="num">01</span></div>
-      <div class="section-title m-rise">코드에서 멀어졌다가 <span class="pt-c">다시 돌아온 25년</span></div>
-    </div>
-    <div class="curve">
-      <svg viewBox="0 0 1180 430">
-        <defs>
-          <linearGradient id="cg" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#74ACFF"/>
-            <stop offset="55%" stop-color="#3B82F6"/>
-            <stop offset="100%" stop-color="#2C63D9"/>
-          </linearGradient>
-          <filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1180" height="430">
-            <feGaussianBlur stdDeviation="6"/>
-          </filter>
-        </defs>
-        <text x="8" y="104" fill="#a6afc0" font-size="19" font-weight="600">코드와의 거리</text>
-        <line x1="8" y1="118" x2="8" y2="362" stroke="#D8DFEA" stroke-width="2"/>
-        <path d="M110,200 C210,140 280,122 370,130 C480,142 530,262 600,298 C700,348 820,220 1060,104"
-              fill="none" stroke="#3B82F6" stroke-width="7" opacity=".22" filter="url(#gl)"/>
-        <path class="m-draw" style="--d:.5s" data-mdur="1500"
-              d="M110,200 C210,140 280,122 370,130 C480,142 530,262 600,298 C700,348 820,220 1060,104"
-              fill="none" stroke="url(#cg)" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="110" cy="200" r="10" fill="#FDFDFF" stroke="#3B82F6" stroke-width="4"/>
-        <circle cx="370" cy="130" r="10" fill="#FDFDFF" stroke="#3B82F6" stroke-width="4"/>
-        <circle cx="600" cy="298" r="10" fill="#FDFDFF" stroke="#3B82F6" stroke-width="4"/>
-        <circle cx="1060" cy="104" r="13" fill="#3B82F6"/>
+<div class="slide layout-flow" data-title-ko="구축 이후 운영과 교체에도 드는 비용" data-layout="flow"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">05 · 운영 비용과 재사용할 자료</p><h2 class="section-title">구축 이후 운영과 교체에도 드는 비용</h2></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>초기 구축</h3><p>자료 정리·시스템 연결·검토 기준 마련</p></div><div><span>02</span><h3>매달 운영</h3><p>도구 사용료·생성·검토·수정</p></div><div><span>03</span><h3>변경 대응</h3><p>규정·담당자·AI 모델 변경</p></div><div><span>04</span><h3>종료·교체</h3><p>데이터 내보내기·이전·복구</p></div></div><p class="take">도입 예산에는 초기 구축비와 운영 중 발생하는 검토·수정·변경 비용을 함께 포함해야 합니다.</p><div class="bridge"><span>다음</span><p>검토 시간을 포함했을 때 월 운영비가 어떻게 달라지는지 계산하겠습니다.</p></div></div></div></div>
 
-        <text x="110" y="252" text-anchor="middle" fill="#3B82F6" font-size="24" font-weight="800">2001</text>
-        <text x="110" y="282" text-anchor="middle" fill="#111" font-size="23" font-weight="700">웹디자이너</text>
-        <text x="110" y="310" text-anchor="middle" fill="#a6afc0" font-size="19">남의 소스를 열어보며 독학</text>
+<div class="slide layout-cost" data-title-ko="월 100건 처리 시 운영비 비교 예시" data-layout="cost"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 비용 계산 · 모두 가정값</p><h2 class="section-title">월 100건 처리 시 운영비 비교 예시</h2><p class="section-desc">인건비는 작성·검토·수정 시간을 시간당 3만 원으로 환산한 값이며, 구축·교육·이전 비용은 별도입니다.</p></div><div class="lesson-content"><div class="cost"><div><p>기존: 100건 × 20분 × 시간당 3만 원</p><strong>100만 원</strong></div><div><p>AI: 건당 총 작업 시간 10분 + 월 도구비 20만 원</p><strong>70만 원</strong></div><div class="cost-result"><span>월 운영비 차이 · 시간 환산 기준</span><strong>30만 원 절감</strong></div></div><p class="take">건당 작업 시간이 16분으로 늘면 도구비를 포함한 월 비용이 100만 원이 되어 절감액이 없어집니다.</p><div class="bridge"><span>다음</span><p>시간을 비용으로 환산한 값과 실제 현금 지출의 차이도 구분하겠습니다.</p></div></div></div></div>
 
-        <text x="370" y="30" text-anchor="middle" fill="#3B82F6" font-size="24" font-weight="800">2007</text>
-        <text x="370" y="60" text-anchor="middle" fill="#111" font-size="23" font-weight="700">개발자로 전환</text>
-        <text x="370" y="86" text-anchor="middle" fill="#a6afc0" font-size="19">CTO · R&amp;D 본부장 · LG DIOS</text>
-        <text x="370" y="110" text-anchor="middle" fill="#a6afc0" font-size="19">2011 웹어워드코리아 대상</text>
+<div class="slide layout-comparison" data-title-ko="절약한 시간의 활용과 실제 지출 감소" data-layout="comparison"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">시간과 손익의 구분</p><h2 class="section-title">절약한 시간의 활용과 실제 지출 감소</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">별도의 가상 예시</p><h3>월 10시간 절약</h3><p>작업 시간이 줄어도 지급하는 급여가 같다면 현금 지출은 그대로일 수 있습니다.</p></div><div class="point accent"><p class="eyebrow">절약한 시간의 활용 예</p><h3>답변이 밀린<br><em>고객 문의 처리</em></h3><p>절약한 시간을 문의 처리에 쓰고, 대기 건수와 완료 건수가 어떻게 달라졌는지 확인할 수 있습니다.</p></div></div><p class="take">시간 절약, 처리량 증가, 현금 지출 감소는 각각 측정해야 합니다.</p><div class="bridge"><span>다음</span><p>도구를 고를 때도 실제 처리 과정과 운영 비용을 함께 확인하겠습니다.</p></div></div></div></div>
 
-        <text x="600" y="348" text-anchor="middle" fill="#3B82F6" font-size="24" font-weight="800">2012 ~ 2021</text>
-        <text x="600" y="378" text-anchor="middle" fill="#111" font-size="23" font-weight="700">창업, 그리고 코드에서 멀어짐</text>
-        <text x="600" y="406" text-anchor="middle" fill="#a6afc0" font-size="19">블루스트림 9년 운영 후 M&amp;A 매각</text>
+<div class="slide layout-checklist" data-title-ko="도구 시연에서 확인할 수정·인수인계·종료 절차" data-layout="checklist"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">구매·개발 비교 제안</p><h2 class="section-title">도구 시연에서 확인할 수정·인수인계·종료 절차</h2></div><div class="lesson-content"><div class="rows"><div><strong>초안 생성</strong><p>승인된 안내를 이용한 실제 초안 작성</p></div><div><strong>조건 변경</strong><p>날짜·환불 조건 변경 후 답변 검토</p></div><div><strong>담당자 변경</strong><p>자료와 수정 이력의 인수인계 가능 여부</p></div><div><strong>종료·이전</strong><p>결과물·자료 내보내기와 서비스 중단 절차</p></div></div><p class="take">구매와 자체 개발은 같은 업무·통과 기준·운영 기간을 기준으로 비교해야 합니다.</p><div class="bridge"><span>다음</span><p>재밋의 웹 제작 업무도 같은 방식으로 나눠 살펴보겠습니다.</p></div></div></div></div>
 
-        <text x="1060" y="66" text-anchor="middle" fill="#2C63D9" font-size="24" font-weight="800">2026</text>
-        <text x="1060" y="160" text-anchor="middle" fill="#111" font-size="23" font-weight="700">다시 풀스택</text>
-        <text x="1060" y="188" text-anchor="middle" fill="#a6afc0" font-size="19">설계부터 배포까지 직접</text>
-      </svg>
-    </div>
-    <p class="note ctr m-fade" style="--d:1.3s">제가 다시 개발할 수 있게 된 건 코딩을 다시 배워서가 아닙니다. 결과물이 맞는지 판단할 줄 알았기 때문입니다.</p>
-  </div>
-</div>
+<div class="slide layout-product" data-title-ko="재밋에서 구분한 웹 제작과 운영 업무" data-layout="product"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">자체 사례 · 발표자 제공 제품 구조</p><h2 class="section-title">재밋에서 구분한 웹 제작과 운영 업무</h2></div><div class="lesson-content"><div class="product"><p class="product-name">Zaemit</p><div class="flow"><div><span>01</span><h3>웹 생성</h3><p>페이지 구조와 초안</p></div><div><span>02</span><h3>이미지 생성</h3><p>페이지에 필요한 이미지</p></div><div><span>03</span><h3>기능 개발</h3><p>입력·신청 등 동작</p></div><div><span>04</span><h3>운영</h3><p>게시 후 유지·변경</p></div></div></div><p class="take">결과를 검토하고 운영하는 사람의 일도 함께 정해야 합니다.</p><p class="source">※ Source: <a href="../260902_daejeon_lecture/founder_story.md" target="_blank" rel="noopener">발표자 제공 이력 · 기존 강의 자료 ↗</a></p><div class="bridge"><span>다음</span><p>이제 세미나 페이지가 완성된 뒤 확인할 접수와 운영 과정을 보겠습니다.</p></div></div></div></div>
 
-<!-- ===== 13 남은 것 ===== -->
-<div class="slide" data-title-ko="20년이 남긴 것">
-  <div class="mesh m13"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">3. 25년의 궤적 - <span class="num">02</span></div>
-      <div class="section-title m-rise">20년이 남긴 것은 <span class="pt-c">판단력</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">문법과 타이핑은 값이 내렸고, 정의하고 판정하는 일은 값이 올랐습니다</div>
-    </div>
-    <div class="cmp m-stagger">
-      <div class="cmp-col off">
-        <div class="ch">쓸모가 줄어든 것</div>
-        <div class="cr">문법과 API를 외우는 능력</div>
-        <div class="cr">타이핑 속도와 단축키</div>
-        <div class="cr">라이브러리 사용법 암기</div>
-        <div class="cr">비슷한 코드를 반복해 쓰는 숙련</div>
-      </div>
-      <div class="cmp-col on">
-        <div class="ch">값이 오른 것</div>
-        <div class="cr">무엇을 만들지 정의하는 능력</div>
-        <div class="cr">결과물이 맞는지 판정하는 눈</div>
-        <div class="cr">어디까지 맡기고 어디서 멈출지 아는 감각</div>
-        <div class="cr">서비스 전체의 맥락을 관리하는 힘</div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1s">20년이 없어도 됩니다. 왜 그런지 다음 장에서 말씀드리겠습니다.</p>
-  </div>
-</div>
+<div class="slide layout-scenario" data-title-ko="세미나 페이지 게시 전에 확인할 신청 처리" data-layout="scenario"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">가상 실습 · 제작에서 운영까지</p><h2 class="section-title">세미나 페이지 게시 전에 확인할 신청 처리</h2></div><div class="lesson-content"><div class="scenario"><div class="event-preview"><p>가상 페이지 · 구성 예시</p><h3>우리 팀의<br>AI 업무 세미나</h3><div class="event-lines"><span>일정 · 장소 · 참가비</span><span>신청 정보 입력</span><span>신청 완료 안내</span></div></div><div><h3>화면 제작 후 확인할<br><em>신청 처리와 운영</em></h3><div class="rows"><div><strong>접수</strong><p>신청 정보의 담당자 전달 여부</p></div><div><strong>정정</strong><p>잘못 입력한 정보의 수정 방법</p></div><div><strong>취소</strong><p>취소 규정에 맞는 처리와 안내</p></div><div><strong>운영</strong><p>운영 담당자와 복원 방법</p></div></div></div></div><div class="bridge"><span>다음</span><p>이 과정에서 확인하고 수정한 내용을 다음 행사에도 쓸 수 있도록 정리하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 14 간지 3 ===== -->
-<div class="slide" data-title-ko="Part 3 - 바이브코딩과 개발자">
-  <div class="mesh m14"></div>
-  <div class="slide-inner">
-    <div class="ganji">
-      <div class="bignum m-fade">3</div>
-      <p class="t-over m-rise">PART 3</p>
-      <h1><span class="hl m-rise" style="--d:.2s"><span class="pt-c">개발직군</span>에서</span><br><span class="hl m-rise" style="--d:.4s">이미 벌어진 일!</span></h1>
-      <p class="lead m-rise" style="--d:.6s">개발은 AI에 가장 먼저 노출된 직군입니다. 같은 일이 다른 직군에서도 일어납니다</p>
-    </div>
-  </div>
-</div>
+<div class="slide layout-comparison" data-title-ko="다음 행사에도 재사용할 규정과 검토 기록" data-layout="comparison"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">반복 업무에 재사용할 자료</p><h2 class="section-title">다음 행사에도 재사용할 규정과 검토 기록</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">완성한 결과물</p><h3>세미나 페이지</h3><p>다음 행사에서 규정이나 담당자가 바뀌면 기존 페이지도 다시 확인해야 합니다.</p></div><div class="point accent"><p class="eyebrow">함께 보관할 자료</p><h3>승인된 규정과 검토 기록<br><em>실제 문의 처리 결과</em></h3><p>반복 문의와 수정 이유를 기록해 두면 다음 행사의 안내와 검토 기준을 정하는 데 참고할 수 있습니다.</p></div></div><p class="take">담당자가 결과물과 해당 규정·수정 기록을 함께 찾을 수 있도록 보관해야 합니다.</p><div class="bridge"><span>다음</span><p>여러분의 반복 업무에서도 같은 방식으로 실행안을 작성해 보겠습니다.</p></div></div></div></div>
 
-<!-- ===== 15 두 가지 방식 ===== -->
-<div class="slide" data-title-ko="웹빌더와 바이브코딩">
-  <div class="mesh m15"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">4. 바이브코딩 - <span class="num">01</span></div>
-      <div class="section-title m-rise">웹빌더와 바이브코딩의 <span class="pt-c">출발점 차이</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">2025년 2월 AI 연구자 안드레이 카파시가 쓴 말입니다. 코드를 직접 쓰는 대신 <b>AI와 대화하며 프로그램을 만드는 방식</b>입니다</div>
-    </div>
-    <div class="fork">
-      <svg viewBox="0 0 1180 150" preserveAspectRatio="none" style="height:9.4vw">
-        <defs>
-          <filter id="gl2" filterUnits="userSpaceOnUse" x="0" y="0" width="1180" height="150">
-            <feGaussianBlur stdDeviation="6"/>
-          </filter>
-        </defs>
-        <path d="M590,44 C590,100 320,80 300,144" fill="none" stroke="#a6afc0" stroke-width="7" opacity=".22" filter="url(#gl2)"/>
-        <path class="m-draw" style="--d:.55s" d="M590,44 C590,100 320,80 300,144" fill="none" stroke="#C3CEDF" stroke-width="2.5"/>
-        <path d="M590,44 C590,100 860,80 880,144" fill="none" stroke="#3B82F6" stroke-width="7" opacity=".22" filter="url(#gl2)"/>
-        <path class="m-draw" style="--d:.55s" d="M590,44 C590,100 860,80 880,144" fill="none" stroke="#3B82F6" stroke-width="2.5"/>
-        <text x="590" y="26" text-anchor="middle" fill="#111" font-size="26" font-weight="800">코딩 없이 만들고 싶다</text>
-      </svg>
-      <div class="fork-cols m-stagger">
-        <div class="fk card">
-          <div class="kind">노코드 방식</div>
-          <h4>웹빌더 · AI 웹빌더</h4>
-          <div class="chips"><span class="chip">Wix</span><span class="chip">Squarespace</span><span class="chip">Framer</span></div>
-          <p>정해진 편집기 위에서 <b>부품을 조립</b>합니다. 틀 안에서는 빠르고, 틀 밖은 막힙니다.</p>
-        </div>
-        <div class="fk card on">
-          <div class="kind">대화형 AI 프로그래밍 방식</div>
-          <h4>바이브코딩</h4>
-          <div class="chips"><span class="chip">Lovable</span><span class="chip">Bolt.new</span><span class="chip">v0</span><span class="chip">재밋</span></div>
-          <p>실행되는 <b>소스 코드 자체를 새로 생성</b>합니다. 제약이 없는 대신, 고칠 때마다 다시 읽고 다시 씁니다.</p>
-        </div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1.1s">※ 학술 분류: 노코드 플랫폼(Bock &amp; Frank, 2021) / 대화형 AI 프로그래밍(Sarkar &amp; Drosos, 2025)</p>
-  </div>
-</div>
+<div class="slide layout-chapter" data-title-ko="월요일에 시험할 반복 업무 한 가지" data-layout="chapter"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">06 · 우리 팀의 실행안 작성</p><h2 class="section-title">월요일에 시험할 반복 업무 한 가지</h2></div><div class="lesson-content"><div class="statement"><h3>최근에 반복한 업무 중<br><em>완료 여부를 확인할 수 있는 일</em></h3><p>필요한 자료가 있고 담당자가 결과를 확인할 수 있으며,<br>문제가 생기면 이전 방식으로 돌아갈 수 있는 일을 골라 주십시오.</p></div><div class="bridge"><span>다음</span><p>업무 선택에 1분, 검토 기준 작성에 1분을 드리겠습니다.</p></div></div></div></div>
 
-<!-- ===== 16 상반된 두 실험 ===== -->
-<div class="slide" data-title-ko="55.8% 빨라짐, 19% 느려짐">
-  <div class="mesh m16"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">4. 바이브코딩 - <span class="num">02</span></div>
-      <div class="section-title h3s m-rise">한쪽은 <span class="pt-c">55.8% 단축</span>, 한쪽은 <span class="pt-r">19% 지연</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">같은 AI를 쓴 두 실험의 결과가 정반대로 나왔습니다</div>
-    </div>
-    <div class="duals m-stagger">
-      <div class="dual">
-        <div class="dm">GitHub Copilot 무작위 대조 실험<span>정형화된 구현 과제 · 일반 개발자</span></div>
-        <div class="dt">
-          <div class="ax"></div><div class="zero">기준선</div>
-          <div class="fill pos" style="width:46%">55.8% 빨라짐</div>
-        </div>
-      </div>
-      <div class="dual">
-        <div class="dm">METR 실측 실험<span>자기 코드베이스를 잘 아는 숙련 개발자</span></div>
-        <div class="dt">
-          <div class="ax"></div>
-          <div class="fill neg" style="width:16%">19% 느려짐</div>
-        </div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1s">느려진 이유는 AI의 성능 때문이 아닙니다. 결과물을 검토하고 고치는 시간이 더 들었습니다. 도입 효과는 조직의 숙련도 분포에 따라 부호가 바뀝니다.<br>※ Source: Peng 외(2023) · METR(2025)</p>
-  </div>
-</div>
+<div class="slide layout-exercise" data-title-ko="2분 실습: 맡길 작업과 검토 기준 작성" data-layout="exercise"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">청중 참여 · 개인 작성</p><h2 class="section-title">2분 실습: 맡길 작업과 검토 기준 작성</h2><p class="section-desc">예: 승인된 행사 안내 → 문의 답변 초안 → 담당자가 확인한 발송용 답변</p></div><div class="lesson-content"><div class="rows"><div><strong>0:00~1:00</strong><p>업무 선택: 입력 자료 → AI에 맡길 작업 → 완료한 결과물</p></div><div><strong>1:00~2:00</strong><p>검토 기준: 확인할 원문 → 검토자 → 담당자에게 넘길 문의</p></div></div><p class="take">필요한 자료나 검토자를 정하기 어렵다면 더 작은 작업으로 범위를 좁혀 보십시오.</p><div class="bridge"><span>다음</span><p>다른 담당자도 실행할 수 있도록 작성한 예시를 보겠습니다.</p></div></div></div></div>
 
-<!-- ===== 17 병목의 이동 ===== -->
-<div class="slide" data-title-ko="검증으로 옮겨간 병목">
-  <div class="mesh m17"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">4. 바이브코딩 - <span class="num">03</span></div>
-      <div class="section-title m-rise">생성에서 <span class="pt-c">검증으로</span> 옮겨간 병목</div>
-      <div class="section-desc m-rise" style="--d:.3s">일의 총량이 줄지는 않았습니다. <b>막히는 자리가 이동</b>했습니다. 두께가 곧 처리 능력입니다</div>
-    </div>
-    <div class="pipes m-stagger">
-      <div class="prow">
-        <div class="pwhen">어제</div>
-        <div class="pipe">
-          <div class="pseg"><div class="pband"><div class="pbar" style="height:4.4vw"></div></div><div class="plab"><b>정의</b><small>무엇을 만들지</small></div></div>
-          <div class="parrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="pseg"><div class="pband"><div class="pbar neck" style="height:1.5vw"></div></div><div class="plab"><b>생성</b><span class="nk">병목</span></div></div>
-          <div class="parrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="pseg"><div class="pband"><div class="pbar" style="height:4.4vw"></div></div><div class="plab"><b>검증</b><small>사람이 감당 가능</small></div></div>
-          <div class="parrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="pseg"><div class="pband"><div class="pbar" style="height:4.4vw"></div></div><div class="plab"><b>배포</b><small>운영으로</small></div></div>
-        </div>
-      </div>
-      <div class="prow now">
-        <div class="pwhen">오늘</div>
-        <div class="pipe">
-          <div class="pseg"><div class="pband"><div class="pbar" style="height:4.4vw"></div></div><div class="plab"><b>정의</b><small>사람의 자리</small></div></div>
-          <div class="parrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="pseg"><div class="pband"><div class="pbar wide" style="height:7.4vw"></div></div><div class="plab"><b>생성</b><small>사실상 무제한</small></div></div>
-          <div class="parrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="pseg"><div class="pband"><div class="pbar neck" style="height:1.2vw"></div></div><div class="plab"><b>검증</b><span class="nk">새 병목</span></div></div>
-          <div class="parrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <div class="pseg"><div class="pband"><div class="pbar" style="height:4.4vw"></div></div><div class="plab"><b>배포</b><small>운영으로</small></div></div>
-        </div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1.1s">사람에게 남는 일은 무엇을 만들지 정의하고, 결과가 맞는지 판정하고, 전체 맥락을 관리하는 것입니다.</p>
-  </div>
-</div>
+<div class="slide layout-worksheet" data-title-ko="실행안 작성 예시: 세미나 문의 답변" data-layout="worksheet"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">실행안 · 가상 작성 예</p><h2 class="section-title">실행안 작성 예시: 세미나 문의 답변</h2></div><div class="lesson-content"><table><thead><tr><th>항목</th><th>가상 업무의 작성 예</th></tr></thead><tbody><tr><td>업무·입력</td><td>행사 안내와 요금표로 문의 답변 초안 작성</td></tr><tr><td>통과 기준</td><td>일정·가격·취소 규정 일치, 없는 정보는 담당자 연결</td></tr><tr><td>검토·권한</td><td>행사 담당자 검토 후 전송, AI의 전송 권한 제한</td></tr><tr><td>측정·중단</td><td>총 작업 시간·수정·재문의 기록, 미승인 약속 시 중단</td></tr></tbody></table><div class="bridge"><span>다음</span><p>작성한 내용만으로 검토와 중단 여부를 판단할 수 있는지 점검하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 18 도미노 ===== -->
-<div class="slide" data-title-ko="개발직군이 첫 번째">
-  <div class="mesh m18"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">4. 바이브코딩 - <span class="num">04</span></div>
-      <div class="section-title m-rise">개발직군은 <span class="pt-c">첫 번째</span>였을 뿐</div>
-      <div class="section-desc m-rise" style="--d:.3s">노출 순서가 다를 뿐, 각 직군에서 벌어지는 일의 구조는 같습니다</div>
-    </div>
-    <div class="domino m-stagger">
-      <div class="dcol">
-        <div class="dstage"><div class="dtile d1"></div></div>
-        <div class="dnm">개발</div>
-        <div class="dwh">이미 넘어짐<br>생성은 공짜, 검증이 병목</div>
-      </div>
-      <div class="dcol">
-        <div class="dstage"><div class="dtile d2"></div></div>
-        <div class="dnm">디자인 · 카피</div>
-        <div class="dwh">넘어지는 중<br>초안 생성이 무료가 됨</div>
-      </div>
-      <div class="dcol">
-        <div class="dstage"><div class="dtile d3"></div></div>
-        <div class="dnm">마케팅 · CS</div>
-        <div class="dwh">기울기 시작<br>응대와 소재가 자동화 구간에</div>
-      </div>
-      <div class="dcol">
-        <div class="dstage"><div class="dtile d4"></div></div>
-        <div class="dnm">기획 · 분석</div>
-        <div class="dwh">아직 서 있음<br>분해와 판정의 자리가 남음</div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1.2s">판정력은 20년으로도 오지만, 자기 업 안에서는 여러분이 이미 검증자입니다. 긴 경력보다 좁은 영역이 먼저입니다.</p>
-  </div>
-</div>
+<div class="slide layout-choice" data-title-ko="짝과 함께 확인할 통과 기준과 중단 방법" data-layout="choice"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">청중 참여 · 짝 점검 1분</p><h2 class="section-title">짝과 함께 확인할 통과 기준과 중단 방법</h2></div><div class="lesson-content"><div class="duo"><div class="point "><p class="eyebrow">통과 기준 확인</p><h3>같은 결과에 대한<br>일관된 판단 가능 여부</h3><p>“좋은 답변”처럼 뜻이 넓은 표현은 날짜·가격·규정의 일치 여부처럼 확인할 수 있는 조건으로 고쳐 주십시오.</p></div><div class="point accent"><p class="eyebrow">중단 방법 확인</p><h3>오류 발생 시<br><em>중단할 담당자와 절차</em></h3><p>확인할 원문과 담당자, 중단에 필요한 권한이 실행안에 적혀 있는지 확인해 주십시오.</p></div></div><p class="take">혼자 참여하셨다면 다른 담당자가 이 실행안을 받았다고 생각하며 다시 읽어 주십시오.</p><div class="bridge"><span>다음</span><p>점검한 실행안으로 2주 동안 시험하는 일정을 정하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 19 간지 4 ===== -->
-<div class="slide" data-title-ko="Part 4 - 남는 것과 할 일">
-  <div class="mesh m19"></div>
-  <div class="slide-inner">
-    <div class="ganji">
-      <div class="bignum m-fade">4</div>
-      <p class="t-over m-rise">PART 4</p>
-      <h1><span class="hl m-rise" style="--d:.2s">만드는 능력이 평준화된 뒤</span><br><span class="hl m-rise" style="--d:.4s"><span class="pt-c">회사에 남는 것</span></span></h1>
-      <p class="lead m-rise" style="--d:.6s">복제되는 것과 쌓이는 것을 나눠서 보겠습니다</p>
-    </div>
-  </div>
-</div>
+<div class="slide layout-timeline" data-title-ko="2주 시험 운영의 비교 방법과 기록" data-layout="timeline"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">운영 제안 · 2주 시험</p><h2 class="section-title">2주 시험 운영의 비교 방법과 기록</h2><p class="section-desc">공정하게 비교하려면 업무 난이도와 물량을 맞추고, 가능하면 AI 사용과 미사용 작업을 번갈아 배정해야 합니다.</p></div><div class="lesson-content"><div class="flow"><div><span>01</span><h3>1~2일</h3><p>AI 없이 처리한 작업의 시간·수정 기록</p></div><div><span>02</span><h3>3~5일</h3><p>AI 초안 사용 후 같은 기준으로 검토</p></div><div><span>03</span><h3>6~9일</h3><p>누락·예외 보완 후 같은 조건에서 재확인</p></div><div><span>04</span><h3>10일</h3><p>품질·시간·비용에 따른 운영 지속 여부 결정</p></div></div><p class="take">시험 건수가 적을 때는 이 결과만으로 장기 효과를 단정해서는 안 됩니다.</p><p class="source">※ Source: <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR · 2025.07 · 숙련 개발자 무작위 실험 ↗</a></p><div class="bridge"><span>다음</span><p>비교에 필요한 시간과 품질 기록을 한 표로 정리하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 20 하루 vs 수년 ===== -->
-<div class="slide" data-title-ko="하루면 복제, 수년이면 축적">
-  <div class="mesh m20"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">5. 남는 것 - <span class="num">01</span></div>
-      <div class="section-title h3s m-rise">화면은 <span class="pt-c">하루</span>, 운영 데이터는 <span class="pt-c">수년</span></div>
-      <div class="section-desc m-rise" style="--d:.3s">아이템을 고르실 때 이 선을 먼저 그으십시오. 사업의 자리는 오른쪽입니다</div>
-    </div>
-    <div class="split m-stagger">
-      <div class="sp card">
-        <div class="tag">하루면 복제됨</div>
-        <h4>만들어지는 것</h4>
-        <ul>
-          <li>화면과 레이아웃</li>
-          <li>기능 목록과 동작</li>
-          <li>소개 문구와 초기 콘텐츠</li>
-          <li>경쟁사를 보고 따라잡을 수 있는 모든 것</li>
-        </ul>
-      </div>
-      <div class="sp-mid">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span>시간</span>
-      </div>
-      <div class="sp ablock on">
-        <div class="tag">수년이 걸림</div>
-        <h4>쌓이는 것</h4>
-        <ul>
-          <li>어떤 고객이 어디서 이탈하는지</li>
-          <li>어떤 문구가 문의로 이어지는지</li>
-          <li>같은 업종에서 성과를 올려 본 판단</li>
-          <li>사고가 났을 때 책임지고 대응한 이력</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="slide layout-table" data-title-ko="품질과 총 작업 시간을 함께 기록할 측정표" data-layout="table"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">측정 양식 · 값은 실험 후 입력</p><h2 class="section-title">품질과 총 작업 시간을 함께 기록할 측정표</h2></div><div class="lesson-content"><table><thead><tr><th>측정 항목</th><th>AI 미사용</th><th>AI 사용</th></tr></thead><tbody><tr><td>완료 건수·업무 난이도</td><td>기록</td><td>기록</td></tr><tr><td>건당 총 작업 시간: 작성+검토+수정</td><td>기록</td><td>기록</td></tr><tr><td>오류·재작업·재문의 건수</td><td>기록</td><td>기록</td></tr><tr><td>도구비·설정·교육 시간</td><td>기록</td><td>기록</td></tr></tbody></table><p class="take">시간이 줄어도 품질이 기준에 못 미치면 작업 조건을 보완한 뒤 다시 비교해야 합니다.</p><div class="bridge"><span>다음</span><p>이 측정표로 중단 여부를 판단할 수 있도록 조건을 미리 정하겠습니다.</p></div></div></div></div>
 
-<!-- ===== 21 복제되지 않는 것 ===== -->
-<div class="slide" data-title-ko="복제되지 않는 자산">
-  <div class="mesh m21"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">5. 남는 것 - <span class="num">02</span></div>
-      <div class="section-title h3s m-rise">복제되지 않는 자산: <span class="pt-c">실데이터 · 도메인 판단 · 운영 책임</span></div>
-    </div>
-    <div class="stack m-stagger">
-      <div class="slayer">
-        <div class="sn tnum">01</div>
-        <div class="st">실데이터</div>
-        <div class="sd">어떤 고객이 어디서 이탈하고 어떤 문구가 문의로 이어지는지. 서비스를 실제로 돌려 본 회사에만 쌓입니다.</div>
-      </div>
-      <div class="slayer">
-        <div class="sn tnum">02</div>
-        <div class="st">도메인 판단</div>
-        <div class="sd">같은 업종에서 성과를 끌어올려 본 경험. 프롬프트로 흉내 낼 수 없고, 남의 데이터로 대신할 수도 없습니다.</div>
-      </div>
-      <div class="slayer ablock on">
-        <div class="sn tnum">03</div>
-        <div class="st">운영 책임</div>
-        <div class="sd">장애가 났을 때, 결제가 얽혔을 때, 법이 바뀌었을 때 책임지고 대응하는 구조. 생성형 도구가 대신해 주지 않습니다.</div>
-      </div>
-    </div>
-    <p class="note ctr m-fade" style="--d:1s">이 셋은 사서 갖출 수 없습니다. 운영한 시간만큼 쌓이기 때문에, 오늘 시작한 회사가 내일 시작한 회사보다 유리합니다.</p>
-  </div>
-</div>
+<div class="slide layout-rows" data-title-ko="시험 운영 전에 정할 중단 조건과 복구 방법" data-layout="rows"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">운영 제안 · 시작과 중단을 함께 결정</p><h2 class="section-title">시험 운영 전에 정할 중단 조건과 복구 방법</h2><p class="section-desc">업무에서 발생할 수 있는 피해를 고려해 중단 조건과 판단 담당자를 정해야 합니다.</p></div><div class="lesson-content"><div class="rows"><div><strong>권한 위반</strong><p>승인 없는 가격 약속·고객 전송·데이터 변경 시 중단</p></div><div><strong>검토 불가</strong><p>확인할 원문이나 검토자가 없을 때 보류</p></div><div><strong>성과 미달</strong><p>품질 기준 미달 또는 총비용 증가 시 업무 범위 재검토</p></div></div><p class="take">누가 중단을 결정하고 어떻게 실행하며, 이전 방식으로 어떻게 돌아갈지 함께 적어야 합니다.</p><div class="bridge"><span>다음</span><p>오늘 살펴본 사례를 실행안의 네 항목으로 정리하며 마치겠습니다.</p></div></div></div></div>
 
-<!-- ===== 22 재밋 사례 ===== -->
-<div class="slide" data-title-ko="Zaemit - 에이전트 4종으로 만든 서비스">
-  <div class="mesh m22"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">5. 남는 것 - <span class="num">03</span></div>
-      <div class="section-title h3s m-rise">바이브코딩으로 만든 바이브코딩 서비스,<br><b class="za pt-c">Zaemit</b></div>
-    </div>
-    <div class="loopwrap">
-      <div class="loop m-rise" style="--d:.5s">
-        <svg viewBox="0 0 400 400">
-          <defs>
-            <filter id="gl3" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
-              <feGaussianBlur stdDeviation="6"/>
-            </filter>
-          </defs>
-          <circle cx="200" cy="200" r="100" fill="none" stroke="#3B82F6" stroke-width="7" opacity=".2" filter="url(#gl3)"/>
-          <circle class="m-draw" style="--d:.8s" data-mdur="1200" cx="200" cy="200" r="100" fill="none" stroke="#3B82F6" stroke-width="2.5" transform="rotate(-90 200 200)"/>
-          <g fill="#3B82F6">
-            <path d="M-7,-6 L7,0 L-7,6 Z" transform="translate(270.7,129.3) rotate(45)"/>
-            <path d="M-7,-6 L7,0 L-7,6 Z" transform="translate(270.7,270.7) rotate(135)"/>
-            <path d="M-7,-6 L7,0 L-7,6 Z" transform="translate(129.3,270.7) rotate(225)"/>
-            <path d="M-7,-6 L7,0 L-7,6 Z" transform="translate(129.3,129.3) rotate(315)"/>
-          </g>
-        </svg>
-        <div class="lnode" style="top:13%;left:50%">
-          <div class="ld"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
-          <b>WebGen</b><small>웹 생성</small>
-        </div>
-        <div class="lnode" style="top:50%;left:85%">
-          <div class="ld"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-          <b>ImgGen</b><small>이미지 생성</small>
-        </div>
-        <div class="lnode" style="top:87%;left:50%">
-          <div class="ld"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <b>Dev</b><small>기능 개발</small>
-        </div>
-        <div class="lnode" style="top:50%;left:15%">
-          <div class="ld"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
-          <b>Ops</b><small>운영</small>
-        </div>
-        <div class="hub"><b>자체 파인튜닝<br>모델</b><small>원가 통제</small></div>
-      </div>
-      <div class="looptxt m-stagger">
-        <p>저희 팀은 <b>AI 에이전트 4종</b>을 만들어 매일의 개발과 운영에 씁니다. 자체 파인튜닝 모델을 프로덕션에 투입해 원가를 통제하고, <b>이 구조를 그대로 상품으로 내놓은 것</b>이 재밋입니다.</p>
-        <p>바이브코딩 도구는 만들 수는 있지만 <b>운영은 못 합니다</b>. 그래서 저희는 생성 경쟁 대신 <b>생성 이후의 운영 레이어</b>를 제품으로 만들고 있습니다.</p>
-        <p>제품 소개를 드리려는 것이 아닙니다. 앞에서 말씀드린 결론을 <b>저희 회사에 그대로 적용하면 이렇게 된다</b>는 사례입니다.</p>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="slide layout-closing" data-title-ko="업무·검토·운영·측정을 담은 실행안 한 장" data-layout="closing"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">마무리 · 오늘 작성한 실행안</p><h2 class="section-title">업무·검토·운영·측정을 담은 실행안 한 장</h2></div><div class="lesson-content"><div class="closing-grid"><div class="point "><p class="eyebrow">업무</p><h3>AI에 맡길 작업</h3><p>BCG 실험에서는 과제에 따라 효과가 달랐습니다.</p></div><div class="point "><p class="eyebrow">검토</p><h3>통과 기준과 검토자</h3><p>에어캐나다는 잘못된 안내에 책임을 졌습니다.</p></div><div class="point "><p class="eyebrow">운영</p><h3>실행 권한과 비용</h3><p>Replit은 개발과 운영 데이터를 분리했습니다.</p></div><div class="point "><p class="eyebrow">측정</p><h3>총 작업 시간과 품질</h3><p>METR 실험에서는 체감과 실제 시간이 달랐습니다.</p></div></div><p class="closing-line">작성한 실행안으로 업무 한 가지를 시험해 보십시오.<br><em>다음 시간에는 이 업무를 AI로 구현해 보겠습니다.</em></p><p class="source"><a href="worksheet.html" target="_blank" rel="noopener">실행안 작성·인쇄 ↗</a></p><div class="bridge"><span>다음</span><p>질문을 받겠습니다. 사례의 원문과 해석 범위는 뒤의 참고 자료에 정리했습니다.</p></div></div></div></div>
 
-<!-- ===== 23 월요일 ===== -->
-<div class="slide" data-title-ko="월요일에 시작할 일">
-  <div class="mesh m23"></div>
-  <div class="slide-inner">
-    <div class="head">
-      <div class="section-label">5. 남는 것 - <span class="num">04</span></div>
-      <div class="section-title m-rise">월요일 아침, <span class="pt-c">업무 목록</span> 나누기부터</div>
-    </div>
-    <div class="stairs m-stagger">
-      <div class="stair">
-        <div class="sn tnum">01</div>
-        <h4>업무를 나눈다</h4>
-        <p>팀의 업무 목록을 정형과 판단으로 가릅니다. 도구 비교는 그다음 일입니다.</p>
-      </div>
-      <div class="stair">
-        <div class="sn tnum">02</div>
-        <h4>판정자를 세운다</h4>
-        <p>정형 업무마다 결과를 판정할 사람의 이름을 적습니다. 이름이 안 적히면 도입하지 않습니다.</p>
-      </div>
-      <div class="stair ablock on">
-        <div class="sn tnum">03</div>
-        <h4>1년치로 계산한다</h4>
-        <p>1년 동안 고칠 때 드는 비용으로 검토서를 씁니다. 제작비는 기준이 되지 못합니다.</p>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="slide layout-references" data-title-ko="고객 상담 사례의 원문과 해설" data-layout="references" data-appendix="true"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">참고 자료</p><h2 class="section-title">고객 상담 사례의 원문과 해설</h2><p class="section-desc">클라르나의 자체 발표·공시와 후속 취재, 에어캐나다 분쟁 결정에 대한 해설을 확인할 수 있습니다.</p></div><div class="lesson-content"><div class="sources"><a href="https://www.prnewswire.com/news-releases/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month-302072744.html" target="_blank" rel="noopener"><strong>Klarna 보도자료 · 2024.02 · 회사 자체 집계</strong><span>자료 확인 ↗</span></a><a href="https://www.customerexperiencedive.com/news/klarna-reinvests-human-talent-customer-service-AI-chatbot/747586/" target="_blank" rel="noopener"><strong>CX Dive · 2025.05.09 · 회사 대변인 취재</strong><span>자료 확인 ↗</span></a><a href="https://s205.q4cdn.com/644747736/files/doc_financials/2025/q4/Klarna-Group-plc-20-F-2025.pdf" target="_blank" rel="noopener"><strong>Klarna 2025 Form 20-F · 회사 자체 집계</strong><span>자료 확인 ↗</span></a><a href="https://www.americanbar.org/groups/business_law/resources/business-law-today/2024-february/bc-tribunal-confirms-companies-remain-liable-information-provided-ai-chatbot/" target="_blank" rel="noopener"><strong>Moffatt v. Air Canada · 2024 BCCRT 149 · ABA 해설</strong><span>자료 확인 ↗</span></a></div></div></div></div>
 
-<!-- ===== 24 클로징 ===== -->
-<div class="slide" data-title-ko="마무리">
-  <div class="mesh m24"></div>
-  <div class="slide-inner">
-    <div class="cover-hero">
-      <p class="t-over m-rise">CLOSING</p>
-      <h1 class="m-rise" style="--d:.3s">도구보다 먼저 나눠야 할 것은 <span class="grad-text">업무</span><br>나눈 업무를 판정할 사람은 <span class="grad-text">여러분</span></h1>
-      <p class="csub m-rise" style="--d:.5s">시작할 때 여쭤본 두 번째 질문을 기억하십니까.<br>회사 업무 중에 AI가 맡아서 돌아가는 일이 있는가.<br>다음 시간에는 그 하나를 실제로 만들어 보겠습니다.</p>
-      <p class="cover-contact m-rise" style="--d:.7s">위븐 김정환 Ph.D · kjh@weven.kr</p>
-    </div>
-  </div>
-</div>
+<div class="slide layout-references" data-title-ko="업무 효과를 확인한 연구와 분석 자료" data-layout="references" data-appendix="true"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">참고 자료</p><h2 class="section-title">업무 효과를 확인한 연구와 분석 자료</h2><p class="section-desc">연구마다 참가자·과제·측정 지표가 다르므로, 수치를 하나의 성공률로 합칠 수는 없습니다.</p></div><div class="lesson-content"><div class="sources"><a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener"><strong>Dell’Acqua 외 · Organization Science · 2026 · BCG 실험</strong><span>자료 확인 ↗</span></a><a href="https://www.anthropic.com/news/the-anthropic-economic-index" target="_blank" rel="noopener"><strong>Anthropic Economic Index · 2025.02 · Claude 이용 기록</strong><span>자료 확인 ↗</span></a><a href="https://arxiv.org/abs/2304.11771v2" target="_blank" rel="noopener"><strong>Brynjolfsson·Li·Raymond · 2024 개정본 · 상담원 현장 연구</strong><span>자료 확인 ↗</span></a></div></div></div></div>
 
+<div class="slide layout-references" data-title-ko="개발 실험과 운영 환경 변경의 출처" data-layout="references" data-appendix="true"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">참고 자료</p><h2 class="section-title">개발 실험과 운영 환경 변경의 출처</h2><p class="section-desc">개발 실험은 당시 도구와 과제 조건의 결과이므로, 현재 모든 도구에 그대로 적용할 수는 없습니다.</p></div><div class="lesson-content"><div class="sources"><a href="https://arxiv.org/abs/2302.06590" target="_blank" rel="noopener"><strong>Peng 외 · 2023 · 통제 실험</strong><span>자료 확인 ↗</span></a><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener"><strong>METR · 2025.07 · 숙련 개발자 무작위 실험</strong><span>자료 확인 ↗</span></a><a href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener"><strong>METR · 2026.02 · 후속 연구의 측정 한계</strong><span>자료 확인 ↗</span></a><a href="https://replit.com/blog/introducing-a-safer-way-to-vibe-code-with-replit-databases" target="_blank" rel="noopener"><strong>Replit · 2025.07.21 · 개발·운영 DB 분리 발표</strong><span>자료 확인 ↗</span></a></div></div></div></div>
+
+<div class="slide layout-rows" data-title-ko="실제 사례·가상 예시·운영 제안의 구분" data-layout="rows" data-appendix="true"><div class="mesh"></div><div class="slide-inner"><div class="head"><p class="section-label">참고 자료 · 해석 범위</p><h2 class="section-title">실제 사례·가상 예시·운영 제안의 구분</h2></div><div class="lesson-content"><div class="rows"><div><strong>사례·연구</strong><p>회사 자체 집계·통제 실험·현장 관찰 자료의 출처 명시</p></div><div><strong>가상 예시</strong><p>세미나 업무와 처리량·시간·금액의 교육용 가정</p></div><div><strong>발표자 경험</strong><p>발표자가 제공한 경력과 제품 구조에 관한 설명</p></div><div><strong>운영 제안</strong><p>사례를 참고한 권한 설정·교육·2주 시험 방법</p></div></div></div></div></div>
 <script>
 (function(){
   var slides=document.querySelectorAll('.slide'),total=slides.length,current=0;
@@ -1016,14 +150,10 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
   var hashParams=new URLSearchParams(window.location.hash.replace('#',''));
   var urlPage=parseInt(urlParams.get('page')||hashParams.get('page'))||0;
   if(urlPage>0&&urlPage<=total)current=urlPage-1;
-
   var appendixStart=total;
   slides.forEach(function(s,i){if(s.hasAttribute('data-appendix')&&i<appendixStart)appendixStart=i});
   var mainTotal=appendixStart;
-
   window.irConfig={version:'260904_dmoa_lecture',theme:'zaemit',languages:['ko'],defaultLang:'ko'};
-
-  /* scale-to-fit: zoom 대신 transform:scale (절대배치 다이어그램·SVG 커넥터 좌표 유지) */
   function fitSlideContent(s){
     var inner=s.querySelector('.slide-inner');if(!inner)return;
     inner.style.transform='';
@@ -1031,10 +161,8 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
         pl=parseFloat(cs.paddingLeft)||0,pr=parseFloat(cs.paddingRight)||0;
     var footerH=s.clientWidth*0.07,availH=s.clientHeight-pt-Math.max(pb,footerH),availW=s.clientWidth-pl-pr;
     var natH=inner.scrollHeight,natW=inner.scrollWidth;
-    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.4,Math.min(1,z));if(z<1)inner.style.transform='scale('+z+')'}
+    if(natH>availH||natW>availW){var z=Math.min(availH/natH,availW/natW);z=Math.max(0.5,Math.min(1,z));if(z<1)inner.style.transform='scale('+z+')'}
   }
-
-  /* ═══ 모션 엔진 (WAAPI) ═══ */
   var EASE_OUT='cubic-bezier(0, 0, 0.2, 1)',STEP_MS=80;
   var countRafs=new Map();
   function noMotion(){return document.body.classList.contains('no-motion')}
@@ -1046,56 +174,27 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
     });
     return steps;
   }
-  function inlineDelay(el){
-    var d=el.style&&el.style.getPropertyValue('--d');
-    if(d){d=parseFloat(d);if(!isNaN(d))return d*1000}
-    return null;
-  }
-  function riseAnim(el,delay){
-    el.animate([{opacity:0,transform:'translateY(0.9375vw)'},{opacity:1,transform:'none'}],
-      {duration:700,delay:delay,easing:EASE_OUT,fill:'both'});
-  }
-  function fadeAnim(el,delay){
-    var dur=parseFloat(el.dataset&&el.dataset.mdur)||1100;
-    el.animate([{opacity:0},{opacity:1}],{duration:dur,delay:delay,easing:EASE_OUT,fill:'both'});
-  }
+  function inlineDelay(el){var d=el.style&&el.style.getPropertyValue('--d');if(d){d=parseFloat(d);if(!isNaN(d))return d*1000}return null}
+  function riseAnim(el,delay){el.animate([{opacity:0,transform:'translateY(0.9375vw)'},{opacity:1,transform:'none'}],{duration:700,delay:delay,easing:EASE_OUT,fill:'both'})}
+  function fadeAnim(el,delay){var dur=parseFloat(el.dataset&&el.dataset.mdur)||1100;el.animate([{opacity:0},{opacity:1}],{duration:dur,delay:delay,easing:EASE_OUT,fill:'both'})}
   function countUp(el,delay,sec){
     if(el.dataset.mcOrig===undefined)el.dataset.mcOrig=el.textContent;
-    var orig=el.dataset.mcOrig;
-    var m=orig.match(/-?\d[\d,]*(?:\.\d+)?/);
-    if(!m)return;
+    var orig=el.dataset.mcOrig;var m=orig.match(/-?\d[\d,]*(?:\.\d+)?/);if(!m)return;
     var raw=m[0],target=parseFloat(raw.replace(/,/g,'')),dec=(raw.split('.')[1]||'').length,grouped=raw.indexOf(',')>=0;
     var pre=orig.slice(0,m.index),post=orig.slice(m.index+raw.length);
     var fmt=function(v){return grouped?v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}):v.toFixed(dec)};
-    var DUR=1200,start;
-    el.textContent=pre+fmt(0)+post;
-    var tick=function(now){
-      if(start===undefined)start=now+delay;
-      var t=(now-start)/DUR;
-      if(t>=1){el.textContent=orig;return}
-      var eased=t<=0?0:1-Math.pow(1-t,3);
-      el.textContent=pre+fmt(target*eased)+post;
-      countRafs.get(sec).push(requestAnimationFrame(tick));
-    };
+    var DUR=1200,start;el.textContent=pre+fmt(0)+post;
+    var tick=function(now){if(start===undefined)start=now+delay;var t=(now-start)/DUR;if(t>=1){el.textContent=orig;return}var eased=t<=0?0:1-Math.pow(1-t,3);el.textContent=pre+fmt(target*eased)+post;countRafs.get(sec).push(requestAnimationFrame(tick))};
     countRafs.get(sec).push(requestAnimationFrame(tick));
   }
   var DRAW_SHAPES='path, line, polyline, circle, ellipse, rect';
   function drawAnim(el,delay){
-    var dur=parseFloat(el.dataset&&el.dataset.mdur)||700;
-    if(el.style)el.style.opacity='1';
+    var dur=parseFloat(el.dataset&&el.dataset.mdur)||700;if(el.style)el.style.opacity='1';
     var shapes=el.matches&&el.matches(DRAW_SHAPES)?[el]:el.querySelectorAll(DRAW_SHAPES);
-    shapes.forEach(function(p){
-      if(typeof p.getTotalLength!=='function')return;
-      var len;try{len=p.getTotalLength()}catch(e){return}
-      if(!len)return;
-      p.style.strokeDasharray=len;
-      p.animate([{strokeDashoffset:len},{strokeDashoffset:0}],
-        {duration:dur,delay:delay,easing:'ease-out',fill:'both'});
-    });
+    shapes.forEach(function(p){if(typeof p.getTotalLength!=='function')return;var len;try{len=p.getTotalLength()}catch(e){return}if(!len)return;p.style.strokeDasharray=len;p.animate([{strokeDashoffset:len},{strokeDashoffset:0}],{duration:dur,delay:delay,easing:'ease-out',fill:'both'})});
   }
   function resetMotion(sec){
-    (countRafs.get(sec)||[]).forEach(cancelAnimationFrame);
-    countRafs.set(sec,[]);
+    (countRafs.get(sec)||[]).forEach(cancelAnimationFrame);countRafs.set(sec,[]);
     sec.querySelectorAll('.m-rise, .m-fade, .m-stagger > *, .m-count, .m-draw, .m-draw path, .m-draw line, .m-draw polyline, .m-draw circle, .m-draw ellipse, .m-draw rect').forEach(function(el){
       if(el.getAnimations)el.getAnimations().forEach(function(a){a.cancel()});
       if(el.dataset&&el.dataset.mcOrig!==undefined)el.textContent=el.dataset.mcOrig;
@@ -1104,67 +203,28 @@ body.no-motion .slide .m-rise,body.no-motion .slide .m-fade,body.no-motion .slid
     });
   }
   function playMotion(sec){
-    if(noMotion())return;
-    resetMotion(sec);
-    requestAnimationFrame(function(){
-      seqOf(sec).forEach(function(el,i){
-        var d=inlineDelay(el);
-        var delay=(d!==null)?d:i*STEP_MS;
-        var inStagger=el.parentElement&&el.parentElement.classList.contains('m-stagger');
-        if(el.classList.contains('m-fade'))fadeAnim(el,delay);
-        else if(el.classList.contains('m-rise')||inStagger)riseAnim(el,delay);
-        if(el.classList.contains('m-count'))countUp(el,delay,sec);
-        if(el.classList.contains('m-draw'))drawAnim(el,delay);
-      });
-    });
+    if(noMotion())return;resetMotion(sec);
+    requestAnimationFrame(function(){seqOf(sec).forEach(function(el,i){var d=inlineDelay(el);var delay=(d!==null)?d:i*STEP_MS;var inStagger=el.parentElement&&el.parentElement.classList.contains('m-stagger');if(el.classList.contains('m-fade'))fadeAnim(el,delay);else if(el.classList.contains('m-rise')||inStagger)riseAnim(el,delay);if(el.classList.contains('m-count'))countUp(el,delay,sec);if(el.classList.contains('m-draw'))drawAnim(el,delay)})});
   }
-  function fitAllSlides(){
-    slides.forEach(function(s){
-      var h=!s.classList.contains('active');
-      if(h){s.style.display='flex';s.style.visibility='hidden'}
-      fitSlideContent(s);
-      if(h){s.style.display='';s.style.visibility=''}
-    });
-  }
+  function fitAllSlides(){slides.forEach(function(s){var h=!s.classList.contains('active');if(h){s.style.display='flex';s.style.visibility='hidden'}fitSlideContent(s);if(h){s.style.display='';s.style.visibility=''}})}
   var playTimer=null;
-  function goTo(idx,src){
+  function goTo(idx){
     if(idx<0||idx>=total||idx===current)return;
-    var os=slides[current];
-    os.classList.remove('active');resetMotion(os);current=idx;
-    var ns=slides[current];
-    ns.style.display='flex';ns.style.visibility='hidden';
-    fitSlideContent(ns);
-    resetMotion(ns);
-    ns.style.display='';ns.style.visibility='';
-    ns.classList.add('active');
-    if(playTimer)clearTimeout(playTimer);
-    playTimer=setTimeout(function(){playMotion(ns)},400);
+    var os=slides[current];os.classList.remove('active');resetMotion(os);current=idx;
+    var ns=slides[current];ns.style.display='flex';ns.style.visibility='hidden';fitSlideContent(ns);resetMotion(ns);ns.style.display='';ns.style.visibility='';ns.classList.add('active');
+    if(playTimer)clearTimeout(playTimer);playTimer=setTimeout(function(){playMotion(ns)},400);
     if(window.irSlideInfo)window.irSlideInfo.current=current;
     try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:mainTotal,appendixStart:appendixStart},'*')}catch(e){}
   }
-  window.setLang=function(nl){
-    document.body.classList.remove('en','ja','ko');
-    if(nl!=='ko')document.body.classList.add(nl);
-    requestAnimationFrame(fitAllSlides);
-  };
-  window.goToSlide=function(idx){goTo(idx,'parent-viewer')};
-  window.irSlideInfo={
-    slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),
-    total:total,mainTotal:mainTotal,appendixStart:appendixStart,current:current
-  };
-  document.addEventListener('keydown',function(e){
-    switch(e.key){
-      case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1,'kb');break;
-      case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1,'kb');break;
-      case'Home':e.preventDefault();goTo(0,'kb');break;case'End':e.preventDefault();goTo(total-1,'kb');break;
-    }
-  });
+  window.setLang=function(nl){document.body.classList.remove('en','ja','ko');if(nl!=='ko')document.body.classList.add(nl);requestAnimationFrame(fitAllSlides)};
+  window.goToSlide=function(idx){goTo(idx)};
+  window.irSlideInfo={slides:Array.from(slides).map(function(s,i){return{index:i,titleKo:s.dataset.titleKo||'슬라이드 '+(i+1),titleEn:s.dataset.titleEn||s.dataset.titleKo||'Slide '+(i+1),titleJa:s.dataset.titleJa||s.dataset.titleKo||'スライド '+(i+1),isAppendix:s.hasAttribute('data-appendix')}}),total:total,mainTotal:mainTotal,appendixStart:appendixStart,current:current};
+  document.addEventListener('keydown',function(e){switch(e.key){case'ArrowDown':case'ArrowRight':case'PageDown':case' ':e.preventDefault();goTo(current+1);break;case'ArrowUp':case'ArrowLeft':case'PageUp':e.preventDefault();goTo(current-1);break;case'Home':e.preventDefault();goTo(0);break;case'End':e.preventDefault();goTo(total-1);break}});
   var wAcc=0,wCool=false;
-  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1),'wh');wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
+  document.addEventListener('wheel',function(e){e.preventDefault();if(wCool)return;wAcc+=e.deltaY;if(Math.abs(wAcc)>=80){goTo(current+(wAcc>0?1:-1));wAcc=0;wCool=true;setTimeout(function(){wCool=false},400)}},{passive:false});
   var tX,tY,tT;
   document.addEventListener('touchstart',function(e){var t=e.touches[0];tX=t.clientX;tY=t.clientY;tT=Date.now()},{passive:true});
-  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1,'t');else if(tX>w*.85)goTo(current+1,'t')},{passive:true});
-
+  document.addEventListener('touchend',function(e){if(Date.now()-tT>300)return;var t=e.changedTouches[0];if(Math.abs(t.clientX-tX)>10||Math.abs(t.clientY-tY)>10)return;var w=window.innerWidth;if(tX<w*.15)goTo(current-1);else if(tX>w*.85)goTo(current+1)},{passive:true});
   if(current>0){slides[0].classList.remove('active');slides[current].classList.add('active')}
   document.fonts.ready.then(function(){fitAllSlides();playMotion(slides[current]);try{parent.postMessage({type:'slideChange',current:current,total:total,mainTotal:mainTotal,appendixStart:appendixStart},'*')}catch(e){}});
   window.addEventListener('resize',function(){requestAnimationFrame(fitAllSlides)});
