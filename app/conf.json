@@ -4,6 +4,66 @@
   "defaultIR": "260203",
   "versions": [
     {
+      "id": "260907_combo_copy",
+      "name": "제휴 제안 + 네트워킹 통합 (복사본)",
+      "nameEn": "Agency Proposal + Networking (Copy)",
+      "description": "260907_combo 복사본, 자유 편집용 (Zaemit 컨셉)",
+      "descriptionEn": "Editable copy of 260907_combo (Zaemit concept)",
+      "date": "2026-09-08",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260907_combo",
+      "name": "제휴 제안 + 네트워킹 통합 (전체 합본)",
+      "nameEn": "Agency Proposal + Networking (Full Merge)",
+      "description": "260907_party_full(창업기업 네트워킹 + 소개자료)과 260907_agency_proposal(창업지원기관 제휴 제안)을 합친 23장 합본. 13~16은 제안 요약·제휴 조건·진행 절차·시작 방법을 박스 없는 골격(빅넘버·베어 테이블·담당 스윔레인·오프셋 수직 스텝)으로 만든 재정비판이고, 18~23은 표지·수정 절차·결과물·제품 단계·기술 검증·클로징을 AI 슬롭 말투와 카드 그리드를 걷어내고 다시 만든 검토판 (Zaemit 컨셉)",
+      "descriptionEn": "Single-file merge of 260907_party_full and 260907_agency_proposal, 51 slides total (Zaemit concept)",
+      "date": "2026-09-07",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260907_agency_proposal",
+      "name": "창업지원기관 제휴 제안 (입주기업 웹사이트 1년 무상)",
+      "nameEn": "Startup Support Agency Partnership Proposal (1-Year Free Websites for Member Companies)",
+      "description": "창업지원기관 250곳에 보내는 제휴 제안서 10장. 기관 부담 0원으로 입주기업에 웹사이트 제작·호스팅·도메인을 1년간 무상 제공하고, 기관은 보육 실적과 입주기업 모집 경쟁력을 얻습니다. 홈페이지가 없는 곳은 새로 만들고 이미 있는 곳은 쓰던 도메인 그대로 재제작하므로 입주기업 전체가 대상입니다. 제안 요약, 지원 대상 두 갈래, 제작 결과물 3건(15h·12h·9h), MCP 제작 방식, 5 Agent Layer 운영 범위, 특허·인증·수상, 제휴 조건, 진행 절차 5단계 (Zaemit 컨셉)",
+      "descriptionEn": "A 10-slide partnership proposal for 250 startup support agencies: member companies get website build, hosting and domain free for one year at zero cost to the agency, while the agency gains incubation results and recruiting appeal. Companies without a site get a new one; companies that already have one keep their domain and get it rebuilt on Zaemit, so every member company qualifies. Covers the summary, the two eligibility tracks, three built sites (15h/12h/9h), the MCP build flow, the 5 Agent Layer, patents and certifications, terms, and the five-step process (Zaemit concept)",
+      "date": "2026-09-07",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260907_party_full",
+      "name": "창업기업 네트워킹 + 소개자료 (통합)",
+      "nameEn": "Startup Networking + Introduction (Merged)",
+      "description": "창업기업 네트워킹 파티 라이트 IR(9장)을 앞에 두고, 뒤에 Zaemit×WEVEN 소개자료를 이어붙인 통합 덱 (Zaemit 컨셉)",
+      "descriptionEn": "Merged deck: the startup networking light IR (9 slides) first, followed by the Zaemit × WEVEN introduction (Zaemit concept)",
+      "date": "2026-09-07",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260907_party",
+      "name": "창업기업 홈페이지 1년 무료 (네트워킹 파티용)",
+      "nameEn": "Free 1-Year Website for Startups (Networking Party)",
+      "description": "창업자 대상 라이트 IR. 내가 쓰던 AI로 예약·결제·회원까지 대화로 만드는 전문 홈페이지를 1년 무상 지원하고, 가입·락인으로 연결하는 9장 (Zaemit 컨셉)",
+      "descriptionEn": "Light IR for founders: build a full website (booking, payments, membership) by chatting with your own AI, free for a year, funneling to sign-up and lock-in. 9 slides (Zaemit concept)",
+      "date": "2026-09-07",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
+      "id": "260906_ir",
+      "name": "IR 투자유치 (편집용 사본)",
+      "nameEn": "IR Deck (editable copy)",
+      "description": "260814_introduce 통째 복제본, 투자유치용으로 편집. Zaemit 컨셉",
+      "descriptionEn": "Full copy of 260814_introduce for fundraising edits. Zaemit concept",
+      "date": "2026-09-06",
+      "theme": "zaemit",
+      "default": false
+    },
+    {
       "id": "260906_dmoa",
       "name": "디모아 AI 특강 · AI 혁명과 AX",
       "nameEn": "DMOA AI Lecture · The AI Revolution and AX",
